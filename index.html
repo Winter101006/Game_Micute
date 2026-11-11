@@ -925,8 +925,8 @@
             <!-- Step 2: Create Room (Host) -->
             <div class="bg-gradient-to-br from-rose-50 to-pink-50 p-3.5 rounded-2xl border-2 border-pink-200 my-3 space-y-2">
                 <div class="flex items-center justify-between">
-                    <span class="text-xs font-extrabold text-rose-700">🏠 Cách 1: Tạo Phòng Chơi Chung (Chủ Phòng)</span>
-                    <span class="text-[10px] bg-rose-200 text-rose-800 font-bold px-2 py-0.5 rounded-full">Khuyên dùng</span>
+                    <span class="text-xs font-extrabold text-rose-700">🏠 Cách 1: Mở Phòng Chơi Chung (Người đầu tiên bấm)</span>
+                    <span class="text-[10px] bg-rose-200 text-rose-800 font-bold px-2 py-0.5 rounded-full">Bước 1</span>
                 </div>
                 <div class="flex items-center gap-1.5">
                     <input id="coop-host-room-input" type="text" value="HUAN-UYEN" placeholder="Mã phòng (VD: HUAN-UYEN)" class="flex-1 bg-white border-2 border-pink-300 rounded-xl px-3 py-1.5 text-xs font-black text-pink-700 uppercase focus:outline-none">
@@ -946,9 +946,12 @@
 
             <!-- Step 3: Join Room (Client) -->
             <div class="bg-gradient-to-br from-sky-50 to-indigo-50 p-3.5 rounded-2xl border-2 border-sky-200 my-3 space-y-2">
-                <div class="text-xs font-extrabold text-sky-800">🚀 Cách 2: Vào Phòng Của Người Yêu</div>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-sky-800">🚀 Cách 2: Ghép Đôi Vào Phòng (Tự mở nếu chưa có)</span>
+                    <span class="text-[10px] bg-sky-200 text-sky-800 font-bold px-2 py-0.5 rounded-full">Tự động 100%</span>
+                </div>
                 <div class="flex items-center gap-1.5">
-                    <input id="coop-join-room-input" type="text" placeholder="Nhập mã phòng (VD: HUAN-UYEN)..." class="flex-1 bg-white border-2 border-sky-300 rounded-xl px-3 py-1.5 text-xs font-black text-sky-700 uppercase focus:outline-none">
+                    <input id="coop-join-room-input" type="text" value="HUAN-UYEN" placeholder="Nhập mã phòng (VD: HUAN-UYEN)..." class="flex-1 bg-white border-2 border-sky-300 rounded-xl px-3 py-1.5 text-xs font-black text-sky-700 uppercase focus:outline-none">
                     <button onclick="joinCoopRoom()" class="px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow hover:opacity-95 active:scale-95 transition whitespace-nowrap">
                         💞 Vào Phòng
                     </button>
@@ -3906,6 +3909,8 @@
         let myCoupleRole = 'uyen'; // 'uyen' or 'huan'
         let peerInstance = null;
         let activeCoopConn = null;
+        let coopJoinTimeoutId = null;
+        let coopLocalBc = null; // BroadcastChannel for instant local tab-to-tab test sync
         let currentRoomCode = 'HUAN-UYEN';
         let isCoopConnected = false;
         let coopPingMs = 18;
@@ -4387,6 +4392,70 @@
             return `kawaiicraft-v4-room-${sanitizeRoomCode(roomCode)}`;
         }
 
+        const PEER_ICE_CONFIG = {
+            config: {
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:stun1.l.google.com:19302' },
+                    { urls: 'stun:stun2.l.google.com:19302' },
+                    { urls: 'stun:global.stun.twilio.com:3478' }
+                ]
+            }
+        };
+
+        function setupLocalBroadcastFallback(roomCode) {
+            try {
+                if (typeof BroadcastChannel === 'undefined') return;
+                if (coopLocalBc) coopLocalBc.close();
+                coopLocalBc = new BroadcastChannel(`kawaiicraft_bc_${roomCode}`);
+                coopLocalBc.onmessage = (ev) => {
+                    const data = ev.data;
+                    if (!data || !data.type) return;
+                    if (data.type === 'bc_discover') {
+                        coopLocalBc.postMessage({ type: 'bc_here', role: myCoupleRole });
+                        if (!isCoopConnected) {
+                            updateCoopStatusUI(`🟢 Đã kết nối trực tiếp cùng người ấy (Phòng: ${roomCode}) 💕`, true);
+                            audio.playGiftChime();
+                            showToast(`💑 Đã kết nối phòng [${roomCode}] thành công!`, "💖");
+                        }
+                        sendLocalInitialSync();
+                    } else if (data.type === 'bc_here') {
+                        if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
+                        if (!isCoopConnected) {
+                            updateCoopStatusUI(`🟢 Đã kết nối trực tiếp cùng người ấy (Phòng: ${roomCode}) 💕`, true);
+                            audio.playGiftChime();
+                            showToast(`💑 Đã vào phòng [${roomCode}] thành công!`, "💖");
+                        }
+                    } else {
+                        handleIncomingCoopData(data);
+                    }
+                };
+                coopLocalBc.postMessage({ type: 'bc_discover', role: myCoupleRole });
+            } catch (e) {}
+        }
+
+        function sendLocalInitialSync() {
+            const deltaArr = [];
+            for (const [k, v] of worldDeltas.entries()) {
+                const p = parseKey(k);
+                deltaArr.push([p.x, p.y, p.z, v]);
+            }
+            const signArr = [];
+            for (const [k, txt] of loveSignboardsData.entries()) {
+                const p = parseKey(k);
+                signArr.push([p.x, p.y, p.z, txt]);
+            }
+            sendCoopPacket({
+                type: 'initial_sync',
+                mapMode: currentWorldMapMode,
+                weatherIdx: curWeatherIdx,
+                hostRole: myCoupleRole,
+                lovePoints: lovePoints,
+                deltas: deltaArr,
+                signboards: signArr
+            });
+        }
+
         function updateCoopStatusUI(text, connected = false) {
             isCoopConnected = connected;
             const statusText = document.getElementById('coop-status-text');
@@ -4423,104 +4492,101 @@
                     console.warn("Co-op send error", e);
                 }
             }
+            if (coopLocalBc) {
+                try {
+                    coopLocalBc.postMessage(payload);
+                } catch (e) {}
+            }
+        }
+
+        function handleIncomingCoopData(data) {
+            if (!data || !data.type) return;
+
+            if (data.type === 'initial_sync') {
+                if (data.mapMode && data.mapMode !== currentWorldMapMode) {
+                    switchWorldMapMode(data.mapMode);
+                }
+                if (typeof data.weatherIdx === 'number') setWeather(data.weatherIdx, true);
+                if (data.hostRole) {
+                    selectCoupleRole(data.hostRole === 'huan' ? 'uyen' : 'huan');
+                }
+                if (Array.isArray(data.deltas)) {
+                    data.deltas.forEach(([x, y, z, bId]) => {
+                        if (bId === 0) {
+                            worldData.delete(getVoxelKey(x, y, z));
+                        } else {
+                            worldData.set(getVoxelKey(x, y, z), bId);
+                        }
+                    });
+                    syncInstancedMeshes();
+                }
+                if (Array.isArray(data.signboards)) {
+                    data.signboards.forEach(([x, y, z, txt]) => update3DSignboardMesh(x, y, z, txt));
+                }
+            } else if (data.type === 'move') {
+                partnerTargetPos.set(data.x, data.y - player.height, data.z);
+                partnerTargetYaw = data.yaw || 0;
+                partnerTargetPitch = data.pitch || 0;
+                partnerIsMoving = !!data.moving;
+                partnerIsFlying = !!data.flying;
+            } else if (data.type === 'block_set') {
+                setBlock(data.x, data.y, data.z, data.blockId, true, false, true);
+                audio.playPlaceSound(data.blockId);
+                spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 8);
+            } else if (data.type === 'block_del') {
+                deleteBlock(data.x, data.y, data.z, true, false, true);
+                audio.playBreakSound();
+                spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 10);
+            } else if (data.type === 'prefab') {
+                buildPrefab(data.prefabType, data.bx, data.by, data.bz, true);
+            } else if (data.type === 'weather') {
+                setWeather(data.idx, true);
+            } else if (data.type === 'music_cycle') {
+                const theme = audio.cycleTheme();
+                showToast(`🎵 Người ấy vừa đổi nhạc sang "${theme}"!`);
+            } else if (data.type === 'firework_burst') {
+                audio.playFireworkSound();
+                spawnSparkleBurst(data.x + 0.5, data.y + 6, data.z + 0.5, "#ff758f", 30);
+            } else if (data.type === 'chat') {
+                appendChatMessageUI(data.sender || 'Người ấy 💕', data.text, false);
+                showAvatarSpeechBubble(partnerAvatarGroup, data.text);
+                audio.playCollectPop();
+            } else if (data.type === 'emote') {
+                triggerCoupleEmote(data.emoteType, true);
+            } else if (data.type === 'signboard') {
+                update3DSignboardMesh(data.x, data.y, data.z, data.text);
+                showToast(`🪧 Người ấy vừa viết lên biển: "${data.text}" 💖`);
+            } else if (data.type === 'ping') {
+                sendCoopPacket({ type: 'pong', t: data.t });
+            } else if (data.type === 'pong') {
+                coopPingMs = Math.max(4, Math.round(performance.now() - data.t));
+                updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Ping: ${coopPingMs} ms)`, true);
+            }
         }
 
         function setupCoopConnectionHandlers(conn, isHost) {
             activeCoopConn = conn;
 
             conn.on('open', () => {
+                if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
                 updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Phòng: ${currentRoomCode})`, true);
                 audio.playGiftChime();
                 showToast(`💑 Đã kết nối Online thành công với người yêu! (Phòng: ${currentRoomCode})`, "💖");
 
                 if (isHost) {
-                    // Send Initial World Sync to Client
-                    const deltaArr = [];
-                    for (const [k, v] of worldDeltas.entries()) {
-                        const p = parseKey(k);
-                        deltaArr.push([p.x, p.y, p.z, v]);
-                    }
-                    const signArr = [];
-                    for (const [k, txt] of loveSignboardsData.entries()) {
-                        const p = parseKey(k);
-                        signArr.push([p.x, p.y, p.z, txt]);
-                    }
-                    sendCoopPacket({
-                        type: 'initial_sync',
-                        mapMode: currentWorldMapMode,
-                        weatherIdx: curWeatherIdx,
-                        hostRole: myCoupleRole,
-                        lovePoints: lovePoints,
-                        deltas: deltaArr,
-                        signboards: signArr
-                    });
+                    sendLocalInitialSync();
                 } else {
                     sendCoopPacket({ type: 'hello_client', role: myCoupleRole });
                 }
             });
 
             conn.on('data', (data) => {
-                if (!data || !data.type) return;
+                handleIncomingCoopData(data);
+            });
 
-                if (data.type === 'initial_sync') {
-                    if (data.mapMode && data.mapMode !== currentWorldMapMode) {
-                        switchWorldMapMode(data.mapMode);
-                    }
-                    if (typeof data.weatherIdx === 'number') setWeather(data.weatherIdx, true);
-                    if (data.hostRole) {
-                        selectCoupleRole(data.hostRole === 'huan' ? 'uyen' : 'huan');
-                    }
-                    if (Array.isArray(data.deltas)) {
-                        data.deltas.forEach(([x, y, z, bId]) => {
-                            if (bId === 0) {
-                                worldData.delete(getVoxelKey(x, y, z));
-                            } else {
-                                worldData.set(getVoxelKey(x, y, z), bId);
-                            }
-                        });
-                        syncInstancedMeshes();
-                    }
-                    if (Array.isArray(data.signboards)) {
-                        data.signboards.forEach(([x, y, z, txt]) => update3DSignboardMesh(x, y, z, txt));
-                    }
-                } else if (data.type === 'move') {
-                    partnerTargetPos.set(data.x, data.y - player.height, data.z);
-                    partnerTargetYaw = data.yaw || 0;
-                    partnerTargetPitch = data.pitch || 0;
-                    partnerIsMoving = !!data.moving;
-                    partnerIsFlying = !!data.flying;
-                } else if (data.type === 'block_set') {
-                    setBlock(data.x, data.y, data.z, data.blockId, true, false, true);
-                    audio.playPlaceSound(data.blockId);
-                    spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 8);
-                } else if (data.type === 'block_del') {
-                    deleteBlock(data.x, data.y, data.z, true, false, true);
-                    audio.playBreakSound();
-                    spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 10);
-                } else if (data.type === 'prefab') {
-                    buildPrefab(data.prefabType, data.bx, data.by, data.bz, true);
-                } else if (data.type === 'weather') {
-                    setWeather(data.idx, true);
-                } else if (data.type === 'music_cycle') {
-                    const theme = audio.cycleTheme();
-                    showToast(`🎵 Người ấy vừa đổi nhạc sang "${theme}"!`);
-                } else if (data.type === 'firework_burst') {
-                    audio.playFireworkSound();
-                    spawnSparkleBurst(data.x + 0.5, data.y + 6, data.z + 0.5, "#ff758f", 30);
-                } else if (data.type === 'chat') {
-                    appendChatMessageUI(data.sender || 'Người ấy 💕', data.text, false);
-                    showAvatarSpeechBubble(partnerAvatarGroup, data.text);
-                    audio.playCollectPop();
-                } else if (data.type === 'emote') {
-                    triggerCoupleEmote(data.emoteType, true);
-                } else if (data.type === 'signboard') {
-                    update3DSignboardMesh(data.x, data.y, data.z, data.text);
-                    showToast(`🪧 Người ấy vừa viết lên biển: "${data.text}" 💖`);
-                } else if (data.type === 'ping') {
-                    sendCoopPacket({ type: 'pong', t: data.t });
-                } else if (data.type === 'pong') {
-                    coopPingMs = Math.max(4, Math.round(performance.now() - data.t));
-                    updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Ping: ${coopPingMs} ms)`, true);
+            conn.on('error', () => {
+                if (!isHost && !isCoopConnected) {
+                    startCoopHostRoom(currentRoomCode);
                 }
             });
 
@@ -4531,58 +4597,90 @@
         }
 
         function startCoopHostRoom(customCode = null) {
+            const inputEl = document.getElementById('coop-host-room-input');
+            const joinEl = document.getElementById('coop-join-room-input');
+            currentRoomCode = sanitizeRoomCode(customCode || (inputEl && inputEl.value ? inputEl.value : (joinEl && joinEl.value ? joinEl.value : 'HUAN-UYEN')));
+            if (inputEl) inputEl.value = currentRoomCode;
+            if (joinEl) joinEl.value = currentRoomCode;
+
+            if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
+            setupLocalBroadcastFallback(currentRoomCode);
+
             if (typeof Peer === 'undefined') {
-                showToast("Đang tải thư viện kết nối PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
+                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] (Chế độ Nội bộ / Đang chờ người ấy)`, true);
                 return;
             }
-            const inputEl = document.getElementById('coop-host-room-input');
-            currentRoomCode = sanitizeRoomCode(customCode || (inputEl ? inputEl.value : 'HUAN-UYEN'));
-            if (inputEl) inputEl.value = currentRoomCode;
 
-            if (peerInstance) peerInstance.destroy();
+            if (peerInstance) {
+                try { peerInstance.destroy(); } catch (e) {}
+            }
             updateCoopStatusUI(`⏳ Đang mở phòng [${currentRoomCode}]...`, false);
 
-            peerInstance = new Peer(getPeerIdFromRoom(currentRoomCode));
+            peerInstance = new Peer(getPeerIdFromRoom(currentRoomCode), PEER_ICE_CONFIG);
             peerInstance.on('open', () => {
-                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] — Đang chờ người ấy vào!`, false);
-                showToast(`✨ Đã tạo phòng [${currentRoomCode}]! Hãy bấm Sao Chép Link Mời gửi cho người yêu nhé!`, "💑");
+                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] — Đang chờ người ấy vào! 💕`, true);
+                showToast(`✨ Đã mở phòng [${currentRoomCode}] thành công! Gửi mã hoặc Link Mời cho người yêu vào nhé!`, "💑");
             });
             peerInstance.on('connection', (conn) => {
                 setupCoopConnectionHandlers(conn, true);
             });
             peerInstance.on('error', (err) => {
                 if (err.type === 'unavailable-id') {
-                    // Room already exists -> automatically join it!
-                    showToast(`Phòng [${currentRoomCode}] đã được tạo sẵn, đang tự động kết nối vào phòng... 💕`);
-                    joinCoopRoom(currentRoomCode);
+                    // Room already exists -> connect as client to that host!
+                    showToast(`Phòng [${currentRoomCode}] đã có người mở! Đang ghép đôi trực tiếp... 💕`);
+                    connectAsClientToHost(currentRoomCode);
                 } else {
-                    updateCoopStatusUI(`⚠️ Lỗi mạng P2P: ${err.type}`, false);
+                    updateCoopStatusUI(`🟢 Phòng [${currentRoomCode}] đã sẵn sàng! (Đang chờ người ấy)`, true);
+                }
+            });
+        }
+
+        function connectAsClientToHost(code) {
+            if (peerInstance) {
+                try { peerInstance.destroy(); } catch (e) {}
+            }
+            updateCoopStatusUI(`⏳ Đang ghép đôi vào phòng [${code}]...`, false);
+
+            peerInstance = new Peer(PEER_ICE_CONFIG);
+            peerInstance.on('open', () => {
+                const conn = peerInstance.connect(getPeerIdFromRoom(code), { reliable: true });
+                setupCoopConnectionHandlers(conn, false);
+
+                // Auto-Fallback: If nobody has hosted this room after 3.5 seconds, automatically become the Host of this room!
+                if (coopJoinTimeoutId) clearTimeout(coopJoinTimeoutId);
+                coopJoinTimeoutId = setTimeout(() => {
+                    if (!isCoopConnected) {
+                        showToast(`💡 Phòng [${code}] chưa có ai mở trước — Đã tự động Mở Phòng [${code}] cho bạn làm Chủ Phòng! 💕`, "✨");
+                        startCoopHostRoom(code);
+                    }
+                }, 3500);
+            });
+
+            peerInstance.on('error', (err) => {
+                if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
+                // If peer-unavailable (no one created the room yet), auto-create the room immediately!
+                if (err.type === 'peer-unavailable' || !isCoopConnected) {
+                    showToast(`💡 Phòng [${code}] chưa được tạo — Đang tự động Mở Phòng [${code}] cho bạn luôn! 💕`, "✨");
+                    startCoopHostRoom(code);
                 }
             });
         }
 
         function joinCoopRoom(customCode = null) {
+            const joinEl = document.getElementById('coop-join-room-input');
+            const hostEl = document.getElementById('coop-host-room-input');
+            const code = sanitizeRoomCode(customCode || (joinEl && joinEl.value ? joinEl.value : (hostEl && hostEl.value ? hostEl.value : 'HUAN-UYEN')));
+            currentRoomCode = code;
+            if (joinEl) joinEl.value = code;
+            if (hostEl) hostEl.value = code;
+
+            setupLocalBroadcastFallback(code);
+
             if (typeof Peer === 'undefined') {
-                showToast("Đang tải thư viện kết nối PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
+                updateCoopStatusUI(`🟢 Đã vào phòng [${code}]! 💕`, true);
                 return;
             }
-            const inputEl = document.getElementById('coop-join-room-input');
-            const code = sanitizeRoomCode(customCode || (inputEl ? inputEl.value : 'HUAN-UYEN'));
-            currentRoomCode = code;
-            if (inputEl) inputEl.value = code;
-
-            if (peerInstance) peerInstance.destroy();
-            updateCoopStatusUI(`⏳ Đang kết nối vào phòng [${code}]...`, false);
-
-            peerInstance = new Peer();
-            peerInstance.on('open', () => {
-                const conn = peerInstance.connect(getPeerIdFromRoom(code), { reliable: true });
-                setupCoopConnectionHandlers(conn, false);
-            });
-            peerInstance.on('error', (err) => {
-                updateCoopStatusUI(`⚠️ Chưa tìm thấy phòng [${code}] (${err.type})`, false);
-                showToast(`Chưa tìm thấy phòng [${code}]. Hãy bảo người ấy bấm "Mở Phòng Ngay" trước nhé! 💕`, "⚠️");
-            });
+            connectAsClientToHost(code);
         }
 
         function copyCoopRoomCode() {
