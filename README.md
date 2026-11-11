@@ -1,13 +1,26 @@
-# 🌸 KawaiiCraft V4.0 — Quần Đảo Livik & Lục Địa Minecraft Cổ Điển 💕
+# 🌸 KawaiiCraft V4.0: Online Co-op Couple Edition 💕
 
-> **Bản Đại Tu Toàn Diện V4.0:** Mở rộng thế giới lên gấp **4 lần** (`300 x 300` blocks), tích hợp **2 Bản Đồ Thế Giới** chuyển đổi tức thì (Quần đảo Livik 4 Mùa & Lục địa Minecraft Cổ Điển), chuỗi **200 Nhiệm Vụ** mở khóa cuốn chiếu từng đợt 10 nhiệm vụ, cùng **Kho Quà & Phiếu Đặc Quyền Tình Yêu** ("Chúc mừng Uyên được 'bóp bóp'", Phiếu Hôn, Phiếu Ôm, Lời Chúc) dành tặng **Bé Uyên**.  
+> **Bản Đại Tu Toàn Diện V4.0 (Online Co-op Couple Edition):** Hỗ trợ **Chơi Chung 2 Người Thời Gian Thực (WebRTC PeerJS P2P)** không độ trễ, **Avatar Chibi 3D Huân & Bé Uyên**, **Hiệu ứng Cộng Hưởng Tình Yêu**, **Biển Gỗ Lưu Bút 3D**, **Selfie Đôi Polaroid**, cùng 2 Bản Đồ Thế Giới (`300 x 300` blocks), chuỗi **200 Nhiệm Vụ** và **Kho Quà & Phiếu Đặc Quyền Tình Yêu** ("Chúc mừng Uyên được 'bóp bóp'") dành tặng **Bé Uyên**.  
 >  
 > 👑 **Nhà sáng tạo:** Phạm Ngọc Huân ✨  
 > 💖 **Dành tặng:** Bé Uyên
 
 ---
 
-## 🌟 TÍNH NĂNG NỔI BẬT BẢN V4.0
+## 🌟 TÍNH NĂNG NỔI BẬT BẢN V4.0 (ONLINE CO-OP COUPLE EDITION)
+
+### 0. 💑 Chế Độ Chơi Chung 2 Người Thời Gian Thực (WebRTC P2P) & Tương Tác Cặp Đôi
+- **Phòng Chơi Đôi Siêu Dễ Dùng (`💑 Chơi Chung (Co-op)`):**
+  - Chọn vai trò nhân vật **`👧💖 Bé Uyên`** hoặc **`👦💙 Anh Huân`**.
+  - **Tạo Phòng (Host):** Tự đặt mã phòng (ví dụ: `HUAN-UYEN`), sao chép mã hoặc **Sao Chép Link Mời Trực Tiếp** (`?room=HUAN-UYEN`) để người yêu bấm vào là tự động kết nối ngay!
+  - **Đồng Bộ Thời Gian Thực 100%:** Đặt/đập khối, dựng nhà mẫu, đổi thời tiết, bật hộp nhạc, bắn pháo hoa, khắc biển gỗ 3D, chat bong bóng và biểu cảm đều đồng bộ tức thì kèm hiển thị Ping (`🟢 Đang kết nối cùng người ấy`).
+- **Avatar 3D Chibi Đáng Yêu & Cộng Hưởng Tình Yêu:**
+  - Hiển thị mô hình Voxel Chibi 3D của người ấy với bảng tên nổi trên đầu, chuyển động chân tay mượt mà 60 FPS (khi chơi 1 mình, Avatar người yêu sẽ tự động đi dạo bên cạnh và trò chuyện cùng bạn!).
+  - **Cộng Hưởng Tình Yêu (`< 4 blocks`):** Khi Huân và Uyên đứng gần nhau, vòng hào quang trái tim dưới chân sẽ phát sáng và tự động cộng thêm điểm **`+💖`** định kỳ.
+  - **Dịch Chuyển Tức Thời (`📍 Bay Tới Người Ấy`):** Bay ngay về sát cạnh người yêu kèm la bàn chỉ hướng và vị trí trên Minimap.
+  - **Hành Động Cặp Đôi (`Phím T, V, K`) & Chat Bong Bóng (`Enter`):** Thả mưa tim (`T`), nhảy múa vui nhộn (`V`), tặng hoa hồng đỏ 3D (`K`), và chat hiện bong bóng thoại ngay trên đầu nhân vật.
+  - **Biển Gỗ Lưu Bút 3D (`Phím 8` - `🪧 Biển Gỗ Lời Nhắn`):** Đặt biển gỗ ở bất kỳ đâu và viết lời nhắn kỷ niệm hiển thị nổi 3D trong thế giới.
+  - **Chụp Ảnh Selfie Đôi (`🤳 Selfie Đôi` / `Phím P`):** Tự động chuyển góc máy 3rd-person chụp cả 2 nhân vật Huân & Uyên đứng cạnh nhau trong khung ảnh Polaroid kỷ niệm.
 
 ### 1. 🗺️ Hai Bản Đồ Thế Giới Rộng Lớn (Diện Tích Gấp 4 Lần — `300 x 300` Blocks)
 Người chơi có thể chuyển đổi mượt mà giữa 2 thế giới ngay trên thanh công cụ hoặc trong Bản Đồ (`Phím M`):

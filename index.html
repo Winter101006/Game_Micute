@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>KawaiiCraft V3.0 - Quần Đảo Livik 4 Mùa Dành Tặng Bé Uyên</title>
+    <title>KawaiiCraft V4.0 — Online Co-op Couple Edition Dành Tặng Bé Uyên</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js r128 CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- PeerJS 1.5.4 WebRTC P2P CDN -->
+    <script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
     <!-- Google Fonts: Nunito & Quicksand -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,6 +164,19 @@
 
         <!-- Primary Action Controls + Collapsible Secondary Drawer -->
         <div class="pointer-events-auto flex items-center flex-wrap gap-1">
+            <!-- Co-op Online Multiplayer Prominent Button -->
+            <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người Thời Gian Thực (Co-op Online)" class="px-3 py-1.5 rounded-2xl flex items-center gap-1.5 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 text-white font-extrabold text-xs shadow-md hover:opacity-95 active:scale-95 transition border-2 border-white">
+                <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+                <span>💑 Chơi Chung (Co-op)</span>
+                <span id="coop-ping-tag" class="hidden text-[10px] bg-white/25 px-1.5 rounded-full">Online</span>
+            </button>
+
+            <!-- Quick Teleport to Partner Button (shown when connected or anytime) -->
+            <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-rose-600 font-extrabold text-xs hover:bg-white active:scale-95 transition border-pink-300">
+                <span>📍</span>
+                <span class="hidden xl:inline">Bay Tới Người Ấy</span>
+            </button>
+
             <!-- Primary Always-Visible Buttons -->
             <button id="btn-map" title="Bản đồ Thế giới & Dịch chuyển nhanh (Phím M)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-purple-600 font-bold text-xs hover:bg-white active:scale-95 transition">
                 <span>🗺️</span>
@@ -263,6 +278,52 @@
     <button id="btn-restore-hud" onclick="toggleCleanHUDMode()" class="fixed top-3 left-3 z-40 hidden cozy-glass px-3 py-1.5 rounded-2xl text-xs font-black text-pink-600 shadow-md hover:bg-white transition">
         👁️ Hiện Giao Diện (Tab)
     </button>
+
+    <!-- COUPLE COMPASS / RED THREAD OF FATE INDICATOR (When Partner is Far) -->
+    <div id="partner-compass-indicator" onclick="teleportToPartner()" title="Bấm để bay ngay tới bên người ấy!" class="fixed top-20 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-auto cursor-pointer cozy-glass px-3.5 py-1 rounded-full border-2 border-rose-300 shadow-md flex items-center gap-1.5 text-xs font-extrabold text-rose-600 hover:bg-white transition">
+        <span id="compass-arrow" class="text-sm">💘</span>
+        <span id="compass-partner-name">💙 Anh Huân</span>
+        <span id="compass-dist-text" class="text-[11px] bg-rose-100 text-rose-700 px-1.5 py-0.2 rounded-full">12m</span>
+        <span class="text-[10px] underline ml-1">Bay tới ↗</span>
+    </div>
+
+    <!-- TOGETHER RESONANCE BADGE (When Standing Within 4 Blocks of Each Other) -->
+    <div id="together-resonance-badge" class="fixed top-28 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-none cozy-glass px-4 py-1.5 rounded-full border-2 border-pink-400 bg-pink-50/90 shadow-lg flex items-center gap-2 text-xs font-black text-rose-600 float-anim">
+        <span class="pulse-heart text-base">💑</span>
+        <span>Đang Ở Cạnh Bên Nhau • Cộng hưởng tình yêu +💖</span>
+    </div>
+
+    <!-- COUPLE QUICK EMOTES & SPEECH BUBBLE CHAT WIDGET (BOTTOM LEFT) -->
+    <div id="couple-chat-panel" class="fixed bottom-24 left-3 z-30 flex flex-col gap-1.5 max-w-[270px] sm:max-w-[310px] pointer-events-none">
+        <!-- Recent Chat Messages Log -->
+        <div id="chat-messages-log" class="flex flex-col gap-1 max-h-28 overflow-y-auto custom-scroll pr-1 pointer-events-auto">
+            <!-- Messages appear here -->
+        </div>
+
+        <!-- Quick Couple Emote Buttons (T, V, K, Selfie) -->
+        <div class="flex items-center flex-wrap gap-1 pointer-events-auto">
+            <button onclick="triggerCoupleEmote('heart')" title="Thả mưa bong bóng trái tim (Phím T)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-rose-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                <span>💖</span> <span>Thả Tim (T)</span>
+            </button>
+            <button onclick="triggerCoupleEmote('dance')" title="Vẫy tay & nhảy múa vui vẻ (Phím V)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-purple-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                <span>💃</span> <span>Vẫy Tay (V)</span>
+            </button>
+            <button onclick="triggerCoupleEmote('flower')" title="Tặng hoa hồng & bắn pháo hoa nhỏ (Phím K)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-pink-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                <span>🌹</span> <span>Tặng Hoa (K)</span>
+            </button>
+            <button onclick="takeCoupleSelfiePhoto()" title="Chụp ảnh Selfie Đôi góc máy thứ 3 (Phím P)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-amber-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                <span>🤳</span> <span>Selfie Đôi</span>
+            </button>
+        </div>
+
+        <!-- Chat Input Bar (Press Enter to focus/send) -->
+        <div class="flex items-center gap-1 pointer-events-auto cozy-glass p-1 rounded-2xl border border-pink-300 shadow-sm">
+            <input id="chat-input-box" type="text" maxlength="80" placeholder="Nhắn lời yêu thương (Phím Enter)..." class="bg-transparent text-xs font-bold text-gray-700 placeholder-pink-400 px-2.5 py-1 flex-1 focus:outline-none">
+            <button onclick="sendCoupleChatMessage()" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-3 py-1 rounded-xl shadow-xs hover:opacity-95 active:scale-95 transition">
+                Gửi 💬
+            </button>
+        </div>
+    </div>
 
     <!-- BOTTOM HOTBAR: Block Selector (1-9) -->
     <div id="hud-bottom-bar" class="absolute bottom-3 left-0 right-0 flex flex-col items-center pointer-events-none z-30 px-2 transition-opacity duration-300">
@@ -797,22 +858,133 @@
         </div>
     </div>
 
-    <!-- 8. PHOTO SNAPSHOT PREVIEW MODAL -->
+    <!-- 8. PHOTO SNAPSHOT PREVIEW MODAL (WITH COUPLE SELFIE MODE) -->
     <div id="photo-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-lg w-full p-5 rounded-3xl shadow-2xl text-center relative">
-            <h3 class="text-base md:text-lg font-black text-pink-600 mb-1">📸 Bức Ảnh Kỷ Niệm Livik</h3>
+            <h3 class="text-base md:text-lg font-black text-pink-600 mb-1">📸 Bức Ảnh Kỷ Niệm Của Huân & Uyên</h3>
             <p class="text-xs text-gray-500 mb-3">Đã lồng khung viền Polaroid lưu lại khoảnh khắc ngọt ngào!</p>
             
-            <div class="bg-white p-2 rounded-2xl border-4 border-pink-200 shadow-inner mb-4 overflow-hidden">
+            <div class="bg-white p-2 rounded-2xl border-4 border-pink-200 shadow-inner mb-3 overflow-hidden">
                 <img id="photo-preview" src="" alt="Snapshot" class="w-full h-auto rounded-xl">
             </div>
 
-            <div class="flex items-center justify-center gap-3">
-                <a id="btn-download-photo" download="kawaiicraft-livik.png" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-2xl shadow transition cursor-pointer text-sm">
-                    💾 Tải Về Máy
+            <div class="flex flex-wrap items-center justify-center gap-2">
+                <button onclick="takeCoupleSelfiePhoto()" class="px-4 py-2.5 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-extrabold rounded-2xl shadow transition cursor-pointer text-xs">
+                    🤳 Chụp Góc Selfie Đôi (2 Nhân Vật)
+                </button>
+                <a id="btn-download-photo" download="kawaiicraft-couple-memory.png" class="px-5 py-2.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold rounded-2xl shadow transition cursor-pointer text-xs">
+                    💾 Tải Ảnh Về Máy
                 </a>
-                <button id="btn-close-photo" class="px-5 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition text-sm">
+                <button id="btn-close-photo" class="px-4 py-2.5 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-2xl transition text-xs">
                     Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8B. ONLINE CO-OP MULTIPLAYER ROOM MODAL (PeerJS WebRTC P2P) -->
+    <div id="coop-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="cozy-glass max-w-lg w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] overflow-y-auto custom-scroll border-2 border-pink-300">
+            <button onclick="toggleCoopModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
+                ✕
+            </button>
+            <div class="flex items-center gap-2.5 mb-2">
+                <span class="text-3xl pulse-heart">💑</span>
+                <div>
+                    <h2 class="text-lg md:text-xl font-extrabold text-rose-600">Phòng Chơi Đôi Online (Co-op Couple)</h2>
+                    <p class="text-xs text-gray-500 font-semibold">Kết nối trực tiếp 2 trình duyệt thời gian thực cho Anh Huân & Bé Uyên!</p>
+                </div>
+            </div>
+
+            <!-- Connection Status Banner -->
+            <div id="coop-status-banner" class="p-3 rounded-2xl bg-pink-50 border-2 border-pink-200 flex items-center justify-between gap-2 my-2.5 text-xs">
+                <div class="flex items-center gap-2">
+                    <span id="coop-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+                    <span id="coop-status-text" class="font-extrabold text-pink-700">Chế độ: Đang ở thế giới cùng Avatar đồng hành 💕</span>
+                </div>
+                <span id="coop-modal-ping" class="font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full text-[10px]">60 FPS</span>
+            </div>
+
+            <!-- Step 1: Select Character Role -->
+            <div class="my-3">
+                <label class="block text-xs font-extrabold text-gray-700 mb-1.5">1. Chọn nhân vật của bạn:</label>
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button id="role-btn-uyen" onclick="selectCoupleRole('uyen')" class="p-3 rounded-2xl border-2 border-pink-500 bg-pink-100/90 text-pink-800 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95">
+                        <span class="text-2xl">👧💖</span>
+                        <span>Mình là Bé Uyên</span>
+                        <span class="text-[10px] font-semibold text-pink-600">Váy hồng pastel & Vương miện nơ</span>
+                    </button>
+                    <button id="role-btn-huan" onclick="selectCoupleRole('huan')" class="p-3 rounded-2xl border-2 border-sky-200 bg-white/80 text-sky-800 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95">
+                        <span class="text-2xl">👦💙</span>
+                        <span>Mình là Anh Huân</span>
+                        <span class="text-[10px] font-semibold text-sky-600">Áo hoodie xanh skyblue & Balo</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Create Room (Host) -->
+            <div class="bg-gradient-to-br from-rose-50 to-pink-50 p-3.5 rounded-2xl border-2 border-pink-200 my-3 space-y-2">
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-extrabold text-rose-700">🏠 Cách 1: Tạo Phòng Chơi Chung (Chủ Phòng)</span>
+                    <span class="text-[10px] bg-rose-200 text-rose-800 font-bold px-2 py-0.5 rounded-full">Khuyên dùng</span>
+                </div>
+                <div class="flex items-center gap-1.5">
+                    <input id="coop-host-room-input" type="text" value="HUAN-UYEN" placeholder="Mã phòng (VD: HUAN-UYEN)" class="flex-1 bg-white border-2 border-pink-300 rounded-xl px-3 py-1.5 text-xs font-black text-pink-700 uppercase focus:outline-none">
+                    <button onclick="startCoopHostRoom()" class="px-3.5 py-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white font-extrabold text-xs rounded-xl shadow hover:opacity-95 active:scale-95 transition whitespace-nowrap">
+                        ✨ Mở Phòng Ngay
+                    </button>
+                </div>
+                <div class="flex items-center gap-2 pt-1">
+                    <button onclick="copyCoopRoomCode()" class="flex-1 py-1.5 bg-white hover:bg-pink-100 border border-pink-300 text-pink-700 font-bold rounded-xl text-[11px] transition">
+                        📋 Sao Chép Mã Phòng
+                    </button>
+                    <button onclick="copyCoopInviteLink()" class="flex-1 py-1.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl text-[11px] shadow-xs hover:opacity-95 transition">
+                        🔗 Sao Chép Link Mời Trực Tiếp
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Join Room (Client) -->
+            <div class="bg-gradient-to-br from-sky-50 to-indigo-50 p-3.5 rounded-2xl border-2 border-sky-200 my-3 space-y-2">
+                <div class="text-xs font-extrabold text-sky-800">🚀 Cách 2: Vào Phòng Của Người Yêu</div>
+                <div class="flex items-center gap-1.5">
+                    <input id="coop-join-room-input" type="text" placeholder="Nhập mã phòng (VD: HUAN-UYEN)..." class="flex-1 bg-white border-2 border-sky-300 rounded-xl px-3 py-1.5 text-xs font-black text-sky-700 uppercase focus:outline-none">
+                    <button onclick="joinCoopRoom()" class="px-4 py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-extrabold text-xs rounded-xl shadow hover:opacity-95 active:scale-95 transition whitespace-nowrap">
+                        💞 Vào Phòng
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quick Couple Actions inside Modal -->
+            <div class="flex items-center justify-between gap-2 pt-2 border-t border-pink-200 text-xs">
+                <button onclick="teleportToPartner(); toggleCoopModal();" class="px-3.5 py-2 bg-rose-100 hover:bg-rose-200 text-rose-700 font-extrabold rounded-xl transition flex items-center gap-1">
+                    📍 Bay Tới Cạnh Người Ấy
+                </button>
+                <button onclick="toggleCoopModal()" class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8C. 3D LOVE SIGNBOARD MESSAGE INPUT MODAL -->
+    <div id="signboard-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+        <div class="cozy-glass max-w-md w-full p-5 rounded-3xl shadow-2xl text-gray-700 relative border-2 border-amber-300">
+            <button onclick="closeSignboardModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-black hover:bg-amber-200 transition flex items-center justify-center">
+                ✕
+            </button>
+            <div class="flex items-center gap-2 mb-2">
+                <span class="text-2xl">🪧</span>
+                <div>
+                    <h3 class="text-base md:text-lg font-extrabold text-amber-800">Biển Gỗ Lưu Bút Tình Yêu</h3>
+                    <p class="text-xs text-gray-500">Viết lời nhắn kỷ niệm lên biển hiệu 3D (Cả 2 người cùng đọc được!)</p>
+                </div>
+            </div>
+            <input id="signboard-text-input" type="text" maxlength="46" placeholder="VD: Tổ Ấm Của Huân & Bé Uyên 💕" class="w-full bg-white border-2 border-amber-300 rounded-2xl px-3.5 py-2.5 text-sm font-bold text-pink-700 my-2 focus:outline-none">
+            <div class="flex items-center justify-end gap-2 mt-2">
+                <button onclick="closeSignboardModal()" class="px-4 py-2 bg-gray-200 text-gray-700 font-bold rounded-xl text-xs">Hủy</button>
+                <button onclick="saveSignboardText()" class="px-5 py-2 bg-gradient-to-r from-amber-500 to-pink-500 text-white font-extrabold rounded-xl shadow text-xs">
+                    💖 Khắc Lên Biển 3D
                 </button>
             </div>
         </div>
@@ -925,10 +1097,11 @@
             { id: 33, name: "Lúa Mì Vàng Óng", emoji: "🌾", category: "nature", color: "#fed330", sideColor: "#e1b12c", sound: "leaf", pattern: "wheat" },
             { id: 34, name: "Đá Cuội Suối Nước", emoji: "🪨", category: "nature", color: "#bdc3c7", sideColor: "#95a5a6", sound: "stone", pattern: "pebble" },
             { id: 35, name: "Pha Lê Băng Xanh", emoji: "💎", category: "deco", color: "#00d2d3", sideColor: "#01a3a4", sound: "chime", emissive: "#00d2d3", pattern: "crystal" },
-            { id: 36, name: "Vải Bạt Dù Che", emoji: "⛱️", category: "deco", color: "#ff9ff3", sideColor: "#feca57", sound: "soft", pattern: "umbrella" }
+            { id: 36, name: "Vải Bạt Dù Che", emoji: "⛱️", category: "deco", color: "#ff9ff3", sideColor: "#feca57", sound: "soft", pattern: "umbrella" },
+            { id: 37, name: "Biển Gỗ Lời Nhắn", emoji: "🪧", category: "deco", color: "#f8c291", sideColor: "#e58e26", sound: "wood", pattern: "signboard" }
         ];
 
-        let hotbarBlockIds = [1, 2, 9, 10, 16, 17, 23, 24, 25];
+        let hotbarBlockIds = [1, 2, 9, 16, 17, 23, 24, 37, 26];
         let selectedHotbarIndex = 0;
         let isCreativeMode = true; // Creative mode default for sweetness
         let lovePoints = 120;
@@ -1011,6 +1184,10 @@
                 ctx.fillStyle = '#c77d48';
                 ctx.fillRect(0, 0, 32, 4); ctx.fillRect(0, 28, 32, 4); ctx.fillRect(0, 0, 4, 32); ctx.fillRect(28, 0, 4, 32);
                 ctx.fillStyle = '#ff793f'; ctx.beginPath(); ctx.arc(16, 16, 5, 0, Math.PI * 2); ctx.fill();
+            } else if (block.pattern === 'signboard') {
+                ctx.fillStyle = '#fff5ea'; ctx.fillRect(4, 6, 24, 16);
+                ctx.strokeStyle = '#b33939'; ctx.lineWidth = 2; ctx.strokeRect(4, 6, 24, 16);
+                ctx.fillStyle = '#ff4d6d'; ctx.fillRect(8, 11, 16, 2); ctx.fillRect(10, 15, 12, 2);
             } else {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
                 ctx.fillRect(6, 6, 4, 4); ctx.fillRect(20, 18, 4, 4);
@@ -1359,7 +1536,11 @@
             drawMinimap();
         }
 
-        function setBlock(x, y, z, blockId, autoSave = true, pushUndo = false) {
+        const worldDeltas = new Map(); // Tracks placed/broken blocks for fast Co-op Sync & Persistence
+        const loveSignboardsData = new Map(); // key "x,y,z" -> text string
+        const loveSignboardMeshes = new Map(); // key "x,y,z" -> THREE.Mesh
+
+        function setBlock(x, y, z, blockId, autoSave = true, pushUndo = false, isRemote = false) {
             const key = getVoxelKey(x, y, z);
             const prevId = worldData.get(key) || null;
             if (pushUndo) {
@@ -1367,12 +1548,22 @@
                 if (undoStack.length > 25) undoStack.shift();
             }
             worldData.set(key, blockId);
+            worldDeltas.set(key, blockId);
             updateVoxelAndNeighbors(x, y, z, prevId);
             if (autoSave) triggerAutoSave();
             checkQuestProgress('build');
+
+            if (!isRemote) {
+                sendCoopPacket({ type: 'block_set', x, y, z, blockId });
+                if (blockId === 37) {
+                    const defaultMsg = "Nhà Của Huân & Bé Uyên 💕";
+                    update3DSignboardMesh(x, y, z, defaultMsg);
+                    openSignboardModal(x, y, z, defaultMsg);
+                }
+            }
         }
 
-        function deleteBlock(x, y, z, autoSave = true, pushUndo = false) {
+        function deleteBlock(x, y, z, autoSave = true, pushUndo = false, isRemote = false) {
             const key = getVoxelKey(x, y, z);
             if (!worldData.has(key)) return;
             const prevId = worldData.get(key);
@@ -1381,8 +1572,14 @@
                 if (undoStack.length > 25) undoStack.shift();
             }
             worldData.delete(key);
+            worldDeltas.set(key, 0);
+            remove3DSignboardMesh(x, y, z);
             updateVoxelAndNeighbors(x, y, z, prevId);
             if (autoSave) triggerAutoSave();
+
+            if (!isRemote) {
+                sendCoopPacket({ type: 'block_del', x, y, z });
+            }
 
             // Check harvest quest (Pumpkin 28 or Wheat 33)
             if (prevId === 28 || prevId === 33) {
@@ -2214,16 +2411,16 @@
             ];
 
             const actionTemplates = [
-                (ch, step) => ({ action: 'build', max: 3 + ch * 2, text: `Đặt ${3 + ch * 2} khối xây dựng trang trí ${mapLabel}` }),
-                (ch, step) => ({ action: 'visit_hotspring', max: 1, text: isMc ? `Ghé thăm Đỉnh Núi Taiga Tuyết Trắng (Chương ${ch})` : `Ghé thăm Đỉnh Tuyết & Suối Nước Nóng (Chương ${ch})` }),
-                (ch, step) => ({ action: 'visit_windmill', max: 1, text: isMc ? `Dạo chơi Làng Dân Làng Bình Nguyên (Chương ${ch})` : `Check-in Cối Xay Gió Thung Lũng Hoa (Chương ${ch})` }),
-                (ch, step) => ({ action: 'harvest', max: 2 + ch, text: `Thu hoạch hoặc đập ${2 + ch} khối tài nguyên/nông sản` }),
-                (ch, step) => ({ action: 'visit_waterfall', max: 1, text: isMc ? `Ngắm cảnh Quảng Trường Giếng Làng Trung Tâm` : `Ngắm Thác Nước Pha Lê & Hồ Trái Tim` }),
-                (ch, step) => ({ action: 'visit_pier', max: 1, text: isMc ? `Thám hiểm Kim Tự Tháp Sa Mạc Cát Vàng` : `Ra Bến Cảng Vịnh Nắng Hạ thăm Vịt Vàng` }),
-                (ch, step) => ({ action: 'pet', max: 1, text: `Vuốt ve hoặc dắt thú cưng đi dạo (Chuột phải / Phím P)` }),
-                (ch, step) => ({ action: 'prefab', max: 1, text: `Dựng 1 Mẫu Nhà Nhanh bất kỳ (Phím G) tại ${mapLabel}` }),
-                (ch, step) => ({ action: 'visit_skyisland', max: 1, text: `Bay lên Đảo Bay Bầu Trời (Y=22) ngắm Đài Kỷ Niệm` }),
-                (ch, step) => ({ action: 'firework_or_photo', max: 1, text: `Chụp 1 bức ảnh kỷ niệm (📸) hoặc bắn Pháo Hoa (🎆)` })
+                (ch, step) => ({ action: 'build', max: 5 + ch * 2, text: `🏡 [Cặp Đôi] Cùng nhau đặt ${5 + ch * 2} khối xây dựng tổ ấm chung tại ${mapLabel}` }),
+                (ch, step) => ({ action: 'together_resonance', max: 1, text: `💑 [Cặp Đôi] Đứng cạnh bên nhau dưới tán cây Hoa Anh Đào hoặc bên Thác Nước` }),
+                (ch, step) => ({ action: 'visit_hotspring', max: 1, text: isMc ? `🌲 Ghé thăm Đỉnh Núi Taiga Tuyết Trắng (Chương ${ch})` : `🏔️ Ghé thăm Đỉnh Tuyết & Suối Nước Nóng (Chương ${ch})` }),
+                (ch, step) => ({ action: 'visit_windmill', max: 1, text: isMc ? `🏡 Dạo chơi Làng Dân Làng Bình Nguyên (Chương ${ch})` : `🌸 Check-in Cối Xay Gió Thung Lũng Hoa (Chương ${ch})` }),
+                (ch, step) => ({ action: 'harvest', max: 2 + ch, text: `🌾 Thu hoạch hoặc đập ${2 + ch} khối tài nguyên/nông sản` }),
+                (ch, step) => ({ action: 'signboard_or_emote', max: 1, text: `🪧 [Cặp Đôi] Đặt Biển Gỗ Lời Nhắn Tình Yêu hoặc Thả Tim (Phím T) cho người ấy` }),
+                (ch, step) => ({ action: 'pet', max: 1, text: `🐰 Vuốt ve hoặc dắt thú cưng đi dạo cùng hai đứa` }),
+                (ch, step) => ({ action: 'prefab', max: 1, text: `✨ Dựng 1 Mẫu Nhà Nhanh bất kỳ (Phím G) tại ${mapLabel}` }),
+                (ch, step) => ({ action: 'visit_skyisland', max: 1, text: `🏰 Bay lên Đảo Bay Bầu Trời (Y=22) ngắm Đài Kỷ Niệm Tình Yêu` }),
+                (ch, step) => ({ action: 'firework_or_photo', max: 1, text: `📸 [Cặp Đôi] Cùng chụp 1 bức ảnh Selfie Đôi (🤳) hoặc ngắm Pháo Hoa dưới Đêm Ngàn Sao` })
             ];
 
             for (let ch = 1; ch <= 10; ch++) {
@@ -2614,12 +2811,15 @@
             new LivikPet('penguin', new THREE.Vector3(52, 12, -52), 'Bé Cánh Cụt Tuyết', '🐧')
         ];
 
-        function buildPrefab(type) {
-            const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
-            const bx = Math.floor(player.position.x + forward.x * 6);
-            const bz = Math.floor(player.position.z + forward.z * 6);
-            let by = Math.floor(player.position.y - 1);
-            while (by > 2 && !hasVoxel(bx, by - 1, bz)) by--;
+        function buildPrefab(type, customBx = null, customBy = null, customBz = null, isRemote = false) {
+            let bx = customBx, by = customBy, bz = customBz;
+            if (bx === null) {
+                const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
+                bx = Math.floor(player.position.x + forward.x * 6);
+                bz = Math.floor(player.position.z + forward.z * 6);
+                by = Math.floor(player.position.y - 1);
+                while (by > 2 && !hasVoxel(bx, by - 1, bz)) by--;
+            }
 
             if (type === 'cottage_spring') {
                 for (let dx = -2; dx <= 2; dx++) {
@@ -2692,6 +2892,9 @@
             spawnSparkleBurst(bx + 0.5, by + 2, bz + 0.5, "#ff758f", 24);
             document.getElementById('prefab-modal').classList.add('hidden');
             checkQuestProgress('prefab', 1);
+            if (!isRemote) {
+                sendCoopPacket({ type: 'prefab', prefabType: type, bx, by, bz });
+            }
         }
 
         function teleportToPOI(poi) {
@@ -2793,22 +2996,32 @@
 
         function triggerPlaceBlock() {
             if (currentRayTarget) {
-                const targetBlockId = getVoxel(currentRayTarget.remove.x, currentRayTarget.remove.y, currentRayTarget.remove.z);
+                const rx = currentRayTarget.remove.x;
+                const ry = currentRayTarget.remove.y;
+                const rz = currentRayTarget.remove.z;
+                const targetBlockId = getVoxel(rx, ry, rz);
+                if (targetBlockId === 37) { // Love Signboard
+                    const existingMsg = loveSignboardsData.get(getVoxelKey(rx, ry, rz)) || "Nhà Của Huân & Bé Uyên 💕";
+                    openSignboardModal(rx, ry, rz, existingMsg);
+                    return;
+                }
                 if (targetBlockId === 25) { // Music Box
                     const theme = audio.cycleTheme();
                     showToast(`🎵 Hộp Nhạc: Đang phát "${theme}"!`);
+                    sendCoopPacket({ type: 'music_cycle' });
                     return;
                 }
                 if (targetBlockId === 26) { // Firework
                     audio.playFireworkSound();
-                    spawnSparkleBurst(currentRayTarget.remove.x + 0.5, currentRayTarget.remove.y + 6, currentRayTarget.remove.z + 0.5, "#ff758f", 30);
+                    spawnSparkleBurst(rx + 0.5, ry + 6, rz + 0.5, "#ff758f", 30);
                     showToast("🎆 Pháo hoa rực rỡ thắp sáng bầu trời!");
+                    sendCoopPacket({ type: 'firework_burst', x: rx, y: ry, z: rz });
                     checkQuestProgress('firework_or_photo', 1);
                     return;
                 }
                 if (targetBlockId === 27) { // Gift Chest
                     audio.playGiftChime();
-                    spawnSparkleBurst(currentRayTarget.remove.x + 0.5, currentRayTarget.remove.y + 2, currentRayTarget.remove.z + 0.5, "#ff4757", 24);
+                    spawnSparkleBurst(rx + 0.5, ry + 2, rz + 0.5, "#ff4757", 24);
                     showToast("🎁 Mở Hộp Quà Bí Mật: Nhận được Thư Tình & Quà Của Huân!");
                     checkQuestProgress('visit_skyisland', 1);
                     return;
@@ -2823,7 +3036,7 @@
             if (p.x === px && (p.y === py || p.y === py - 1) && p.z === pz) return;
 
             const activeBlockId = hotbarBlockIds[selectedHotbarIndex];
-            setBlock(p.x, p.y, p.z, activeBlockId, true, true);
+            setBlock(p.x, p.y, p.z, activeBlockId, true, true, false);
             audio.playPlaceSound(activeBlockId);
             spawnSparkleBurst(p.x + 0.5, p.y + 0.5, p.z + 0.5, "#ff758f", 8);
         }
@@ -3063,9 +3276,30 @@
 
         // Keyboard & Mouse Listeners
         window.addEventListener('keydown', (e) => {
+            const activeTag = document.activeElement ? document.activeElement.tagName : '';
+            if (activeTag === 'INPUT' || activeTag === 'TEXTAREA') {
+                if (e.code === 'Enter') {
+                    e.preventDefault();
+                    if (document.activeElement.id === 'chat-input-box') sendCoupleChatMessage();
+                    else if (document.activeElement.id === 'signboard-text-input') saveSignboardText();
+                } else if (e.code === 'Escape') {
+                    document.activeElement.blur();
+                }
+                return;
+            }
+
             keys[e.code] = true;
             audio.init();
 
+            if (e.code === 'Enter') {
+                e.preventDefault();
+                const chatInput = document.getElementById('chat-input-box');
+                if (chatInput) {
+                    document.exitPointerLock();
+                    chatInput.focus();
+                }
+                return;
+            }
             if (e.code === 'Tab') {
                 e.preventDefault();
                 toggleCleanHUDMode();
@@ -3078,13 +3312,19 @@
             if (e.code === 'KeyZ') performUndo();
             if (e.code === 'KeyF') toggleFlyMode();
 
+            // Couple Emotes & Interactions: T (Heart), V (Wave/Dance), K (Flower/Gift), P (Selfie or Pet)
+            if (e.code === 'KeyT') triggerCoupleEmote('heart');
+            if (e.code === 'KeyV') triggerCoupleEmote('dance');
+            if (e.code === 'KeyK') triggerCoupleEmote('flower');
+
             if (e.code === 'KeyP') {
-                let nearest = null; let minDist = 4.5;
+                let nearest = null; let minDist = 4.2;
                 pets.forEach(p => {
                     const d = p.group.position.distanceTo(player.position);
                     if (d < minDist) { minDist = d; nearest = p; }
                 });
                 if (nearest) nearest.interact();
+                else takeCoupleSelfiePhoto();
             }
 
             if (e.code === 'Space') {
@@ -3094,7 +3334,6 @@
             }
 
             if (e.code === 'KeyB' || e.code === 'KeyI') toggleInventoryModal();
-            if (e.code === 'KeyV') pickBlock();
             if (e.code === 'KeyG') togglePrefabModal();
             if (e.code === 'KeyM') toggleMapModal();
             if (e.code === 'KeyN') toggleQuestModal();
@@ -3300,6 +3539,16 @@
             mCtx.fillStyle = '#0984e3';
             mCtx.beginPath(); mCtx.arc(w/2, h/2, 8, 0, Math.PI * 2); mCtx.fill();
 
+            // Partner Avatar Marker on Minimap
+            if (typeof partnerTargetPos !== 'undefined' && partnerTargetPos) {
+                const pNormX = (partnerTargetPos.x / (WORLD_RADIUS * 2)) + 0.5;
+                const pNormZ = (partnerTargetPos.z / (WORLD_RADIUS * 2)) + 0.5;
+                const ppx = pNormX * w; const ppz = pNormZ * h;
+                mCtx.fillStyle = myCoupleRole === 'uyen' ? '#0984e3' : '#ff6b81';
+                mCtx.beginPath(); mCtx.arc(ppx, ppz, 4.5, 0, Math.PI * 2); mCtx.fill();
+                mCtx.strokeStyle = '#ffffff'; mCtx.lineWidth = 1.5; mCtx.stroke();
+            }
+
             // Player Marker
             const normX = (player.position.x / (WORLD_RADIUS * 2)) + 0.5;
             const normZ = (player.position.z / (WORLD_RADIUS * 2)) + 0.5;
@@ -3331,7 +3580,7 @@
         ];
         let curWeatherIdx = 0;
 
-        function setWeather(idx) {
+        function setWeather(idx, isRemote = false) {
             curWeatherIdx = idx % WEATHERS.length;
             const w = WEATHERS[curWeatherIdx];
             scene.background = new THREE.Color(w.bg);
@@ -3342,6 +3591,9 @@
             sunLight.intensity = w.sunInt;
             document.getElementById('time-icon').innerText = w.icon;
             document.getElementById('time-label').innerText = w.name;
+            if (!isRemote && typeof sendCoopPacket === 'function') {
+                sendCoopPacket({ type: 'weather', idx: curWeatherIdx });
+            }
         }
 
         // Rainbow Mesh
@@ -3504,6 +3756,10 @@
                 const pos = parseKey(key);
                 blocksList.push([pos.x, pos.y, pos.z, id]);
             }
+            const signboardsArr = [];
+            for (const [key, text] of loveSignboardsData.entries()) {
+                signboardsArr.push([key, text]);
+            }
             const payload = {
                 version: "4.0",
                 slot: currentSlot,
@@ -3514,7 +3770,8 @@
                 blocks: blocksList,
                 lovePoints: lovePoints,
                 unlockedChapterByMap: unlockedChapterByMap,
-                rewardCoupons: rewardCoupons
+                rewardCoupons: rewardCoupons,
+                signboards: signboardsArr
             };
             try {
                 localStorage.setItem(SLOT_KEYS[currentSlot], JSON.stringify(payload));
@@ -3545,6 +3802,15 @@
                         }
                         if (Array.isArray(parsed.rewardCoupons) && parsed.rewardCoupons.length > 0) {
                             rewardCoupons = parsed.rewardCoupons;
+                        }
+                        if (Array.isArray(parsed.signboards)) {
+                            loveSignboardsData.clear();
+                            for (const [k, m] of loveSignboardMeshes.entries()) scene.remove(m);
+                            loveSignboardMeshes.clear();
+                            parsed.signboards.forEach(([k, txt]) => {
+                                const p = parseKey(k);
+                                update3DSignboardMesh(p.x, p.y, p.z, txt);
+                            });
                         }
                         updateLovePointsUI();
                         updateCouponCountersUI();
@@ -3583,19 +3849,25 @@
                 const pos = parseKey(key);
                 blocksList.push([pos.x, pos.y, pos.z, id]);
             }
+            const signboardsArr = [];
+            for (const [key, text] of loveSignboardsData.entries()) {
+                signboardsArr.push([key, text]);
+            }
             const data = {
-                game: "KawaiiCraft V3 Livik",
+                game: "KawaiiCraft V4.0 Couple Edition",
                 author: "Phạm Ngọc Huân & Bé Uyên",
                 slot: currentSlot,
+                mapMode: currentWorldMapMode,
                 exportedAt: new Date().toISOString(),
                 blocks: blocksList,
-                lovePoints: lovePoints
+                lovePoints: lovePoints,
+                signboards: signboardsArr
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `kawaiicraft-livik-slot${currentSlot}-${Date.now()}.kawaii`;
+            a.download = `kawaiicraft-couple-slot${currentSlot}-${Date.now()}.kawaii`;
             a.click();
             URL.revokeObjectURL(url);
             showToast("Đã tải file Thế giới (.kawaii) về máy! 💌");
@@ -3611,6 +3883,12 @@
                     if (parsed && Array.isArray(parsed.blocks)) {
                         worldData.clear();
                         parsed.blocks.forEach(item => worldData.set(getVoxelKey(item[0], item[1], item[2]), item[3]));
+                        if (Array.isArray(parsed.signboards)) {
+                            parsed.signboards.forEach(([k, txt]) => {
+                                const p = parseKey(k);
+                                update3DSignboardMesh(p.x, p.y, p.z, txt);
+                            });
+                        }
                         syncInstancedMeshes();
                         saveWorldToCurrentSlot(true);
                         showToast(`Đã nạp file thế giới thành công! 🎉`);
@@ -3620,6 +3898,851 @@
             };
             reader.readAsText(file);
         });
+
+        /* ==========================================================================
+           11B. REAL-TIME CO-OP MULTIPLAYER (PEERJS WEBRTC P2P), 3D COUPLE AVATARS,
+                SPEECH BUBBLE CHAT, 3D LOVE SIGNBOARDS & SELFIE PHOTO BOOTH
+           ========================================================================== */
+        let myCoupleRole = 'uyen'; // 'uyen' or 'huan'
+        let peerInstance = null;
+        let activeCoopConn = null;
+        let currentRoomCode = 'HUAN-UYEN';
+        let isCoopConnected = false;
+        let coopPingMs = 18;
+        let lastPingSentAt = 0;
+        let lastPosBroadcastAt = 0;
+        let lastResonanceTickAt = 0;
+
+        // 3D Chibi Couple Avatar Groups (Self & Partner)
+        let myAvatarGroup = null;
+        let partnerAvatarGroup = null;
+        let resonanceRingMesh = null;
+
+        const partnerTargetPos = new THREE.Vector3(2.8, 4, 4.5);
+        let partnerTargetYaw = 0;
+        let partnerTargetPitch = 0;
+        let partnerIsMoving = false;
+        let partnerIsFlying = false;
+        let partnerActiveEmote = null;
+        let partnerEmoteUntil = 0;
+        let myActiveEmote = null;
+        let myEmoteUntil = 0;
+
+        function createFloatingLabelTexture(text, bgColor = 'rgba(255, 240, 246, 0.95)', borderColor = '#ff4d6d', textColor = '#d63031') {
+            const c = document.createElement('canvas');
+            c.width = 512; c.height = 128;
+            const ctx = c.getContext('2d');
+            ctx.fillStyle = bgColor;
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(8, 16, 496, 96, 36) : ctx.fillRect(8, 16, 496, 96);
+            ctx.fill();
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = borderColor;
+            ctx.stroke();
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 38px Quicksand, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, 256, 64);
+            return new THREE.CanvasTexture(c);
+        }
+
+        function buildChibiCoupleAvatar(role) {
+            const root = new THREE.Group();
+            const isUyen = role === 'uyen';
+
+            const skinMat = new THREE.MeshStandardMaterial({ color: 0xffe0bd, roughness: 0.5 });
+            const hairMat = new THREE.MeshStandardMaterial({ color: isUyen ? 0x3d2314 : 0x2c3e50, roughness: 0.6 });
+            const outfitMat = new THREE.MeshStandardMaterial({ color: isUyen ? 0xff8da1 : 0x74b9ff, roughness: 0.45 });
+            const pantsMat = new THREE.MeshStandardMaterial({ color: isUyen ? 0xffffff : 0x34495e, roughness: 0.5 });
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x1e272e });
+            const blushMat = new THREE.MeshBasicMaterial({ color: 0xff6b81 });
+
+            // Head Group (rotates with pitch/yaw)
+            const headGroup = new THREE.Group();
+            headGroup.position.set(0, 1.32, 0);
+            const headBox = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.56, 0.56), skinMat);
+            headGroup.add(headBox);
+
+            // Hair cap
+            const hairTop = new THREE.Mesh(new THREE.BoxGeometry(0.60, 0.22, 0.60), hairMat);
+            hairTop.position.set(0, 0.22, 0);
+            headGroup.add(hairTop);
+            const hairBack = new THREE.Mesh(new THREE.BoxGeometry(0.58, isUyen ? 0.62 : 0.34, 0.16), hairMat);
+            hairBack.position.set(0, isUyen ? -0.04 : 0.08, 0.24);
+            headGroup.add(hairBack);
+
+            // Eyes & Pink Blush
+            const eyeL = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.10, 0.04), eyeMat);
+            eyeL.position.set(-0.13, -0.02, -0.28);
+            const eyeR = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.10, 0.04), eyeMat);
+            eyeR.position.set(0.13, -0.02, -0.28);
+            const blushL = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.05, 0.04), blushMat);
+            blushL.position.set(-0.19, -0.10, -0.28);
+            const blushR = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.05, 0.04), blushMat);
+            blushR.position.set(0.19, -0.10, -0.28);
+            headGroup.add(eyeL, eyeR, blushL, blushR);
+
+            if (isUyen) {
+                // Cute Pink Ribbon & Crown on Uyên's head
+                const bowMat = new THREE.MeshStandardMaterial({ color: 0xff4d6d });
+                const bowCenter = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.12, 0.12), new THREE.MeshStandardMaterial({ color: 0xffd32a }));
+                bowCenter.position.set(0, 0.36, -0.14);
+                const bowL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.14, 0.10), bowMat);
+                bowL.position.set(-0.14, 0.37, -0.14);
+                const bowR = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.14, 0.10), bowMat);
+                bowR.position.set(0.14, 0.37, -0.14);
+                headGroup.add(bowCenter, bowL, bowR);
+            }
+            root.add(headGroup);
+
+            // Body / Torso
+            const bodyMesh = new THREE.Mesh(new THREE.BoxGeometry(0.50, 0.58, 0.30), outfitMat);
+            bodyMesh.position.set(0, 0.76, 0);
+            root.add(bodyMesh);
+
+            if (isUyen) {
+                // Pastel Pink Skirt for Bé Uyên
+                const skirtMesh = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.24, 0.38), new THREE.MeshStandardMaterial({ color: 0xffb8c6 }));
+                skirtMesh.position.set(0, 0.46, 0);
+                root.add(skirtMesh);
+            } else {
+                // Cute Backpack for Huân
+                const packMesh = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.42, 0.18), new THREE.MeshStandardMaterial({ color: 0xf39c12 }));
+                packMesh.position.set(0, 0.78, 0.22);
+                root.add(packMesh);
+            }
+
+            // Arms & Legs
+            const armL = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.52, 0.18), outfitMat);
+            armL.position.set(-0.36, 0.76, 0);
+            const armR = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.52, 0.18), outfitMat);
+            armR.position.set(0.36, 0.76, 0);
+
+            const legL = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.46, 0.20), pantsMat);
+            legL.position.set(-0.14, 0.23, 0);
+            const legR = new THREE.Mesh(new THREE.BoxGeometry(0.20, 0.46, 0.20), pantsMat);
+            legR.position.set(0.14, 0.23, 0);
+            root.add(armL, armR, legL, legR);
+
+            // Rose Flower Prop in Right Hand (visible during 'flower' emote)
+            const roseMesh = new THREE.Mesh(new THREE.BoxGeometry(0.16, 0.28, 0.16), new THREE.MeshBasicMaterial({ color: 0xff2e63 }));
+            roseMesh.position.set(0.38, 0.92, -0.32);
+            roseMesh.visible = false;
+            root.add(roseMesh);
+
+            // Floating Name Tag Sprite
+            const nameText = isUyen ? "💖 Bé Uyên" : "💙 Anh Huân";
+            const nameTex = createFloatingLabelTexture(
+                nameText,
+                isUyen ? 'rgba(255, 240, 246, 0.95)' : 'rgba(235, 248, 255, 0.95)',
+                isUyen ? '#ff4d6d' : '#0984e3',
+                isUyen ? '#d63031' : '#0984e3'
+            );
+            const nameSprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: nameTex, transparent: true }));
+            nameSprite.scale.set(2.1, 0.52, 1);
+            nameSprite.position.set(0, 2.02, 0);
+            root.add(nameSprite);
+
+            // Floating Speech Bubble Sprite (above Name Tag)
+            const bubbleSprite = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true }));
+            bubbleSprite.scale.set(3.2, 0.78, 1);
+            bubbleSprite.position.set(0, 2.68, 0);
+            bubbleSprite.visible = false;
+            root.add(bubbleSprite);
+
+            root.userData = { headGroup, armL, armR, legL, legR, roseMesh, nameSprite, bubbleSprite, role };
+            return root;
+        }
+
+        function initCoupleAvatarsAndResonance() {
+            if (myAvatarGroup) scene.remove(myAvatarGroup);
+            if (partnerAvatarGroup) scene.remove(partnerAvatarGroup);
+            if (resonanceRingMesh) scene.remove(resonanceRingMesh);
+
+            const partnerRole = myCoupleRole === 'uyen' ? 'huan' : 'uyen';
+            myAvatarGroup = buildChibiCoupleAvatar(myCoupleRole);
+            myAvatarGroup.visible = false; // Only visible during Couple Selfie Mode!
+            scene.add(myAvatarGroup);
+
+            partnerAvatarGroup = buildChibiCoupleAvatar(partnerRole);
+            partnerAvatarGroup.position.copy(partnerTargetPos);
+            scene.add(partnerAvatarGroup);
+
+            // Glowing Together Resonance Ring on the ground
+            const ringGeo = new THREE.RingGeometry(0.9, 1.25, 32);
+            const ringMat = new THREE.MeshBasicMaterial({ color: 0xff4d6d, side: THREE.DoubleSide, transparent: true, opacity: 0.75 });
+            resonanceRingMesh = new THREE.Mesh(ringGeo, ringMat);
+            resonanceRingMesh.rotation.x = -Math.PI / 2;
+            resonanceRingMesh.visible = false;
+            scene.add(resonanceRingMesh);
+
+            // Initialize default romantic signboard near Heart Lake bridge
+            if (loveSignboardsData.size === 0) {
+                worldData.set(getVoxelKey(3, 5, 6), 37);
+                update3DSignboardMesh(3, 5, 6, "Tổ Ấm Của Huân & Bé Uyên 💕");
+            }
+        }
+
+        function selectCoupleRole(role) {
+            myCoupleRole = (role === 'huan') ? 'huan' : 'uyen';
+            const btnUyen = document.getElementById('role-btn-uyen');
+            const btnHuan = document.getElementById('role-btn-huan');
+            if (btnUyen && btnHuan) {
+                if (myCoupleRole === 'uyen') {
+                    btnUyen.className = "p-3 rounded-2xl border-2 border-pink-500 bg-pink-100/90 text-pink-800 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95";
+                    btnHuan.className = "p-3 rounded-2xl border-2 border-sky-200 bg-white/80 text-sky-800 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95";
+                } else {
+                    btnHuan.className = "p-3 rounded-2xl border-2 border-sky-500 bg-sky-100/90 text-sky-900 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95";
+                    btnUyen.className = "p-3 rounded-2xl border-2 border-pink-200 bg-white/80 text-pink-800 font-extrabold text-xs flex flex-col items-center gap-1 shadow-sm transition active:scale-95";
+                }
+            }
+            initCoupleAvatarsAndResonance();
+            syncInstancedMeshes();
+            sendCoopPacket({ type: 'role_change', role: myCoupleRole });
+            showToast(myCoupleRole === 'uyen' ? "Đã chọn nhân vật: 👧💖 Bé Uyên (Người đồng hành: 💙 Anh Huân)" : "Đã chọn nhân vật: 👦💙 Anh Huân (Người đồng hành: 💖 Bé Uyên)");
+        }
+
+        function showAvatarSpeechBubble(avatarGroup, text) {
+            if (!avatarGroup || !avatarGroup.userData.bubbleSprite) return;
+            const sprite = avatarGroup.userData.bubbleSprite;
+            const clipped = text.length > 32 ? text.slice(0, 32) + '...' : text;
+            const tex = createFloatingLabelTexture(`💬 ${clipped}`, 'rgba(255, 255, 255, 0.98)', '#ff6b81', '#2d3436');
+            sprite.material.map = tex;
+            sprite.material.needsUpdate = true;
+            sprite.visible = true;
+            clearTimeout(sprite.hideTimer);
+            sprite.hideTimer = setTimeout(() => {
+                sprite.visible = false;
+            }, 6000);
+        }
+
+        function appendChatMessageUI(senderName, text, isSelf = true) {
+            const log = document.getElementById('chat-messages-log');
+            if (!log) return;
+            const item = document.createElement('div');
+            item.className = `cozy-glass px-3 py-1.5 rounded-2xl text-xs font-bold shadow-xs border ${isSelf ? 'border-pink-300 text-pink-800' : 'border-sky-300 text-sky-800'}`;
+            item.innerHTML = `<span class="font-black">${senderName}:</span> <span>${text}</span>`;
+            log.appendChild(item);
+            while (log.children.length > 6) log.removeChild(log.firstChild);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function sendCoupleChatMessage() {
+            const input = document.getElementById('chat-input-box');
+            if (!input) return;
+            const msg = input.value.trim();
+            if (!msg) {
+                input.blur();
+                return;
+            }
+            input.value = '';
+            input.blur();
+
+            const myName = myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân';
+            appendChatMessageUI(myName, msg, true);
+            audio.playGiftChime();
+            showAvatarSpeechBubble(myAvatarGroup, msg);
+            sendCoopPacket({ type: 'chat', sender: myName, text: msg });
+
+            // If playing solo before partner connects, AI companion replies sweetly!
+            if (!isCoopConnected && partnerAvatarGroup) {
+                setTimeout(() => {
+                    const partnerName = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
+                    const sweetReplies = [
+                        "Anh Huân luôn ở ngay cạnh Bé Uyên đây! Thương em nhất trên đời 💕",
+                        "Ngôi nhà tụi mình xây đẹp quá Uyên ơi! Lại đây anh ôm cái nào 🫂💖",
+                        "Yêu cục cưng của anh nhiều lắm! Chúc mừng Uyên được 'bóp bóp' nha 👐😝",
+                        "Đi đâu anh cũng đi theo bảo vệ công chúa Uyên hết! 🌸✨"
+                    ];
+                    const reply = sweetReplies[Math.floor(Math.random() * sweetReplies.length)];
+                    appendChatMessageUI(partnerName, reply, false);
+                    showAvatarSpeechBubble(partnerAvatarGroup, reply);
+                    audio.playCollectPop();
+                }, 900);
+            }
+        }
+
+        function triggerCoupleEmote(emoteType, isRemote = false) {
+            const now = performance.now();
+            const targetGroup = isRemote ? partnerAvatarGroup : myAvatarGroup;
+            const pos = isRemote ? partnerAvatarGroup.position : player.position;
+
+            if (isRemote) {
+                partnerActiveEmote = emoteType;
+                partnerEmoteUntil = now + 3200;
+            } else {
+                myActiveEmote = emoteType;
+                myEmoteUntil = now + 3200;
+                // Also make companion avatar react joyfully!
+                if (!isCoopConnected) {
+                    partnerActiveEmote = emoteType;
+                    partnerEmoteUntil = now + 3200;
+                }
+                sendCoopPacket({ type: 'emote', emoteType });
+                checkQuestProgress('signboard_or_emote', 1);
+            }
+
+            audio.playGiftChime();
+            if (emoteType === 'heart') {
+                spawnSparkleBurst(pos.x, pos.y + 1.5, pos.z, "#ff4d6d", 22);
+                if (partnerAvatarGroup) spawnSparkleBurst(partnerAvatarGroup.position.x, partnerAvatarGroup.position.y + 1.5, partnerAvatarGroup.position.z, "#ff758f", 18);
+                if (!isRemote) showToast("💖 Đã thả chùm bong bóng Trái Tim Yêu Thương!", "💖");
+            } else if (emoteType === 'dance') {
+                spawnSparkleBurst(pos.x, pos.y + 1.2, pos.z, "#a29bfe", 18);
+                if (!isRemote) showToast("💃 Đang vẫy tay & nhảy múa vui vẻ cùng người ấy!", "💃");
+            } else if (emoteType === 'flower') {
+                spawnSparkleBurst(pos.x, pos.y + 2.2, pos.z, "#ff2e63", 26);
+                if (!isRemote) showToast("🌹 Trao tặng Bông Hoa Hồng & Pháo Hoa Tình Yêu!", "🌹");
+            }
+        }
+
+        function teleportToPartner() {
+            if (!partnerAvatarGroup) return;
+            player.velocity.set(0, 0, 0);
+            player.position.set(
+                partnerAvatarGroup.position.x + 1.4,
+                partnerAvatarGroup.position.y + player.height,
+                partnerAvatarGroup.position.z + 1.4
+            );
+            spawnSparkleBurst(partnerAvatarGroup.position.x, partnerAvatarGroup.position.y + 1.2, partnerAvatarGroup.position.z, "#ff4d6d", 24);
+            audio.playGiftChime();
+            const partnerName = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
+            showToast(`📍 Đã bay tới đứng ngay cạnh ${partnerName}! 💑`);
+            checkQuestProgress('together_resonance', 1);
+        }
+
+        // 3D Love Signboards System
+        let editingSignboardCoord = null;
+
+        function openSignboardModal(x, y, z, defaultText = '') {
+            editingSignboardCoord = { x, y, z };
+            const modal = document.getElementById('signboard-modal');
+            const input = document.getElementById('signboard-text-input');
+            if (input) input.value = defaultText;
+            if (modal) {
+                modal.classList.remove('hidden');
+                document.exitPointerLock();
+                setTimeout(() => { if (input) input.focus(); }, 60);
+            }
+        }
+
+        function closeSignboardModal() {
+            const modal = document.getElementById('signboard-modal');
+            if (modal) modal.classList.add('hidden');
+            editingSignboardCoord = null;
+        }
+
+        function update3DSignboardMesh(x, y, z, text) {
+            const key = getVoxelKey(x, y, z);
+            loveSignboardsData.set(key, text);
+
+            if (loveSignboardMeshes.has(key)) {
+                scene.remove(loveSignboardMeshes.get(key));
+            }
+
+            const signCanvas = document.createElement('canvas');
+            signCanvas.width = 512; signCanvas.height = 160;
+            const sCtx = signCanvas.getContext('2d');
+            sCtx.fillStyle = '#fff5ea';
+            sCtx.fillRect(0, 0, 512, 160);
+            sCtx.strokeStyle = '#e58e26';
+            sCtx.lineWidth = 12;
+            sCtx.strokeRect(6, 6, 500, 148);
+            sCtx.fillStyle = '#d63031';
+            sCtx.font = 'bold 24px Quicksand, sans-serif';
+            sCtx.textAlign = 'center';
+            sCtx.fillText('🪧 LƯU BÚT TÌNH YÊU 💕', 256, 48);
+            sCtx.fillStyle = '#e84393';
+            sCtx.font = 'bold 28px Quicksand, sans-serif';
+            sCtx.fillText(text || 'Yêu Bé Uyên Nhiều Lắm!', 256, 105);
+
+            const tex = new THREE.CanvasTexture(signCanvas);
+            const mat = new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide });
+            const mesh = new THREE.Mesh(new THREE.PlaneGeometry(1.9, 0.62), mat);
+            mesh.position.set(x + 0.5, y + 1.35, z + 0.5);
+            scene.add(mesh);
+            loveSignboardMeshes.set(key, mesh);
+        }
+
+        function remove3DSignboardMesh(x, y, z) {
+            const key = getVoxelKey(x, y, z);
+            loveSignboardsData.delete(key);
+            if (loveSignboardMeshes.has(key)) {
+                scene.remove(loveSignboardMeshes.get(key));
+                loveSignboardMeshes.delete(key);
+            }
+        }
+
+        function saveSignboardText() {
+            if (!editingSignboardCoord) return;
+            const input = document.getElementById('signboard-text-input');
+            const text = (input && input.value.trim()) ? input.value.trim() : "Nhà Của Huân & Bé Uyên 💕";
+            const { x, y, z } = editingSignboardCoord;
+            update3DSignboardMesh(x, y, z, text);
+            sendCoopPacket({ type: 'signboard', x, y, z, text });
+            checkQuestProgress('signboard_or_emote', 1);
+            saveWorldToCurrentSlot(true);
+            closeSignboardModal();
+            audio.playGiftChime();
+            showToast(`🪧 Đã khắc lời nhắn: "${text}" lên biển 3D! 💖`);
+        }
+
+        // Couple Selfie Photo Booth Mode (Third-Person Camera showing BOTH avatars!)
+        function takeCoupleSelfiePhoto() {
+            if (!myAvatarGroup || !partnerAvatarGroup) return;
+
+            const savedCamPos = camera.position.clone();
+            const savedCamQuat = camera.quaternion.clone();
+            const savedPartnerPos = partnerAvatarGroup.position.clone();
+            const savedPartnerRot = partnerAvatarGroup.rotation.y;
+
+            const groundY = Math.floor(player.position.y - player.height);
+            const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
+            const right = new THREE.Vector3(1, 0, 0).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
+
+            // Place My Avatar & Partner Avatar side-by-side posing for the camera
+            myAvatarGroup.position.set(player.position.x - right.x * 0.62, groundY, player.position.z - right.z * 0.62);
+            myAvatarGroup.visible = true;
+
+            partnerAvatarGroup.position.set(player.position.x + right.x * 0.62, groundY, player.position.z + right.z * 0.62);
+
+            const camSelfiePos = new THREE.Vector3(
+                player.position.x + forward.x * 3.8,
+                groundY + 1.65,
+                player.position.z + forward.z * 3.8
+            );
+            camera.position.copy(camSelfiePos);
+            camera.lookAt(player.position.x, groundY + 1.15, player.position.z);
+
+            const lookAngle = Math.atan2(camSelfiePos.x - player.position.x, camSelfiePos.z - player.position.z) + Math.PI;
+            myAvatarGroup.rotation.y = lookAngle;
+            partnerAvatarGroup.rotation.y = lookAngle;
+
+            // Raise arms in heart/wave pose + show rose
+            if (myAvatarGroup.userData.armR) myAvatarGroup.userData.armR.rotation.x = -2.4;
+            if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = -2.4;
+            if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = true;
+
+            spawnSparkleBurst(player.position.x, groundY + 1.8, player.position.z, "#ff4d6d", 20);
+            targetWireframe.visible = false;
+            renderer.render(scene, camera);
+
+            const renderCanvas = renderer.domElement;
+            const snapCanvas = document.createElement('canvas');
+            const pad = 24; const bottomMargin = 104;
+            snapCanvas.width = renderCanvas.width + pad * 2;
+            snapCanvas.height = renderCanvas.height + pad + bottomMargin;
+            const sCtx = snapCanvas.getContext('2d');
+            sCtx.fillStyle = '#fff5f8';
+            sCtx.fillRect(0, 0, snapCanvas.width, snapCanvas.height);
+            sCtx.strokeStyle = '#ffb8c6'; sCtx.lineWidth = 6;
+            sCtx.strokeRect(8, 8, snapCanvas.width - 16, snapCanvas.height - 16);
+            sCtx.drawImage(renderCanvas, pad, pad);
+
+            sCtx.fillStyle = '#e84393';
+            sCtx.font = 'bold 26px Quicksand, sans-serif';
+            sCtx.fillText('🤳 Khoảnh Khắc Selfie Đôi: Phạm Ngọc Huân & Bé Uyên 💖', pad + 10, renderCanvas.height + pad + 42);
+            sCtx.fillStyle = '#636e72';
+            sCtx.font = 'bold 16px Quicksand, sans-serif';
+            sCtx.fillText(`Kỷ niệm tại ${currentPOIName || 'Quần Đảo Tình Yêu'} • Ngày ${new Date().toLocaleDateString('vi-VN')}`, pad + 10, renderCanvas.height + pad + 76);
+
+            const dataUrl = snapCanvas.toDataURL('image/png');
+            photoPreview.src = dataUrl;
+            downloadPhotoLink.href = dataUrl;
+            photoModal.classList.remove('hidden');
+
+            // Restore camera and avatar states
+            myAvatarGroup.visible = false;
+            if (myAvatarGroup.userData.armR) myAvatarGroup.userData.armR.rotation.x = 0;
+            if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = 0;
+            if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = false;
+            partnerAvatarGroup.position.copy(savedPartnerPos);
+            partnerAvatarGroup.rotation.y = savedPartnerRot;
+            camera.position.copy(savedCamPos);
+            camera.quaternion.copy(savedCamQuat);
+            targetWireframe.visible = true;
+
+            document.exitPointerLock();
+            audio.playGiftChime();
+            showToast("🤳 Đã chụp bức ảnh Selfie Đôi của Huân & Uyên tuyệt đẹp! 💖");
+            checkQuestProgress('photo', 1);
+        }
+
+        // PeerJS Real-time WebRTC Co-op Networking
+        function toggleCoopModal() {
+            const m = document.getElementById('coop-modal');
+            if (!m) return;
+            m.classList.toggle('hidden');
+            if (!m.classList.contains('hidden')) {
+                document.exitPointerLock();
+            }
+        }
+
+        function sanitizeRoomCode(raw) {
+            return (raw || 'HUAN-UYEN').trim().toUpperCase().replace(/[^A-Z0-9_-]/g, '');
+        }
+
+        function getPeerIdFromRoom(roomCode) {
+            return `kawaiicraft-v4-room-${sanitizeRoomCode(roomCode)}`;
+        }
+
+        function updateCoopStatusUI(text, connected = false) {
+            isCoopConnected = connected;
+            const statusText = document.getElementById('coop-status-text');
+            const statusDot = document.getElementById('coop-status-dot');
+            const topDot = document.getElementById('coop-btn-dot');
+            const pingTag = document.getElementById('coop-ping-tag');
+            const modalPing = document.getElementById('coop-modal-ping');
+
+            if (statusText) statusText.innerText = text;
+            if (statusDot) {
+                statusDot.className = connected
+                    ? "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"
+                    : "w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping";
+            }
+            if (topDot) {
+                topDot.className = connected
+                    ? "w-2.5 h-2.5 rounded-full bg-emerald-300 animate-ping"
+                    : "w-2 h-2 rounded-full bg-amber-300 animate-pulse";
+            }
+            if (pingTag) {
+                pingTag.classList.toggle('hidden', !connected);
+                if (connected) pingTag.innerText = `${coopPingMs}ms`;
+            }
+            if (modalPing && connected) {
+                modalPing.innerText = `Ping: ${coopPingMs} ms`;
+            }
+        }
+
+        function sendCoopPacket(payload) {
+            if (activeCoopConn && activeCoopConn.open) {
+                try {
+                    activeCoopConn.send(payload);
+                } catch (e) {
+                    console.warn("Co-op send error", e);
+                }
+            }
+        }
+
+        function setupCoopConnectionHandlers(conn, isHost) {
+            activeCoopConn = conn;
+
+            conn.on('open', () => {
+                updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Phòng: ${currentRoomCode})`, true);
+                audio.playGiftChime();
+                showToast(`💑 Đã kết nối Online thành công với người yêu! (Phòng: ${currentRoomCode})`, "💖");
+
+                if (isHost) {
+                    // Send Initial World Sync to Client
+                    const deltaArr = [];
+                    for (const [k, v] of worldDeltas.entries()) {
+                        const p = parseKey(k);
+                        deltaArr.push([p.x, p.y, p.z, v]);
+                    }
+                    const signArr = [];
+                    for (const [k, txt] of loveSignboardsData.entries()) {
+                        const p = parseKey(k);
+                        signArr.push([p.x, p.y, p.z, txt]);
+                    }
+                    sendCoopPacket({
+                        type: 'initial_sync',
+                        mapMode: currentWorldMapMode,
+                        weatherIdx: curWeatherIdx,
+                        hostRole: myCoupleRole,
+                        lovePoints: lovePoints,
+                        deltas: deltaArr,
+                        signboards: signArr
+                    });
+                } else {
+                    sendCoopPacket({ type: 'hello_client', role: myCoupleRole });
+                }
+            });
+
+            conn.on('data', (data) => {
+                if (!data || !data.type) return;
+
+                if (data.type === 'initial_sync') {
+                    if (data.mapMode && data.mapMode !== currentWorldMapMode) {
+                        switchWorldMapMode(data.mapMode);
+                    }
+                    if (typeof data.weatherIdx === 'number') setWeather(data.weatherIdx, true);
+                    if (data.hostRole) {
+                        selectCoupleRole(data.hostRole === 'huan' ? 'uyen' : 'huan');
+                    }
+                    if (Array.isArray(data.deltas)) {
+                        data.deltas.forEach(([x, y, z, bId]) => {
+                            if (bId === 0) {
+                                worldData.delete(getVoxelKey(x, y, z));
+                            } else {
+                                worldData.set(getVoxelKey(x, y, z), bId);
+                            }
+                        });
+                        syncInstancedMeshes();
+                    }
+                    if (Array.isArray(data.signboards)) {
+                        data.signboards.forEach(([x, y, z, txt]) => update3DSignboardMesh(x, y, z, txt));
+                    }
+                } else if (data.type === 'move') {
+                    partnerTargetPos.set(data.x, data.y - player.height, data.z);
+                    partnerTargetYaw = data.yaw || 0;
+                    partnerTargetPitch = data.pitch || 0;
+                    partnerIsMoving = !!data.moving;
+                    partnerIsFlying = !!data.flying;
+                } else if (data.type === 'block_set') {
+                    setBlock(data.x, data.y, data.z, data.blockId, true, false, true);
+                    audio.playPlaceSound(data.blockId);
+                    spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 8);
+                } else if (data.type === 'block_del') {
+                    deleteBlock(data.x, data.y, data.z, true, false, true);
+                    audio.playBreakSound();
+                    spawnSparkleBurst(data.x + 0.5, data.y + 0.5, data.z + 0.5, "#ff758f", 10);
+                } else if (data.type === 'prefab') {
+                    buildPrefab(data.prefabType, data.bx, data.by, data.bz, true);
+                } else if (data.type === 'weather') {
+                    setWeather(data.idx, true);
+                } else if (data.type === 'music_cycle') {
+                    const theme = audio.cycleTheme();
+                    showToast(`🎵 Người ấy vừa đổi nhạc sang "${theme}"!`);
+                } else if (data.type === 'firework_burst') {
+                    audio.playFireworkSound();
+                    spawnSparkleBurst(data.x + 0.5, data.y + 6, data.z + 0.5, "#ff758f", 30);
+                } else if (data.type === 'chat') {
+                    appendChatMessageUI(data.sender || 'Người ấy 💕', data.text, false);
+                    showAvatarSpeechBubble(partnerAvatarGroup, data.text);
+                    audio.playCollectPop();
+                } else if (data.type === 'emote') {
+                    triggerCoupleEmote(data.emoteType, true);
+                } else if (data.type === 'signboard') {
+                    update3DSignboardMesh(data.x, data.y, data.z, data.text);
+                    showToast(`🪧 Người ấy vừa viết lên biển: "${data.text}" 💖`);
+                } else if (data.type === 'ping') {
+                    sendCoopPacket({ type: 'pong', t: data.t });
+                } else if (data.type === 'pong') {
+                    coopPingMs = Math.max(4, Math.round(performance.now() - data.t));
+                    updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Ping: ${coopPingMs} ms)`, true);
+                }
+            });
+
+            conn.on('close', () => {
+                updateCoopStatusUI("🟡 Người ấy đã tạm rời phòng (Đang chờ kết nối lại...)", false);
+                showToast("Người ấy đã tạm ngắt kết nối phòng chơi chung 🌸");
+            });
+        }
+
+        function startCoopHostRoom(customCode = null) {
+            if (typeof Peer === 'undefined') {
+                showToast("Đang tải thư viện kết nối PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
+                return;
+            }
+            const inputEl = document.getElementById('coop-host-room-input');
+            currentRoomCode = sanitizeRoomCode(customCode || (inputEl ? inputEl.value : 'HUAN-UYEN'));
+            if (inputEl) inputEl.value = currentRoomCode;
+
+            if (peerInstance) peerInstance.destroy();
+            updateCoopStatusUI(`⏳ Đang mở phòng [${currentRoomCode}]...`, false);
+
+            peerInstance = new Peer(getPeerIdFromRoom(currentRoomCode));
+            peerInstance.on('open', () => {
+                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] — Đang chờ người ấy vào!`, false);
+                showToast(`✨ Đã tạo phòng [${currentRoomCode}]! Hãy bấm Sao Chép Link Mời gửi cho người yêu nhé!`, "💑");
+            });
+            peerInstance.on('connection', (conn) => {
+                setupCoopConnectionHandlers(conn, true);
+            });
+            peerInstance.on('error', (err) => {
+                if (err.type === 'unavailable-id') {
+                    // Room already exists -> automatically join it!
+                    showToast(`Phòng [${currentRoomCode}] đã được tạo sẵn, đang tự động kết nối vào phòng... 💕`);
+                    joinCoopRoom(currentRoomCode);
+                } else {
+                    updateCoopStatusUI(`⚠️ Lỗi mạng P2P: ${err.type}`, false);
+                }
+            });
+        }
+
+        function joinCoopRoom(customCode = null) {
+            if (typeof Peer === 'undefined') {
+                showToast("Đang tải thư viện kết nối PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
+                return;
+            }
+            const inputEl = document.getElementById('coop-join-room-input');
+            const code = sanitizeRoomCode(customCode || (inputEl ? inputEl.value : 'HUAN-UYEN'));
+            currentRoomCode = code;
+            if (inputEl) inputEl.value = code;
+
+            if (peerInstance) peerInstance.destroy();
+            updateCoopStatusUI(`⏳ Đang kết nối vào phòng [${code}]...`, false);
+
+            peerInstance = new Peer();
+            peerInstance.on('open', () => {
+                const conn = peerInstance.connect(getPeerIdFromRoom(code), { reliable: true });
+                setupCoopConnectionHandlers(conn, false);
+            });
+            peerInstance.on('error', (err) => {
+                updateCoopStatusUI(`⚠️ Chưa tìm thấy phòng [${code}] (${err.type})`, false);
+                showToast(`Chưa tìm thấy phòng [${code}]. Hãy bảo người ấy bấm "Mở Phòng Ngay" trước nhé! 💕`, "⚠️");
+            });
+        }
+
+        function copyCoopRoomCode() {
+            const inputEl = document.getElementById('coop-host-room-input');
+            const code = sanitizeRoomCode(inputEl ? inputEl.value : currentRoomCode);
+            if (navigator.clipboard) navigator.clipboard.writeText(code);
+            showToast(`📋 Đã sao chép mã phòng: ${code}`, "✨");
+        }
+
+        function copyCoopInviteLink() {
+            const inputEl = document.getElementById('coop-host-room-input');
+            const code = sanitizeRoomCode(inputEl ? inputEl.value : currentRoomCode);
+            const url = new URL(window.location.href);
+            url.searchParams.set('room', code);
+            if (navigator.clipboard) navigator.clipboard.writeText(url.toString());
+            showToast(`🔗 Đã sao chép Link Mời Trực Tiếp! Gửi link này cho người yêu bấm vào là chơi chung ngay 💕`, "💌");
+        }
+
+        function updateCoupleAvatarsAndMechanics(now) {
+            if (!partnerAvatarGroup) return;
+
+            // 1. Broadcast local player state at 25Hz (every 40ms) when connected
+            if (isCoopConnected && now - lastPosBroadcastAt > 40) {
+                lastPosBroadcastAt = now;
+                const isMoving = !!(keys['KeyW'] || keys['KeyS'] || keys['KeyA'] || keys['KeyD'] || keys['ArrowUp'] || keys['ArrowDown']);
+                sendCoopPacket({
+                    type: 'move',
+                    x: Number(player.position.x.toFixed(2)),
+                    y: Number(player.position.y.toFixed(2)),
+                    z: Number(player.position.z.toFixed(2)),
+                    yaw: Number(player.rotation.y.toFixed(3)),
+                    pitch: Number(player.rotation.x.toFixed(3)),
+                    moving: isMoving,
+                    flying: player.isFlying
+                });
+            }
+
+            // Ping measurement every 3 seconds
+            if (isCoopConnected && now - lastPingSentAt > 3000) {
+                lastPingSentAt = now;
+                sendCoopPacket({ type: 'ping', t: now });
+            }
+
+            // 2. If offline / waiting for partner, Companion Avatar gently accompanies player around the island
+            if (!isCoopConnected) {
+                const distToPlayer = partnerTargetPos.distanceTo(player.position);
+                if (distToPlayer > 28) {
+                    partnerTargetPos.set(player.position.x + 2.5, player.position.y - player.height, player.position.z + 2.5);
+                } else if (distToPlayer > 3.6) {
+                    const dir = new THREE.Vector3().subVectors(player.position, partnerTargetPos);
+                    dir.y = 0; dir.normalize();
+                    partnerTargetPos.addScaledVector(dir, 0.065);
+                    partnerTargetYaw = Math.atan2(dir.x, dir.z) + Math.PI;
+                    partnerIsMoving = true;
+                } else {
+                    partnerIsMoving = false;
+                    // Look warmly at player
+                    const dx = player.position.x - partnerAvatarGroup.position.x;
+                    const dz = player.position.z - partnerAvatarGroup.position.z;
+                    partnerTargetYaw = Math.atan2(dx, dz) + Math.PI;
+                }
+                const gx = Math.floor(partnerTargetPos.x);
+                const gz = Math.floor(partnerTargetPos.z);
+                let gy = Math.floor(partnerTargetPos.y + 2);
+                while (gy > 1 && !hasVoxel(gx, gy - 1, gz)) gy--;
+                partnerTargetPos.y = gy;
+            }
+
+            // 3. Smooth 60 FPS Lerp for Partner Avatar Position & Rotation
+            partnerAvatarGroup.position.lerp(partnerTargetPos, 0.22);
+            partnerAvatarGroup.rotation.y = THREE.MathUtils.lerp(partnerAvatarGroup.rotation.y, partnerTargetYaw, 0.2);
+
+            const ud = partnerAvatarGroup.userData;
+            if (ud && ud.headGroup) {
+                ud.headGroup.rotation.x = THREE.MathUtils.lerp(ud.headGroup.rotation.x, partnerTargetPitch * 0.6, 0.2);
+            }
+
+            // Limb Swing & Emote Animations
+            if (ud) {
+                if (now < partnerEmoteUntil && partnerActiveEmote) {
+                    if (partnerActiveEmote === 'dance') {
+                        partnerAvatarGroup.rotation.y += 0.14;
+                        partnerAvatarGroup.position.y += Math.abs(Math.sin(now * 0.015)) * 0.25;
+                        ud.armL.rotation.z = Math.sin(now * 0.02) * 0.8 + 0.8;
+                        ud.armR.rotation.z = -Math.sin(now * 0.02) * 0.8 - 0.8;
+                    } else if (partnerActiveEmote === 'heart') {
+                        ud.armL.rotation.x = -2.5;
+                        ud.armR.rotation.x = -2.5;
+                    } else if (partnerActiveEmote === 'flower') {
+                        ud.armR.rotation.x = -1.6;
+                        if (ud.roseMesh) ud.roseMesh.visible = true;
+                    }
+                } else {
+                    if (ud.roseMesh) ud.roseMesh.visible = false;
+                    ud.armL.rotation.z = 0; ud.armR.rotation.z = 0;
+                    if (partnerIsMoving) {
+                        const swing = Math.sin(now * 0.012) * 0.65;
+                        ud.armL.rotation.x = swing;
+                        ud.armR.rotation.x = -swing;
+                        ud.legL.rotation.x = -swing;
+                        ud.legR.rotation.x = swing;
+                    } else {
+                        ud.armL.rotation.x = Math.sin(now * 0.003) * 0.06;
+                        ud.armR.rotation.x = -Math.sin(now * 0.003) * 0.06;
+                        ud.legL.rotation.x = 0;
+                        ud.legR.rotation.x = 0;
+                    }
+                }
+            }
+
+            // 4. Together Resonance (< 4.2 blocks) & Compass Indicator (> 12 blocks)
+            const distBetweenCouple = Math.hypot(
+                player.position.x - partnerAvatarGroup.position.x,
+                player.position.z - partnerAvatarGroup.position.z
+            );
+
+            const resonanceBadge = document.getElementById('together-resonance-badge');
+            const compassEl = document.getElementById('partner-compass-indicator');
+
+            if (distBetweenCouple <= 4.2) {
+                if (resonanceBadge) resonanceBadge.classList.remove('hidden');
+                if (compassEl) compassEl.classList.add('hidden');
+                if (resonanceRingMesh) {
+                    resonanceRingMesh.visible = true;
+                    resonanceRingMesh.position.set(
+                        (player.position.x + partnerAvatarGroup.position.x) * 0.5,
+                        partnerAvatarGroup.position.y + 0.08,
+                        (player.position.z + partnerAvatarGroup.position.z) * 0.5
+                    );
+                    resonanceRingMesh.rotation.z += 0.025;
+                }
+                if (now - lastResonanceTickAt > 4500) {
+                    lastResonanceTickAt = now;
+                    lovePoints += 1;
+                    updateLovePointsUI();
+                    spawnSparkleBurst(partnerAvatarGroup.position.x, partnerAvatarGroup.position.y + 1.4, partnerAvatarGroup.position.z, "#ff758f", 4);
+                    checkQuestProgress('together_resonance', 1);
+                }
+            } else {
+                if (resonanceBadge) resonanceBadge.classList.add('hidden');
+                if (resonanceRingMesh) resonanceRingMesh.visible = false;
+
+                if (compassEl) {
+                    if (distBetweenCouple > 10) {
+                        compassEl.classList.remove('hidden');
+                        const nameEl = document.getElementById('compass-partner-name');
+                        const distEl = document.getElementById('compass-dist-text');
+                        if (nameEl) nameEl.innerText = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
+                        if (distEl) distEl.innerText = `${Math.round(distBetweenCouple)}m`;
+                    } else {
+                        compassEl.classList.add('hidden');
+                    }
+                }
+            }
+
+            // Slowly face 3D Love Signboards toward player for easy reading
+            for (const mesh of loveSignboardMeshes.values()) {
+                mesh.lookAt(player.position.x, mesh.position.y, player.position.z);
+            }
+        }
 
         /* ==========================================================================
            12. MAIN ANIMATION LOOP (LOCKED 60 FPS)
@@ -3648,6 +4771,9 @@
             // Animate Living Creatures (Koi Fish & Butterflies)
             updateLivingCreatures(now);
 
+            // Animate 3D Couple Avatars, WebRTC Sync, Resonance & 3D Signboards
+            updateCoupleAvatarsAndMechanics(now);
+
             updatePlayerMovement();
             updateRaycast();
             updateParticles();
@@ -3671,8 +4797,24 @@
             setWeather(0);
             renderHotbar();
             loadWorldFromCurrentSlot();
+            initCoupleAvatarsAndResonance();
             updateQuestUI();
             animate();
+
+            // Auto-detect ?room=CODE in URL to auto-join Co-op room
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const inviteRoom = params.get('room');
+                if (inviteRoom && inviteRoom.trim()) {
+                    const cleanCode = inviteRoom.trim().toUpperCase();
+                    const joinInput = document.getElementById('coop-join-room-input');
+                    if (joinInput) joinInput.value = cleanCode;
+                    selectCoupleRole('uyen');
+                    setTimeout(() => {
+                        joinCoopRoom();
+                    }, 900);
+                }
+            } catch (e) {}
         };
     </script>
 </body>
