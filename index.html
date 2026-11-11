@@ -899,10 +899,50 @@
             <!-- Connection Status Banner -->
             <div id="coop-status-banner" class="p-3 rounded-2xl bg-pink-50 border-2 border-pink-200 flex items-center justify-between gap-2 my-2.5 text-xs">
                 <div class="flex items-center gap-2">
-                    <span id="coop-status-dot" class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
-                    <span id="coop-status-text" class="font-extrabold text-pink-700">Chế độ: Đang ở thế giới cùng Avatar đồng hành 💕</span>
+                    <span id="coop-status-dot" class="w-2.5 h-2.5 rounded-full bg-gray-400"></span>
+                    <span id="coop-status-text" class="font-extrabold text-pink-700">Chế độ: Đang chơi 1 mình (Chưa kết nối Co-op)</span>
                 </div>
                 <span id="coop-modal-ping" class="font-black text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-full text-[10px]">60 FPS</span>
+            </div>
+
+            <!-- Client 15s Countdown Progress UI (Hidden by default) -->
+            <div id="coop-client-progress-box" class="hidden p-3.5 rounded-2xl bg-sky-50 border-2 border-sky-300 my-2.5 space-y-2">
+                <div class="flex items-center justify-between text-xs font-extrabold text-sky-800">
+                    <span id="coop-client-countdown-text">🔄 Đang tìm phòng trên máy chủ... (Còn 15s)</span>
+                    <span id="coop-client-countdown-sec" class="bg-sky-600 text-white px-2 py-0.5 rounded-full text-[11px] font-black">15s</span>
+                </div>
+                <div class="w-full h-2.5 bg-sky-100 rounded-full overflow-hidden border border-sky-200">
+                    <div id="coop-client-progress-bar" class="h-full bg-gradient-to-r from-sky-500 to-pink-500 transition-all duration-500" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <!-- Host 5-Minute Waiting Timer & Cancel Button (Hidden by default) -->
+            <div id="coop-host-waiting-box" class="hidden p-3.5 rounded-2xl bg-emerald-50 border-2 border-emerald-300 my-2.5 space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                    <span id="coop-host-wait-text" class="text-xs font-extrabold text-emerald-800">⏳ Đang chờ người ấy vào phòng... (Tự động hủy phòng chờ sau: 05:00)</span>
+                    <button onclick="cancelCoopRoomWaiting()" class="px-3 py-1 bg-rose-500 hover:bg-rose-600 text-white font-extrabold rounded-xl text-[11px] shadow transition whitespace-nowrap">
+                        🛑 Hủy Phòng Chờ
+                    </button>
+                </div>
+            </div>
+
+            <!-- 15s Hard Timeout Error Panel (Hidden by default) -->
+            <div id="coop-timeout-error-box" class="hidden p-4 rounded-2xl bg-orange-50 border-2 border-red-400 my-2.5 space-y-2 text-xs">
+                <div class="font-black text-red-600 text-sm">❌ KẾT NỐI THẤT BẠI (Quá 15 giây chờ)!</div>
+                <div class="text-gray-700 font-semibold">Nguyên nhân có thể do 1 trong 3 lý do sau:</div>
+                <ol class="list-decimal list-inside text-gray-700 space-y-1 font-bold text-[11px]">
+                    <li>Người tạo phòng (Host) chưa bấm <b>"Mở Phòng Ngay"</b> hoặc đã tắt tab.</li>
+                    <li>Nhập sai <b>Mã Phòng</b>.</li>
+                    <li>Mạng đang chặn P2P (Hãy bấm nút <b>"Thử Kết Nối Lại"</b> bên dưới).</li>
+                </ol>
+                <div class="flex items-center gap-2 pt-1.5">
+                    <button onclick="retryCoopConnection()" class="flex-1 py-2 bg-gradient-to-r from-orange-500 to-rose-500 text-white font-extrabold rounded-xl shadow hover:opacity-95 transition">
+                        🔄 Thử lại ngay
+                    </button>
+                    <button onclick="hideCoopErrorBox()" class="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold rounded-xl transition">
+                        ✖ Đóng
+                    </button>
+                </div>
             </div>
 
             <!-- Step 1: Select Character Role -->
@@ -3542,10 +3582,10 @@
             mCtx.fillStyle = '#0984e3';
             mCtx.beginPath(); mCtx.arc(w/2, h/2, 8, 0, Math.PI * 2); mCtx.fill();
 
-            // Partner Avatar Marker on Minimap
-            if (typeof partnerTargetPos !== 'undefined' && partnerTargetPos) {
-                const pNormX = (partnerTargetPos.x / (WORLD_RADIUS * 2)) + 0.5;
-                const pNormZ = (partnerTargetPos.z / (WORLD_RADIUS * 2)) + 0.5;
+            // Partner Avatar Marker on Minimap (ONLY when real remote player is connected!)
+            if (isCoopConnected && partnerAvatarGroup) {
+                const pNormX = (partnerAvatarGroup.position.x / (WORLD_RADIUS * 2)) + 0.5;
+                const pNormZ = (partnerAvatarGroup.position.z / (WORLD_RADIUS * 2)) + 0.5;
                 const ppx = pNormX * w; const ppz = pNormZ * h;
                 mCtx.fillStyle = myCoupleRole === 'uyen' ? '#0984e3' : '#ff6b81';
                 mCtx.beginPath(); mCtx.arc(ppx, ppz, 4.5, 0, Math.PI * 2); mCtx.fill();
@@ -3909,19 +3949,26 @@
         let myCoupleRole = 'uyen'; // 'uyen' or 'huan'
         let peerInstance = null;
         let activeCoopConn = null;
-        let coopJoinTimeoutId = null;
-        let coopLocalBc = null; // BroadcastChannel for instant local tab-to-tab test sync
         let currentRoomCode = 'HUAN-UYEN';
         let isCoopConnected = false;
         let coopPingMs = 18;
         let lastPingSentAt = 0;
+        let lastPongReceivedAt = 0;
         let lastPosBroadcastAt = 0;
         let lastResonanceTickAt = 0;
 
-        // 3D Chibi Couple Avatar Groups (Self & Partner)
+        // Timers for 15s Client Timeout, 10s Host Register Timeout & 300s Host Waiting Countdown
+        let clientCountdownIntervalId = null;
+        let hostRegisterTimeoutId = null;
+        let hostWaitIntervalId = null;
+        let lastAttemptMode = 'join'; // 'host' or 'join'
+
+        // 3D Chibi Couple Avatar Groups (Self & Remote Partner — ZERO FAKE NPC!)
         let myAvatarGroup = null;
-        let partnerAvatarGroup = null;
+        let partnerAvatarGroup = null; // Alias to remotePlayerMesh, ONLY created after 2-way HANDSHAKE!
+        let remotePlayerMesh = null;
         let resonanceRingMesh = null;
+        let remotePartnerName = 'Người ấy 💕';
 
         const partnerTargetPos = new THREE.Vector3(2.8, 4, 4.5);
         let partnerTargetYaw = 0;
@@ -4060,21 +4107,17 @@
             return root;
         }
 
+        // ZERO FAKE AVATAR POLICY: Never spawn partnerAvatarGroup on startup!
+        // Remote player mesh is ONLY spawned inside spawnRemotePlayerAvatar() upon 2-way HANDSHAKE!
         function initCoupleAvatarsAndResonance() {
             if (myAvatarGroup) scene.remove(myAvatarGroup);
-            if (partnerAvatarGroup) scene.remove(partnerAvatarGroup);
             if (resonanceRingMesh) scene.remove(resonanceRingMesh);
 
-            const partnerRole = myCoupleRole === 'uyen' ? 'huan' : 'uyen';
             myAvatarGroup = buildChibiCoupleAvatar(myCoupleRole);
-            myAvatarGroup.visible = false; // Only visible during Couple Selfie Mode!
+            myAvatarGroup.visible = false; // Only visible during Selfie Mode!
             scene.add(myAvatarGroup);
 
-            partnerAvatarGroup = buildChibiCoupleAvatar(partnerRole);
-            partnerAvatarGroup.position.copy(partnerTargetPos);
-            scene.add(partnerAvatarGroup);
-
-            // Glowing Together Resonance Ring on the ground
+            // Glowing Together Resonance Ring on the ground (hidden until connected & close)
             const ringGeo = new THREE.RingGeometry(0.9, 1.25, 32);
             const ringMat = new THREE.MeshBasicMaterial({ color: 0xff4d6d, side: THREE.DoubleSide, transparent: true, opacity: 0.75 });
             resonanceRingMesh = new THREE.Mesh(ringGeo, ringMat);
@@ -4087,6 +4130,38 @@
                 worldData.set(getVoxelKey(3, 5, 6), 37);
                 update3DSignboardMesh(3, 5, 6, "Tổ Ấm Của Huân & Bé Uyên 💕");
             }
+        }
+
+        function spawnRemotePlayerAvatar(remoteRole, initialPos) {
+            removeRemotePlayerAvatar();
+            const roleToBuild = (remoteRole === 'huan' || remoteRole === 'uyen')
+                ? remoteRole
+                : (myCoupleRole === 'uyen' ? 'huan' : 'uyen');
+            remotePlayerMesh = buildChibiCoupleAvatar(roleToBuild);
+            if (initialPos && typeof initialPos.x === 'number') {
+                partnerTargetPos.set(initialPos.x, initialPos.y - player.height, initialPos.z);
+            } else {
+                partnerTargetPos.set(player.position.x + 2.2, player.position.y - player.height, player.position.z + 2.2);
+            }
+            remotePlayerMesh.position.copy(partnerTargetPos);
+            scene.add(remotePlayerMesh);
+            partnerAvatarGroup = remotePlayerMesh;
+        }
+
+        function removeRemotePlayerAvatar() {
+            if (remotePlayerMesh) {
+                scene.remove(remotePlayerMesh);
+                remotePlayerMesh = null;
+            }
+            if (partnerAvatarGroup) {
+                scene.remove(partnerAvatarGroup);
+                partnerAvatarGroup = null;
+            }
+            if (resonanceRingMesh) resonanceRingMesh.visible = false;
+            const resonanceBadge = document.getElementById('together-resonance-badge');
+            const compassEl = document.getElementById('partner-compass-indicator');
+            if (resonanceBadge) resonanceBadge.classList.add('hidden');
+            if (compassEl) compassEl.classList.add('hidden');
         }
 
         function selectCoupleRole(role) {
@@ -4103,13 +4178,14 @@
                 }
             }
             initCoupleAvatarsAndResonance();
-            syncInstancedMeshes();
-            sendCoopPacket({ type: 'role_change', role: myCoupleRole });
-            showToast(myCoupleRole === 'uyen' ? "Đã chọn nhân vật: 👧💖 Bé Uyên (Người đồng hành: 💙 Anh Huân)" : "Đã chọn nhân vật: 👦💙 Anh Huân (Người đồng hành: 💖 Bé Uyên)");
+            if (isCoopConnected) {
+                sendCoopPacket({ type: 'role_change', role: myCoupleRole });
+            }
+            showToast(myCoupleRole === 'uyen' ? "Đã chọn nhân vật: 👧💖 Bé Uyên" : "Đã chọn nhân vật: 👦💙 Anh Huân");
         }
 
         function showAvatarSpeechBubble(avatarGroup, text) {
-            if (!avatarGroup || !avatarGroup.userData.bubbleSprite) return;
+            if (!avatarGroup || !avatarGroup.userData || !avatarGroup.userData.bubbleSprite) return;
             const sprite = avatarGroup.userData.bubbleSprite;
             const clipped = text.length > 32 ? text.slice(0, 32) + '...' : text;
             const tex = createFloatingLabelTexture(`💬 ${clipped}`, 'rgba(255, 255, 255, 0.98)', '#ff6b81', '#2d3436');
@@ -4148,30 +4224,17 @@
             appendChatMessageUI(myName, msg, true);
             audio.playGiftChime();
             showAvatarSpeechBubble(myAvatarGroup, msg);
-            sendCoopPacket({ type: 'chat', sender: myName, text: msg });
 
-            // If playing solo before partner connects, AI companion replies sweetly!
-            if (!isCoopConnected && partnerAvatarGroup) {
-                setTimeout(() => {
-                    const partnerName = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
-                    const sweetReplies = [
-                        "Anh Huân luôn ở ngay cạnh Bé Uyên đây! Thương em nhất trên đời 💕",
-                        "Ngôi nhà tụi mình xây đẹp quá Uyên ơi! Lại đây anh ôm cái nào 🫂💖",
-                        "Yêu cục cưng của anh nhiều lắm! Chúc mừng Uyên được 'bóp bóp' nha 👐😝",
-                        "Đi đâu anh cũng đi theo bảo vệ công chúa Uyên hết! 🌸✨"
-                    ];
-                    const reply = sweetReplies[Math.floor(Math.random() * sweetReplies.length)];
-                    appendChatMessageUI(partnerName, reply, false);
-                    showAvatarSpeechBubble(partnerAvatarGroup, reply);
-                    audio.playCollectPop();
-                }, 900);
+            if (isCoopConnected) {
+                sendCoopPacket({ type: 'chat', sender: myName, text: msg });
+            } else {
+                showToast("⚠️ Bạn chưa kết nối Co-op nên người ấy chưa đọc được tin nhắn này. Hãy bấm '💑 Chơi Chung' nhé!", "💡");
             }
         }
 
         function triggerCoupleEmote(emoteType, isRemote = false) {
             const now = performance.now();
-            const targetGroup = isRemote ? partnerAvatarGroup : myAvatarGroup;
-            const pos = isRemote ? partnerAvatarGroup.position : player.position;
+            const pos = (isRemote && partnerAvatarGroup) ? partnerAvatarGroup.position : player.position;
 
             if (isRemote) {
                 partnerActiveEmote = emoteType;
@@ -4179,12 +4242,9 @@
             } else {
                 myActiveEmote = emoteType;
                 myEmoteUntil = now + 3200;
-                // Also make companion avatar react joyfully!
-                if (!isCoopConnected) {
-                    partnerActiveEmote = emoteType;
-                    partnerEmoteUntil = now + 3200;
+                if (isCoopConnected) {
+                    sendCoopPacket({ type: 'emote', emoteType });
                 }
-                sendCoopPacket({ type: 'emote', emoteType });
                 checkQuestProgress('signboard_or_emote', 1);
             }
 
@@ -4195,7 +4255,7 @@
                 if (!isRemote) showToast("💖 Đã thả chùm bong bóng Trái Tim Yêu Thương!", "💖");
             } else if (emoteType === 'dance') {
                 spawnSparkleBurst(pos.x, pos.y + 1.2, pos.z, "#a29bfe", 18);
-                if (!isRemote) showToast("💃 Đang vẫy tay & nhảy múa vui vẻ cùng người ấy!", "💃");
+                if (!isRemote) showToast("💃 Đang vẫy tay & nhảy múa vui vẻ!", "💃");
             } else if (emoteType === 'flower') {
                 spawnSparkleBurst(pos.x, pos.y + 2.2, pos.z, "#ff2e63", 26);
                 if (!isRemote) showToast("🌹 Trao tặng Bông Hoa Hồng & Pháo Hoa Tình Yêu!", "🌹");
@@ -4203,7 +4263,10 @@
         }
 
         function teleportToPartner() {
-            if (!partnerAvatarGroup) return;
+            if (!isCoopConnected || !partnerAvatarGroup) {
+                showToast("⚠️ Hiện chưa có người chơi thứ 2 trong phòng! Hãy kết nối Co-op trước nhé.", "💡");
+                return;
+            }
             player.velocity.set(0, 0, 0);
             player.position.set(
                 partnerAvatarGroup.position.x + 1.4,
@@ -4212,8 +4275,7 @@
             );
             spawnSparkleBurst(partnerAvatarGroup.position.x, partnerAvatarGroup.position.y + 1.2, partnerAvatarGroup.position.z, "#ff4d6d", 24);
             audio.playGiftChime();
-            const partnerName = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
-            showToast(`📍 Đã bay tới đứng ngay cạnh ${partnerName}! 💑`);
+            showToast(`📍 Đã bay tới đứng ngay cạnh ${remotePartnerName}! 💑`);
             checkQuestProgress('together_resonance', 1);
         }
 
@@ -4293,24 +4355,27 @@
             showToast(`🪧 Đã khắc lời nhắn: "${text}" lên biển 3D! 💖`);
         }
 
-        // Couple Selfie Photo Booth Mode (Third-Person Camera showing BOTH avatars!)
+        // Couple Selfie Photo Booth Mode
         function takeCoupleSelfiePhoto() {
-            if (!myAvatarGroup || !partnerAvatarGroup) return;
+            if (!myAvatarGroup) return;
 
             const savedCamPos = camera.position.clone();
             const savedCamQuat = camera.quaternion.clone();
-            const savedPartnerPos = partnerAvatarGroup.position.clone();
-            const savedPartnerRot = partnerAvatarGroup.rotation.y;
+            const hasPartner = !!(isCoopConnected && partnerAvatarGroup);
+            const savedPartnerPos = hasPartner ? partnerAvatarGroup.position.clone() : null;
+            const savedPartnerRot = hasPartner ? partnerAvatarGroup.rotation.y : 0;
 
             const groundY = Math.floor(player.position.y - player.height);
             const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
             const right = new THREE.Vector3(1, 0, 0).applyEuler(new THREE.Euler(0, player.rotation.y, 0)).normalize();
 
-            // Place My Avatar & Partner Avatar side-by-side posing for the camera
-            myAvatarGroup.position.set(player.position.x - right.x * 0.62, groundY, player.position.z - right.z * 0.62);
+            if (hasPartner) {
+                myAvatarGroup.position.set(player.position.x - right.x * 0.62, groundY, player.position.z - right.z * 0.62);
+                partnerAvatarGroup.position.set(player.position.x + right.x * 0.62, groundY, player.position.z + right.z * 0.62);
+            } else {
+                myAvatarGroup.position.set(player.position.x, groundY, player.position.z);
+            }
             myAvatarGroup.visible = true;
-
-            partnerAvatarGroup.position.set(player.position.x + right.x * 0.62, groundY, player.position.z + right.z * 0.62);
 
             const camSelfiePos = new THREE.Vector3(
                 player.position.x + forward.x * 3.8,
@@ -4322,12 +4387,13 @@
 
             const lookAngle = Math.atan2(camSelfiePos.x - player.position.x, camSelfiePos.z - player.position.z) + Math.PI;
             myAvatarGroup.rotation.y = lookAngle;
-            partnerAvatarGroup.rotation.y = lookAngle;
-
-            // Raise arms in heart/wave pose + show rose
             if (myAvatarGroup.userData.armR) myAvatarGroup.userData.armR.rotation.x = -2.4;
-            if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = -2.4;
-            if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = true;
+
+            if (hasPartner) {
+                partnerAvatarGroup.rotation.y = lookAngle;
+                if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = -2.4;
+                if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = true;
+            }
 
             spawnSparkleBurst(player.position.x, groundY + 1.8, player.position.z, "#ff4d6d", 20);
             targetWireframe.visible = false;
@@ -4347,7 +4413,7 @@
 
             sCtx.fillStyle = '#e84393';
             sCtx.font = 'bold 26px Quicksand, sans-serif';
-            sCtx.fillText('🤳 Khoảnh Khắc Selfie Đôi: Phạm Ngọc Huân & Bé Uyên 💖', pad + 10, renderCanvas.height + pad + 42);
+            sCtx.fillText('🤳 Khoảnh Khắc Kỷ Niệm: Phạm Ngọc Huân & Bé Uyên 💖', pad + 10, renderCanvas.height + pad + 42);
             sCtx.fillStyle = '#636e72';
             sCtx.font = 'bold 16px Quicksand, sans-serif';
             sCtx.fillText(`Kỷ niệm tại ${currentPOIName || 'Quần Đảo Tình Yêu'} • Ngày ${new Date().toLocaleDateString('vi-VN')}`, pad + 10, renderCanvas.height + pad + 76);
@@ -4360,21 +4426,56 @@
             // Restore camera and avatar states
             myAvatarGroup.visible = false;
             if (myAvatarGroup.userData.armR) myAvatarGroup.userData.armR.rotation.x = 0;
-            if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = 0;
-            if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = false;
-            partnerAvatarGroup.position.copy(savedPartnerPos);
-            partnerAvatarGroup.rotation.y = savedPartnerRot;
+            if (hasPartner && savedPartnerPos) {
+                if (partnerAvatarGroup.userData.armL) partnerAvatarGroup.userData.armL.rotation.x = 0;
+                if (partnerAvatarGroup.userData.roseMesh) partnerAvatarGroup.userData.roseMesh.visible = false;
+                partnerAvatarGroup.position.copy(savedPartnerPos);
+                partnerAvatarGroup.rotation.y = savedPartnerRot;
+            }
             camera.position.copy(savedCamPos);
             camera.quaternion.copy(savedCamQuat);
             targetWireframe.visible = true;
 
             document.exitPointerLock();
             audio.playGiftChime();
-            showToast("🤳 Đã chụp bức ảnh Selfie Đôi của Huân & Uyên tuyệt đẹp! 💖");
+            showToast("🤳 Đã chụp bức ảnh Polaroid tuyệt đẹp! 💖");
             checkQuestProgress('photo', 1);
         }
 
-        // PeerJS Real-time WebRTC Co-op Networking
+        /* ==========================================================================
+           PEERJS WEBRTC NAT TRAVERSAL (MULTIPLE STUN + OPENRELAY TURN SERVERS),
+           15s CLIENT COUNTDOWN TIMEOUT, 5m HOST WAITING TIMER & 2-WAY HANDSHAKE
+           ========================================================================== */
+        const PEER_CONFIG = {
+            debug: 2,
+            config: {
+                iceCandidatePoolSize: 10,
+                iceServers: [
+                    // Google & Cloudflare STUN Servers
+                    { urls: 'stun:stun.l.google.com:19302' },
+                    { urls: 'stun:stun1.l.google.com:19302' },
+                    { urls: 'stun:stun2.l.google.com:19302' },
+                    { urls: 'stun:stun.cloudflare.com:3478' },
+                    // Public OpenRelay TURN Servers (Bắt buộc để vượt tường lửa Symmetric NAT giữa 2 mạng khác nhau)
+                    {
+                        urls: 'turn:openrelay.metered.ca:80',
+                        username: 'openrelayproject',
+                        credential: 'openrelayproject'
+                    },
+                    {
+                        urls: 'turn:openrelay.metered.ca:443',
+                        username: 'openrelayproject',
+                        credential: 'openrelayproject'
+                    },
+                    {
+                        urls: 'turn:openrelay.metered.ca:443?transport=tcp',
+                        username: 'openrelayproject',
+                        credential: 'openrelayproject'
+                    }
+                ]
+            }
+        };
+
         function toggleCoopModal() {
             const m = document.getElementById('coop-modal');
             if (!m) return;
@@ -4389,71 +4490,49 @@
         }
 
         function getPeerIdFromRoom(roomCode) {
-            return `kawaiicraft-v4-room-${sanitizeRoomCode(roomCode)}`;
+            const cleanCode = sanitizeRoomCode(roomCode);
+            return 'KAWAII_V4_' + cleanCode;
         }
 
-        const PEER_ICE_CONFIG = {
-            config: {
-                iceServers: [
-                    { urls: 'stun:stun.l.google.com:19302' },
-                    { urls: 'stun:stun1.l.google.com:19302' },
-                    { urls: 'stun:stun2.l.google.com:19302' },
-                    { urls: 'stun:global.stun.twilio.com:3478' }
-                ]
-            }
-        };
-
-        function setupLocalBroadcastFallback(roomCode) {
-            try {
-                if (typeof BroadcastChannel === 'undefined') return;
-                if (coopLocalBc) coopLocalBc.close();
-                coopLocalBc = new BroadcastChannel(`kawaiicraft_bc_${roomCode}`);
-                coopLocalBc.onmessage = (ev) => {
-                    const data = ev.data;
-                    if (!data || !data.type) return;
-                    if (data.type === 'bc_discover') {
-                        coopLocalBc.postMessage({ type: 'bc_here', role: myCoupleRole });
-                        if (!isCoopConnected) {
-                            updateCoopStatusUI(`🟢 Đã kết nối trực tiếp cùng người ấy (Phòng: ${roomCode}) 💕`, true);
-                            audio.playGiftChime();
-                            showToast(`💑 Đã kết nối phòng [${roomCode}] thành công!`, "💖");
-                        }
-                        sendLocalInitialSync();
-                    } else if (data.type === 'bc_here') {
-                        if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
-                        if (!isCoopConnected) {
-                            updateCoopStatusUI(`🟢 Đã kết nối trực tiếp cùng người ấy (Phòng: ${roomCode}) 💕`, true);
-                            audio.playGiftChime();
-                            showToast(`💑 Đã vào phòng [${roomCode}] thành công!`, "💖");
-                        }
-                    } else {
-                        handleIncomingCoopData(data);
-                    }
-                };
-                coopLocalBc.postMessage({ type: 'bc_discover', role: myCoupleRole });
-            } catch (e) {}
+        function clearAllCoopTimers() {
+            if (clientCountdownIntervalId) { clearInterval(clientCountdownIntervalId); clientCountdownIntervalId = null; }
+            if (hostRegisterTimeoutId) { clearTimeout(hostRegisterTimeoutId); hostRegisterTimeoutId = null; }
+            if (hostWaitIntervalId) { clearInterval(hostWaitIntervalId); hostWaitIntervalId = null; }
+            const clientBox = document.getElementById('coop-client-progress-box');
+            const hostWaitBox = document.getElementById('coop-host-waiting-box');
+            if (clientBox) clientBox.classList.add('hidden');
+            if (hostWaitBox) hostWaitBox.classList.add('hidden');
         }
 
-        function sendLocalInitialSync() {
-            const deltaArr = [];
-            for (const [k, v] of worldDeltas.entries()) {
-                const p = parseKey(k);
-                deltaArr.push([p.x, p.y, p.z, v]);
+        function hideCoopErrorBox() {
+            const errBox = document.getElementById('coop-timeout-error-box');
+            if (errBox) errBox.classList.add('hidden');
+        }
+
+        function showCoopTimeoutErrorBox() {
+            clearAllCoopTimers();
+            const errBox = document.getElementById('coop-timeout-error-box');
+            if (errBox) errBox.classList.remove('hidden');
+            updateCoopStatusUI("❌ KẾT NỐI THẤT BẠI (Quá 15 giây chờ)!", false);
+        }
+
+        function retryCoopConnection() {
+            hideCoopErrorBox();
+            if (lastAttemptMode === 'host') {
+                startCoopHostRoom(currentRoomCode);
+            } else {
+                joinCoopRoom(currentRoomCode);
             }
-            const signArr = [];
-            for (const [k, txt] of loveSignboardsData.entries()) {
-                const p = parseKey(k);
-                signArr.push([p.x, p.y, p.z, txt]);
-            }
-            sendCoopPacket({
-                type: 'initial_sync',
-                mapMode: currentWorldMapMode,
-                weatherIdx: curWeatherIdx,
-                hostRole: myCoupleRole,
-                lovePoints: lovePoints,
-                deltas: deltaArr,
-                signboards: signArr
-            });
+        }
+
+        function cancelCoopRoomWaiting() {
+            clearAllCoopTimers();
+            hideCoopErrorBox();
+            if (activeCoopConn) { try { activeCoopConn.close(); } catch (e) {} activeCoopConn = null; }
+            if (peerInstance) { try { peerInstance.destroy(); } catch (e) {} peerInstance = null; }
+            removeRemotePlayerAvatar();
+            updateCoopStatusUI("🛑 Đã hủy phòng chờ (Chế độ chơi 1 mình)", false);
+            showToast("🛑 Đã đóng phòng chờ Co-op.", "✨");
         }
 
         function updateCoopStatusUI(text, connected = false) {
@@ -4468,19 +4547,19 @@
             if (statusDot) {
                 statusDot.className = connected
                     ? "w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"
-                    : "w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping";
+                    : "w-2.5 h-2.5 rounded-full bg-amber-400 animate-pulse";
             }
             if (topDot) {
                 topDot.className = connected
                     ? "w-2.5 h-2.5 rounded-full bg-emerald-300 animate-ping"
-                    : "w-2 h-2 rounded-full bg-amber-300 animate-pulse";
+                    : "w-2 h-2 rounded-full bg-amber-300";
             }
             if (pingTag) {
                 pingTag.classList.toggle('hidden', !connected);
                 if (connected) pingTag.innerText = `${coopPingMs}ms`;
             }
-            if (modalPing && connected) {
-                modalPing.innerText = `Ping: ${coopPingMs} ms`;
+            if (modalPing) {
+                modalPing.innerText = connected ? `Ping: ${coopPingMs} ms` : '60 FPS';
             }
         }
 
@@ -4492,26 +4571,94 @@
                     console.warn("Co-op send error", e);
                 }
             }
-            if (coopLocalBc) {
-                try {
-                    coopLocalBc.postMessage(payload);
-                } catch (e) {}
-            }
         }
 
-        function handleIncomingCoopData(data) {
+        function buildWorldDeltaPayload() {
+            const deltaArr = [];
+            for (const [k, v] of worldDeltas.entries()) {
+                const p = parseKey(k);
+                deltaArr.push([p.x, p.y, p.z, v]);
+            }
+            const signArr = [];
+            for (const [k, txt] of loveSignboardsData.entries()) {
+                const p = parseKey(k);
+                signArr.push([p.x, p.y, p.z, txt]);
+            }
+            return { deltas: deltaArr, signboards: signArr };
+        }
+
+        function handleRemoteDisconnection(reasonMsg = "⚠️ Người ấy đã thoát hoặc mất kết nối") {
+            clearAllCoopTimers();
+            if (activeCoopConn) {
+                try { activeCoopConn.close(); } catch (e) {}
+                activeCoopConn = null;
+            }
+            removeRemotePlayerAvatar();
+            updateCoopStatusUI(reasonMsg, false);
+            showToast(reasonMsg, "⚠️");
+        }
+
+        function handleIncomingCoopData(data, isHost) {
             if (!data || !data.type) return;
 
-            if (data.type === 'initial_sync') {
+            // 1. 2-WAY HANDSHAKE: Host receives HANDSHAKE_SYN from Client
+            if (data.type === 'HANDSHAKE_SYN') {
+                clearAllCoopTimers();
+                hideCoopErrorBox();
+
+                const clientRole = data.role || (myCoupleRole === 'uyen' ? 'huan' : 'uyen');
+                remotePartnerName = data.name || (clientRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân');
+
+                // Spawn Client's 3D Avatar on Host's screen
+                spawnRemotePlayerAvatar(clientRole, data.pos);
+
+                // Send back HANDSHAKE_ACK with Host's info & worldDelta
+                const myName = myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân';
+                const worldSync = buildWorldDeltaPayload();
+                sendCoopPacket({
+                    type: 'HANDSHAKE_ACK',
+                    role: myCoupleRole,
+                    name: myName,
+                    pos: { x: player.position.x, y: player.position.y, z: player.position.z },
+                    mapMode: currentWorldMapMode,
+                    timeOfDay: curWeatherIdx,
+                    worldDelta: worldSync.deltas,
+                    signboards: worldSync.signboards
+                });
+
+                lastPongReceivedAt = Date.now();
+                lastPingSentAt = Date.now();
+                updateCoopStatusUI(`💖 ĐÃ KẾT NỐI THÀNH CÔNG CÙNG ${remotePartnerName} (Ping: ${coopPingMs} ms)`, true);
+                const modal = document.getElementById('coop-modal');
+                if (modal) modal.classList.add('hidden');
+                audio.playFireworkSound();
+                spawnSparkleBurst(player.position.x, player.position.y + 3, player.position.z, "#ff4d6d", 32);
+                showToast(`💖 ĐÃ KẾT NỐI THÀNH CÔNG CÙNG ${remotePartnerName} (Ping: ${coopPingMs} ms)`, "💑");
+                return;
+            }
+
+            // 2. 2-WAY HANDSHAKE: Client receives HANDSHAKE_ACK from Host
+            if (data.type === 'HANDSHAKE_ACK') {
+                clearAllCoopTimers();
+                hideCoopErrorBox();
+
+                const hostRole = data.role || 'huan';
+                remotePartnerName = data.name || (hostRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân');
+
+                // Ensure Client uses the opposite couple role so Huân & Uyên pair up
+                if (hostRole === myCoupleRole) {
+                    selectCoupleRole(hostRole === 'huan' ? 'uyen' : 'huan');
+                }
+
+                // Sync map mode, weather & worldDelta
                 if (data.mapMode && data.mapMode !== currentWorldMapMode) {
                     switchWorldMapMode(data.mapMode);
                 }
-                if (typeof data.weatherIdx === 'number') setWeather(data.weatherIdx, true);
-                if (data.hostRole) {
-                    selectCoupleRole(data.hostRole === 'huan' ? 'uyen' : 'huan');
+                if (typeof data.timeOfDay === 'number') {
+                    setWeather(data.timeOfDay, true);
                 }
-                if (Array.isArray(data.deltas)) {
-                    data.deltas.forEach(([x, y, z, bId]) => {
+                if (Array.isArray(data.worldDelta)) {
+                    data.worldDelta.forEach(([x, y, z, bId]) => {
                         if (bId === 0) {
                             worldData.delete(getVoxelKey(x, y, z));
                         } else {
@@ -4523,12 +4670,46 @@
                 if (Array.isArray(data.signboards)) {
                     data.signboards.forEach(([x, y, z, txt]) => update3DSignboardMesh(x, y, z, txt));
                 }
-            } else if (data.type === 'move') {
+
+                // Spawn Host's 3D Avatar on Client's screen
+                spawnRemotePlayerAvatar(hostRole, data.pos);
+
+                lastPongReceivedAt = Date.now();
+                lastPingSentAt = Date.now();
+                updateCoopStatusUI(`💖 ĐÃ KẾT NỐI THÀNH CÔNG CÙNG ${remotePartnerName} (Ping: ${coopPingMs} ms)`, true);
+                const modal = document.getElementById('coop-modal');
+                if (modal) modal.classList.add('hidden');
+                audio.playFireworkSound();
+                spawnSparkleBurst(player.position.x, player.position.y + 3, player.position.z, "#ff4d6d", 32);
+                showToast(`💖 ĐÃ KẾT NỐI THÀNH CÔNG CÙNG ${remotePartnerName} (Ping: ${coopPingMs} ms)`, "💑");
+                return;
+            }
+
+            // 3. Heartbeat PING / PONG every 2 seconds
+            if (data.type === 'PING') {
+                lastPongReceivedAt = Date.now();
+                sendCoopPacket({ type: 'PONG', t: data.t });
+                return;
+            }
+            if (data.type === 'PONG') {
+                lastPongReceivedAt = Date.now();
+                coopPingMs = Math.max(2, Math.round(Date.now() - data.t));
+                updateCoopStatusUI(`💖 ĐÃ KẾT NỐI THÀNH CÔNG CÙNG ${remotePartnerName} (Ping: ${coopPingMs} ms)`, true);
+                return;
+            }
+
+            // 4. Real-time Gameplay Synchronization
+            if (data.type === 'move') {
+                lastPongReceivedAt = Date.now();
                 partnerTargetPos.set(data.x, data.y - player.height, data.z);
                 partnerTargetYaw = data.yaw || 0;
                 partnerTargetPitch = data.pitch || 0;
                 partnerIsMoving = !!data.moving;
                 partnerIsFlying = !!data.flying;
+            } else if (data.type === 'role_change') {
+                const newRemoteRole = data.role === 'huan' ? 'huan' : 'uyen';
+                remotePartnerName = newRemoteRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân';
+                spawnRemotePlayerAvatar(newRemoteRole, { x: partnerTargetPos.x, y: partnerTargetPos.y + player.height, z: partnerTargetPos.z });
             } else if (data.type === 'block_set') {
                 setBlock(data.x, data.y, data.z, data.blockId, true, false, true);
                 audio.playPlaceSound(data.blockId);
@@ -4548,19 +4729,15 @@
                 audio.playFireworkSound();
                 spawnSparkleBurst(data.x + 0.5, data.y + 6, data.z + 0.5, "#ff758f", 30);
             } else if (data.type === 'chat') {
-                appendChatMessageUI(data.sender || 'Người ấy 💕', data.text, false);
+                appendChatMessageUI(data.sender || remotePartnerName, data.text, false);
                 showAvatarSpeechBubble(partnerAvatarGroup, data.text);
                 audio.playCollectPop();
+                showToast(`💬 ${data.sender || remotePartnerName}: "${data.text}"`, "💌");
             } else if (data.type === 'emote') {
                 triggerCoupleEmote(data.emoteType, true);
             } else if (data.type === 'signboard') {
                 update3DSignboardMesh(data.x, data.y, data.z, data.text);
                 showToast(`🪧 Người ấy vừa viết lên biển: "${data.text}" 💖`);
-            } else if (data.type === 'ping') {
-                sendCoopPacket({ type: 'pong', t: data.t });
-            } else if (data.type === 'pong') {
-                coopPingMs = Math.max(4, Math.round(performance.now() - data.t));
-                updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Ping: ${coopPingMs} ms)`, true);
             }
         }
 
@@ -4568,105 +4745,131 @@
             activeCoopConn = conn;
 
             conn.on('open', () => {
-                if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
-                updateCoopStatusUI(`🟢 Đang kết nối cùng người ấy (Phòng: ${currentRoomCode})`, true);
-                audio.playGiftChime();
-                showToast(`💑 Đã kết nối Online thành công với người yêu! (Phòng: ${currentRoomCode})`, "💖");
-
-                if (isHost) {
-                    sendLocalInitialSync();
-                } else {
-                    sendCoopPacket({ type: 'hello_client', role: myCoupleRole });
+                // When Client's DataChannel opens, immediately send HANDSHAKE_SYN
+                if (!isHost) {
+                    const myName = myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân';
+                    sendCoopPacket({
+                        type: 'HANDSHAKE_SYN',
+                        role: myCoupleRole,
+                        name: myName,
+                        pos: { x: player.position.x, y: player.position.y, z: player.position.z }
+                    });
                 }
             });
 
             conn.on('data', (data) => {
-                handleIncomingCoopData(data);
+                handleIncomingCoopData(data, isHost);
             });
 
             conn.on('error', () => {
-                if (!isHost && !isCoopConnected) {
-                    startCoopHostRoom(currentRoomCode);
+                if (isCoopConnected) {
+                    handleRemoteDisconnection("⚠️ Người ấy đã thoát hoặc mất kết nối");
                 }
             });
 
             conn.on('close', () => {
-                updateCoopStatusUI("🟡 Người ấy đã tạm rời phòng (Đang chờ kết nối lại...)", false);
-                showToast("Người ấy đã tạm ngắt kết nối phòng chơi chung 🌸");
+                if (isCoopConnected) {
+                    handleRemoteDisconnection("⚠️ Người ấy đã thoát hoặc mất kết nối");
+                }
             });
         }
 
+        // B. Host Mode: 10s Registration Timeout + 5-Minute (300s) Waiting Countdown
         function startCoopHostRoom(customCode = null) {
+            lastAttemptMode = 'host';
+            hideCoopErrorBox();
+            clearAllCoopTimers();
+            removeRemotePlayerAvatar();
+
             const inputEl = document.getElementById('coop-host-room-input');
             const joinEl = document.getElementById('coop-join-room-input');
-            currentRoomCode = sanitizeRoomCode(customCode || (inputEl && inputEl.value ? inputEl.value : (joinEl && joinEl.value ? joinEl.value : 'HUAN-UYEN')));
+            currentRoomCode = sanitizeRoomCode(customCode || (inputEl && inputEl.value ? inputEl.value : 'HUAN-UYEN'));
             if (inputEl) inputEl.value = currentRoomCode;
             if (joinEl) joinEl.value = currentRoomCode;
 
-            if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
-            setupLocalBroadcastFallback(currentRoomCode);
-
             if (typeof Peer === 'undefined') {
-                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] (Chế độ Nội bộ / Đang chờ người ấy)`, true);
+                showToast("⚠️ Đang tải thư viện mạng PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
                 return;
             }
 
             if (peerInstance) {
                 try { peerInstance.destroy(); } catch (e) {}
+                peerInstance = null;
             }
-            updateCoopStatusUI(`⏳ Đang mở phòng [${currentRoomCode}]...`, false);
 
-            peerInstance = new Peer(getPeerIdFromRoom(currentRoomCode), PEER_ICE_CONFIG);
+            updateCoopStatusUI(`⏳ Đang đăng ký phòng [${currentRoomCode}] trên máy chủ... (Tối đa 10s)`, false);
+
+            // 10-second timeout to register room on PeerJS server
+            hostRegisterTimeoutId = setTimeout(() => {
+                if (!peerInstance || !peerInstance.open) {
+                    if (peerInstance) { try { peerInstance.destroy(); } catch (e) {} peerInstance = null; }
+                    updateCoopStatusUI(`❌ Lỗi mạng: Quá 10 giây không thể đăng ký phòng [${currentRoomCode}]!`, false);
+                    showToast("❌ Quá 10 giây không tạo được phòng trên máy chủ. Hãy kiểm tra mạng và thử lại!", "⚠️");
+                }
+            }, 10000);
+
+            peerInstance = new Peer(getPeerIdFromRoom(currentRoomCode), PEER_CONFIG);
+
             peerInstance.on('open', () => {
-                updateCoopStatusUI(`🟢 Đã mở phòng [${currentRoomCode}] — Đang chờ người ấy vào! 💕`, true);
-                showToast(`✨ Đã mở phòng [${currentRoomCode}] thành công! Gửi mã hoặc Link Mời cho người yêu vào nhé!`, "💑");
+                if (hostRegisterTimeoutId) { clearTimeout(hostRegisterTimeoutId); hostRegisterTimeoutId = null; }
+                updateCoopStatusUI(`🟢 PHÒNG ĐÃ SẴN SÀNG! Mã phòng: [${currentRoomCode}]`, false);
+                showToast(`🟢 PHÒNG ĐÃ SẴN SÀNG! Mã phòng: [${currentRoomCode}]. Hãy gửi mã cho người ấy kết nối nhé!`, "💑");
+
+                // Start 5-minute (300s) Host Waiting Countdown UI
+                let remainWaitSec = 300;
+                const hostWaitBox = document.getElementById('coop-host-waiting-box');
+                const hostWaitText = document.getElementById('coop-host-wait-text');
+                if (hostWaitBox) hostWaitBox.classList.remove('hidden');
+
+                const updateWaitLabel = () => {
+                    const mm = String(Math.floor(remainWaitSec / 60)).padStart(2, '0');
+                    const ss = String(remainWaitSec % 60).padStart(2, '0');
+                    if (hostWaitText) {
+                        hostWaitText.innerText = `⏳ Đang chờ người ấy vào phòng... (Tự động hủy phòng chờ sau: ${mm}:${ss})`;
+                    }
+                };
+                updateWaitLabel();
+
+                hostWaitIntervalId = setInterval(() => {
+                    if (isCoopConnected) {
+                        clearInterval(hostWaitIntervalId);
+                        hostWaitIntervalId = null;
+                        if (hostWaitBox) hostWaitBox.classList.add('hidden');
+                        return;
+                    }
+                    remainWaitSec--;
+                    if (remainWaitSec <= 0) {
+                        cancelCoopRoomWaiting();
+                        updateCoopStatusUI("⏰ Phòng chờ đã tự hủy do quá 5 phút không có người kết nối. Bạn có thể bấm Tạo Phòng lại bất cứ lúc nào!", false);
+                        showToast("Phòng chờ đã tự hủy do quá 5 phút không có người kết nối. Bạn có thể bấm Tạo Phòng lại bất cứ lúc nào!", "⏰");
+                    } else {
+                        updateWaitLabel();
+                    }
+                }, 1000);
             });
+
             peerInstance.on('connection', (conn) => {
                 setupCoopConnectionHandlers(conn, true);
             });
+
             peerInstance.on('error', (err) => {
+                if (hostRegisterTimeoutId) { clearTimeout(hostRegisterTimeoutId); hostRegisterTimeoutId = null; }
                 if (err.type === 'unavailable-id') {
-                    // Room already exists -> connect as client to that host!
-                    showToast(`Phòng [${currentRoomCode}] đã có người mở! Đang ghép đôi trực tiếp... 💕`);
-                    connectAsClientToHost(currentRoomCode);
+                    updateCoopStatusUI(`⚠️ Mã phòng [${currentRoomCode}] đang được mở ở tab/máy khác! Hãy bấm "💞 Vào Phòng" hoặc đổi mã khác.`, false);
+                    showToast(`⚠️ Mã phòng [${currentRoomCode}] đã tồn tại! Nếu người yêu đã mở phòng này, bạn hãy bấm nút "💞 Vào Phòng" bên dưới nhé!`, "💡");
                 } else {
-                    updateCoopStatusUI(`🟢 Phòng [${currentRoomCode}] đã sẵn sàng! (Đang chờ người ấy)`, true);
+                    updateCoopStatusUI(`⚠️ Lỗi mạng P2P: ${err.type}`, false);
                 }
             });
         }
 
-        function connectAsClientToHost(code) {
-            if (peerInstance) {
-                try { peerInstance.destroy(); } catch (e) {}
-            }
-            updateCoopStatusUI(`⏳ Đang ghép đôi vào phòng [${code}]...`, false);
-
-            peerInstance = new Peer(PEER_ICE_CONFIG);
-            peerInstance.on('open', () => {
-                const conn = peerInstance.connect(getPeerIdFromRoom(code), { reliable: true });
-                setupCoopConnectionHandlers(conn, false);
-
-                // Auto-Fallback: If nobody has hosted this room after 3.5 seconds, automatically become the Host of this room!
-                if (coopJoinTimeoutId) clearTimeout(coopJoinTimeoutId);
-                coopJoinTimeoutId = setTimeout(() => {
-                    if (!isCoopConnected) {
-                        showToast(`💡 Phòng [${code}] chưa có ai mở trước — Đã tự động Mở Phòng [${code}] cho bạn làm Chủ Phòng! 💕`, "✨");
-                        startCoopHostRoom(code);
-                    }
-                }, 3500);
-            });
-
-            peerInstance.on('error', (err) => {
-                if (coopJoinTimeoutId) { clearTimeout(coopJoinTimeoutId); coopJoinTimeoutId = null; }
-                // If peer-unavailable (no one created the room yet), auto-create the room immediately!
-                if (err.type === 'peer-unavailable' || !isCoopConnected) {
-                    showToast(`💡 Phòng [${code}] chưa được tạo — Đang tự động Mở Phòng [${code}] cho bạn luôn! 💕`, "✨");
-                    startCoopHostRoom(code);
-                }
-            });
-        }
-
+        // A. Client Mode: 15-Second Visual Countdown Timer + Hard Timeout
         function joinCoopRoom(customCode = null) {
+            lastAttemptMode = 'join';
+            hideCoopErrorBox();
+            clearAllCoopTimers();
+            removeRemotePlayerAvatar();
+
             const joinEl = document.getElementById('coop-join-room-input');
             const hostEl = document.getElementById('coop-host-room-input');
             const code = sanitizeRoomCode(customCode || (joinEl && joinEl.value ? joinEl.value : (hostEl && hostEl.value ? hostEl.value : 'HUAN-UYEN')));
@@ -4674,13 +4877,74 @@
             if (joinEl) joinEl.value = code;
             if (hostEl) hostEl.value = code;
 
-            setupLocalBroadcastFallback(code);
-
             if (typeof Peer === 'undefined') {
-                updateCoopStatusUI(`🟢 Đã vào phòng [${code}]! 💕`, true);
+                showToast("⚠️ Đang tải thư viện mạng PeerJS, vui lòng thử lại sau 2 giây!", "⚠️");
                 return;
             }
-            connectAsClientToHost(code);
+
+            if (peerInstance) {
+                try { peerInstance.destroy(); } catch (e) {}
+                peerInstance = null;
+            }
+
+            // Show 15-second Countdown Progress UI
+            let remainingSec = 15;
+            const clientBox = document.getElementById('coop-client-progress-box');
+            const countdownText = document.getElementById('coop-client-countdown-text');
+            const countdownSec = document.getElementById('coop-client-countdown-sec');
+            const progressBar = document.getElementById('coop-client-progress-bar');
+
+            if (clientBox) clientBox.classList.remove('hidden');
+
+            const renderClientCountdown = () => {
+                let stageMsg = '';
+                if (remainingSec >= 10) {
+                    stageMsg = `🔄 Đang tìm phòng [${code}] trên máy chủ... (Còn ${remainingSec}s)`;
+                } else if (remainingSec >= 5) {
+                    stageMsg = `🛡️ Đang vượt tường lửa mạng (STUN/TURN)... (Còn ${remainingSec}s)`;
+                } else {
+                    stageMsg = `⏳ Đang đồng bộ thế giới với người ấy... (Còn ${remainingSec}s)`;
+                }
+                if (countdownText) countdownText.innerText = stageMsg;
+                if (countdownSec) countdownSec.innerText = `${remainingSec}s`;
+                if (progressBar) progressBar.style.width = `${Math.max(5, (remainingSec / 15) * 100)}%`;
+                updateCoopStatusUI(stageMsg, false);
+            };
+            renderClientCountdown();
+
+            clientCountdownIntervalId = setInterval(() => {
+                if (isCoopConnected) {
+                    clearAllCoopTimers();
+                    return;
+                }
+                remainingSec--;
+                if (remainingSec <= 0) {
+                    // HARD TIMEOUT AFTER 15 SECONDS: Close connection, destroy peer, show detailed red/orange error panel
+                    clearAllCoopTimers();
+                    if (activeCoopConn) { try { activeCoopConn.close(); } catch (e) {} activeCoopConn = null; }
+                    if (peerInstance) { try { peerInstance.destroy(); } catch (e) {} peerInstance = null; }
+                    removeRemotePlayerAvatar();
+                    showCoopTimeoutErrorBox();
+                } else {
+                    renderClientCountdown();
+                }
+            }, 1000);
+
+            peerInstance = new Peer(PEER_CONFIG);
+            peerInstance.on('open', () => {
+                const conn = peerInstance.connect(getPeerIdFromRoom(code), { reliable: true });
+                setupCoopConnectionHandlers(conn, false);
+            });
+
+            peerInstance.on('error', (err) => {
+                if (!isCoopConnected) {
+                    clearAllCoopTimers();
+                    if (activeCoopConn) { try { activeCoopConn.close(); } catch (e) {} activeCoopConn = null; }
+                    if (peerInstance) { try { peerInstance.destroy(); } catch (e) {} peerInstance = null; }
+                    removeRemotePlayerAvatar();
+                    showCoopTimeoutErrorBox();
+                }
+            });
         }
 
         function copyCoopRoomCode() {
@@ -4700,10 +4964,16 @@
         }
 
         function updateCoupleAvatarsAndMechanics(now) {
-            if (!partnerAvatarGroup) return;
+            // 1. Always orient 3D Love Signboards toward player
+            for (const mesh of loveSignboardMeshes.values()) {
+                mesh.lookAt(player.position.x, mesh.position.y, player.position.z);
+            }
 
-            // 1. Broadcast local player state at 25Hz (every 40ms) when connected
-            if (isCoopConnected && now - lastPosBroadcastAt > 40) {
+            // ZERO FAKE AVATAR POLICY: If not connected or no real remotePlayerMesh exists, do nothing!
+            if (!isCoopConnected || !partnerAvatarGroup) return;
+
+            // 2. Broadcast local player state at 25Hz (every 40ms) when connected
+            if (now - lastPosBroadcastAt > 40) {
                 lastPosBroadcastAt = now;
                 const isMoving = !!(keys['KeyW'] || keys['KeyS'] || keys['KeyA'] || keys['KeyD'] || keys['ArrowUp'] || keys['ArrowDown']);
                 sendCoopPacket({
@@ -4718,38 +4988,18 @@
                 });
             }
 
-            // Ping measurement every 3 seconds
-            if (isCoopConnected && now - lastPingSentAt > 3000) {
-                lastPingSentAt = now;
-                sendCoopPacket({ type: 'ping', t: now });
+            // 3. Heartbeat Ping-Pong every 2 seconds (2000ms) + 6-second Dead Connection Watchdog
+            const nowEpoch = Date.now();
+            if (nowEpoch - lastPingSentAt >= 2000) {
+                lastPingSentAt = nowEpoch;
+                sendCoopPacket({ type: 'PING', t: nowEpoch });
+            }
+            if (lastPongReceivedAt > 0 && nowEpoch - lastPongReceivedAt > 6000) {
+                handleRemoteDisconnection("⚠️ Người ấy đã thoát hoặc mất kết nối (Quá 6s mất tín hiệu)");
+                return;
             }
 
-            // 2. If offline / waiting for partner, Companion Avatar gently accompanies player around the island
-            if (!isCoopConnected) {
-                const distToPlayer = partnerTargetPos.distanceTo(player.position);
-                if (distToPlayer > 28) {
-                    partnerTargetPos.set(player.position.x + 2.5, player.position.y - player.height, player.position.z + 2.5);
-                } else if (distToPlayer > 3.6) {
-                    const dir = new THREE.Vector3().subVectors(player.position, partnerTargetPos);
-                    dir.y = 0; dir.normalize();
-                    partnerTargetPos.addScaledVector(dir, 0.065);
-                    partnerTargetYaw = Math.atan2(dir.x, dir.z) + Math.PI;
-                    partnerIsMoving = true;
-                } else {
-                    partnerIsMoving = false;
-                    // Look warmly at player
-                    const dx = player.position.x - partnerAvatarGroup.position.x;
-                    const dz = player.position.z - partnerAvatarGroup.position.z;
-                    partnerTargetYaw = Math.atan2(dx, dz) + Math.PI;
-                }
-                const gx = Math.floor(partnerTargetPos.x);
-                const gz = Math.floor(partnerTargetPos.z);
-                let gy = Math.floor(partnerTargetPos.y + 2);
-                while (gy > 1 && !hasVoxel(gx, gy - 1, gz)) gy--;
-                partnerTargetPos.y = gy;
-            }
-
-            // 3. Smooth 60 FPS Lerp for Partner Avatar Position & Rotation
+            // 4. Smooth 60 FPS Lerp for Real Remote Partner Avatar Position & Rotation
             partnerAvatarGroup.position.lerp(partnerTargetPos, 0.22);
             partnerAvatarGroup.rotation.y = THREE.MathUtils.lerp(partnerAvatarGroup.rotation.y, partnerTargetYaw, 0.2);
 
@@ -4758,7 +5008,7 @@
                 ud.headGroup.rotation.x = THREE.MathUtils.lerp(ud.headGroup.rotation.x, partnerTargetPitch * 0.6, 0.2);
             }
 
-            // Limb Swing & Emote Animations
+            // Limb Swing & Emote Animations for Real Remote Partner
             if (ud) {
                 if (now < partnerEmoteUntil && partnerActiveEmote) {
                     if (partnerActiveEmote === 'dance') {
@@ -4791,7 +5041,7 @@
                 }
             }
 
-            // 4. Together Resonance (< 4.2 blocks) & Compass Indicator (> 12 blocks)
+            // 5. Together Resonance (< 4.2 blocks) & Compass Indicator (> 10 blocks)
             const distBetweenCouple = Math.hypot(
                 player.position.x - partnerAvatarGroup.position.x,
                 player.position.z - partnerAvatarGroup.position.z
@@ -4828,17 +5078,12 @@
                         compassEl.classList.remove('hidden');
                         const nameEl = document.getElementById('compass-partner-name');
                         const distEl = document.getElementById('compass-dist-text');
-                        if (nameEl) nameEl.innerText = myCoupleRole === 'uyen' ? '💙 Anh Huân' : '💖 Bé Uyên';
+                        if (nameEl) nameEl.innerText = remotePartnerName;
                         if (distEl) distEl.innerText = `${Math.round(distBetweenCouple)}m`;
                     } else {
                         compassEl.classList.add('hidden');
                     }
                 }
-            }
-
-            // Slowly face 3D Love Signboards toward player for easy reading
-            for (const mesh of loveSignboardMeshes.values()) {
-                mesh.lookAt(player.position.x, mesh.position.y, player.position.z);
             }
         }
 
