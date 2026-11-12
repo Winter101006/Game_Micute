@@ -1,59 +1,67 @@
-# KawaiiCraft V5.0 — Đảo Livik 320x320 & Khu Vui Chơi / 6 Minigame Cặp Đôi (Huân & Bé Uyên)
+# KawaiiCraft V5.1 — Quần Đảo Đa Bản Đồ 320x320 & Khu Vui Chơi / 8 Minigame Cặp Đôi (Huân & Bé Uyên)
 
 Tác giả & Thiết kế: **Phạm Ngọc Huân** • Dành tặng riêng cho: **Bé Uyên 💖**
 
 ---
 
-## 1. Trải nghiệm Liền Mạch (Zero-Interruption Flow)
-- **Loại bỏ hoàn toàn Popup/Modal ngắt quãng:** Hoàn thành Cột Mốc hay mở Hộp Quà Bí Mật không còn tự động bật bảng làm mất chuột (`exitPointerLock`).
-- **Thông báo Toast Banner 3 giây:** Trượt nhẹ nhàng ở cạnh trên màn hình (`pointer-events-none`) kèm âm thanh *ting!* dịu nhẹ.
-- **Rút gọn còn 5 Cột Mốc Cặp Đôi Lớn (`Phím N`):**
-  1. Chơi 1 ván **Đấu Trường Đuổi Bắt Cân Bằng 50/50** cùng nhau.
-  2. Đua **Mê Cung Tình Yêu 44x44** & chạm **Cúp Trái Tim Vàng** ở tâm mê cung.
-  3. Ngồi chung **Cabin #0 Vòng Quay Mặt Trời Khổng Lồ** ngắm toàn cảnh đảo Livik.
-  4. Chinh phục **Đỉnh Tuyết Livik & Suối Nước Nóng** (hoặc Đỉnh Taiga trong Map Minecraft).
-  5. Cùng nhau đặt **15 khối** xây tổ ấm chung của hai đứa.
+## 1. Điểm Mới Nổi Bật Ở Phiên Bản V5.1 (Nâng Cấp Theo Trải Nghiệm Thực Tế)
+
+### 🎡 Vòng Quay Siêu Cao (Đỉnh `Y = 56`) & Cabin Kính Thoáng 360°
+- Nâng tâm vòng quay lên **`FERRIS_CENTER = (32, 34, -12)`** với bán kính **`R = 22` blocks** (đỉnh đạt **`Y = 56`**), giúp nhìn bao quát vượt qua toàn bộ lâu đài, cây anh đào và đảo mây.
+- Thiết kế lại **8 Cabin Kính Toàn Cảnh**: bỏ tường chắn sau, thay bằng lan can kính thấp ngang thắt lưng và mái che nâng cao (`+1.15`), vị trí mắt ngồi ở `tmpRideVec.y - 0.15` cho tầm nhìn 360° không bị che khuất.
+
+### 📡 Danh Sách Phòng Đang Mở (`publicRooms` — Vào Bằng 1 Chạm)
+- Khi một người bấm **✨ Mở Phòng Ngay**, hệ thống tự động đăng phòng lên nhánh `/publicRooms/{ROOM_ID}` (kèm tên chủ phòng, bản đồ đang chơi, số người `1/2` và tự dọn sạch bằng `.onDisconnect().remove()`).
+- Trong modal **💑 Chơi Chung**, Bé Uyên chỉ cần bấm nút **💞 Vào Luôn** ngay trên thẻ phòng đang mở mà không cần nhớ hay gõ lại mật khẩu/mã phòng!
+
+### 🎨 Giao Diện HUD Chia Nhóm Khoa Học, Chat Gọn Góc Dưới Trái & Cụm Điều Khiển Góc Dưới Phải
+- **Thanh công cụ trên cùng chia 3 nhóm rõ ràng:**
+  - Nhóm **Điểm & Vị Trí** (trắng/hồng): Map badge tích hợp chuyển nhanh bản đồ, tọa độ khu vực, Tỉ số & Tim.
+  - Nhóm **Hoạt Động Chính** (màu đậm nổi bật): Chơi Chung (tím-hồng), Khu Vui Chơi (cam-đỏ), Tới Người Yêu (hồng đậm), Bản Đồ (xanh dương), Cột Mốc Đôi (vàng) & Kho Quà.
+  - Nhóm **Tiện Ích Phụ** (`⚙️ Thêm`): Thu gọn gọn gàng các nút ít dùng (Túi đồ, Ghép đồ, Mẫu nhà, Lưu, Đèn trời, Nhạc, Máy yếu, Hướng dẫn).
+- **Khung Chat Tình Yêu** được đẩy sát góc **dưới-trái (`bottom-3 left-3`)** với nút **▼ Ẩn / ▲ Mở Chat** (hiển thị chấm hồng báo tin chưa đọc khi thu gọn).
+- **Cụm nút nhanh góc dưới-phải (`#quick-action-pad`):** Bổ sung nút **☁️ Đài Mây (`Y=54`)**, nút **⚡ Chạy Nhanh** (bật/tắt chạy nhanh liên tục) và nút **⬆️ Nhảy / Giữ Bay Lên** dùng được trên cả PC lẫn cảm ứng.
+
+### 🕊️ Sửa Triệt Để Lỗi Giật & Rơi Khi Giữ Phím `Space` Đang Bay
+- Nguyên nhân gốc rễ: Giữ phím `Space` khoảng 2s kích hoạt sự kiện bàn phím lặp (`e.repeat === true`), liên tục rơi vào điều kiện nháy đúp `< 300ms` và bật/tắt `toggleFlyMode()` giữa không trung.
+- Đã chặn hoàn toàn `if (!e.repeat)` trên phím `Space` nháy đúp và các phím chức năng khác — giữ `Space` hoặc nút **⬆️ Nhảy** bay lên cực kỳ mượt mà, ổn định!
 
 ---
 
-## 2. Thế Giới Mở Rộng Gấp 4 Lần (`320 x 320` Blocks) & Tối Ưu 60 FPS
-- **Kích thước thế giới:** `WORLD_RADIUS = 160` (`X: -160..160`, `Z: -160..160`, tổng diện tích `320 x 320` blocks) cho cả **Đảo Livik 4 Mùa** và **Lục Địa Minecraft Cổ Điển**.
-- **Các khu vực nổi bật mới:**
-  - **Bắc & Đông Bắc:** Đỉnh Núi Tuyết hùng vĩ (`Y ~ 16-22`), Suối Nước Nóng bốc khói (`X:75 Z:-91`), **Máng Trượt Băng Tốc Độ 2.5x** (`X:84 Y:17 Z:-70` trượt xuống `X:50 Y:5 Z:-28`).
-  - **Tây Bắc:** Thung Lũng Hoa Anh Đào mở rộng, **Cối Xay Gió Khổng Lồ** (`X:-88 Z:-78`) & **Xích Đu Đôi Anh Đào**.
-  - **Trung Tâm:** Hồ Trái Tim, Thác Nước Pha Lê, **Công Viên Giải Trí Đôi** & **Lâu Đài Mây trên không (`Y = 28`)**.
-  - **Tây Nam & Đông Nam:** Rừng Phong Lá Đỏ, Vườn Bí Ngô & Nhà Kho Đỏ (`X:-75 Z:75`); Vịnh Nắng Hạ, Bến Du Thuyền dài (`X:92 Z:78..126`), Du Thuyền Pastel (`X:100 Z:122`), Chú Vịt Vàng Khổng Lồ (`X:108 Z:102`) & Các Đảo Nhỏ Ngoài Khơi.
-- **Tối ưu hiệu năng 60 FPS:**
-  - `THREE.InstancedMesh` với `frustumCulled = false` + giới hạn buffer thông minh theo loại khối.
-  - **Surface Culling & Spatial Hash `Uint8Array` (`staticColliderGrid`):** Kiểm tra va chạm và occlusion ở độ phức tạp $O(1)$, không gây giật lag khi sinh bản đồ `320 x 320`.
-  - **Fast Delta Save (`V5.0`):** `localStorage` chỉ lưu mảng `worldDeltas` các khối người chơi tự đặt/đập (< 1ms mỗi lần lưu tự động).
-  - **Particle Camera Culling:** Hạt thời tiết (tuyết, hoa đào, lá phong, nắng) chỉ sinh trong bán kính `<= 20 blocks` quanh `camera` và tái sử dụng material.
+## 2. 3 Thế Giới Rộng Lớn `320 x 320` Blocks & Đồng Bộ Đổi Map 2 Người (`Phím M`)
+
+1. **🏝️ Map 1: Quần Đảo Livik 4 Mùa (`320x320`):**
+   - 4 vùng sinh thái Xuân-Hạ-Thu-Đông rõ rệt quanh Hồ Trái Tim, Đỉnh Tuyết & Suối Nước Nóng, Máng Trượt Băng 2.5x, Thung Lũng Anh Đào, Rừng Phong, Bến Du Thuyền & Chú Vịt Vàng.
+2. **❄️ Map 2: PUBG Vikendi Vương Quốc Tuyết (`320x320`):**
+   - Phủ tuyết trắng & băng xanh toàn bản đồ: **Hồ Đóng Băng Trung Tâm**, **Lâu Đài Tuyết Vikendi** ở phía Bắc (`X:-12 Z:-85`), **Cảng Vũ Trụ Cosmodrome** (`X:65 Z:78`), **Tháp Radar Tuyết** & Rừng Thông Đóng Băng.
+   - **Minigame độc quyền Vikendi:** 💎 **Săn 6 Tinh Thể Băng** rải khắp các công trình nổi bật của Vikendi!
+3. **🌴 Map 3: PUBG Sanhok Rừng Rậm & Đền Cổ (`320x320`):**
+   - Dòng **Sông Xanh uốn lượn hình chữ S** chia cắt rừng nhiệt đới với **3 Cây Cầu Treo Gỗ**, **Đền Cổ Đá Rong Ruins** (`X:-2 Z:-65`), **Trại Huấn Luyện Bootcamp** & Làng Nhà Sàn Bờ Sông.
+   - **Minigame độc quyền Sanhok:** 🏛️ **Vượt Bẫy Đền Cổ** thu thập **5 Cổ Vật Vàng** trên khắp đảo rừng!
+4. **Thông báo Mời Đổi Map Đồng Bộ + Radar Chỉ Đường Tương Tác:**
+   - Khi 1 người chuyển bản đồ (bấm thanh trên cùng hoặc trong **Phím M**), người yêu lập tức nhận bảng mời nổi không ngắt chuột (`#map-invite-banner`) — bấm nút hoặc nhấn phím **`Y`** để sang cùng, sau đó cả 2 máy nhận thông báo xác nhận đã đồng bộ cùng một thế giới!
+   - Radar góc trên phải và Bản đồ lớn (**Phím M**) tự cập nhật màu sắc địa hình, cầu/sông, vị trí 2 người theo từng Map; cho phép **Click trực tiếp lên Radar Bản Đồ Lớn** để dịch chuyển nhanh tới bất kỳ địa danh hay tọa độ nào!
 
 ---
 
-## 3. Khu Vui Chơi & 6 Minigame Đồng Bộ Firebase (`Phím U`)
-
-Tất cả minigame và bảng tỉ số (`🏆 Huân X - Y Uyên`) được đồng bộ thời gian thực qua **Firebase Realtime Database (`kawaii-craft-c7663`)** tại nhánh `/rooms/{ROOM_ID}/minigames`.
+## 3. Đài Ngắm Mây Toàn Cảnh (`Y=54`) & 8 Minigame Cặp Đôi (`Phím U`)
 
 | STT | Trò Chơi / Khu Vui Chơi | Tọa Độ Trung Tâm | Cơ Chế & Luật Chơi |
 | :-: | :--- | :--- | :--- |
-| **1** | **🏃‍♂️ Đấu Trường Đuổi Bắt 50/50** (`36x36`) | `X:60 Y:5 Z:0` | Hiệp **45 giây**, tự đóng cổng sân, tắt Bay & khóa đập khối. **Người Đuổi** có hào quang Đỏ-Cam + **+6% tốc độ** (`< 1.8m` là bắt thắng). **Người Chạy** có hào quang Xanh Mint + kỹ năng **Lướt Nhanh (`Shift` / `F`, hồi 7s)**. Sân đối xứng có **4 Đệm Nhảy Lò Xo (Khối `38`)** & **2 Cổng Dịch Chuyển (`X:60 Z:-15` ↔ `X:60 Z:14`, Khối `39`)**. Tự đổi vai mỗi hiệp! |
-| **2** | **🌿 Mê Cung Tình Yêu** (`44x44`) | Cổng `X:-59 Z:23`<br>Tâm `X:-58.5 Z:0.5` | Tường cây cao 4 blocks không thể nhìn xuyên. Đếm ngược 3s trước khi mở Cổng Xuất Phát. Có **3 Bình Tăng Tốc (+55% trong 5s)** ở các ngõ rẽ & **Nút Đổi Sơ Đồ** (seed đồng bộ Firebase giữa 2 máy). Chạm **Cúp Trái Tim Vàng** trước để thắng! |
-| **3** | **🎡 Vòng Quay Mặt Trời Khổng Lồ** | `X:28.5 Y:20 Z:-8` | Cao `28 blocks` với 6 Cabin Pastel luôn cân bằng thẳng đứng khi vòng quay xoay liên tục. Đứng gần bấm **`E`** (hoặc từ Hub `U`) để Huân & Uyên ngồi chung **Cabin #0** ngắm toàn cảnh đảo `320x320`. Bấm **`E`** hoặc **`Space`** để xuống. |
-| **4** | **🎠 Xích Đu Đôi Anh Đào** | `X:-34 Y:5 Z:-34` | Dưới gốc Hoa Anh Đào cổ thụ. Bấm **`E`** để ngồi cạnh nhau đung đưa nhịp nhàng theo sóng `Math.sin` và tỏa bong bóng trái tim hồng. |
-| **5** | **🎨 Sàn Nhảy Sắc Màu** (`6x6`) | `X:10 Y:5 Z:29` | Lưới `6x6` ô (`3x3` block/ô) gồm 6 màu pastel (`🍓 Hồng Dâu`, `🍊 Cam Đảo`, `🍋 Vàng Chanh`, `🍏 Bạc Hà`, `🫐 Xanh Ngọc`, `🍇 Khoai Môn`) nổi trên hồ nước. Cứ mỗi lượt, hệ thống hô màu **3 giây** để chạy tới ô đúng trước khi các màu khác biến mất **2 giây**! Ai rơi xuống hồ nước bị loại. |
-| **6** | **🌈 Parkour Cầu Vồng & 🛷 Máng Trượt Băng** | Parkour: `X:-14 Z:-26` → `Y:28`<br>Trượt Băng: `X:84 Y:17 Z:-70` | **Parkour:** Nhảy bậc cầu vồng qua **3 Checkpoint** lên thẳng Đảo Mây (`Y=28`) tính giờ không dùng Bay.<br>**Máng Trượt Băng:** Đường băng tuyết từ Đỉnh Núi Tuyết xuống trung tâm công viên — tự động kích hoạt tốc độ **lướt `2.5x`** trên Khối Băng (`ID 8`)! |
+| **1** | **🏃‍♂️ Đấu Trường Đuổi Bắt 50/50** (`36x36`) | `X:60 Y:5 Z:0` | Hiệp **45s**, tự đổi vai Huân ↔ Uyên. Người Đuổi `+6%` tốc độ (`<1.8m` bắt thắng). Người Chạy có **Lướt (`Shift`/`F`, hồi 7s)** + 4 Đệm Nhảy & 2 Cổng Dịch Chuyển. |
+| **2** | **🌿 Mê Cung Tình Yêu** (`44x44`) | `X:-58.5 Y:6 Z:0.5` | Tường hoa cao 4 blocks + 3s đếm ngược + 3 Bình Tăng Tốc + nút đổi Seed đồng bộ Firebase. |
+| **3** | **🎡 Vòng Quay Siêu Cao `Y=56`** | `X:32 Y:34 Z:-12` | 8 Cabin kính thoáng 360°, đỉnh đạt **`Y = 56`**, ngồi ngắm trọn đảo không bị che! |
+| **4** | **🎠 Xích Đu Đôi Anh Đào** | `X:-34 Y:5 Z:-34` | Ngồi cạnh nhau dưới tán anh đào đung đưa nhẹ nhàng & thả tim. |
+| **5** | **🎨 Sàn Nhảy Sắc Màu** (`6x6`) | `X:10 Y:5 Z:29` | Lưới 6 màu pastel trên hồ nước — hô màu 3s, rụng sàn 2s! |
+| **6** | **🌈 Parkour & 🛷 Máng Trượt Băng** | `X:-14 Z:-26` → `Y:28` | Nhảy 3 Checkpoint lên Đảo Mây hoặc trượt đường băng tốc độ `2.5x`. |
+| **7** | **⚔️ Đấu Trường Thanh Máu (`100 HP`)** | `X:50 Y:5 Z:40` | Đấu đối kháng thời gian thực với thanh **100 HP**: Ném Cầu Tuyết Tim (**`J` / `Q` / Chuột trái**, `-15 HP`), bật **Khiên Tim** (**`K` / Chuột phải**, giảm sát thương còn `-5 HP` trong 2.2s), nhặt **3 Bánh Kem Hồi `+20 HP`**. Hỗ trợ Bia Đấu Tập khi luyện 1 mình (tự xóa sạch khi kết thúc trận!). |
+| **8** | **💎 / 🏛️ Đặc Sản Theo Map & ☁️ Đài Ngắm Mây** | Đài Mây: `X:0 Y:54 Z:-18` | **Săn 6 Tinh Thể Băng** ở Map Vikendi, **Vượt Bẫy Đền Cổ (5 Cổ Vật)** ở Map Sanhok, và **Đài Ngắm Mây Y=54** ngắm toàn cảnh 320x320. |
 
 ---
 
-## 4. Phím Tắt Điều Khiển Chính
-- **`W / A / S / D`** + Chuột: Di chuyển & xoay góc nhìn
-- **`Shift` / `F` (trong Đuổi Bắt):** Kỹ năng **Lướt Nhanh** cho Người Chạy (hồi `7s`)
-- **`F` / `Space x2` (ngoài Minigame):** Bật/Tắt chế độ Bay tự do
-- **`U`:** Mở Hub **Công Viên Giải Trí & 6 Minigame Cặp Đôi**
-- **`E` (gần Vòng Quay / Xích Đu):** Ngồi lên / Xuống khỏi trò chơi đôi
-- **`E` / Chuột Phải:** Đặt khối hoặc mở Tương tác (Hộp Nhạc, Pháo Hoa, Biển Chữ, Hộp Quà)
-- **`Q` / Chuột Trái:** Đập khối
-- **`N`:** Mở bảng **5 Cột Mốc Cặp Đôi** | **`M`:** Bản Đồ Di Chuyển | **`G`:** Bay Tới Người Ấy (khi Co-op) hoặc Mẫu Nhà
-- **`T / V / K / P`:** Thả Tim / Nhảy Vui / Tặng Hoa / Chụp Ảnh Selfie hoặc Gọi Thú Cưng
-- **`Tab`:** Thu gọn HUD tối đa để ngắm cảnh toàn màn hình
+## 4. Phím Tắt Điều Khiển Nhanh (Zero-Interruption Flow)
+- **`W / A / S / D`** + Chuột: Di chuyển & xoay góc nhìn (hoặc bật nút **⚡ Chạy Nhanh**)
+- **`F` / `Space x2`:** Bật/Tắt Bay tự do — **giữ `Space` hoặc nút ⬆️ Nhảy** để bay lên mượt mà không giật rơi!
+- **`U`:** Mở Hub **8 Minigame & Đấu Trường 100 HP** • **`J / Q / Chuột trái`:** Ném Cầu Tuyết Tim • **`K / Chuột phải`:** Khiên Tim
+- **`M`:** Mở **Bản Đồ 3 Thế Giới & Radar Chỉ Đường Click-to-Teleport** • **`Y`:** Chấp nhận sang Map cùng người yêu
+- **`E`:** Ngồi lên/xuống Vòng Quay `Y=56`, Xích Đu & đặt khối • **`G`:** Bay Tới Người Yêu • **`Tab`:** Thu gọn HUD

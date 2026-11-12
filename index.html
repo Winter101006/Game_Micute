@@ -124,163 +124,129 @@
         </div>
     </div>
 
-    <!-- TOP BAR: Collapsible Minimalist HUD for Maximum Screen View -->
-    <div id="hud-top-bar" class="absolute top-2.5 left-0 right-0 px-3 md:px-4 flex flex-wrap items-center justify-between pointer-events-none z-30 gap-2 transition-all duration-300">
-        <!-- Title, World Switcher Pill & Dynamic POI Location Badge -->
-        <div class="pointer-events-auto flex items-center gap-2 cozy-glass px-3 py-1.5 rounded-2xl shadow-sm">
-            <span class="text-xl pulse-heart">💖</span>
-            <div>
-                <div class="flex items-center flex-wrap gap-1.5">
-                    <h1 class="text-pink-600 font-extrabold text-xs md:text-sm leading-tight">KawaiiCraft V5.0</h1>
-                    <!-- Fast World Switcher Pill (2 Worlds) -->
-                    <button id="btn-switch-world-mode" onclick="toggleWorldMapMode()" title="Bấm để chuyển đổi giữa Đảo Livik 4 Mùa & Thế Giới Minecraft Cổ Điển" class="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-extrabold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-sm transition flex items-center gap-1 cursor-pointer">
-                        <span id="world-mode-icon">🏝️</span>
-                        <span id="world-mode-label">Map 1: Đảo Livik (320x320)</span>
-                        <span class="text-[9px] opacity-80">⇄ Đổi Map</span>
-                    </button>
-                    <!-- Current Biome / POI Badge -->
-                    <span id="current-biome-badge" class="bg-pink-50 text-pink-700 font-extrabold text-[10px] md:text-xs px-2 py-0.5 rounded-full border border-pink-200 hidden sm:flex items-center gap-1">
-                        🌊 Thác Nước & Hồ Trái Tim
-                    </span>
-                    <!-- Couple Scoreboard Live Pill -->
-                    <span id="couple-score-pill" onclick="toggleMinigamesModal()" title="Bảng Tỉ Số Minigame Cặp Đôi (Bấm để mở Khu Vui Chơi)" class="cursor-pointer bg-gradient-to-r from-sky-500 via-purple-500 to-pink-500 text-white font-black text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1 hover:opacity-95 transition">
-                        🏆 <span id="couple-score-text">Huân 0 - 0 Uyên</span>
-                    </span>
-                    <!-- Love Points Counter -->
-                    <span id="love-points-badge" class="bg-rose-500 text-white font-black text-[10px] md:text-xs px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
-                        💖 <span id="love-points-text">120</span>
-                    </span>
-                    <!-- Active Save Slot Badge -->
-                    <span id="active-slot-badge" class="bg-pink-50 text-pink-600 font-bold text-[10px] px-2 py-0.5 rounded-full border border-pink-200 hidden lg:inline">
-                        Slot 1
-                    </span>
-                </div>
-                <p id="hud-subtitle-bar" class="text-pink-500 text-[10px] md:text-[11px] font-semibold flex items-center gap-1.5 mt-0.5">
-                    <span id="fps-counter" class="text-emerald-500 font-bold">60 FPS</span>
-                    <span>•</span>
-                    <span class="text-gray-500 hidden sm:inline">Thế giới 320x320 & Công viên Cặp Đôi của Huân & Bé Uyên 💕</span>
-                    <span id="save-status-indicator" class="text-pink-400 font-bold text-[10px] flex items-center gap-1">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-ping"></span>
-                        Đã lưu
-                    </span>
-                </p>
+    <!-- TOP BAR: Clean Color-Coded Compact HUD -->
+    <div id="hud-top-bar" class="absolute top-2.5 left-0 right-0 px-3 md:px-4 flex flex-col items-start pointer-events-none z-30 gap-1.5 transition-all duration-300 max-w-[calc(100vw-165px)]">
+        <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS -->
+        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1 rounded-2xl shadow-sm">
+            <span class="text-lg pulse-heart">💖</span>
+            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.1</h1>
+            <!-- Unified Map Switcher & Guide Trigger -->
+            <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-extrabold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-sm transition flex items-center gap-1 cursor-pointer">
+                <span id="world-mode-icon">🌸</span>
+                <span id="world-mode-label">Map 1: Đảo Livik</span>
+                <span class="text-[9px] opacity-85">▾ Đổi Map</span>
+            </button>
+            <span id="current-biome-badge" class="bg-pink-50 text-pink-700 font-extrabold text-[10px] md:text-xs px-2 py-0.5 rounded-full border border-pink-200 hidden md:inline-flex items-center gap-1">
+                🌊 Hồ Trái Tim
+            </span>
+            <span id="couple-score-pill" onclick="toggleMinigamesModal()" title="Bảng Tỉ Số Minigame Cặp Đôi (Bấm mở Khu Vui Chơi)" class="cursor-pointer bg-gradient-to-r from-sky-500 via-purple-500 to-pink-500 text-white font-black text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-xs flex items-center gap-1 hover:opacity-95 transition">
+                🏆 <span id="couple-score-text">Huân 0 - 0 Uyên</span>
+            </span>
+            <span id="love-points-badge" class="bg-rose-500 text-white font-black text-[10px] md:text-xs px-2 py-0.5 rounded-full shadow-xs flex items-center gap-1">
+                💖 <span id="love-points-text">120</span>
+            </span>
+            <span id="active-slot-badge" class="bg-pink-50 text-pink-600 font-bold text-[10px] px-2 py-0.5 rounded-full border border-pink-200 hidden xl:inline">
+                Slot 1
+            </span>
+            <span id="fps-counter" class="text-emerald-600 font-black text-[10px] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">60 FPS</span>
+            <span id="save-status-indicator" class="text-pink-400 font-bold text-[10px] hidden lg:flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-ping"></span> Lưu
+            </span>
+        </div>
+
+        <!-- Row 2: 3 Color-Coded Action Groups (Minimalist — only 7 essential buttons!) -->
+        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5">
+            <!-- Group A (Pink/Purple): Couple & Co-op -->
+            <div class="flex items-center gap-1 bg-pink-100/75 p-1 rounded-2xl border border-pink-300 shadow-xs backdrop-blur-md">
+                <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người & Xem Danh Sách Phòng Đang Mở" class="px-2.5 py-1 rounded-xl flex items-center gap-1.5 bg-gradient-to-r from-rose-500 to-purple-500 text-white font-extrabold text-xs shadow-sm hover:opacity-95 active:scale-95 transition">
+                    <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+                    <span>💑 Co-op</span>
+                    <span id="coop-ping-tag" class="hidden text-[10px] bg-white/25 px-1.5 rounded-full">Online</span>
+                </button>
+                <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-rose-600 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                    <span>📍</span>
+                    <span class="hidden sm:inline">Tới Người Ấy</span>
+                </button>
+            </div>
+
+            <!-- Group B (Amber/Orange): Games, Battle & Milestones -->
+            <div class="flex items-center gap-1 bg-amber-100/75 p-1 rounded-2xl border border-amber-300 shadow-xs backdrop-blur-md">
+                <button id="btn-minigames" onclick="toggleMinigamesModal()" title="Khu Vui Chơi, Đấu Trường Thanh Máu & Minigame (Phím U)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-black text-xs shadow-sm hover:opacity-95 active:scale-95 transition">
+                    <span>🎪</span>
+                    <span>Minigame (U)</span>
+                </button>
+                <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn (Phím N)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-amber-800 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                    <span>📜</span>
+                    <span class="hidden sm:inline">Cột Mốc</span>
+                    <span id="quest-badge-counter" class="bg-rose-500 text-white text-[9px] font-black px-1.5 rounded-full">0/5</span>
+                </button>
+            </div>
+
+            <!-- Group C (Sky/Mint): Build, Fly, View & Collapsible Utilities Drawer -->
+            <div class="flex items-center flex-wrap gap-1 bg-sky-100/75 p-1 rounded-2xl border border-sky-300 shadow-xs backdrop-blur-md">
+                <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-sky-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                    <span>🎒</span>
+                    <span class="hidden md:inline">Túi Đồ</span>
+                </button>
+                <button id="btn-fly" title="Bật/Tắt Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-indigo-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                    <span id="fly-icon">🕊️</span>
+                    <span id="fly-label">Đi Bộ</span>
+                </button>
+                <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng thêm: Bản đồ, Kho Quà, Ghép Đồ, Lưu Game, Thời Tiết, Hướng Dẫn..." class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-sky-600 text-white font-black text-xs hover:bg-sky-700 active:scale-95 transition">
+                    <span id="drawer-toggle-text">⚙️ Thêm ▾</span>
+                </button>
             </div>
         </div>
 
-        <!-- Primary Action Controls + Collapsible Secondary Drawer -->
-        <div class="pointer-events-auto flex items-center flex-wrap gap-1">
-            <!-- Co-op Online Multiplayer Prominent Button -->
-            <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người Thời Gian Thực (Co-op Online)" class="px-3 py-1.5 rounded-2xl flex items-center gap-1.5 bg-gradient-to-r from-rose-500 via-pink-500 to-purple-500 text-white font-extrabold text-xs shadow-md hover:opacity-95 active:scale-95 transition border-2 border-white">
-                <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
-                <span>💑 Chơi Chung (Co-op)</span>
-                <span id="coop-ping-tag" class="hidden text-[10px] bg-white/25 px-1.5 rounded-full">Online</span>
+        <!-- Collapsible Compact Grid Drawer (Cleanly categorized, hidden by default!) -->
+        <div id="extra-tools-drawer" class="hidden pointer-events-auto cozy-glass p-2 rounded-2xl border-2 border-pink-300 shadow-xl items-center flex-wrap gap-1.5 max-w-xl">
+            <button id="btn-map" title="Bản đồ Hướng Dẫn 320x320 & Đổi Map (Phím M)" class="px-2.5 py-1.5 rounded-xl bg-purple-100 hover:bg-purple-200 text-purple-800 font-extrabold text-xs flex items-center gap-1 transition">
+                🗺️ <span>Bản Đồ (M)</span>
             </button>
-
-            <!-- Amusement Park & 6 Minigames Hub Button (Phím U) -->
-            <button id="btn-minigames" onclick="toggleMinigamesModal()" title="Khu Vui Chơi & 6 Minigame Cặp Đôi Đồng Bộ (Phím U)" class="px-3 py-1.5 rounded-2xl flex items-center gap-1.5 bg-gradient-to-r from-amber-400 via-orange-400 to-rose-500 text-white font-black text-xs shadow-md hover:opacity-95 active:scale-95 transition border-2 border-white">
-                <span>🎪</span>
-                <span>Khu Vui Chơi & Minigame (U)</span>
+            <button onclick="teleportToCloudObservatory()" title="Bay lên Đài Quan Sát Trên Mây (Y=54) ngắm toàn cảnh từ trên cao!" class="px-2.5 py-1.5 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-800 font-extrabold text-xs flex items-center gap-1 transition">
+                ☁️ <span>View Trên Mây</span>
             </button>
-
-            <!-- Quick Teleport to Partner Button -->
-            <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-rose-600 font-extrabold text-xs hover:bg-white active:scale-95 transition border-pink-300">
-                <span>📍</span>
-                <span class="hidden xl:inline">Bay Tới Người Ấy</span>
+            <button id="btn-coupons" onclick="toggleCouponModal()" title="Kho Thẻ Phần Thưởng Tình Yêu (Ôm, Hôn, Bóp Bóp)" class="px-2.5 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-700 font-extrabold text-xs flex items-center gap-1 transition">
+                🎟️ <span>Kho Quà</span> <span id="coupon-badge-counter" class="bg-amber-400 text-amber-950 text-[9px] font-black px-1.5 rounded-full">1</span>
             </button>
-
-            <!-- Primary Always-Visible Buttons -->
-            <button id="btn-map" title="Bản đồ Thế giới 320x320 & Dịch chuyển nhanh (Phím M)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-purple-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                <span>🗺️</span>
-                <span class="hidden sm:inline">Bản Đồ</span>
+            <button id="btn-craft" title="Xưởng Ghép Đồ & Sáng Tạo (Phím C)" class="px-2.5 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 font-extrabold text-xs flex items-center gap-1 transition">
+                🛠️ <span>Ghép Đồ</span>
             </button>
-
-            <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn & Phần thưởng (Phím N)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-pink-600 font-bold text-xs hover:bg-white active:scale-95 transition relative">
-                <span>📜</span>
-                <span class="hidden sm:inline">Cột Mốc Đôi</span>
-                <span id="quest-badge-counter" class="bg-rose-500 text-white text-[9px] font-black px-1.5 py-0.2 rounded-full">0/5</span>
+            <button id="btn-prefab" title="Xây Nhà Mẫu 1 Chạm (Phím G khi chơi đơn)" class="px-2.5 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 font-extrabold text-xs flex items-center gap-1 transition">
+                ✨ <span>Mẫu Nhà</span>
             </button>
-
-            <button id="btn-coupons" onclick="toggleCouponModal()" title="Kho Thẻ Phần Thưởng Tình Yêu của Uyên (Ôm, Hôn, Bóp Bóp)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-rose-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                <span>🎟️</span>
-                <span class="hidden md:inline">Kho Quà Yêu</span>
-                <span id="coupon-badge-counter" class="bg-amber-400 text-amber-950 text-[9px] font-black px-1.5 rounded-full">1</span>
+            <button id="btn-time" title="Đổi Thời tiết: Nắng Sớm / Hoàng Hôn / Đêm Sao" class="px-2.5 py-1.5 rounded-xl bg-pink-100 hover:bg-pink-200 text-pink-800 font-extrabold text-xs flex items-center gap-1 transition">
+                <span id="time-icon">☀️</span> <span id="time-label">Nắng Sớm</span>
             </button>
-
-            <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-rose-500 font-bold text-xs hover:bg-white active:scale-95 transition">
-                <span>🎒</span>
-                <span class="hidden md:inline">Túi Đồ</span>
-            </button>
-
-            <!-- Collapsible Extra Tools Drawer (Hidden by default to keep screen super clean!) -->
-            <div id="extra-tools-drawer" class="hidden items-center flex-wrap gap-1">
-                <button id="btn-craft" title="Xưởng Ghép Đồ & Chế độ Sáng tạo (Phím C)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-amber-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span>🛠️</span>
-                    <span class="hidden lg:inline">Ghép Đồ</span>
-                </button>
-
-                <button id="btn-prefab" title="Xây Nhà Mẫu 1 Chạm (Phím G)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-amber-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span>✨</span>
-                    <span class="hidden lg:inline">Mẫu Nhà</span>
-                </button>
-
-                <button id="btn-fly" title="Chế độ Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-indigo-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span id="fly-icon">🕊️</span>
-                    <span id="fly-label" class="hidden lg:inline">Đi Bộ</span>
-                </button>
-
-                <button id="btn-time" title="Đổi Thời tiết: Nắng Sớm / Hoàng Hôn / Đêm Sao" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-pink-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span id="time-icon">☀️</span>
-                    <span id="time-label" class="hidden xl:inline">Nắng Sớm</span>
-                </button>
-
-                <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="cozy-glass px-2 py-1.5 rounded-2xl text-sky-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    🌈
-                </button>
-
-                <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="cozy-glass px-2 py-1.5 rounded-2xl text-blue-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    💾
-                </button>
-
-                <button id="btn-perf" title="Chế độ Siêu Mượt cho máy yếu" class="cozy-glass px-2 py-1.5 rounded-2xl text-emerald-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span id="perf-icon">⚡</span>
-                </button>
-
-                <button id="btn-sound" title="Bật/Tắt nhạc Lo-fi" class="cozy-glass px-2 py-1.5 rounded-2xl text-pink-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    <span id="sound-icon">🎵</span>
-                </button>
-
-                <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="cozy-glass px-2 py-1.5 rounded-2xl text-rose-500 font-bold text-xs hover:bg-white active:scale-95 transition">
-                    📸
-                </button>
-            </div>
-
-            <!-- Toggle Drawer Button -->
-            <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng / Thu gọn thanh công cụ để nhìn màn hình rộng hơn" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 text-gray-700 font-extrabold text-xs hover:bg-white active:scale-95 transition border-pink-300">
-                <span id="drawer-toggle-text">⚙️ Tiện Ích ▾</span>
-            </button>
-
-            <!-- Clean Cinema View Toggle (Tab) -->
-            <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện để ngắm cảnh toàn màn hình (Phím Tab)" class="cozy-glass px-2 py-1.5 rounded-2xl text-pink-600 font-bold text-xs hover:bg-white active:scale-95 transition">
-                👁️
-            </button>
-
-            <!-- Help Guide Button -->
-            <button id="btn-help" title="Hướng dẫn sử dụng chi tiết cho Uyên" class="cozy-glass px-2.5 py-1.5 rounded-2xl flex items-center gap-1 bg-pink-500 text-white font-black text-xs hover:bg-pink-600 active:scale-95 transition shadow-sm">
-                <span>❓ Hướng Dẫn</span>
-            </button>
+            <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-50 text-sky-600 font-bold text-xs border border-sky-200 transition">🌈</button>
+            <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-blue-600 font-bold text-xs border border-blue-200 transition">💾 Lưu</button>
+            <button id="btn-perf" title="Chế độ Siêu Mượt cho máy yếu" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-600 font-bold text-xs border border-emerald-200 transition"><span id="perf-icon">⚡</span> Mượt</button>
+            <button id="btn-sound" title="Bật/Tắt nhạc Lo-fi" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-pink-50 text-pink-600 font-bold text-xs border border-pink-200 transition"><span id="sound-icon">🎵</span></button>
+            <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-500 font-bold text-xs border border-rose-200 transition">📸</button>
+            <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs border border-gray-200 transition">👁️ Ẩn HUD</button>
+            <button id="btn-help" title="Hướng dẫn sử dụng chi tiết cho Uyên" class="px-2.5 py-1.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-black text-xs transition">❓ Hướng Dẫn</button>
         </div>
     </div>
 
-    <!-- FLOATING COMPACT RADAR MINIMAP (TOP RIGHT) -->
-    <div id="minimap-container" class="absolute top-16 right-3 pointer-events-auto z-20 hidden sm:flex flex-col items-end w-[132px] transition-all duration-300">
-        <div class="cozy-glass p-2 rounded-3xl shadow-lg relative flex flex-col items-center w-full">
-            <canvas id="minimap-canvas" width="112" height="112" style="width: 112px !important; height: 112px !important;"></canvas>
-            <div class="flex items-center justify-between w-full px-1 mt-1 text-[9px] font-bold text-gray-600">
-                <span id="minimap-title-tag" class="text-pink-600 truncate">🏝️ Đảo Livik</span>
+    <!-- INTERACTIVE GUIDANCE RADAR MINIMAP (TOP RIGHT) -->
+    <div id="minimap-container" class="absolute top-3 right-3 pointer-events-auto z-20 hidden sm:flex flex-col items-end w-[148px] transition-all duration-300">
+        <div class="cozy-glass p-2 rounded-3xl shadow-lg relative flex flex-col items-center w-full border-2 border-pink-200">
+            <div class="relative cursor-pointer" onclick="toggleMapModal()" title="Bấm vào bản đồ để mở Hướng Dẫn Địa Điểm & Đổi Map!">
+                <canvas id="minimap-canvas" width="124" height="124" style="width: 124px !important; height: 124px !important;" class="rounded-2xl border border-white/80 shadow-inner"></canvas>
+                <span class="absolute bottom-1 right-1 text-[9px] font-black bg-white/85 text-pink-600 px-1.5 py-0.2 rounded-full shadow-xs">M</span>
+            </div>
+            <div class="flex items-center justify-between w-full px-1 mt-1 text-[10px] font-extrabold text-gray-700">
+                <span id="minimap-title-tag" class="text-pink-600 truncate">🌸 Đảo Livik</span>
                 <button onclick="toggleMinimapVisibility()" title="Thu nhỏ bản đồ góc" class="text-gray-400 hover:text-pink-600 font-black">✕</button>
             </div>
-            <button onclick="toggleMapModal()" class="mt-0.5 text-[10px] text-pink-600 font-bold hover:underline">
-                Bản Đồ & Đổi Map ↗
+            <div id="minimap-coords" class="text-[9px] font-bold text-gray-500 w-full px-1 flex justify-between">
+                <span>X:0 Z:8</span><span>Y:7</span>
+            </div>
+            <div id="minimap-partner-status" onclick="teleportToPartner()" class="hidden cursor-pointer w-full mt-0.5 px-1.5 py-0.5 rounded-lg bg-rose-50 border border-rose-200 text-[9px] font-extrabold text-rose-600 text-center truncate hover:bg-rose-100">
+                💑 Đang ở gần
+            </div>
+            <button onclick="toggleMapModal()" class="mt-1 w-full py-1 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-[10px] font-black rounded-xl hover:opacity-95 transition shadow-xs">
+                🗺️ Hướng Dẫn & Đổi Map ↗
             </button>
         </div>
     </div>
@@ -290,27 +256,64 @@
         👁️ Hiện Giao Diện (Tab)
     </button>
 
+    <!-- NON-INTRUSIVE PARTNER MAP CHANGE INVITE BANNER -->
+    <div id="map-invite-banner" class="fixed top-20 left-1/2 -translate-x-1/2 z-40 hidden pointer-events-auto cozy-glass px-4 py-2 rounded-3xl border-2 border-indigo-400 bg-white/95 shadow-2xl flex flex-wrap items-center justify-center gap-2.5 text-xs">
+        <span id="map-invite-text" class="font-black text-indigo-700">💌 Người ấy vừa chuyển sang Map khác!</span>
+        <button onclick="acceptIncomingMapInvite()" class="px-3 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-black rounded-xl shadow hover:opacity-95 transition">
+            ✅ Đổi Sang Cùng (Y)
+        </button>
+        <button onclick="dismissMapInviteBanner()" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl">✕</button>
+    </div>
+
     <!-- COUPLE COMPASS / RED THREAD OF FATE INDICATOR (When Partner is Far) -->
-    <div id="partner-compass-indicator" onclick="teleportToPartner()" title="Bấm để bay ngay tới bên người ấy!" class="fixed top-20 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-auto cursor-pointer cozy-glass px-3.5 py-1 rounded-full border-2 border-rose-300 shadow-md flex items-center gap-1.5 text-xs font-extrabold text-rose-600 hover:bg-white transition">
+    <div id="partner-compass-indicator" onclick="teleportToPartner()" title="Bấm để bay ngay tới bên người ấy!" class="fixed top-24 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-auto cursor-pointer cozy-glass px-3.5 py-1 rounded-full border-2 border-rose-300 shadow-md flex items-center gap-1.5 text-xs font-extrabold text-rose-600 hover:bg-white transition">
         <span id="compass-arrow" class="text-sm">💘</span>
         <span id="compass-partner-name">💙 Anh Huân</span>
         <span id="compass-dist-text" class="text-[11px] bg-rose-100 text-rose-700 px-1.5 py-0.2 rounded-full">12m</span>
         <span class="text-[10px] underline ml-1">Bay tới ↗</span>
     </div>
 
+    <!-- BATTLE ARENA DUAL HP BAR HUD (Đấu Trường Thanh Máu 100 HP) -->
+    <div id="battle-hp-hud" class="fixed top-28 left-1/2 -translate-x-1/2 z-30 hidden pointer-events-none cozy-glass px-4 py-2.5 rounded-3xl border-2 border-rose-400 bg-white/95 shadow-2xl w-[92vw] max-w-lg space-y-1.5">
+        <div class="flex items-center justify-between gap-3 text-xs font-black">
+            <div class="flex-1">
+                <div class="flex justify-between text-sky-700 mb-0.5">
+                    <span id="hp-label-left">💙 Anh Huân</span>
+                    <span id="hp-val-left">100/100</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden border border-sky-300">
+                    <div id="hp-bar-left" class="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all duration-200" style="width: 100%"></div>
+                </div>
+            </div>
+            <span class="text-base font-black text-rose-500">⚔️ VS</span>
+            <div class="flex-1">
+                <div class="flex justify-between text-rose-600 mb-0.5">
+                    <span id="hp-label-right">💖 Bé Uyên</span>
+                    <span id="hp-val-right">100/100</span>
+                </div>
+                <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden border border-pink-300">
+                    <div id="hp-bar-right" class="h-full bg-gradient-to-r from-pink-400 to-rose-600 transition-all duration-200" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+        <div class="text-center text-[10px] font-bold text-gray-600">
+            ❄️ Bắn Pháo Tim/Cầu Tuyết: <span class="text-rose-600">Chuột Trái / J / Q</span> • 🛡️ Khiên Giảm Sát Thương: <span class="text-indigo-600">K / Chuột Phải</span> • 🎂 Ăn Bánh Dâu để hồi +20 HP!
+        </div>
+    </div>
+
     <!-- ACTIVE MINIGAME HUD BANNER (Zero-Interruption Live Timer / Color Cue / Skill Cooldown) -->
-    <div id="minigame-hud-banner" class="fixed top-20 left-1/2 -translate-x-1/2 z-30 hidden pointer-events-auto cozy-glass px-4 py-2 rounded-3xl border-2 border-amber-400 bg-white/95 shadow-xl flex flex-wrap items-center justify-center gap-3 text-xs">
-        <span id="mg-hud-title" class="font-black text-rose-600 text-sm">🏃‍♂️ ĐUỔI BẮT 50/50</span>
-        <span id="mg-hud-timer" class="px-3 py-1 rounded-full bg-amber-500 text-white font-black text-sm shadow-xs">45s</span>
-        <span id="mg-hud-role" class="px-2.5 py-1 rounded-full bg-pink-100 text-pink-800 font-extrabold">Vai: Người Đuổi (+6%)</span>
-        <span id="mg-hud-skill" class="hidden px-2.5 py-1 rounded-full bg-cyan-100 text-cyan-800 font-extrabold">💨 Lướt (Shift/F): Sẵn sàng!</span>
-        <button onclick="exitCurrentMinigameOrRide()" class="px-2.5 py-1 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-[11px] shadow-xs transition">
+    <div id="minigame-hud-banner" class="fixed top-16 left-1/2 -translate-x-1/2 z-30 hidden pointer-events-auto cozy-glass px-4 py-1.5 rounded-3xl border-2 border-amber-400 bg-white/95 shadow-xl flex flex-wrap items-center justify-center gap-2.5 text-xs">
+        <span id="mg-hud-title" class="font-black text-rose-600 text-xs sm:text-sm">🏃‍♂️ ĐUỔI BẮT 50/50</span>
+        <span id="mg-hud-timer" class="px-3 py-0.5 rounded-full bg-amber-500 text-white font-black text-xs sm:text-sm shadow-xs">45s</span>
+        <span id="mg-hud-role" class="px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800 font-extrabold">Vai: Người Đuổi (+6%)</span>
+        <span id="mg-hud-skill" class="hidden px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 font-extrabold">💨 Lướt (Shift/F): Sẵn sàng!</span>
+        <button onclick="exitCurrentMinigameOrRide()" class="px-2.5 py-0.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-[11px] shadow-xs transition">
             ❌ Thoát
         </button>
     </div>
 
     <!-- RIDE / INTERACTION PROXIMITY PROMPT (Non-intrusive floating cue above hotbar) -->
-    <div id="ride-action-prompt" class="fixed bottom-32 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-auto cursor-pointer cozy-glass px-4 py-1.5 rounded-full border-2 border-pink-400 bg-pink-50/95 shadow-lg flex items-center gap-2 text-xs font-black text-pink-700 animate-bounce" onclick="handleRideInteractKey()">
+    <div id="ride-action-prompt" class="fixed bottom-28 left-1/2 -translate-x-1/2 z-20 hidden pointer-events-auto cursor-pointer cozy-glass px-4 py-1.5 rounded-full border-2 border-pink-400 bg-pink-50/95 shadow-lg flex items-center gap-2 text-xs font-black text-pink-700 animate-bounce" onclick="handleRideInteractKey()">
         <span id="ride-prompt-icon">🎡</span>
         <span id="ride-prompt-text">Bấm [E] để lên Cabin Vòng Quay Mặt Trời!</span>
     </div>
@@ -321,71 +324,99 @@
         <span>Đang Ở Cạnh Bên Nhau • Cộng hưởng tình yêu +💖</span>
     </div>
 
-    <!-- COUPLE QUICK EMOTES & SPEECH BUBBLE CHAT WIDGET (BOTTOM LEFT) -->
-    <div id="couple-chat-panel" class="fixed bottom-24 left-3 z-30 flex flex-col gap-1.5 max-w-[270px] sm:max-w-[310px] pointer-events-none">
-        <!-- Recent Chat Messages Log -->
-        <div id="chat-messages-log" class="flex flex-col gap-1 max-h-28 overflow-y-auto custom-scroll pr-1 pointer-events-auto">
-            <!-- Messages appear here -->
-        </div>
+    <!-- COUPLE QUICK EMOTES & COLLAPSIBLE CHAT WIDGET (PUSHED CLEANLY TO BOTTOM LEFT!) -->
+    <div id="couple-chat-panel" class="fixed bottom-3 left-3 z-30 flex flex-col gap-1.5 max-w-[280px] sm:max-w-[320px] pointer-events-none">
+        <!-- Minimized Restore Pill (Shown only when Chat is Collapsed) -->
+        <button id="btn-chat-expand" onclick="toggleCoupleChatPanel()" class="hidden pointer-events-auto cozy-glass px-3 py-1.5 rounded-2xl border-2 border-pink-300 text-xs font-black text-pink-700 shadow-md flex items-center gap-1.5 self-start hover:bg-white transition">
+            <span>💬</span> <span>Mở Chat & Cảm Xúc</span> <span id="chat-unread-dot" class="hidden w-2 h-2 rounded-full bg-rose-500 animate-ping"></span> <span>▲</span>
+        </button>
 
-        <!-- Quick Couple Emote Buttons (T, V, K, Selfie) -->
-        <div class="flex items-center flex-wrap gap-1 pointer-events-auto">
-            <button onclick="triggerCoupleEmote('heart')" title="Thả mưa bong bóng trái tim (Phím T)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-rose-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
-                <span>💖</span> <span>Thả Tim (T)</span>
-            </button>
-            <button onclick="triggerCoupleEmote('dance')" title="Vẫy tay & nhảy múa vui vẻ (Phím V)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-purple-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
-                <span>💃</span> <span>Vẫy Tay (V)</span>
-            </button>
-            <button onclick="triggerCoupleEmote('flower')" title="Tặng hoa hồng & bắn pháo hoa nhỏ (Phím K)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-pink-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
-                <span>🌹</span> <span>Tặng Hoa (K)</span>
-            </button>
-            <button onclick="takeCoupleSelfiePhoto()" title="Chụp ảnh Selfie Đôi góc máy thứ 3 (Phím P)" class="cozy-glass px-2.5 py-1 rounded-xl text-[11px] font-extrabold text-amber-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
-                <span>🤳</span> <span>Selfie Đôi</span>
-            </button>
-        </div>
+        <!-- Expanded Chat Body -->
+        <div id="couple-chat-body" class="flex flex-col gap-1.5">
+            <!-- Header Bar with Collapse Button -->
+            <div class="flex items-center justify-between px-2.5 py-0.5 rounded-xl bg-white/80 border border-pink-200 shadow-xs pointer-events-auto self-start gap-2">
+                <span class="text-[10px] font-black text-pink-600">💌 Khung Chat & Cảm Xúc Đôi</span>
+                <button onclick="toggleCoupleChatPanel()" title="Thu gọn khung chat cho màn hình thoáng hơn" class="text-[10px] font-black text-gray-500 hover:text-rose-600 px-1.5 py-0.2 rounded-lg bg-pink-50">
+                    ▼ Ẩn
+                </button>
+            </div>
 
-        <!-- Chat Input Bar (Press Enter to focus/send) -->
-        <div class="flex items-center gap-1 pointer-events-auto cozy-glass p-1 rounded-2xl border border-pink-300 shadow-sm">
-            <input id="chat-input-box" type="text" maxlength="80" placeholder="Nhắn lời yêu thương (Phím Enter)..." class="bg-transparent text-xs font-bold text-gray-700 placeholder-pink-400 px-2.5 py-1 flex-1 focus:outline-none">
-            <button onclick="sendCoupleChatMessage()" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-3 py-1 rounded-xl shadow-xs hover:opacity-95 active:scale-95 transition">
-                Gửi 💬
-            </button>
+            <!-- Recent Chat Messages Log -->
+            <div id="chat-messages-log" class="flex flex-col gap-1 max-h-24 overflow-y-auto custom-scroll pr-1 pointer-events-auto">
+                <!-- Messages appear here -->
+            </div>
+
+            <!-- Quick Couple Emote Buttons (T, V, K, Selfie) -->
+            <div class="flex items-center flex-wrap gap-1 pointer-events-auto">
+                <button onclick="triggerCoupleEmote('heart')" title="Thả mưa bong bóng trái tim (Phím T)" class="cozy-glass px-2 py-0.5 rounded-xl text-[10px] font-extrabold text-rose-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                    <span>💖</span> <span>Tim (T)</span>
+                </button>
+                <button onclick="triggerCoupleEmote('dance')" title="Vẫy tay & nhảy múa vui vẻ (Phím V)" class="cozy-glass px-2 py-0.5 rounded-xl text-[10px] font-extrabold text-purple-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                    <span>💃</span> <span>Nhảy (V)</span>
+                </button>
+                <button onclick="triggerCoupleEmote('flower')" title="Tặng hoa hồng & pháo hoa (Phím K)" class="cozy-glass px-2 py-0.5 rounded-xl text-[10px] font-extrabold text-pink-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                    <span>🌹</span> <span>Hoa (K)</span>
+                </button>
+                <button onclick="takeCoupleSelfiePhoto()" title="Chụp ảnh Selfie Đôi (Phím P)" class="cozy-glass px-2 py-0.5 rounded-xl text-[10px] font-extrabold text-amber-600 hover:bg-white active:scale-95 transition flex items-center gap-1 shadow-xs">
+                    <span>🤳</span> <span>Selfie</span>
+                </button>
+            </div>
+
+            <!-- Chat Input Bar (Press Enter to focus/send) -->
+            <div class="flex items-center gap-1 pointer-events-auto cozy-glass p-1 rounded-2xl border border-pink-300 shadow-sm">
+                <input id="chat-input-box" type="text" maxlength="80" placeholder="Nhắn lời yêu thương (Enter)..." class="bg-transparent text-xs font-bold text-gray-700 placeholder-pink-400 px-2 py-0.5 flex-1 focus:outline-none">
+                <button onclick="sendCoupleChatMessage()" class="bg-gradient-to-r from-pink-500 to-rose-500 text-white text-xs font-black px-2.5 py-1 rounded-xl shadow-xs hover:opacity-95 active:scale-95 transition">
+                    Gửi 💬
+                </button>
+            </div>
         </div>
     </div>
 
     <!-- BOTTOM HOTBAR: Block Selector (1-9) -->
-    <div id="hud-bottom-bar" class="absolute bottom-3 left-0 right-0 flex flex-col items-center pointer-events-none z-30 px-2 transition-opacity duration-300">
+    <div id="hud-bottom-bar" class="absolute bottom-2 left-0 right-0 flex flex-col items-center pointer-events-none z-20 px-2 transition-opacity duration-300">
         <!-- Selected Block Name Tag & Quick Cheatsheet Hint -->
-        <div class="flex items-center gap-2 mb-1.5 pointer-events-auto">
-            <div id="block-name-tag" class="cozy-glass px-3.5 py-1 rounded-full text-xs font-bold text-pink-600 shadow-sm">
+        <div class="flex items-center gap-2 mb-1 pointer-events-auto">
+            <div id="block-name-tag" class="cozy-glass px-3 py-0.5 rounded-full text-[11px] font-bold text-pink-600 shadow-sm">
                 🌸 Cỏ Xuân Hồng (Phím 1)
             </div>
-            <div class="cozy-glass px-2.5 py-1 rounded-full text-[11px] font-bold text-gray-500 hidden md:inline-block">
-                💡 Đặt/Lên Xe: <span class="text-pink-600">E</span> • Đập: <span class="text-pink-600">Q</span> • Khu Vui Chơi: <span class="text-amber-600 font-black">U</span> • Chạy/Lướt: <span class="text-purple-600">Shift</span> • Bay: <span class="text-indigo-600">F</span> • Tới Người Yêu: <span class="text-rose-600">G</span>
+            <div class="cozy-glass px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-500 hidden lg:inline-block">
+                💡 Đặt/Lên Xe: <span class="text-pink-600">E</span> • Đập/Bắn: <span class="text-pink-600">Q</span> • Minigame: <span class="text-amber-600 font-black">U</span> • Chạy/Lướt: <span class="text-purple-600">Shift</span> • Bay: <span class="text-indigo-600">F</span> • Bản Đồ: <span class="text-sky-600">M</span>
             </div>
         </div>
 
         <!-- Hotbar Slots -->
-        <div id="hotbar" class="pointer-events-auto flex items-center gap-1 sm:gap-2 cozy-glass p-2 rounded-3xl max-w-full overflow-x-auto shadow-md">
+        <div id="hotbar" class="pointer-events-auto flex items-center gap-1 sm:gap-1.5 cozy-glass p-1.5 rounded-3xl max-w-full overflow-x-auto shadow-md">
             <!-- Injected by JavaScript dynamically with 9 cute blocks -->
         </div>
     </div>
 
-    <!-- ON-SCREEN MOBILE/TRACKPAD TOUCH ACTION BUTTONS -->
-    <div class="absolute bottom-28 right-3 flex flex-col gap-2 pointer-events-none z-20 md:hidden">
-        <button id="touch-place" class="pointer-events-auto w-11 h-11 rounded-2xl cozy-glass bg-pink-100/95 flex items-center justify-center text-xl font-bold text-pink-600 shadow-lg active:scale-90 transition">
-            ➕
+    <!-- QUICK JUMP, SPRINT BOOST & CLOUD OBSERVATORY CONTROLS (BOTTOM RIGHT - ALL DEVICES!) -->
+    <div id="quick-action-pad" class="fixed bottom-3 right-3 flex flex-col items-end gap-1.5 pointer-events-none z-30">
+        <!-- Mobile Touch Build Buttons -->
+        <div class="flex gap-1.5 md:hidden">
+            <button id="touch-place" class="pointer-events-auto w-10 h-10 rounded-2xl cozy-glass bg-pink-100/95 flex items-center justify-center text-lg font-bold text-pink-600 shadow-lg active:scale-90 transition">
+                ➕
+            </button>
+            <button id="touch-break" class="pointer-events-auto w-10 h-10 rounded-2xl cozy-glass bg-rose-100/95 flex items-center justify-center text-lg font-bold text-rose-600 shadow-lg active:scale-90 transition">
+                🔨
+            </button>
+        </div>
+        <!-- Always-Available Cloud View, Sprint Toggle & Jump Button -->
+        <button id="action-skyview-btn" onclick="teleportToCloudObservatory()" title="Bay lên Đài Ngắm Toàn Cảnh Trên Mây (Y=54) nhìn xuống dưới!" class="pointer-events-auto cozy-glass px-3 py-1.5 rounded-2xl bg-sky-100/95 hover:bg-white border-2 border-sky-300 flex items-center gap-1 text-xs font-black text-sky-700 shadow-lg active:scale-95 transition">
+            <span>☁️</span> <span>View Trên Mây</span>
         </button>
-        <button id="touch-break" class="pointer-events-auto w-11 h-11 rounded-2xl cozy-glass bg-rose-100/95 flex items-center justify-center text-xl font-bold text-rose-600 shadow-lg active:scale-90 transition">
-            🔨
-        </button>
-        <button id="touch-jump" class="pointer-events-auto w-11 h-11 rounded-2xl cozy-glass bg-emerald-100/95 flex items-center justify-center text-xl font-bold text-emerald-600 shadow-lg active:scale-90 transition">
-            🦘
-        </button>
+        <div class="flex items-center gap-1.5">
+            <button id="action-sprint-btn" onclick="toggleSprintMode()" title="Bật/Tắt Tăng Tốc Khi Chạy (hoặc giữ phím Shift)" class="pointer-events-auto cozy-glass px-3 py-2 rounded-2xl bg-amber-50/95 hover:bg-white border-2 border-amber-300 flex items-center gap-1 text-xs font-black text-amber-800 shadow-lg active:scale-95 transition">
+                <span>⚡</span> <span id="sprint-btn-label">Chạy Nhanh</span>
+            </button>
+            <button id="touch-jump" title="Nhảy lên (Hoặc giữ để bay cao khi đang bật chế độ Bay)" class="pointer-events-auto px-3.5 py-2 rounded-2xl cozy-glass bg-emerald-100/95 hover:bg-emerald-200 border-2 border-emerald-400 flex items-center gap-1 text-xs font-black text-emerald-800 shadow-lg active:scale-90 transition">
+                <span>🦘</span> <span>Nhảy</span>
+            </button>
+        </div>
     </div>
 
     <!-- PET STATUS EMOTE BADGE -->
-    <div id="pet-emote" class="absolute bottom-20 left-4 pointer-events-none z-20 hidden">
+    <div id="pet-emote" class="fixed bottom-24 left-3 pointer-events-none z-20 hidden">
         <div class="cozy-glass px-3.5 py-1.5 rounded-2xl flex items-center gap-2 text-xs font-bold text-pink-600 float-anim shadow-sm">
             <span id="pet-emote-icon" class="text-lg">🐰</span>
             <span id="pet-emote-text">Thú cưng đang đi lon ton theo Uyên ❤️</span>
@@ -547,49 +578,74 @@
         </div>
     </div>
 
-    <!-- 3. RADAR MINIMAP, WORLD SWITCHER & 6 POI TELEPORT MODAL (Phím M) -->
+    <!-- 3. RADAR MINIMAP, 3-MAP SWITCHER & INTERACTIVE GUIDANCE MODAL (Phím M) -->
     <div id="map-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
-        <div class="cozy-glass max-w-2xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
-            <button onclick="toggleMapModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
+        <div class="cozy-glass max-w-3xl w-full p-4 md:p-5 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
+            <button onclick="toggleMapModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
             </button>
-            <div class="flex items-center gap-2 mb-2">
+            <div class="flex items-center gap-2 mb-2 pr-8">
                 <span class="text-2xl">🗺️</span>
                 <div>
-                    <h2 id="map-modal-title" class="text-lg md:text-xl font-extrabold text-pink-600">Bản Đồ Thế Giới (Siêu Rộng 320x320)</h2>
-                    <p class="text-xs text-gray-500">Chọn Bản đồ muốn chơi hoặc bấm vào địa danh / khu trò chơi để bay đến ngay!</p>
+                    <h2 id="map-modal-title" class="text-base md:text-lg font-extrabold text-pink-600">Bản Đồ Chỉ Đường & 3 Thế Giới (320x320)</h2>
+                    <p class="text-[11px] text-gray-500 font-semibold">Đổi Map sẽ tự động gửi thông báo mời người yêu sang cùng • Bấm trực tiếp lên Radar hoặc ô bên cạnh để bay tới!</p>
                 </div>
             </div>
 
-            <!-- 2 WORLD MAPS SWITCHER TABS -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-3 bg-pink-50/90 p-2 rounded-2xl border border-pink-200">
-                <button id="tab-map-livik" onclick="switchWorldMapMode('livik')" class="p-2.5 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow transition">
+            <!-- 3 WORLD MAPS SWITCHER TABS (LIVIK / VIKENDI SNOW / SANHOK JUNGLE) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3 bg-pink-50/90 p-2 rounded-2xl border border-pink-200">
+                <button id="tab-map-livik" onclick="switchWorldMapMode('livik')" class="p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow transition active:scale-95">
                     <span class="text-lg">🏝️</span>
-                    <div class="text-left">
-                        <div>Map 1: Quần Đảo Livik 4 Mùa (320x320)</div>
-                        <div class="text-[10px] opacity-85 font-normal">Rộng gấp 4 lần • 4 mùa & Công Viên Cặp Đôi</div>
+                    <div class="text-left leading-tight">
+                        <div>Map 1: Livik 4 Mùa</div>
+                        <div class="text-[9.5px] opacity-90 font-normal">Vòng Quay Y=56 • Công Viên</div>
                     </div>
                 </button>
-                <button id="tab-map-minecraft" onclick="switchWorldMapMode('minecraft')" class="p-2.5 rounded-xl font-extrabold text-xs flex items-center justify-center gap-2 bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 transition">
-                    <span class="text-lg">⛏️</span>
-                    <div class="text-left">
-                        <div>Map 2: Lục Địa Minecraft Cổ Điển (320x320)</div>
-                        <div class="text-[10px] opacity-85 font-normal">Làng NPC, Đền Sa Mạc, Kim Cương & 6 Minigame</div>
+                <button id="tab-map-vikendi" onclick="switchWorldMapMode('vikendi')" class="p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-white text-sky-700 border border-sky-200 hover:bg-sky-50 transition active:scale-95">
+                    <span class="text-lg">❄️</span>
+                    <div class="text-left leading-tight">
+                        <div>Map 2: Vikendi Tuyết</div>
+                        <div class="text-[9.5px] opacity-85 font-normal">Lâu Đài Tuyết & Săn Tinh Thể</div>
+                    </div>
+                </button>
+                <button id="tab-map-sanhok" onclick="switchWorldMapMode('sanhok')" class="p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 transition active:scale-95">
+                    <span class="text-lg">🌴</span>
+                    <div class="text-left leading-tight">
+                        <div>Map 3: Sanhok Rừng</div>
+                        <div class="text-[9.5px] opacity-85 font-normal">Cầu Treo & Bẫy Đền Cổ</div>
                     </div>
                 </button>
             </div>
 
-            <!-- 6 POIs Interactive Grid (Dynamic based on active Map) -->
-            <div id="map-poi-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 my-1 overflow-y-auto custom-scroll p-1">
-                <!-- Injected dynamically via renderMapPOIGrid() -->
+            <!-- Interactive Radar Canvas + POIs Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 my-1 overflow-y-auto custom-scroll p-0.5 flex-1">
+                <div class="md:col-span-5 flex flex-col items-center justify-between bg-white/80 rounded-2xl p-3 border-2 border-pink-200">
+                    <div class="text-[11px] font-black text-pink-700 mb-1.5 flex items-center gap-1">
+                        <span>🧭</span> Radar Chỉ Đường Tương Tác (Click để Bay)
+                    </div>
+                    <div class="relative">
+                        <canvas id="fullmap-canvas" width="240" height="240" onclick="handleFullMapClick(event)" class="rounded-2xl border-2 border-pink-300 shadow-md cursor-crosshair bg-sky-100 block"></canvas>
+                    </div>
+                    <div class="w-full flex flex-wrap items-center justify-center gap-2 text-[10px] font-bold text-gray-600 mt-2">
+                        <span>💖 Bạn</span>
+                        <span>💛 Người Yêu</span>
+                        <span>⭐ Địa Danh (Click)</span>
+                    </div>
+                </div>
+                <div id="map-poi-grid" class="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-2 content-start">
+                    <!-- Injected dynamically via renderMapPOIGrid() -->
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                <button onclick="toggleMapModal(); toggleMinigamesModal();" class="py-2.5 w-full bg-gradient-to-r from-amber-400 to-rose-500 text-white text-xs font-extrabold rounded-xl shadow-md hover:opacity-95 transition">
-                    🎪 Mở Khu Vui Chơi & 6 Minigame (Phím U)
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2.5">
+                <button onclick="toggleMapModal(); toggleMinigamesModal();" class="py-2 w-full bg-gradient-to-r from-amber-400 to-rose-500 text-white text-xs font-extrabold rounded-xl shadow-md hover:opacity-95 transition">
+                    🎪 Khu Vui Chơi & Đấu 100 HP (U)
                 </button>
-                <button onclick="teleportToPOI('waterfall')" class="py-2.5 w-full bg-gradient-to-r from-sky-400 to-indigo-400 text-white text-xs font-bold rounded-xl shadow-md hover:from-sky-500 hover:to-indigo-500 transition">
-                    💧 Về Trung Tâm Hồ Trái Tim (Phím H)
+                <button onclick="teleportToCloudObservatory(); toggleMapModal();" class="py-2 w-full bg-gradient-to-r from-sky-400 to-indigo-500 text-white text-xs font-extrabold rounded-xl shadow-md hover:opacity-95 transition">
+                    ☁️ Lên Đài Ngắm Mây (Y=54)
+                </button>
+                <button onclick="teleportToPartner(); toggleMapModal();" class="py-2 w-full bg-gradient-to-r from-pink-500 to-fuchsia-500 text-white text-xs font-extrabold rounded-xl shadow-md hover:opacity-95 transition">
+                    💞 Tới Cạnh Người Yêu (G)
                 </button>
             </div>
         </div>
@@ -794,6 +850,48 @@
                         </div>
                         <button onclick="startParkourMinigame()" class="w-full py-2 bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-black rounded-xl text-xs shadow hover:opacity-95 transition">
                             ▶️ Bắt Đầu Đua Parkour Cầu Vồng
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 7: 100-HP Battle Arena -->
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-300 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="font-black text-red-700 text-sm">7. ⚔️ Đấu Trường Thanh Máu (100 HP)</span>
+                            <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-full text-red-600 border border-red-200">X:50 Z:40</span>
+                        </div>
+                        <p class="text-[11px] text-gray-600 leading-relaxed mb-2">
+                            <b>Đối kháng 100 HP:</b> Bấm <b>J / Q / Chuột trái</b> ném Cầu Tuyết Tim (-15 HP). Bấm <b>K / Chuột phải</b> bật Khiên Tim! Ăn <b>Bánh Kem (+20 HP)</b> trên sân. Ai về 0 HP trước thua!
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <button onclick="teleportCoupleToLocation(50, 6, 40, 'Đấu Trường Thanh Máu 100 HP')" class="w-full py-1.5 bg-white hover:bg-red-100 border border-red-300 text-red-700 font-extrabold rounded-xl text-[11px] transition">
+                            📍 Dịch chuyển cả 2 tới Đấu Trường
+                        </button>
+                        <button onclick="startBattleHPMinigame()" class="w-full py-2 bg-gradient-to-r from-red-500 to-orange-500 text-white font-black rounded-xl text-xs shadow hover:opacity-95 transition">
+                            ⚔️ Vào Trận Đấu Thanh Máu Ngay
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 8: Map-Exclusive Special Minigame + Cloud Observatory -->
+                <div class="p-3.5 rounded-2xl bg-gradient-to-br from-violet-50 to-cyan-50 border-2 border-violet-300 flex flex-col justify-between shadow-sm">
+                    <div>
+                        <div class="flex items-center justify-between mb-1">
+                            <span id="map-special-title" class="font-black text-violet-800 text-sm">8. 🎯 Trò Chơi Đặc Sản Theo Map</span>
+                            <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-full text-violet-700 border border-violet-200">Đặc Quyền</span>
+                        </div>
+                        <p id="map-special-desc" class="text-[11px] text-gray-600 leading-relaxed mb-2">
+                            <b>Vikendi:</b> Săn 6 Tinh Thể Băng ở Lâu Đài Tuyết! <b>Sanhok:</b> Vượt Bẫy Đền Cổ tìm 5 Cổ Vật Vàng! Hoặc bay lên <b>Đài Ngắm Mây (Y=54)</b> ngắm toàn cảnh!
+                        </p>
+                    </div>
+                    <div class="flex flex-col gap-1.5">
+                        <button onclick="teleportToCloudObservatory(); toggleMinigamesModal();" class="w-full py-1.5 bg-white hover:bg-sky-100 border border-sky-300 text-sky-700 font-extrabold rounded-xl text-[11px] transition">
+                            ☁️ Bay Lên Đài Ngắm Mây Toàn Cảnh (Y=54)
+                        </button>
+                        <button id="map-special-btn" onclick="startMapSpecialMinigame()" class="w-full py-2 bg-gradient-to-r from-violet-500 to-cyan-500 text-white font-black rounded-xl text-xs shadow hover:opacity-95 transition">
+                            🌟 Chơi Trò Đặc Sản Map Hiện Tại
                         </button>
                     </div>
                 </div>
@@ -1157,6 +1255,23 @@
                 </div>
             </div>
 
+            <!-- Live Active Public Rooms Directory (1-Click Join without typing password) -->
+            <div id="coop-active-rooms-box" class="bg-gradient-to-br from-emerald-50 to-teal-50 p-3 rounded-2xl border-2 border-emerald-200 my-2.5 space-y-2">
+                <div class="flex items-center justify-between gap-2">
+                    <span class="text-xs font-extrabold text-emerald-800 flex items-center gap-1">
+                        <span>📡</span> Danh Sách Phòng Đang Mở (Bấm 1 chạm để vào luôn)
+                    </span>
+                    <button onclick="refreshPublicRoomsList()" class="px-2 py-0.5 rounded-lg bg-white border border-emerald-300 text-emerald-700 font-bold text-[10px] hover:bg-emerald-100 transition">
+                        🔄 Làm mới
+                    </button>
+                </div>
+                <div id="coop-active-rooms-list" class="space-y-1.5 max-h-32 overflow-y-auto custom-scroll">
+                    <div class="text-[11px] text-gray-500 italic py-1.5 text-center bg-white/70 rounded-xl border border-emerald-100">
+                        Chưa có phòng nào đang mở — bấm "✨ Mở Phòng Ngay" để Bé Uyên thấy phòng nhé!
+                    </div>
+                </div>
+            </div>
+
             <!-- Step 2: Create Room (Host) -->
             <div class="bg-gradient-to-br from-rose-50 to-pink-50 p-3.5 rounded-2xl border-2 border-pink-200 my-3 space-y-2">
                 <div class="flex items-center justify-between">
@@ -1237,45 +1352,41 @@
             <div class="flex items-center gap-2 mb-2">
                 <span class="text-2xl">🧸</span>
                 <div>
-                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.0 💕</h2>
-                    <p class="text-xs text-gray-500 font-semibold">Thế giới rộng 320x320 mượt mà 60 FPS cùng Công Viên 6 Trò Chơi Đôi!</p>
+                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.1 💕</h2>
+                    <p class="text-xs text-gray-500 font-semibold">3 Bản Đồ (Livik, Vikendi Tuyết, Sanhok Rừng) • Vòng Quay Y=56 • Đấu Trường 100 HP!</p>
                 </div>
             </div>
 
             <div class="space-y-1.5 text-xs md:text-sm font-medium">
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-2.5 rounded-xl border border-amber-300">
-                    <div class="font-extrabold text-rose-700 mb-0.5">🎪 1. Khu Vui Chơi & 6 Minigame Cặp Đôi (Phím U):</div>
-                    <p class="text-xs text-gray-600">Bấm <b class="text-amber-700">Phím U</b> để mở 6 trò chơi đồng bộ 2 máy: <b>Đuổi Bắt 50/50</b>, <b>Mê Cung Tình Yêu</b>, <b>Vòng Quay Mặt Trời</b>, <b>Xích Đu Anh Đào</b>, <b>Sàn Nhảy Sắc Màu</b> & <b>Parkour / Trượt Băng</b>!</p>
+                    <div class="font-extrabold text-rose-700 mb-0.5">🎪 1. Khu Vui Chơi & 8 Minigame Cặp Đôi (Phím U):</div>
+                    <p class="text-xs text-gray-600">Bấm <b class="text-amber-700">Phím U</b> để mở 8 trò đồng bộ 2 máy: Đuổi Bắt, Mê Cung, Vòng Quay Toàn Cảnh (Y=56), Xích Đu, Sàn Nhảy, Parkour, <b>⚔️ Đấu Trường Thanh Máu 100 HP</b> & <b>Đặc Sản Vikendi / Sanhok</b>!</p>
                 </div>
 
                 <div class="bg-gradient-to-r from-pink-100 to-rose-100 p-2.5 rounded-xl border border-pink-200">
-                    <div class="font-extrabold text-rose-700 mb-0.5">📜 2. 5 Cột Mốc Cặp Đôi Không Ngắt Quãng (Phím N):</div>
-                    <p class="text-xs text-gray-600">Hoàn thành các cột mốc lớn sẽ hiện dải thông báo <b>Toast nhẹ nhàng 3 giây</b> không hề làm mất chuột hay dừng game! Nhận quà đặc quyền <b>"Bóp Bóp"</b> trong Kho Quà (🎟️).</p>
+                    <div class="font-extrabold text-rose-700 mb-0.5">📜 2. Đổi Bản Đồ Chung & Đài Ngắm Mây (Y=54):</div>
+                    <p class="text-xs text-gray-600">Bấm <b class="text-purple-700">Phím M</b> chọn Map (<b>Livik / Vikendi Tuyết / Sanhok Rừng</b>). Khi 1 người đổi Map, người yêu nhận bảng mời ở góc trên và bấm <kbd class="px-1 bg-white rounded border">Y</kbd> để sang cùng! Đài Ngắm Mây ở góc dưới phải giúp ngắm toàn đảo.</p>
                 </div>
 
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Đi lại, Chạy nhanh & Lướt:</span>
-                    <span><kbd class="px-1.5 py-0.5 bg-white rounded border border-pink-200 font-mono">W, A, S, D</kbd> • <kbd class="px-1.5 py-0.5 bg-white rounded border border-pink-200 font-mono">Shift</kbd> chạy nhanh / Lướt (Đuổi Bắt)</span>
+                    <span class="text-pink-700 font-bold">Đi lại, Chạy nhanh & Nút góc phải:</span>
+                    <span><kbd class="px-1.5 py-0.5 bg-white rounded border border-pink-200 font-mono">W, A, S, D</kbd> • <kbd class="px-1.5 py-0.5 bg-white rounded border border-pink-200 font-mono">Shift</kbd> hoặc nút <b>⚡ Chạy Nhanh</b> + <b>⬆️ Nhảy</b></span>
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Đặt khối / Lên Vòng Quay & Xích Đu:</span>
-                    <span><span class="font-bold text-pink-600">Phím E</span> (hoặc Chuột phải)</span>
+                    <span class="text-pink-700 font-bold">Đặt khối / Lên Vòng Quay / Đấu 100 HP:</span>
+                    <span><b class="text-pink-600">E</b> (Lên xe/Đặt) • <b class="text-rose-600">Q / J / Chuột trái</b> (Đập/Ném) • <b class="text-sky-600">K</b> (Khiên Tim/Hoa)</span>
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Đập khối / Thu hoạch:</span>
-                    <span><span class="font-bold text-rose-600">Phím Q</span> hoặc <b>Chuột trái</b></span>
-                </div>
-                <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Bay tự do / Kỹ năng Lướt:</span>
+                    <span class="text-pink-700 font-bold">Bay tự do (giữ Space bay lên mượt):</span>
                     <span><span class="font-bold text-indigo-600">Phím F</span> (hoặc nháy đúp <kbd class="px-1 bg-white rounded border">Space</kbd>)</span>
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Khu Vui Chơi / Bản Đồ / Tới Người Ấy:</span>
-                    <span>Minigame: <b class="text-amber-600">U</b> • Bản đồ: <b class="text-purple-600">M</b> • Tới Người Yêu: <b class="text-rose-600">G</b></span>
+                    <span class="text-pink-700 font-bold">Phím tắt nhanh:</span>
+                    <span>Minigame: <b class="text-amber-600">U</b> • Map: <b class="text-purple-600">M</b> • Tới Người Yêu: <b class="text-rose-600">G</b> • Đồng ý Map: <b class="text-emerald-600">Y</b></span>
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
-                    <span class="text-pink-700 font-bold">Thả Tim / Múa / Hoa / Selfie Đôi:</span>
-                    <span><b class="text-rose-600">T</b> • <b class="text-purple-600">V</b> • <b class="text-pink-600">K</b> • <b class="text-amber-600">P</b> • Thu gọn HUD: <kbd class="px-1 bg-white rounded border font-mono">Tab</kbd></span>
+                    <span class="text-pink-700 font-bold">Thả Tim / Múa / Selfie / Thu gọn HUD:</span>
+                    <span><b class="text-rose-600">T</b> • <b class="text-purple-600">V</b> • <b class="text-amber-600">P</b> • Thu gọn: <kbd class="px-1 bg-white rounded border font-mono">Tab</kbd></span>
                 </div>
             </div>
 
@@ -1941,74 +2052,194 @@
             };
         }
 
+        const MAP_META = {
+            livik: {
+                id: 'livik',
+                icon: '🏝️',
+                topLabel: 'Map 1: Livik (320x320)',
+                shortName: 'Đảo Livik 4 Mùa',
+                fullName: 'Quần Đảo Livik 4 Mùa (320x320)',
+                radarTag: '🏝️ Đảo Livik',
+                tabActive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow transition active:scale-95',
+                tabInactive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-white text-pink-700 border border-pink-200 hover:bg-pink-50 transition active:scale-95'
+            },
+            vikendi: {
+                id: 'vikendi',
+                icon: '❄️',
+                topLabel: 'Map 2: Vikendi Tuyết',
+                shortName: 'Vikendi Tuyết Trắng',
+                fullName: 'Vikendi Vương Quốc Tuyết (320x320)',
+                radarTag: '❄️ Vikendi Tuyết',
+                tabActive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-gradient-to-r from-sky-500 to-cyan-600 text-white shadow transition active:scale-95',
+                tabInactive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-white text-sky-700 border border-sky-200 hover:bg-sky-50 transition active:scale-95'
+            },
+            sanhok: {
+                id: 'sanhok',
+                icon: '🌴',
+                topLabel: 'Map 3: Sanhok Rừng',
+                shortName: 'Sanhok Rừng & Đền Cổ',
+                fullName: 'Sanhok Rừng Nhiệt Đới (320x320)',
+                radarTag: '🌴 Sanhok Rừng',
+                tabActive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow transition active:scale-95',
+                tabInactive: 'p-2 rounded-xl font-extrabold text-xs flex items-center justify-center gap-1.5 bg-white text-emerald-700 border border-emerald-200 hover:bg-emerald-50 transition active:scale-95'
+            }
+        };
+
+        function normalizeMapMode(mode) {
+            if (mode === 'minecraft') return 'vikendi';
+            return MAP_META[mode] ? mode : 'livik';
+        }
+
         const MAP_POI_CONFIG = {
             livik: [
-                { id: 'hotspring', icon: '🏔️', title: '1. Đỉnh Tuyết & Trượt Băng (320x320)', desc: 'Núi tuyết cao hùng vĩ, Suối Nước Nóng & Đường Trượt Băng 2.5x', bg: 'from-cyan-50 to-blue-100 border-cyan-300', titleCol: 'text-cyan-800', subCol: 'text-cyan-600' },
-                { id: 'windmill', icon: '🌸', title: '2. Thung Lũng Anh Đào & Xích Đu', desc: 'Cối xay gió khổng lồ, vườn hoa xuân & Xích Đu Đôi', bg: 'from-pink-50 to-rose-100 border-pink-300', titleCol: 'text-pink-800', subCol: 'text-pink-600' },
-                { id: 'waterfall', icon: '🌊', title: '3. Hồ Trái Tim & Vòng Quay Mặt Trời', desc: 'Trung tâm công viên giải trí, Thác Pha Lê & Vòng Quay 28m', bg: 'from-sky-50 to-indigo-100 border-sky-300', titleCol: 'text-sky-800', subCol: 'text-sky-600' },
-                { id: 'farm', icon: '🍁', title: '4. Rừng Phong Thu & Đồi Bí Ngô', desc: 'Rừng phong lá đỏ rực rỡ, nhà kho đỏ & ruộng lúa mì', bg: 'from-amber-50 to-orange-100 border-amber-300', titleCol: 'text-amber-800', subCol: 'text-amber-600' },
-                { id: 'pier', icon: '🏖️', title: '5. Vịnh Nắng Hạ & Bến Du Thuyền', desc: 'Bãi biển dài, bến du thuyền, Vịt Vàng & Đảo ngoài khơi', bg: 'from-emerald-50 to-teal-100 border-emerald-300', titleCol: 'text-emerald-800', subCol: 'text-emerald-600' },
-                { id: 'skyisland', icon: '🏰', title: '6. Lâu Đài Mây & Đích Parkour (Y=28)', desc: 'Đảo bay lơ lửng trên trời cao nối bằng cầu vồng Obby', bg: 'from-purple-50 to-fuchsia-100 border-purple-300', titleCol: 'text-purple-800', subCol: 'text-purple-600' }
+                { id: 'hotspring', icon: '🏔️', title: '1. Đỉnh Tuyết & Trượt Băng', desc: 'Núi tuyết cao, Suối Nước Nóng & Đường Trượt Băng 2.5x', x: 75, z: -86, bg: 'from-cyan-50 to-blue-100 border-cyan-300', titleCol: 'text-cyan-800', subCol: 'text-cyan-600' },
+                { id: 'windmill', icon: '🌸', title: '2. Thung Lũng Anh Đào', desc: 'Cối xay gió khổng lồ, vườn hoa xuân & Xích Đu Đôi', x: -82, z: -75, bg: 'from-pink-50 to-rose-100 border-pink-300', titleCol: 'text-pink-800', subCol: 'text-pink-600' },
+                { id: 'waterfall', icon: '🌊', title: '3. Hồ Trái Tim & Vòng Quay Y=56', desc: 'Trung tâm giải trí, Đấu Trường 100 HP & Vòng Quay Siêu Cao', x: 0, z: 8, bg: 'from-sky-50 to-indigo-100 border-sky-300', titleCol: 'text-sky-800', subCol: 'text-sky-600' },
+                { id: 'farm', icon: '🍁', title: '4. Rừng Phong Thu & Bí Ngô', desc: 'Rừng phong lá đỏ rực rỡ, nhà kho đỏ & ruộng lúa mì', x: -75, z: 72, bg: 'from-amber-50 to-orange-100 border-amber-300', titleCol: 'text-amber-800', subCol: 'text-amber-600' },
+                { id: 'pier', icon: '🏖️', title: '5. Vịnh Nắng Hạ & Vịt Vàng', desc: 'Bãi biển dài, bến du thuyền & Đảo nhỏ ngoài khơi', x: 92, z: 110, bg: 'from-emerald-50 to-teal-100 border-emerald-300', titleCol: 'text-emerald-800', subCol: 'text-emerald-600' },
+                { id: 'skyisland', icon: '☁️', title: '6. Lâu Đài Mây & Đài Ngắm Y=54', desc: 'Đảo bay Y=28 (Đích Parkour) & Đài Ngắm Mây Toàn Cảnh', x: 0, z: 2, bg: 'from-purple-50 to-fuchsia-100 border-purple-300', titleCol: 'text-purple-800', subCol: 'text-purple-600' }
             ],
-            minecraft: [
-                { id: 'hotspring', icon: '🌲', title: '1. Đỉnh Núi Taiga & Máng Trượt Băng', desc: 'Dãy núi đá Taiga phủ tuyết trắng và đường trượt băng cổ điển', bg: 'from-cyan-50 to-blue-100 border-cyan-300', titleCol: 'text-cyan-800', subCol: 'text-cyan-600' },
-                { id: 'windmill', icon: '🏡', title: '2. Làng Dân Làng Bình Nguyên', desc: 'Ngôi làng Minecraft cổ điển với nhà gỗ sồi & Xích Đu Anh Đào', bg: 'from-emerald-50 to-lime-100 border-emerald-300', titleCol: 'text-emerald-800', subCol: 'text-emerald-600' },
-                { id: 'waterfall', icon: '⛲', title: '3. Quảng Trường & Vòng Quay Đôi', desc: 'Trái tim Lục Địa Minecraft cạnh Công Viên 6 Minigame', bg: 'from-sky-50 to-indigo-100 border-sky-300', titleCol: 'text-sky-800', subCol: 'text-sky-600' },
-                { id: 'farm', icon: '💎', title: '4. Hẻm Núi Mỏ Kim Cương', desc: 'Khu mỏ lộ thiên sâu thẳm chứa đầy quặng Pha Lê Kim Cương', bg: 'from-amber-50 to-orange-100 border-amber-300', titleCol: 'text-amber-800', subCol: 'text-amber-600' },
-                { id: 'pier', icon: '🏜️', title: '5. Kim Tự Tháp Sa Mạc & Ốc Đảo', desc: 'Kim tự tháp cát vàng cổ đại ẩn giấu kho báu bí mật của Huân', bg: 'from-yellow-50 to-amber-100 border-yellow-300', titleCol: 'text-yellow-800', subCol: 'text-yellow-600' },
-                { id: 'skyisland', icon: '🏰', title: '6. Pháo Đài Bầu Trời (Y=28)', desc: 'Đảo bay cổ điển phía trên ngôi làng nối với Parkour Cầu Vồng', bg: 'from-purple-50 to-fuchsia-100 border-purple-300', titleCol: 'text-purple-800', subCol: 'text-purple-600' }
+            vikendi: [
+                { id: 'hotspring', icon: '🏰', title: '1. Lâu Đài Tuyết Vikendi Bắc', desc: 'Pháo đài tuyết cổ đại nhiều tháp canh & Tinh Thể Băng #1', x: -12, z: -85, bg: 'from-sky-50 to-cyan-100 border-sky-300', titleCol: 'text-sky-800', subCol: 'text-sky-600' },
+                { id: 'windmill', icon: '⛷️', title: '2. Đỉnh Máng Trượt Băng Tuyết', desc: 'Máng trượt băng 2.5x siêu dài & Tháp Radar Tuyết trắng', x: 84, z: -70, bg: 'from-blue-50 to-indigo-100 border-blue-300', titleCol: 'text-blue-800', subCol: 'text-blue-600' },
+                { id: 'waterfall', icon: '🧊', title: '3. Hồ Đóng Băng & Vòng Quay Y=56', desc: 'Hồ băng trượt trung tâm + Vòng Quay Mặt Trời & Đấu Trường', x: 0, z: 8, bg: 'from-cyan-50 to-teal-100 border-cyan-300', titleCol: 'text-cyan-800', subCol: 'text-cyan-600' },
+                { id: 'farm', icon: '🌲', title: '4. Rừng Thông Đóng Băng', desc: 'Rừng thông tuyết phủ dày đặc & cabin gỗ sưởi ấm đôi', x: -75, z: 65, bg: 'from-indigo-50 to-violet-100 border-indigo-300', titleCol: 'text-indigo-800', subCol: 'text-indigo-600' },
+                { id: 'pier', icon: '🚀', title: '5. Cảng Vũ Trụ Cosmodrome', desc: 'Bệ phóng tên lửa khổng lồ giữa băng giá Vikendi', x: 65, z: 78, bg: 'from-slate-50 to-sky-100 border-slate-300', titleCol: 'text-slate-800', subCol: 'text-slate-600' },
+                { id: 'skyisland', icon: '💎', title: '6. Đài Mây & Săn 6 Tinh Thể Băng', desc: 'Minigame độc quyền Vikendi: tìm đủ 6 Tinh Thể Băng!', x: 0, z: 2, bg: 'from-teal-50 to-cyan-100 border-teal-300', titleCol: 'text-teal-800', subCol: 'text-teal-600' }
+            ],
+            sanhok: [
+                { id: 'hotspring', icon: '⛩️', title: '1. Đền Cổ Đá Rong Ruins', desc: 'Ngôi đền cổ kính bậc thang đá giữa rừng nhiệt đới Sanhok', x: -2, z: -65, bg: 'from-emerald-50 to-teal-100 border-emerald-300', titleCol: 'text-emerald-800', subCol: 'text-emerald-600' },
+                { id: 'windmill', icon: '⛺', title: '2. Trại Bootcamp Rừng Rậm', desc: 'Khu nhà gỗ tập huấn & đường rừng thử thách Sanhok', x: -64, z: -48, bg: 'from-lime-50 to-emerald-100 border-lime-300', titleCol: 'text-lime-800', subCol: 'text-lime-600' },
+                { id: 'waterfall', icon: '🌉', title: '3. Cầu Treo Sông Xanh & Công Viên', desc: '3 cây cầu treo bắc qua sông uốn lượn & Đấu Trường 100 HP', x: 0, z: 8, bg: 'from-teal-50 to-cyan-100 border-teal-300', titleCol: 'text-teal-800', subCol: 'text-teal-600' },
+                { id: 'farm', icon: '🌺', title: '4. Làng Nhà Sàn Bờ Sông', desc: 'Xóm nhà sàn mộng mơ ven sông Sanhok đầy hoa nhiệt đới', x: -45, z: 58, bg: 'from-amber-50 to-yellow-100 border-amber-300', titleCol: 'text-amber-800', subCol: 'text-amber-600' },
+                { id: 'pier', icon: '🏞️', title: '5. Hang Thác Rừng Đông Nam', desc: 'Thác nước rừng sâu lấp lánh pha lê & Cổ Vật Vàng #5', x: 75, z: 55, bg: 'from-green-50 to-emerald-100 border-green-300', titleCol: 'text-green-800', subCol: 'text-green-600' },
+                { id: 'skyisland', icon: '👑', title: '6. Vượt Bẫy Đền Cổ (5 Cổ Vật)', desc: 'Minigame độc quyền Sanhok: thu thập 5 Cổ Vật Vàng!', x: 0, z: 2, bg: 'from-yellow-50 to-orange-100 border-yellow-300', titleCol: 'text-yellow-800', subCol: 'text-yellow-600' }
             ]
         };
 
-        function renderMapPOIGrid() {
-            const grid = document.getElementById('map-poi-grid');
-            if (!grid) return;
-            const list = MAP_POI_CONFIG[currentWorldMapMode] || MAP_POI_CONFIG.livik;
-            grid.innerHTML = list.map(item => `
-                <button onclick="teleportToPOI('${item.id}')" class="p-3.5 rounded-2xl bg-gradient-to-br ${item.bg} border-2 hover:scale-[1.02] transition text-left flex items-start gap-3 shadow-sm">
-                    <span class="text-3xl">${item.icon}</span>
-                    <div>
-                        <div class="font-bold ${item.titleCol} text-sm">${item.title}</div>
-                        <div class="text-xs ${item.subCol} mt-0.5">${item.desc}</div>
-                    </div>
-                </button>
-            `).join('');
-
-            const tabLivik = document.getElementById('tab-map-livik');
-            const tabMc = document.getElementById('tab-map-minecraft');
-            if (tabLivik && tabMc) {
-                if (currentWorldMapMode === 'livik') {
-                    tabLivik.className = "px-4 py-2 rounded-2xl font-black text-xs bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-md transition active:scale-95";
-                    tabMc.className = "px-4 py-2 rounded-2xl font-black text-xs bg-white text-emerald-700 border-2 border-emerald-300 hover:bg-emerald-50 shadow-sm transition active:scale-95";
-                } else {
-                    tabMc.className = "px-4 py-2 rounded-2xl font-black text-xs bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md transition active:scale-95";
-                    tabLivik.className = "px-4 py-2 rounded-2xl font-black text-xs bg-white text-pink-600 border-2 border-pink-300 hover:bg-pink-50 shadow-sm transition active:scale-95";
-                }
+        function rebuildActiveWorldMap(mode) {
+            currentWorldMapMode = normalizeMapMode(mode);
+            if (currentWorldMapMode === 'vikendi') {
+                generateVikendiSnowMap();
+            } else if (currentWorldMapMode === 'sanhok') {
+                generateSanhokJungleMap();
+            } else {
+                generateLivikContinent();
             }
-            const worldLabel = document.getElementById('world-mode-label');
-            const worldIcon = document.getElementById('world-mode-icon');
-            if (worldLabel) worldLabel.innerText = currentWorldMapMode === 'livik' ? 'Map 1: Đảo Livik (320x320)' : 'Map 2: Minecraft (320x320)';
-            if (worldIcon) worldIcon.innerText = currentWorldMapMode === 'livik' ? '🏝️' : '⛏️';
         }
 
-        function switchWorldMapMode(mode) {
-            if (mode !== 'livik' && mode !== 'minecraft') return;
-            currentWorldMapMode = mode;
-            exitCurrentMinigameOrRide(false);
-            if (mode === 'livik') {
-                generateLivikContinent();
-            } else {
-                generateMinecraftOverworld();
+        function syncAllMapAndRadarUI() {
+            currentWorldMapMode = normalizeMapMode(currentWorldMapMode);
+            const meta = MAP_META[currentWorldMapMode];
+            const worldLabel = document.getElementById('world-mode-label');
+            const worldIcon = document.getElementById('world-mode-icon');
+            const minimapTag = document.getElementById('minimap-title-tag');
+            if (worldLabel) worldLabel.innerText = meta.topLabel;
+            if (worldIcon) worldIcon.innerText = meta.icon;
+            if (minimapTag) minimapTag.innerText = meta.radarTag;
+
+            ['livik', 'vikendi', 'sanhok'].forEach(m => {
+                const tab = document.getElementById(`tab-map-${m}`);
+                if (tab) tab.className = (currentWorldMapMode === m) ? MAP_META[m].tabActive : MAP_META[m].tabInactive;
+            });
+
+            // Sync Card 8 Special Map Game in Minigames Modal
+            const spTitle = document.getElementById('map-special-title');
+            const spDesc = document.getElementById('map-special-desc');
+            const spBtn = document.getElementById('map-special-btn');
+            if (spTitle && spDesc && spBtn) {
+                if (currentWorldMapMode === 'vikendi') {
+                    spTitle.innerText = '8. 💎 Săn 6 Tinh Thể Băng Vikendi';
+                    spDesc.innerText = 'Độc quyền Map Vikendi: chạy khắp Lâu Đài Tuyết, Hồ Băng & Cosmodrome thu thập đủ 6 Tinh Thể Băng!';
+                    spBtn.innerText = '💎 Bắt Đầu Săn Tinh Thể Băng (Vikendi)';
+                } else if (currentWorldMapMode === 'sanhok') {
+                    spTitle.innerText = '8. 🏛️ Vượt Bẫy Đền Cổ Sanhok';
+                    spDesc.innerText = 'Độc quyền Map Sanhok: băng qua Cầu Treo, Bootcamp & Đền Cổ Ruins gom đủ 5 Cổ Vật Vàng!';
+                    spBtn.innerText = '🏛️ Bắt Đầu Săn Cổ Vật Đền Cổ (Sanhok)';
+                } else {
+                    spTitle.innerText = '8. ☁️ Chinh Phục Đảo & Đài Ngắm Mây';
+                    spDesc.innerText = 'Map Livik 4 Mùa: lên Vòng Quay Siêu Cao (Y=56) hoặc Đài Ngắm Mây (Y=54) thưởng ngoạn toàn cảnh!';
+                    spBtn.innerText = '🎡 Chơi Săn Điểm Khám Phá 4 Mùa (Livik)';
+                }
             }
+
+            if (typeof updateMinimapPartnerUI === 'function') updateMinimapPartnerUI();
+            if (typeof drawMinimap === 'function') drawMinimap();
+            if (typeof drawFullInteractiveMap === 'function') drawFullInteractiveMap();
+        }
+
+        function renderMapPOIGrid() {
+            const grid = document.getElementById('map-poi-grid');
+            if (grid) {
+                const list = MAP_POI_CONFIG[currentWorldMapMode] || MAP_POI_CONFIG.livik;
+                grid.innerHTML = list.map(item => `
+                    <button onclick="teleportToPOI('${item.id}')" class="p-2.5 rounded-2xl bg-gradient-to-br ${item.bg} border-2 hover:scale-[1.02] transition text-left flex items-start gap-2.5 shadow-sm">
+                        <span class="text-2xl leading-none mt-0.5">${item.icon}</span>
+                        <div>
+                            <div class="font-bold ${item.titleCol} text-xs">${item.title}</div>
+                            <div class="text-[10.5px] ${item.subCol} mt-0.5 leading-snug">${item.desc}</div>
+                        </div>
+                    </button>
+                `).join('');
+            }
+            syncAllMapAndRadarUI();
+        }
+
+        let incomingPendingMapInvite = null;
+        function switchWorldMapMode(mode, isFromInvite = false) {
+            const nextMode = normalizeMapMode(mode);
+            currentWorldMapMode = nextMode;
+            if (typeof exitCurrentMinigameOrRide === 'function') exitCurrentMinigameOrRide(false);
+            rebuildActiveWorldMap(nextMode);
             player.position.set(0, 7, 8);
             player.velocity.set(0, 0, 0);
             renderMapPOIGrid();
             updateQuestUI();
             saveWorldToCurrentSlot(true);
+
+            // Sync map invite to partner via Firebase so they get invited & notified!
+            if (currentRoomCode && db) {
+                db.ref('publicRooms/' + currentRoomCode + '/mapMode').set(nextMode).catch(() => {});
+            }
+            if (isCoopConnected && db && currentRoomCode) {
+                const meta = MAP_META[nextMode];
+                const myName = myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân';
+                if (!isFromInvite) {
+                    db.ref('rooms/' + currentRoomCode + '/meta/mapMode').set(nextMode).catch(() => {});
+                    db.ref('rooms/' + currentRoomCode + '/minigames/mapInvite').set({
+                        mapMode: nextMode,
+                        senderId: myPlayerId,
+                        senderRole: myCoupleRole,
+                        senderName: myName,
+                        nonce: Date.now(),
+                        updatedAt: getFbTimestamp()
+                    }).catch(() => {});
+                    sendCoopPacket({ type: 'map_switched', sender: myName, mapMode: nextMode, mapName: meta.shortName });
+                    showToast(`Đã gửi lời mời sang ${meta.shortName} cho người yêu! 💌`, meta.icon, 3200);
+                } else {
+                    sendCoopPacket({ type: 'map_synced', sender: myName, mapMode: nextMode, mapName: meta.shortName });
+                    showToast(`✨ Đã đổi sang ${meta.shortName} cùng người yêu! 💕`, meta.icon, 3200);
+                }
+            }
+        }
+
+        function acceptIncomingMapInvite() {
+            if (!incomingPendingMapInvite || !incomingPendingMapInvite.mapMode) return;
+            const targetMode = incomingPendingMapInvite.mapMode;
+            dismissMapInviteBanner();
+            switchWorldMapMode(targetMode, true);
+        }
+
+        function dismissMapInviteBanner() {
+            incomingPendingMapInvite = null;
+            const banner = document.getElementById('map-invite-banner');
+            if (banner) banner.classList.add('hidden');
         }
 
         function toggleWorldMapMode() {
-            switchWorldMapMode(currentWorldMapMode === 'livik' ? 'minecraft' : 'livik');
+            const order = ['livik', 'vikendi', 'sanhok'];
+            const idx = order.indexOf(normalizeMapMode(currentWorldMapMode));
+            switchWorldMapMode(order[(idx + 1) % order.length]);
         }
 
         function isInAmusementPlaza(x, z) {
@@ -2016,12 +2247,14 @@
             if (x >= 41 && x <= 78 && z >= -19 && z <= 18) return true;
             // 2. Couple Maze plaza (-81..-36, -22..26)
             if (x >= -81 && x <= -36 && z >= -22 && z <= 26) return true;
-            // 3. Ferris Wheel plaza (22..35, -15..1)
-            if (x >= 22 && x <= 35 && z >= -15 && z <= 1) return true;
+            // 3. Giant Ferris Wheel plaza (24..40, -19..-5)
+            if (x >= 24 && x <= 40 && z >= -19 && z <= -5) return true;
             // 4. Sakura Couple Swing clearing (-39..-29, -39..-29)
             if (x >= -39 && x <= -29 && z >= -39 && z <= -29) return true;
             // 5. Color Match Stage Bay (-13..12, 20..44)
             if (x >= -13 && x <= 12 && z >= 20 && z <= 44) return true;
+            // 6. 100-HP Battle Arena Colosseum (37..64, 27..54)
+            if (x >= 37 && x <= 64 && z >= 27 && z <= 54) return true;
             return false;
         }
 
@@ -2231,10 +2464,124 @@
             showToast("Đã mở Đại Lục Địa Livik 320x320 & Khu Vui Chơi Đôi! 🏝️🎪");
         }
 
-        function generateMinecraftOverworld() {
-            currentWorldMapMode = 'minecraft';
+        function generateVikendiSnowMap() {
+            currentWorldMapMode = 'vikendi';
             clearWorldVoxels();
-            const R = WORLD_RADIUS; // 160 -> 320x320 blocks
+            const R = WORLD_RADIUS; // 160 -> 320x320 PUBG Snow Vikendi
+
+            for (let x = -R; x <= R; x++) {
+                for (let z = -R; z <= R; z++) {
+                    const distToCenter = Math.sqrt(x * x + z * z);
+
+                    // Frozen Arctic Sea border
+                    if (distToCenter > 150) {
+                        rawSetVoxel(x, 2, z, ((Math.abs(x) + Math.abs(z)) % 11 === 0) ? 8 : 7);
+                        continue;
+                    }
+                    if (distToCenter > 142) {
+                        rawSetVoxel(x, 3, z, 8); // Thick coastal ice shelf
+                        continue;
+                    }
+
+                    if (isInAmusementPlaza(x, z)) {
+                        if (x >= -13 && x <= 12 && z >= 21 && z <= 44) {
+                            rawSetVoxel(x, 3, z, 8);
+                        } else {
+                            rawSetVoxel(x, 4, z, 4);
+                        }
+                        continue;
+                    }
+
+                    // Central Frozen Lake (Radius <= 22)
+                    if (distToCenter <= 22) {
+                        const isBridgeX = Math.abs(z) <= 2;
+                        const isBridgeZ = Math.abs(x) <= 2;
+                        if (isBridgeX || isBridgeZ) {
+                            rawSetVoxel(x, 4, z, 15);
+                        } else {
+                            rawSetVoxel(x, 3, z, 8);
+                        }
+                        continue;
+                    }
+
+                    // Snowy mountain peaks & glacial valleys (totally distinct from Livik!)
+                    const mountainNorth = Math.max(0, Math.floor((68 - Math.hypot(x + 12, z + 85)) * 0.22));
+                    const ridgeEast = Math.max(0, Math.floor((62 - Math.hypot(x - 84, z + 70)) * 0.24));
+                    const wave = Math.sin(x * 0.045) * Math.cos(z * 0.045) * 1.4;
+                    let height = Math.max(4, Math.floor(4 + mountainNorth + ridgeEast + wave));
+                    let surfaceId = height > 11 ? 34 : (Math.abs(x) <= 2 || Math.abs(z) <= 2 ? 34 : 4);
+                    if (Math.hypot(x - 65, z - 78) <= 16) {
+                        height = 4;
+                        surfaceId = (Math.abs(x - 65) <= 3 || Math.abs(z - 78) <= 3) ? 8 : 34;
+                    }
+
+                    rawSetVoxel(x, height, z, surfaceId);
+                    if (height > 5 && (Math.abs(x) + Math.abs(z)) % 3 === 0) {
+                        rawSetVoxel(x, height - 1, z, 34);
+                    }
+                    if (hash2D(x + 91, z + 13) < 0.011 && distToCenter > 28 && surfaceId === 4) {
+                        rawSetVoxel(x, height + 1, z, hash2D(x, z) < 0.4 ? 29 : 35);
+                    }
+                }
+            }
+
+            // Vikendi Medieval Snow Castle at North (-12, 13, -85)
+            for (let dx = -12; dx <= 12; dx++) {
+                for (let dz = -10; dz <= 10; dz++) {
+                    const isWall = Math.abs(dx) === 12 || Math.abs(dz) === 10;
+                    const isGate = dz === 10 && Math.abs(dx) <= 2;
+                    rawSetVoxel(-12 + dx, 13, -85 + dz, 34);
+                    if (isWall && !isGate) {
+                        for (let y = 14; y <= 18; y++) rawSetVoxel(-12 + dx, y, -85 + dz, y === 18 ? 4 : 34);
+                    }
+                }
+            }
+            [[-24, -95], [0, -95], [-24, -75], [0, -75]].forEach(([tx, tz]) => {
+                for (let dx = -1; dx <= 1; dx++) for (let dz = -1; dz <= 1; dz++) {
+                    for (let y = 14; y <= 21; y++) rawSetVoxel(tx + dx, y, tz + dz, y === 21 ? 8 : 34);
+                }
+                rawSetVoxel(tx, 22, tz, 23);
+            });
+            rawSetVoxel(-12, 14, -85, 35);
+
+            // Cosmodrome Rocket Launch Pad at SE (65, 5, 78)
+            for (let y = 5; y <= 18; y++) {
+                const rad = y < 12 ? 2 : 1;
+                for (let dx = -rad; dx <= rad; dx++) for (let dz = -rad; dz <= rad; dz++) {
+                    rawSetVoxel(65 + dx, y, 78 + dz, y % 4 === 0 ? 17 : 12);
+                }
+            }
+            rawSetVoxel(65, 19, 78, 24);
+            rawSetVoxel(65, 20, 78, 35);
+
+            // Radar Station Tower at NE (42, 6, -72)
+            for (let y = 5; y <= 13; y++) rawSetVoxel(42, y, -72, 12);
+            for (let dx = -2; dx <= 2; dx++) for (let dz = -2; dz <= 2; dz++) rawSetVoxel(42 + dx, 14, -72 + dz, 8);
+
+            // Dense Snowy Pine Forest across Vikendi!
+            [[-75, 65], [-92, 48], [-58, 72], [-70, -45], [48, -42], [95, -80], [28, 82], [-88, -82], [110, 22], [-105, -25]].forEach(([tx, tz]) => {
+                const ty = findSafeSurfaceY(tx, tz, 8) - 1;
+                plantTree(tx, Math.max(5, ty), tz, 'winter');
+            });
+
+            buildFloatingSkyIsland(0, 28, 0, "❄️ PHÁO ĐÀI BĂNG VIKENDI (320x320) 💎", "Thế Giới Tuyết Trắng • Săn 6 Tinh Thể Băng & Parkour");
+            buildCoupleAmusementPark();
+            initLivingCreatures();
+
+            rawSetVoxel(-12, 14, -82, 27);
+            rawSetVoxel(65, 5, 74, 27);
+            rawSetVoxel(-75, 6, 65, 27);
+            rawSetVoxel(0, 30, 0, 27);
+
+            syncInstancedMeshes();
+            renderMapPOIGrid();
+            showToast("Đã mở Map 2: PUBG Vikendi Vương Quốc Tuyết (320x320)! ❄️🏰", "❄️");
+        }
+
+        function generateSanhokJungleMap() {
+            currentWorldMapMode = 'sanhok';
+            clearWorldVoxels();
+            const R = WORLD_RADIUS; // 160 -> 320x320 PUBG Tropical Jungle Sanhok
 
             for (let x = -R; x <= R; x++) {
                 for (let z = -R; z <= R; z++) {
@@ -2242,6 +2589,10 @@
 
                     if (distToCenter > 150) {
                         rawSetVoxel(x, 2, z, 7);
+                        continue;
+                    }
+                    if (distToCenter > 138) {
+                        rawSetVoxel(x, 3, z, 6);
                         continue;
                     }
 
@@ -2254,117 +2605,72 @@
                         continue;
                     }
 
-                    const riverZ = Math.sin(x * 0.04) * 18;
-                    if (Math.abs(z - riverZ) <= 3.2 && distToCenter > 22 && Math.abs(x) > 82) {
-                        if (Math.abs(x) >= 96 && Math.abs(x) <= 100) {
-                            rawSetVoxel(x, 4, z, 13);
+                    // Winding S-Curve Sanhok Jungle River + 3 Wooden Suspension Bridges!
+                    const riverZ = Math.sin(x * 0.032) * 38;
+                    if (Math.abs(z - riverZ) <= 4.2 && distToCenter > 22 && !(x >= -20 && x <= 18 && z >= -82 && z <= -50)) {
+                        const isBridge = (Math.abs(x + 100) <= 2) || (Math.abs(x + 60) <= 2) || (Math.abs(x - 96) <= 2);
+                        if (isBridge) {
+                            rawSetVoxel(x, 5, z, 15);
                         } else {
                             rawSetVoxel(x, 3, z, 7);
                         }
                         continue;
                     }
 
-                    let height = 4;
-                    let surfaceId = 2;
-                    let subId = 5;
-
-                    if (x > 22 && z < -22) {
-                        const distToPeak = Math.sqrt(Math.pow(x - 88, 2) + Math.pow(z + 88, 2));
-                        const hillLift = Math.max(0, Math.floor((64 - distToPeak) * 0.25));
-                        height = 4 + hillLift;
-                        surfaceId = height > 10 ? 4 : (height > 7 ? 34 : 2);
-                    } else if (x < -22 && z < -22) {
-                        const wave = Math.sin(x * 0.055) * Math.cos(z * 0.055) * 1.5;
-                        height = Math.floor(4 + wave);
-                        surfaceId = 2;
-                    } else if (x < -22 && z > 22) {
-                        const distQuarry = Math.sqrt(Math.pow(x + 85, 2) + Math.pow(z - 85, 2));
-                        if (distQuarry <= 18) {
-                            height = 2;
-                            surfaceId = (Math.abs(x * z) % 7 === 0) ? 35 : 34;
-                        } else {
-                            height = 4 + Math.floor(Math.sin(x * 0.07) * 1.4);
-                            surfaceId = 34;
-                        }
-                    } else if (x > 22 && z > 22) {
-                        height = 4 + Math.floor(Math.cos(z * 0.06) * 1.2);
-                        surfaceId = 6;
-                    }
-
-                    if (distToCenter <= 55 && (Math.abs(x) <= 2 || Math.abs(z) <= 2)) {
-                        surfaceId = 34;
+                    const hillEast = Math.max(0, Math.floor((48 - Math.hypot(x - 75, z - 55)) * 0.16));
+                    const wave = Math.sin(x * 0.05) * Math.sin(z * 0.05) * 1.6;
+                    let height = Math.max(4, Math.floor(4 + hillEast + wave));
+                    let surfaceId = (Math.abs(x) <= 2 || Math.abs(z) <= 2) && distToCenter <= 55 ? 34 : 2;
+                    if (Math.hypot(x + 64, z + 48) <= 14) {
                         height = 4;
+                        surfaceId = 34;
                     }
 
                     rawSetVoxel(x, height, z, surfaceId);
-                    if (height > 4 && (Math.abs(x) + Math.abs(z)) % 2 === 0) {
-                        rawSetVoxel(x, height - 1, z, subId);
-                    }
-
-                    if (hash2D(x, z) < 0.014 && distToCenter > 26 && surfaceId === 2) {
-                        rawSetVoxel(x, height + 1, z, hash2D(x + 17, z) < 0.5 ? 30 : 33);
+                    if (hash2D(x + 31, z + 57) < 0.018 && distToCenter > 24 && surfaceId === 2) {
+                        rawSetVoxel(x, height + 1, z, hash2D(x, z) < 0.5 ? 30 : 33);
                     }
                 }
             }
 
-            // Central Village Well
-            for (let dx = -2; dx <= 2; dx++) {
-                for (let dz = -2; dz <= 2; dz++) {
-                    if (Math.abs(dx) === 2 || Math.abs(dz) === 2) rawSetVoxel(dx, 5, dz, 34);
-                    else rawSetVoxel(dx, 4, dz, 7);
-                }
-            }
-            [[-2, -2], [2, -2], [-2, 2], [2, 2]].forEach(([px, pz]) => {
-                for (let y = 6; y <= 8; y++) rawSetVoxel(px, y, pz, 13);
-            });
-            for (let rx = -2; rx <= 2; rx++) {
-                for (let rz = -2; rz <= 2; rz++) rawSetVoxel(rx, 9, rz, 34);
-            }
-            rawSetVoxel(0, 10, 0, 24);
-
-            // Classic Village Houses & Windmill
-            buildAutumnBarn(-16, 5, -14);
-            buildAutumnBarn(16, 5, -14);
-            buildAutumnBarn(-80, 5, -72);
-            buildAutumnBarn(-94, 5, -62);
-            buildGiantWindmill(-88, 6, -78);
-
-            // Stepped Desert Pyramid at (95, 4, 95)
-            for (let step = 0; step <= 8; step++) {
-                const rad = 10 - step;
-                for (let dx = -rad; dx <= rad; dx++) {
-                    for (let dz = -rad; dz <= rad; dz++) {
-                        if (Math.abs(dx) === rad || Math.abs(dz) === rad || step === 8) {
-                            rawSetVoxel(95 + dx, 5 + step, 95 + dz, 6);
-                        }
+            // Sanhok Ancient Stepped Moss-Stone Temple (Ruins) at (-2, 5, -65)
+            for (let step = 0; step <= 6; step++) {
+                const rad = 12 - step * 1.5;
+                for (let dx = -Math.floor(rad); dx <= Math.floor(rad); dx++) {
+                    for (let dz = -Math.floor(rad); dz <= Math.floor(rad); dz++) {
+                        rawSetVoxel(-2 + dx, 5 + step, -65 + dz, (dx + dz) % 5 === 0 ? 2 : 34);
                     }
                 }
             }
-            rawSetVoxel(95, 5, 95, 27);
-            rawSetVoxel(94, 5, 95, 35);
-            rawSetVoxel(96, 5, 95, 35);
+            rawSetVoxel(-2, 12, -65, 23);
+            rawSetVoxel(-5, 11, -65, 24);
+            rawSetVoxel(1, 11, -65, 24);
 
-            [[-48, -50], [-64, -85], [-102, -68], [48, -50], [72, -72], [105, -95]].forEach(([tx, tz], i) => {
-                plantTree(tx, i > 2 ? 8 : 5, tz, i > 2 ? 'winter' : 'summer');
+            // Bootcamp Barracks & Riverside Stilt House
+            buildAutumnBarn(-64, 5, -48);
+            buildAutumnBarn(-45, 5, 58);
+
+            // Tropical Jungle Groves!
+            [[-78, -32], [-46, -68], [26, -72], [58, -62], [-84, 54], [-25, 76], [85, 65], [105, -20], [-102, 12]].forEach(([tx, tz], idx) => {
+                const ty = findSafeSurfaceY(tx, tz, 6) - 1;
+                plantTree(tx, Math.max(5, ty), tz, idx % 2 === 0 ? 'summer' : 'spring');
             });
 
-            buildFloatingSkyIsland(0, 28, 0, "⛏️ PHÁO ĐÀI BẦU TRỜI MINECRAFT 💖", "Lục Địa 320x320 & Đích Parkour Cầu Vồng");
-            createGiantDuck(108, 3, 102);
-
-            // Shared 6 Couple Minigames & Amusement Rides!
+            buildFloatingSkyIsland(0, 28, 0, "🌴 ĐỀN NGỌC SANHOK TRÊN MÂY (320x320) 🏛️", "Rừng Rậm Cầu Treo • Vượt Bẫy Đền Cổ Săn 5 Cổ Vật");
             buildCoupleAmusementPark();
-
             initLivingCreatures();
 
-            rawSetVoxel(-80, 6, -68, 27);
-            rawSetVoxel(75, 13, -91, 27);
-            rawSetVoxel(-85, 3, 85, 27);
+            rawSetVoxel(-2, 12, -63, 27);
+            rawSetVoxel(-64, 5, -44, 27);
+            rawSetVoxel(75, 8, 55, 27);
             rawSetVoxel(0, 30, 0, 27);
 
             syncInstancedMeshes();
             renderMapPOIGrid();
-            showToast("Đã mở Map Minecraft 320x320 & Công Viên Cặp Đôi! ⛏️🎪");
+            showToast("Đã mở Map 3: PUBG Sanhok Rừng Rậm & Đền Cổ (320x320)! 🌴🏛️", "🌴");
         }
+
+        const generateMinecraftOverworld = generateVikendiSnowMap;
 
         function buildYachtAt(bx, by, bz) {
             for (let dz = -4; dz <= 4; dz++) {
@@ -2529,7 +2835,31 @@
         const MAZE_ORIGIN = { x: -80, z: -21 }; // 43x43 maze + entrance pad -> 44x44 garden
         const MAZE_GOAL_POS = { x: -58.5, y: 6.2, z: 0.5 };
         const MAZE_BOOST_SPOTS = [];
-        const FERRIS_CENTER = { x: 28.5, y: 20, z: -8, radius: 12 };
+        const FERRIS_CENTER = { x: 32, y: 34, z: -12, radius: 22 }; // Đỉnh cao tới Y=56 siêu thoáng!
+        const CLOUD_OBS_POS = { x: 0, y: 54, z: -18 }; // Đài Ngắm Mây Toàn Cảnh Trên Cao
+        const BATTLE_ARENA_CENTER = { x: 50, y: 5, z: 40 }; // Đấu Trường Thanh Máu 100 HP
+        const BATTLE_HEAL_SPOTS = [
+            { x: 43, y: 5, z: 33, active: true, cooldownUntil: 0 },
+            { x: 57, y: 5, z: 33, active: true, cooldownUntil: 0 },
+            { x: 50, y: 5, z: 47, active: true, cooldownUntil: 0 }
+        ];
+        const battleHealMeshes = [];
+        const mapSpecialCollectibles = [];
+        const VIKENDI_CRYSTAL_SPOTS = [
+            { x: -12, y: 15, z: -85, label: 'Đỉnh Lâu Đài Bắc' },
+            { x: 42, y: 14, z: -72, label: 'Tháp Radar Tuyết' },
+            { x: 0, y: 6, z: -24, label: 'Hồ Băng Trung Tâm' },
+            { x: 84, y: 18, z: -70, label: 'Đỉnh Máng Trượt Băng' },
+            { x: -75, y: 14, z: 65, label: 'Rừng Thông Đóng Băng' },
+            { x: 65, y: 12, z: 78, label: 'Cảng Vũ Trụ Cosmodrome' }
+        ];
+        const SANHOK_RELIC_SPOTS = [
+            { x: -2, y: 12, z: -65, label: 'Đỉnh Đền Cổ Đá Rong' },
+            { x: -64, y: 7, z: -48, label: 'Trại Huấn Luyện Bootcamp' },
+            { x: 58, y: 6, z: -42, label: 'Cầu Treo Sông Xanh Đông' },
+            { x: -45, y: 6, z: 58, label: 'Làng Sàn Bờ Sông Nam' },
+            { x: 75, y: 8, z: 55, label: 'Hang Thác Rừng Nhiệt Đới' }
+        ];
         const SWING_ANCHOR = { x: -34, y: 9.5, z: -34 };
         const PARKOUR_CHECKPOINTS = [
             { x: -14, y: 5, z: -26, label: "Điểm Xuất Phát Parkour" },
@@ -2566,6 +2896,8 @@
             if (amusementGroup) scene.remove(amusementGroup);
             amusementGroup = new THREE.Group();
             scene.add(amusementGroup);
+            battleHealMeshes.length = 0;
+            mapSpecialCollectibles.length = 0;
 
             buildTagArenaVoxels();
             buildLoveMazeVoxels(currentMazeSeed);
@@ -2574,6 +2906,13 @@
             buildColorMatchStage(currentColorBoardSeed);
             buildRainbowParkourObby();
             buildSnowIceSlide();
+            buildCloudObservatoryDeck();
+            buildBattleArenaVoxels();
+            if (currentWorldMapMode === 'vikendi') {
+                buildVikendiCrystalTargets();
+            } else if (currentWorldMapMode === 'sanhok') {
+                buildSanhokTempleRelics();
+            }
         }
 
         function buildTagArenaVoxels() {
@@ -2802,55 +3141,60 @@
 
         function buildGiantFerrisWheel() {
             const cx = FERRIS_CENTER.x, cy = FERRIS_CENTER.y, cz = FERRIS_CENTER.z, R = FERRIS_CENTER.radius;
-            // Wooden boarding platform at base
-            for (let dx = -4; dx <= 4; dx++) {
+            // Spacious wooden & glow boarding platform at base
+            for (let dx = -5; dx <= 5; dx++) {
                 for (let dz = -5; dz <= 6; dz++) {
-                    rawSetVoxel(Math.floor(cx) + dx, 4, cz + dz, 15);
+                    rawSetVoxel(Math.floor(cx) + dx, 4, cz + dz, (Math.abs(dx) === 5 || dz === -5 || dz === 6) ? 16 : 15);
                 }
             }
             rawSetVoxel(Math.floor(cx) - 4, 5, cz + 5, 23);
             rawSetVoxel(Math.floor(cx) + 4, 5, cz + 5, 23);
 
-            // Twin Support A-Frame Pillars
-            const legMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.4 });
-            [-2.2, 2.2].forEach(zOff => {
-                [-5.5, 5.5].forEach(xOff => {
+            // Tall Twin A-Frame Support Pillars reaching cy=34
+            const legMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.35 });
+            [-2.4, 2.4].forEach(zOff => {
+                [-9.5, 9.5].forEach(xOff => {
                     const legLen = Math.hypot(xOff, cy - 4);
-                    const legMesh = new THREE.Mesh(new THREE.BoxGeometry(0.55, legLen, 0.55), legMat);
+                    const legMesh = new THREE.Mesh(new THREE.BoxGeometry(0.75, legLen, 0.75), legMat);
                     legMesh.position.set(cx + xOff * 0.5, 4 + (cy - 4) * 0.5, cz + zOff);
                     legMesh.rotation.z = Math.atan2(xOff, cy - 4);
                     amusementGroup.add(legMesh);
                 });
             });
 
-            // Axle Hub
-            const axle = new THREE.Mesh(new THREE.BoxGeometry(0.9, 0.9, 5.2), new THREE.MeshStandardMaterial({ color: 0xff758f }));
+            // Glowing Axle Hub
+            const axle = new THREE.Mesh(
+                new THREE.BoxGeometry(1.4, 1.4, 5.6),
+                new THREE.MeshStandardMaterial({ color: 0xff758f, emissive: 0xff4d6d, emissiveIntensity: 0.45 })
+            );
             axle.position.set(cx, cy, cz);
             amusementGroup.add(axle);
 
-            // Rotating Wheel Group (rotates around Z axis so circle rises cleanly along Heart Lake!)
+            // Rotating Giant Panoramic Wheel Group (peak Y = 34 + 22 = 56!)
             ferrisWheelGroup = new THREE.Group();
             ferrisWheelGroup.position.set(cx, cy, cz);
             amusementGroup.add(ferrisWheelGroup);
 
-            const rimMat = new THREE.MeshStandardMaterial({ color: 0xff9ff3, emissive: 0xff6b81, emissiveIntensity: 0.25 });
-            [-1.5, 1.5].forEach(zOff => {
-                const rim = new THREE.Mesh(new THREE.TorusGeometry(R, 0.28, 8, 36), rimMat);
+            const rimMat = new THREE.MeshStandardMaterial({ color: 0xff9ff3, emissive: 0xff6b81, emissiveIntensity: 0.35 });
+            [-1.7, 1.7].forEach(zOff => {
+                const rim = new THREE.Mesh(new THREE.TorusGeometry(R, 0.32, 8, 48), rimMat);
                 rim.position.z = zOff;
                 ferrisWheelGroup.add(rim);
             });
 
-            // 6 Pastel Cabins + Radial Spokes
+            // 8 Unobstructed Panoramic Glass Cabins + Radial Spokes
             ferrisCabinGroups.length = 0;
-            const cabinColors = [0xff7eb6, 0x74b9ff, 0xfeca57, 0xa29bfe, 0x55efc4, 0xff7675];
+            const cabinColors = [0xff7eb6, 0x74b9ff, 0xfeca57, 0xa29bfe, 0x55efc4, 0xff7675, 0xfd79a8, 0x00cec9];
             const spokeMat = new THREE.MeshStandardMaterial({ color: 0xffeaa7 });
+            const glassRailMat = new THREE.MeshStandardMaterial({ color: 0xdff9fb, transparent: true, opacity: 0.34, roughness: 0.15 });
+            const slimFrameMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.3 });
 
-            for (let i = 0; i < 6; i++) {
-                const ang = (i / 6) * Math.PI * 2;
+            for (let i = 0; i < 8; i++) {
+                const ang = (i / 8) * Math.PI * 2;
                 const px = Math.cos(ang) * R;
                 const py = Math.sin(ang) * R;
 
-                [-1.5, 1.5].forEach(zOff => {
+                [-1.7, 1.7].forEach(zOff => {
                     const spoke = new THREE.Mesh(new THREE.BoxGeometry(0.22, R, 0.22), spokeMat);
                     spoke.position.set(px * 0.5, py * 0.5, zOff);
                     spoke.rotation.z = ang - Math.PI / 2;
@@ -2860,25 +3204,36 @@
                 const cabin = new THREE.Group();
                 cabin.position.set(px, py, 0);
 
-                const cMat = new THREE.MeshStandardMaterial({ color: cabinColors[i], roughness: 0.4 });
-                const roofMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-                const floor = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.25, 2.5), cMat);
-                floor.position.y = -1.7;
-                const backWall = new THREE.Mesh(new THREE.BoxGeometry(2.4, 1.2, 0.2), cMat);
-                backWall.position.set(0, -1.1, -1.15);
-                const roof = new THREE.Mesh(new THREE.BoxGeometry(2.6, 0.25, 2.7), roofMat);
-                roof.position.y = 0.2;
-                const hangerL = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.9, 0.14), roofMat);
-                hangerL.position.set(-1.1, -0.75, 0);
-                const hangerR = new THREE.Mesh(new THREE.BoxGeometry(0.14, 1.9, 0.14), roofMat);
-                hangerR.position.set(1.1, -0.75, 0);
+                const cMat = new THREE.MeshStandardMaterial({ color: cabinColors[i], roughness: 0.35 });
+                // Floor below seated eye height (-1.5)
+                const floor = new THREE.Mesh(new THREE.BoxGeometry(2.7, 0.22, 2.7), cMat);
+                floor.position.y = -1.5;
 
-                cabin.add(floor, backWall, roof, hangerL, hangerR);
+                // Low waist-high panoramic glass rails ONLY (0.38 tall -> 100% unobstructed horizon & down-view!)
+                const railFront = new THREE.Mesh(new THREE.BoxGeometry(2.65, 0.38, 0.08), glassRailMat);
+                railFront.position.set(0, -1.2, 1.28);
+                const railBack = new THREE.Mesh(new THREE.BoxGeometry(2.65, 0.38, 0.08), glassRailMat);
+                railBack.position.set(0, -1.2, -1.28);
+                const railLeft = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.38, 2.55), glassRailMat);
+                railLeft.position.set(-1.28, -1.2, 0);
+                const railRight = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.38, 2.55), glassRailMat);
+                railRight.position.set(1.28, -1.2, 0);
+
+                // Higher translucent sun-roof (+1.15) with 4 slim corner rods so eye level (-0.15) is crystal clear!
+                const roof = new THREE.Mesh(new THREE.BoxGeometry(2.85, 0.16, 2.85), slimFrameMat);
+                roof.position.y = 1.15;
+                [[-1.25, -1.25], [1.25, -1.25], [-1.25, 1.25], [1.25, 1.25]].forEach(([rx, rz]) => {
+                    const post = new THREE.Mesh(new THREE.BoxGeometry(0.09, 2.6, 0.09), slimFrameMat);
+                    post.position.set(rx, -0.18, rz);
+                    cabin.add(post);
+                });
+
+                cabin.add(floor, railFront, railBack, railLeft, railRight, roof);
                 ferrisWheelGroup.add(cabin);
                 ferrisCabinGroups.push(cabin);
             }
 
-            create3DParkSign(cx, 8.2, cz + 6.5, "🎡 VÒNG QUAY MẶT TRỜI", "Lại gần bấm [E] để lên Cabin cùng nhau!", "#e84393");
+            create3DParkSign(cx, 8.6, cz + 7, "🎡 VÒNG QUAY SIÊU CAO (ĐỈNH Y=56)", "Cabin kính thoáng 360° • Bấm [E] để lên ngắm cảnh!", "#e84393");
         }
 
         function buildSakuraCoupleSwing() {
@@ -3018,6 +3373,92 @@
                 rawSetVoxel(sx + 2, sy + 1, sz, 4);
                 if (t % 6 === 0) rawSetVoxel(sx + 2, sy + 2, sz, 23);
             }
+        }
+
+        function buildCloudObservatoryDeck() {
+            // Đài Ngắm Mây Toàn Cảnh (Tâm X:0, Y:52, Z:-18) -> Nhìn xuống toàn đảo 320x320 không bị che!
+            const cx = CLOUD_OBS_POS.x, by = 52, cz = CLOUD_OBS_POS.z;
+            for (let dx = -4; dx <= 4; dx++) {
+                for (let dz = -4; dz <= 4; dz++) {
+                    const isBorder = Math.abs(dx) === 4 || Math.abs(dz) === 4;
+                    const isCenter = dx === 0 && dz === 0;
+                    rawSetVoxel(cx + dx, by, cz + dz, isCenter ? 24 : (isBorder ? 32 : 21));
+                    if (isBorder && (Math.abs(dx) === 4 && Math.abs(dz) === 4)) {
+                        rawSetVoxel(cx + dx, by + 1, cz + dz, 23); // Đèn lồng 4 góc
+                    }
+                }
+            }
+            if (amusementGroup) {
+                create3DParkSign(cx, by + 3.2, cz - 4.2, "☁️ ĐÀI NGẮM MÂY TOÀN CẢNH", "Ngắm trọn vẹn 320x320 từ độ cao Y=54!", "#0984e3");
+            }
+        }
+
+        function buildBattleArenaVoxels() {
+            // Đấu Trường Thanh Máu 100 HP (26x26): X: 38..63, Z: 28..53
+            for (let x = 38; x <= 63; x++) {
+                for (let z = 28; z <= 53; z++) {
+                    const isChecker = ((x + z) % 2 === 0);
+                    rawSetVoxel(x, 4, z, isChecker ? 12 : 16);
+                    const isEdge = (x === 38 || x === 63 || z === 28 || z === 53);
+                    if (isEdge) {
+                        const isGate = ((x === 38 || x === 63) && Math.abs(z - 40) <= 2) || ((z === 28 || z === 53) && Math.abs(x - 50) <= 2);
+                        for (let y = 5; y <= 7; y++) {
+                            if (isGate) rawDeleteVoxel(x, y, z);
+                            else rawSetVoxel(x, y, z, y === 7 ? 24 : 34);
+                        }
+                        if (!isGate && (x + z) % 5 === 0) rawSetVoxel(x, 8, z, 23);
+                    }
+                }
+            }
+            // 4 Cột đá che chắn đối xứng để né đòn cầu tuyết tim
+            [[45, 35], [55, 35], [45, 45], [55, 45]].forEach(([px, pz]) => {
+                rawSetVoxel(px, 5, pz, 16);
+                rawSetVoxel(px, 6, pz, 24);
+            });
+            // 3 Ô hồi +20 HP (Bánh kem dâu)
+            BATTLE_HEAL_SPOTS.forEach(spot => {
+                spot.active = true;
+                spot.cooldownUntil = 0;
+                rawSetVoxel(spot.x, 4, spot.z, 31);
+                if (amusementGroup) {
+                    const padMesh = new THREE.Mesh(
+                        new THREE.OctahedronGeometry(0.65, 0),
+                        new THREE.MeshStandardMaterial({ color: 0xff758f, emissive: 0xff4d6d, emissiveIntensity: 0.75 })
+                    );
+                    padMesh.position.set(spot.x + 0.5, 6.2, spot.z + 0.5);
+                    amusementGroup.add(padMesh);
+                    battleHealMeshes.push({ mesh: padMesh, spot });
+                }
+            });
+            if (amusementGroup) {
+                create3DParkSign(50.5, 8.2, 27.2, "⚔️ ĐẤU TRƯỜNG THANH MÁU 100 HP", "Ném [J/Q] • Khiên [K] • Ăn Bánh Kem hồi +20 HP!", "#d63031");
+            }
+        }
+
+        function buildVikendiCrystalTargets() {
+            if (!amusementGroup) return;
+            VIKENDI_CRYSTAL_SPOTS.forEach((pt, idx) => {
+                const crystal = new THREE.Mesh(
+                    new THREE.OctahedronGeometry(0.85, 0),
+                    new THREE.MeshStandardMaterial({ color: 0x00cec9, emissive: 0x00d2d3, emissiveIntensity: 0.85 })
+                );
+                crystal.position.set(pt.x + 0.5, pt.y + 1.5, pt.z + 0.5);
+                amusementGroup.add(crystal);
+                mapSpecialCollectibles.push({ id: idx, mesh: crystal, x: pt.x, y: pt.y + 1, z: pt.z, label: pt.label, collected: false });
+            });
+        }
+
+        function buildSanhokTempleRelics() {
+            if (!amusementGroup) return;
+            SANHOK_RELIC_SPOTS.forEach((pt, idx) => {
+                const relic = new THREE.Mesh(
+                    new THREE.DodecahedronGeometry(0.8, 0),
+                    new THREE.MeshStandardMaterial({ color: 0xfeca57, emissive: 0xff9f43, emissiveIntensity: 0.85 })
+                );
+                relic.position.set(pt.x + 0.5, pt.y + 1.5, pt.z + 0.5);
+                amusementGroup.add(relic);
+                mapSpecialCollectibles.push({ id: idx, mesh: relic, x: pt.x, y: pt.y + 1, z: pt.z, label: pt.label, collected: false });
+            });
         }
 
         function initLivingCreatures() {
@@ -3246,38 +3687,38 @@
         ];
 
         function generate5MilestonesForMap(mapMode) {
-            const isMc = mapMode === 'minecraft';
-            const mapLabel = isMc ? 'Lục Địa Minecraft 320x320' : 'Đảo Livik 320x320';
+            const norm = normalizeMapMode(mapMode);
+            const mapLabel = MAP_META[norm] ? MAP_META[norm].shortName : 'Đảo Livik 320x320';
             const templates = [
                 {
                     id: 1,
                     action: 'minigame_tag',
-                    title: '🏃 Chơi 1 ván Đấu Trường Đuổi Bắt Cân Bằng 50/50 cùng nhau',
-                    desc: 'Mở Hub Minigame (U) → Đấu Trường Đuổi Bắt hoặc bấm Bắt đầu ngay tại sân X:42..78',
+                    title: '🏃 Chơi Đấu Trường Đuổi Bắt hoặc Đấu Trường Thanh Máu 100 HP',
+                    desc: 'Mở Hub Minigame (U) → Đuổi Bắt 50/50 hoặc Đấu Trường Thanh Máu (X:50 Z:40)',
                     max: 1,
                     rewardIdx: 0
                 },
                 {
                     id: 2,
                     action: 'minigame_maze',
-                    title: '🌿 Đua Mê Cung Tình Yêu & chạm Cúp Trái Tim ở tâm mê cung',
-                    desc: 'Chạy từ Cổng Vào (-80, 0) tới Cúp Vàng Vô Địch (-58, 0) — có 3 bình Tăng Tốc!',
+                    title: norm === 'vikendi' ? '💎 Săn Tinh Thể Băng hoặc đua Mê Cung Tình Yêu' : (norm === 'sanhok' ? '🏛️ Vượt Bẫy Đền Cổ Sanhok hoặc đua Mê Cung' : '🌿 Đua Mê Cung Tình Yêu & chạm Cúp Trái Tim'),
+                    desc: 'Chạy từ Cổng Vào (-80, 0) tới Cúp Vàng Vô Địch (-58, 0) hoặc chơi Đặc Sản Map!',
                     max: 1,
                     rewardIdx: 1
                 },
                 {
                     id: 3,
                     action: 'ride_ferris',
-                    title: '🎡 Ngồi chung Cabin Vòng Quay Mặt Trời Khổng Lồ ngắm cảnh',
-                    desc: 'Tới chân Vòng Quay (X:28 Z:-8) bấm phím E để ngồi chung Cabin #0 cực lãng mạn!',
+                    title: '🎡 Ngồi chung Cabin Vòng Quay Siêu Cao (Y=56) ngắm toàn cảnh',
+                    desc: 'Tới chân Vòng Quay (X:32 Z:-12) bấm phím E — cabin thoáng 360° ngắm toàn đảo!',
                     max: 1,
                     rewardIdx: 2
                 },
                 {
                     id: 4,
                     action: 'visit_hotspring',
-                    title: isMc ? '🏔️ Chinh phục Đỉnh Núi Tuyết Taiga (Bắc) trên bản đồ 320x320' : '🏔️ Chinh phục Đỉnh Tuyết Livik & ngâm Suối Nước Nóng bốc khói',
-                    desc: `Khám phá vùng Bắc ${mapLabel} (tọa độ X:75 Z:-91) hoặc trượt Máng Băng!`,
+                    title: norm === 'vikendi' ? '🏰 Chinh phục Lâu Đài Tuyết Vikendi Bắc trên bản đồ 320x320' : (norm === 'sanhok' ? '⛩️ Chinh phục Đền Cổ Đá Rong Sanhok giữa rừng rậm' : '🏔️ Chinh phục Đỉnh Tuyết Livik & Suối Nước Nóng'),
+                    desc: `Khám phá địa danh nổi tiếng nhất của ${mapLabel}!`,
                     max: 1,
                     rewardIdx: 3
                 },
@@ -3318,12 +3759,13 @@
 
         const QUESTS_BY_MAP = {
             livik: generate5MilestonesForMap('livik'),
-            minecraft: generate5MilestonesForMap('minecraft')
+            vikendi: generate5MilestonesForMap('vikendi'),
+            sanhok: generate5MilestonesForMap('sanhok')
         };
         const LIVIK_QUESTS = QUESTS_BY_MAP.livik;
 
-        const unlockedChapterByMap = { livik: 1, minecraft: 1 };
-        const viewingChapterByMap = { livik: 1, minecraft: 1 };
+        const unlockedChapterByMap = { livik: 1, vikendi: 1, sanhok: 1 };
+        const viewingChapterByMap = { livik: 1, vikendi: 1, sanhok: 1 };
         let rewardCoupons = [
             {
                 id: 1,
@@ -3392,7 +3834,7 @@
                     type: q.rewardType || 'bop',
                     icon: q.rewardIcon || '👐💖',
                     title: q.rewardTitle || "Chúc mừng Uyên được 'bóp bóp'!",
-                    desc: `${q.title} (${currentWorldMapMode === 'livik' ? 'Đảo Livik' : 'Map Minecraft'})`,
+                    desc: `${q.title} (${(MAP_META[currentWorldMapMode] || MAP_META.livik).shortName})`,
                     time: new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })
                 });
                 updateCouponCountersUI();
@@ -3435,7 +3877,7 @@
 
             const chBadge = document.getElementById('quest-chapter-badge');
             if (chBadge) {
-                chBadge.innerText = `5 Cột Mốc Vàng (${currentWorldMapMode === 'livik' ? 'Livik' : 'Minecraft'})`;
+                chBadge.innerText = `5 Cột Mốc Vàng (${(MAP_META[currentWorldMapMode] || MAP_META.livik).shortName})`;
             }
             const totalProg = document.getElementById('quest-total-progress');
             if (totalProg) {
@@ -3740,27 +4182,31 @@
                 exitCurrentMinigameOrRide(true);
             }
             player.velocity.set(0, 0, 0);
-            const isMc = currentWorldMapMode === 'minecraft';
+            const m = normalizeMapMode(currentWorldMapMode);
             if (poi === 'hotspring') {
-                const sy = findSafeSurfaceY(75, -86, 16);
-                player.position.set(75, sy, -86);
-                showToast(isMc ? "Đã đến Đỉnh Núi Taiga Tuyết Trắng 320x320! 🌲❄️" : "Đã đến Suối Nước Nóng & Máng Trượt Băng! 🏔️♨️");
+                const tx = m === 'vikendi' ? -12 : (m === 'sanhok' ? -2 : 75);
+                const tz = m === 'vikendi' ? -85 : (m === 'sanhok' ? -65 : -86);
+                player.position.set(tx, findSafeSurfaceY(tx, tz, 14), tz);
+                showToast(m === 'vikendi' ? "Đã đến Lâu Đài Tuyết Vikendi! 🏰❄️" : (m === 'sanhok' ? "Đã đến Đền Cổ Đá Rong Sanhok! ⛩️🌴" : "Đã đến Đỉnh Tuyết & Suối Nước Nóng! 🏔️♨️"));
                 checkQuestProgress('visit_hotspring', 1);
             } else if (poi === 'windmill') {
-                const sy = findSafeSurfaceY(-82, -75, 7);
-                player.position.set(-82, sy, -75);
-                showToast(isMc ? "Đã đến Làng Dân Làng Bình Nguyên 320x320! 🏡🌾" : "Đã đến Cối Xay Gió Thung Lũng Hoa Anh Đào! 🌸✨");
+                const tx = m === 'vikendi' ? 84 : (m === 'sanhok' ? -64 : -82);
+                const tz = m === 'vikendi' ? -70 : (m === 'sanhok' ? -48 : -75);
+                player.position.set(tx, findSafeSurfaceY(tx, tz, 16), tz);
+                showToast(m === 'vikendi' ? "Đã đến Đỉnh Máng Trượt Băng Vikendi! ⛷️❄️" : (m === 'sanhok' ? "Đã đến Trại Bootcamp Rừng Rậm Sanhok! ⛺🌴" : "Đã đến Cối Xay Gió Thung Lũng Hoa Anh Đào! 🌸✨"));
             } else if (poi === 'waterfall') {
                 player.position.set(0, 7, 8);
-                showToast(isMc ? "Đã về Quảng Trường Giếng Làng Trung Tâm! ⛲" : "Đã về Thác Nước Pha Lê & Trung Tâm Khu Vui Chơi! 🌊🎪");
+                showToast("Đã về Quảng Trường Trung Tâm & Công Viên Vòng Quay Y=56! 🌊🎪");
             } else if (poi === 'farm') {
-                const tx = isMc ? -85 : -75, tz = isMc ? 85 : 72;
+                const tx = m === 'vikendi' ? -75 : (m === 'sanhok' ? -45 : -75);
+                const tz = m === 'vikendi' ? 65 : (m === 'sanhok' ? 58 : 72);
                 player.position.set(tx, findSafeSurfaceY(tx, tz, 6), tz);
-                showToast(isMc ? "Đã đến Hẻm Núi Mỏ Kim Cương! 💎⛏️" : "Đã đến Trang Trại Mùa Thu & Vườn Bí Ngô 320x320! 🍁🌾");
+                showToast(m === 'vikendi' ? "Đã đến Rừng Thông Đóng Băng! 🌲❄️" : (m === 'sanhok' ? "Đã đến Làng Nhà Sàn Bờ Sông Sanhok! 🌺🌉" : "Đã đến Trang Trại Mùa Thu & Vườn Bí Ngô! 🍁🌾"));
             } else if (poi === 'pier') {
-                const tx = isMc ? 95 : 92, tz = isMc ? 82 : 110;
+                const tx = m === 'vikendi' ? 65 : (m === 'sanhok' ? 75 : 92);
+                const tz = m === 'vikendi' ? 78 : (m === 'sanhok' ? 55 : 110);
                 player.position.set(tx, findSafeSurfaceY(tx, tz, 6), tz);
-                showToast(isMc ? "Đã đến Kim Tự Tháp Sa Mạc Cát Vàng! 🏜️💎" : "Đã đến Bến Du Thuyền Vịnh Nắng Hạ & Chú Vịt Vàng! 🏖️🛥️");
+                showToast(m === 'vikendi' ? "Đã đến Cảng Vũ Trụ Cosmodrome Tuyết! 🚀❄️" : (m === 'sanhok' ? "Đã đến Hang Thác Rừng Nhiệt Đới Sanhok! 🏞️🌴" : "Đã đến Bến Du Thuyền Vịnh Nắng Hạ & Chú Vịt Vàng! 🏖️🛥️"));
             } else if (poi === 'skyisland') {
                 player.position.set(0, 31.6, 2);
                 showToast("Đã đặt chân lên Đảo Bay Bầu Trời & Đích Parkour (Y=28)! 🏰☁️✨");
@@ -3788,6 +4234,48 @@
         let isPointerLocked = false;
         let lastSpacePress = 0;
         let currentRayTarget = null;
+        let isSprintToggled = false;
+        let touchHoldJump = false;
+        let isChatCollapsed = false;
+
+        function toggleSprintMode() {
+            isSprintToggled = !isSprintToggled;
+            const btn = document.getElementById('action-sprint-btn');
+            const lbl = document.getElementById('sprint-btn-label');
+            if (btn) {
+                btn.classList.toggle('bg-gradient-to-r', isSprintToggled);
+                btn.classList.toggle('from-amber-400', isSprintToggled);
+                btn.classList.toggle('to-orange-500', isSprintToggled);
+                btn.classList.toggle('text-white', isSprintToggled);
+                btn.classList.toggle('bg-amber-50/95', !isSprintToggled);
+                btn.classList.toggle('text-amber-700', !isSprintToggled);
+            }
+            if (lbl) lbl.innerText = isSprintToggled ? 'Đang Chạy Nhanh!' : 'Chạy Nhanh';
+            showToast(isSprintToggled ? "⚡ Đã bật Chạy Nhanh liên tục!" : "🚶 Đã tắt Chạy Nhanh!", "⚡", 1800);
+        }
+
+        function toggleCoupleChatPanel() {
+            isChatCollapsed = !isChatCollapsed;
+            const body = document.getElementById('couple-chat-body');
+            const expandBtn = document.getElementById('btn-chat-expand');
+            const unreadDot = document.getElementById('chat-unread-dot');
+            if (body) body.classList.toggle('hidden', isChatCollapsed);
+            if (expandBtn) expandBtn.classList.toggle('hidden', !isChatCollapsed);
+            if (!isChatCollapsed && unreadDot) unreadDot.classList.add('hidden');
+        }
+
+        function teleportToCloudObservatory() {
+            if (typeof exitCurrentMinigameOrRide === 'function' && currentSeatedRide) {
+                exitCurrentMinigameOrRide(true);
+            }
+            player.isFlying = false;
+            if (typeof updateFlyButtonUI === 'function') updateFlyButtonUI();
+            player.velocity.set(0, 0, 0);
+            player.position.set(CLOUD_OBS_POS.x + 0.5, CLOUD_OBS_POS.y, CLOUD_OBS_POS.z + 0.5);
+            player.rotation.x = -0.52;
+            player.rotation.y = 0;
+            showToast("☁️ Đã lên Đài Ngắm Mây Toàn Cảnh (Y=54)! Nhìn xuống trọn vẹn 320x320!", "☁️", 3000);
+        }
 
         const wireframeGeo = new THREE.EdgesGeometry(new THREE.BoxGeometry(1.01, 1.01, 1.01));
         const wireframeMat = new THREE.LineBasicMaterial({ color: 0xff6b81, linewidth: 2.5 });
@@ -3851,7 +4339,7 @@
         function isCompetitiveMinigameActive() {
             return !!(
                 activeMinigame &&
-                (activeMinigame.id === 'tag' || activeMinigame.id === 'maze' || activeMinigame.id === 'colormatch' || activeMinigame.id === 'parkour') &&
+                (activeMinigame.id === 'tag' || activeMinigame.id === 'maze' || activeMinigame.id === 'colormatch' || activeMinigame.id === 'parkour' || activeMinigame.id === 'battle' || activeMinigame.id === 'mapspecial') &&
                 (activeMinigame.phase === 'countdown' || activeMinigame.phase === 'playing')
             );
         }
@@ -4019,7 +4507,7 @@
                 if (moveDir.lengthSq() > 0) moveDir.normalize();
             }
 
-            const isSprinting = keys['ShiftLeft'] || keys['ShiftRight'];
+            const isSprinting = isSprintToggled || keys['ShiftLeft'] || keys['ShiftRight'];
             let curSpeed = isSprinting ? player.sprintSpeed : player.speed;
 
             const bx = Math.floor(player.position.x);
@@ -4053,11 +4541,12 @@
             }
 
             if (player.isFlying) {
-                const spd = player.flySpeed;
-                player.position.x += moveDir.x * spd;
-                player.position.z += moveDir.z * spd;
-                if (keys['Space']) player.position.y += spd;
+                const spd = isSprinting ? player.flySpeed * 1.45 : player.flySpeed;
+                player.position.x = THREE.MathUtils.clamp(player.position.x + moveDir.x * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
+                player.position.z = THREE.MathUtils.clamp(player.position.z + moveDir.z * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
+                if (keys['Space'] || touchHoldJump) player.position.y += spd;
                 if (keys['ShiftLeft'] || keys['KeyC']) player.position.y -= spd;
+                player.position.y = THREE.MathUtils.clamp(player.position.y, 2.0, 110);
             } else {
                 const nextX = player.position.x + moveDir.x * curSpeed;
                 const nextZ = player.position.z + moveDir.z * curSpeed;
@@ -4084,6 +4573,9 @@
                 if (activeMinigame && activeMinigame.id === 'tag' && activeMinigame.phase === 'playing') {
                     player.position.x = THREE.MathUtils.clamp(player.position.x, 43.3, 76.7);
                     player.position.z = THREE.MathUtils.clamp(player.position.z, -17.3, 16.7);
+                } else if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.phase === 'playing') {
+                    player.position.x = THREE.MathUtils.clamp(player.position.x, 39.2, 62.6);
+                    player.position.z = THREE.MathUtils.clamp(player.position.z, 29.2, 52.6);
                 }
 
                 // Spring Jump Pad (Block 38)
@@ -4151,35 +4643,64 @@
         let currentPOIName = "";
 
         function updateCurrentPOIHUD() {
-            const px = player.position.x; const pz = player.position.z;
+            const px = player.position.x; const py = player.position.y; const pz = player.position.z;
             const dist = Math.sqrt(px * px + pz * pz);
             const badge = document.getElementById('current-biome-badge');
-            const isMc = currentWorldMapMode === 'minecraft';
+            const coordsEl = document.getElementById('minimap-coords');
+            if (coordsEl) coordsEl.innerText = `X:${Math.round(px)} Y:${Math.round(py)} Z:${Math.round(pz)}`;
+
+            const m = normalizeMapMode(currentWorldMapMode);
             let newPOI = "";
 
-            if (player.position.y >= 24) {
-                newPOI = isMc ? "🏰 Pháo Đài Bầu Trời (Y=28)" : "🏰 Lâu Đài Mây Trên Không (Y=28)";
+            if (Math.hypot(px - CLOUD_OBS_POS.x, pz - CLOUD_OBS_POS.z) <= 8 && py >= 48) {
+                newPOI = "☁️ Đài Ngắm Mây Toàn Cảnh (Y=54)";
+            } else if (py >= 24) {
+                newPOI = m === 'vikendi' ? "❄️ Pháo Đài Băng Trên Không (Y=28)" : (m === 'sanhok' ? "🌴 Đền Bay Ngọc Lục Bảo (Y=28)" : "🏰 Lâu Đài Mây Trên Không (Y=28)");
+            } else if (px >= 38 && px <= 63 && pz >= 28 && pz <= 53) {
+                newPOI = "⚔️ Đấu Trường Thanh Máu 100 HP";
             } else if (px >= 40 && px <= 79 && pz >= -20 && pz <= 19) {
                 newPOI = "🏃‍♂️ Đấu Trường Đuổi Bắt 50/50";
             } else if (px >= -82 && px <= -35 && pz >= -23 && pz <= 23) {
                 newPOI = "🌿 Mê Cung Tình Yêu (44x44)";
             } else if (px >= -4 && px <= 24 && pz >= 16 && pz <= 42) {
                 newPOI = "💃 Sàn Nhảy Sắc Màu";
-            } else if (px >= 14 && px <= 42 && pz >= -22 && pz <= 8) {
-                newPOI = "🎡 Vòng Quay Mặt Trời Đôi";
+            } else if (px >= 14 && px <= 46 && pz >= -26 && pz <= 6) {
+                newPOI = "🎡 Vòng Quay Siêu Cao (Y=56)";
             } else if (dist <= 28) {
-                newPOI = isMc ? "⛲ Quảng Trường Giếng Làng" : "🌊 Hồ Trái Tim & Trung Tâm Công Viên";
+                newPOI = m === 'vikendi' ? "🧊 Hồ Đóng Băng Trung Tâm" : (m === 'sanhok' ? "🌉 Cầu Treo Sông Xanh Trung Tâm" : "🌊 Hồ Trái Tim & Trung Tâm Công Viên");
+            } else if (m === 'vikendi') {
+                if (pz < -40 && px < 20) {
+                    newPOI = "🏰 Lâu Đài Tuyết Vikendi Bắc";
+                    checkQuestProgress('visit_hotspring', 1);
+                } else if (px > 35 && pz < -35) {
+                    newPOI = "⛷️ Máng Trượt Băng & Tháp Radar";
+                } else if (px > 25 && pz > 35) {
+                    newPOI = "🚀 Cảng Vũ Trụ Cosmodrome";
+                } else {
+                    newPOI = "🌲 Rừng Thông Đóng Băng Vikendi";
+                }
+            } else if (m === 'sanhok') {
+                if (pz < -40 && px > -25 && px < 25) {
+                    newPOI = "⛩️ Đền Cổ Đá Rong Ruins";
+                    checkQuestProgress('visit_hotspring', 1);
+                } else if (px < -30 && pz < -20) {
+                    newPOI = "⛺ Trại Huấn Luyện Bootcamp";
+                } else if (px > 35 && pz > 20) {
+                    newPOI = "🏞️ Hang Thác Rừng Nhiệt Đới";
+                } else {
+                    newPOI = "🌺 Làng Nhà Sàn & Rừng Sanhok";
+                }
             } else if (px > 14 && pz < -14) {
-                newPOI = isMc ? "🌲 Đỉnh Núi Taiga & Máng Trượt" : "🏔️ Đỉnh Tuyết & Suối Nước Nóng";
+                newPOI = "🏔️ Đỉnh Tuyết & Suối Nước Nóng";
                 if (px > 52 && pz < -58) {
                     checkQuestProgress('visit_hotspring', 1);
                 }
             } else if (px < -14 && pz < -14) {
-                newPOI = isMc ? "🏡 Làng Dân Làng Bình Nguyên" : "🌸 Thung Lũng Anh Đào & Xích Đu";
+                newPOI = "🌸 Thung Lũng Anh Đào & Xích Đu";
             } else if (px < -14 && pz > 14) {
-                newPOI = isMc ? "💎 Hẻm Núi Mỏ Kim Cương" : "🍁 Rừng Phong Thu & Nhà Kho Đỏ";
+                newPOI = "🍁 Rừng Phong Thu & Nhà Kho Đỏ";
             } else {
-                newPOI = isMc ? "🏜️ Kim Tự Tháp Sa Mạc" : "🏖️ Vịnh Nắng Hạ & Bến Du Thuyền";
+                newPOI = "🏖️ Vịnh Nắng Hạ & Bến Du Thuyền";
             }
 
             if (badge && newPOI !== currentPOIName) {
@@ -4309,21 +4830,34 @@
                 }
                 return;
             }
-            if (e.code === 'Tab') {
+            if (e.code === 'Tab' && !e.repeat) {
                 e.preventDefault();
                 toggleCleanHUDMode();
                 return;
             }
-            if (e.key >= '1' && e.key <= '9') selectHotbar(parseInt(e.key) - 1);
-            if (e.code === 'KeyE') {
+            if (e.key >= '1' && e.key <= '9' && !e.repeat) selectHotbar(parseInt(e.key) - 1);
+            if (e.code === 'KeyE' && !e.repeat) {
                 if (typeof handleRideInteractKey === 'function' && handleRideInteractKey()) return;
                 triggerPlaceBlock();
                 return;
             }
-            if (e.code === 'KeyQ') triggerBreakBlock();
-            if (e.code === 'KeyC') toggleCraftModal();
-            if (e.code === 'KeyZ') performUndo();
-            if (e.code === 'KeyU') {
+            if ((e.code === 'KeyQ' || e.code === 'KeyJ') && !e.repeat) {
+                if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.phase === 'playing' && typeof fireBattleProjectile === 'function') {
+                    fireBattleProjectile();
+                } else if (e.code === 'KeyQ') {
+                    triggerBreakBlock();
+                }
+                return;
+            }
+            if (e.code === 'KeyY' && !e.repeat) {
+                if (incomingPendingMapInvite && typeof acceptIncomingMapInvite === 'function') {
+                    acceptIncomingMapInvite();
+                }
+                return;
+            }
+            if (e.code === 'KeyC' && !e.repeat) toggleCraftModal();
+            if (e.code === 'KeyZ' && !e.repeat) performUndo();
+            if (e.code === 'KeyU' && !e.repeat) {
                 if (typeof toggleMinigamesModal === 'function') toggleMinigamesModal();
                 return;
             }
@@ -4332,7 +4866,7 @@
                     triggerTagDashSkill();
                 }
             }
-            if (e.code === 'KeyF') {
+            if (e.code === 'KeyF' && !e.repeat) {
                 if (activeMinigame && activeMinigame.id === 'tag' && activeMinigame.phase === 'playing' && typeof triggerTagDashSkill === 'function') {
                     triggerTagDashSkill();
                 } else {
@@ -4340,12 +4874,18 @@
                 }
             }
 
-            // Couple Emotes & Interactions: T (Heart), V (Wave/Dance), K (Flower/Gift), P (Selfie or Pet)
-            if (e.code === 'KeyT') triggerCoupleEmote('heart');
-            if (e.code === 'KeyV') triggerCoupleEmote('dance');
-            if (e.code === 'KeyK') triggerCoupleEmote('flower');
+            // Couple Emotes & Interactions: T (Heart), V (Wave/Dance), K (Battle Shield or Flower), P (Selfie or Pet)
+            if (e.code === 'KeyT' && !e.repeat) triggerCoupleEmote('heart');
+            if (e.code === 'KeyV' && !e.repeat) triggerCoupleEmote('dance');
+            if (e.code === 'KeyK' && !e.repeat) {
+                if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.phase === 'playing' && typeof activateBattleShield === 'function') {
+                    activateBattleShield();
+                } else {
+                    triggerCoupleEmote('flower');
+                }
+            }
 
-            if (e.code === 'KeyP') {
+            if (e.code === 'KeyP' && !e.repeat) {
                 let nearest = null; let minDist = 4.2;
                 pets.forEach(p => {
                     const d = p.group.position.distanceTo(player.position);
@@ -4355,7 +4895,7 @@
                 else takeCoupleSelfiePhoto();
             }
 
-            if (e.code === 'Space') {
+            if (e.code === 'Space' && !e.repeat) {
                 if (currentSeatedRide && typeof exitCurrentMinigameOrRide === 'function') {
                     exitCurrentMinigameOrRide();
                     return;
@@ -4365,14 +4905,14 @@
                 lastSpacePress = now;
             }
 
-            if (e.code === 'KeyB' || e.code === 'KeyI') toggleInventoryModal();
-            if (e.code === 'KeyG') {
+            if ((e.code === 'KeyB' || e.code === 'KeyI') && !e.repeat) toggleInventoryModal();
+            if (e.code === 'KeyG' && !e.repeat) {
                 if (isCoopConnected && partnerAvatarGroup) teleportToPartner();
                 else togglePrefabModal();
             }
-            if (e.code === 'KeyM') toggleMapModal();
-            if (e.code === 'KeyN') toggleQuestModal();
-            if (e.code === 'KeyH') teleportToPOI('waterfall');
+            if (e.code === 'KeyM' && !e.repeat) toggleMapModal();
+            if (e.code === 'KeyN' && !e.repeat) toggleQuestModal();
+            if (e.code === 'KeyH' && !e.repeat) teleportToPOI('waterfall');
         });
 
         window.addEventListener('keyup', (e) => { keys[e.code] = false; });
@@ -4386,8 +4926,15 @@
 
         container.addEventListener('click', (e) => {
             audio.init();
-            if (!isPointerLocked) container.requestPointerLock();
-            else if (e.button === 0) triggerBreakBlock();
+            if (!isPointerLocked) {
+                container.requestPointerLock();
+            } else if (e.button === 0) {
+                if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.phase === 'playing' && typeof fireBattleProjectile === 'function') {
+                    fireBattleProjectile();
+                } else {
+                    triggerBreakBlock();
+                }
+            }
         });
 
         const touchPlace = document.getElementById('touch-place');
@@ -4395,18 +4942,36 @@
         const touchJump = document.getElementById('touch-jump');
         if (touchPlace) touchPlace.onclick = (e) => { e.stopPropagation(); audio.init(); triggerPlaceBlock(); };
         if (touchBreak) touchBreak.onclick = (e) => { e.stopPropagation(); audio.init(); triggerBreakBlock(); };
-        if (touchJump) touchJump.onclick = (e) => {
-            e.stopPropagation(); audio.init();
-            if (currentSeatedRide && typeof exitCurrentMinigameOrRide === 'function') {
-                exitCurrentMinigameOrRide();
-                return;
-            }
-            if (player.isGrounded) { player.velocity.y = 0.21; player.isGrounded = false; audio.playJumpSound(); }
-        };
+        if (touchJump) {
+            const startJumpHold = (e) => {
+                e.stopPropagation(); audio.init();
+                touchHoldJump = true;
+                if (currentSeatedRide && typeof exitCurrentMinigameOrRide === 'function') {
+                    exitCurrentMinigameOrRide();
+                    return;
+                }
+                if (player.isGrounded && !player.isFlying) {
+                    player.velocity.y = 0.21;
+                    player.isGrounded = false;
+                    audio.playJumpSound();
+                }
+            };
+            const endJumpHold = () => { touchHoldJump = false; };
+            touchJump.addEventListener('pointerdown', startJumpHold);
+            touchJump.addEventListener('pointerup', endJumpHold);
+            touchJump.addEventListener('pointerleave', endJumpHold);
+            touchJump.addEventListener('pointercancel', endJumpHold);
+        }
 
         container.addEventListener('contextmenu', (e) => {
             e.preventDefault();
-            if (isPointerLocked) triggerPlaceBlock();
+            if (isPointerLocked) {
+                if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.phase === 'playing' && typeof activateBattleShield === 'function') {
+                    activateBattleShield();
+                } else {
+                    triggerPlaceBlock();
+                }
+            }
         });
 
         const clickOverlay = document.getElementById('click-to-play-overlay');
@@ -4534,8 +5099,13 @@
 
         function toggleMapModal() {
             const m = document.getElementById('map-modal');
+            if (!m) return;
             m.classList.toggle('hidden');
-            if (!m.classList.contains('hidden')) document.exitPointerLock();
+            if (!m.classList.contains('hidden')) {
+                renderMapPOIGrid();
+                drawFullInteractiveMap();
+                document.exitPointerLock();
+            }
         }
 
         function toggleQuestModal() {
@@ -4548,68 +5118,162 @@
         const minimapCanvas = document.getElementById('minimap-canvas');
         const mCtx = minimapCanvas.getContext('2d');
 
-        function drawMinimap() {
-            const w = minimapCanvas.width; const h = minimapCanvas.height;
-            mCtx.clearRect(0, 0, w, h);
+        function updateMinimapPartnerUI() {
+            const el = document.getElementById('minimap-partner-status');
+            if (!el) return;
+            if (isCoopConnected && partnerAvatarGroup) {
+                const partnerName = myCoupleRole === 'uyen' ? 'Huân' : 'Uyên';
+                const dist = Math.round(Math.hypot(partnerAvatarGroup.position.x - player.position.x, partnerAvatarGroup.position.z - player.position.z));
+                el.innerText = `💞 ${partnerName} cách ${dist}m`;
+                el.className = "text-[9px] font-extrabold text-rose-600 mt-0.5 text-center leading-tight";
+            } else {
+                el.innerText = "💞 Chơi 1 mình";
+                el.className = "text-[9px] font-bold text-gray-500 mt-0.5 text-center leading-tight";
+            }
+        }
+
+        function renderMapRadarOntoCanvas(canvasEl, ctx, showLabels = false) {
+            if (!canvasEl || !ctx) return;
+            const w = canvasEl.width, h = canvasEl.height;
+            const s = w / 104;
+            ctx.clearRect(0, 0, w, h);
 
             const toMapX = (wx) => ((wx / (WORLD_RADIUS * 2)) + 0.5) * w;
             const toMapZ = (wz) => ((wz / (WORLD_RADIUS * 2)) + 0.5) * h;
+            const m = normalizeMapMode(currentWorldMapMode);
 
-            // Surrounding Blue Ocean
-            mCtx.fillStyle = '#74b9ff';
-            mCtx.fillRect(0, 0, w, h);
+            // Distinct Radar Ground & Biomes per Map!
+            if (m === 'vikendi') {
+                ctx.fillStyle = '#54a0ff';
+                ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = '#f5f6fa';
+                ctx.beginPath(); ctx.arc(w / 2, h / 2, 46 * s, 0, Math.PI * 2); ctx.fill();
+                // Frozen Central Lake + Snow Castle + Cosmodrome
+                ctx.fillStyle = '#74b9ff';
+                ctx.beginPath(); ctx.arc(w / 2, h / 2, 7.5 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#dfe6e9';
+                ctx.fillRect(toMapX(-12) - 5 * s, toMapZ(-85) - 5 * s, 10 * s, 10 * s);
+                ctx.fillStyle = '#00cec9';
+                ctx.fillRect(toMapX(65) - 4 * s, toMapZ(78) - 4 * s, 8 * s, 8 * s);
+            } else if (m === 'sanhok') {
+                ctx.fillStyle = '#00cec9';
+                ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = '#55efc4';
+                ctx.beginPath(); ctx.arc(w / 2, h / 2, 45 * s, 0, Math.PI * 2); ctx.fill();
+                // Winding S-Curve Sanhok River
+                ctx.strokeStyle = '#0984e3'; ctx.lineWidth = Math.max(2, 3 * s);
+                ctx.beginPath();
+                for (let wx = -140; wx <= 140; wx += 10) {
+                    const wz = Math.sin(wx * 0.032) * 38;
+                    if (wx === -140) ctx.moveTo(toMapX(wx), toMapZ(wz));
+                    else ctx.lineTo(toMapX(wx), toMapZ(wz));
+                }
+                ctx.stroke();
+                ctx.fillStyle = '#fdcb6e'; // Ruins Temple
+                ctx.fillRect(toMapX(-2) - 4 * s, toMapZ(-65) - 4 * s, 8 * s, 8 * s);
+            } else {
+                ctx.fillStyle = '#74b9ff';
+                ctx.fillRect(0, 0, w, h);
+                ctx.fillStyle = '#a8e6cf';
+                ctx.beginPath(); ctx.arc(w / 2, h / 2, 46 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath(); ctx.arc(w / 2 + 20 * s, h / 2 - 20 * s, 14 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#fab1a0';
+                ctx.beginPath(); ctx.arc(w / 2 - 20 * s, h / 2 + 20 * s, 14 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#ffeaa7';
+                ctx.beginPath(); ctx.arc(w / 2 + 22 * s, h / 2 + 20 * s, 14 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = '#0984e3';
+                ctx.beginPath(); ctx.arc(w / 2, h / 2, 6 * s, 0, Math.PI * 2); ctx.fill();
+            }
 
-            // Island Circle (320x320 coverage)
-            mCtx.fillStyle = '#a8e6cf';
-            mCtx.beginPath(); mCtx.arc(w/2, h/2, 46, 0, Math.PI * 2); mCtx.fill();
+            // Shared Amusement Park + Battle Colosseum Markers
+            ctx.fillStyle = '#ff7675';
+            ctx.fillRect(toMapX(60) - 3.5 * s, toMapZ(0) - 3.5 * s, 7 * s, 7 * s);
+            ctx.fillStyle = '#d63031'; // Battle 100 HP Colosseum (X:50 Z:40)
+            ctx.fillRect(toMapX(50) - 3.5 * s, toMapZ(40) - 3.5 * s, 7 * s, 7 * s);
+            ctx.fillStyle = '#00b894'; // Love Maze
+            ctx.fillRect(toMapX(-59) - 4 * s, toMapZ(0) - 4 * s, 8 * s, 8 * s);
+            ctx.strokeStyle = '#e84393'; ctx.lineWidth = Math.max(1.5, 1.8 * s); // Ferris Y=56
+            ctx.beginPath(); ctx.arc(toMapX(FERRIS_CENTER.x), toMapZ(FERRIS_CENTER.z), 4 * s, 0, Math.PI * 2); ctx.stroke();
 
-            // 4 Quadrant Biome Color Tints
-            mCtx.fillStyle = '#ffffff'; // Snowy mountain NE
-            mCtx.beginPath(); mCtx.arc(w/2 + 20, h/2 - 20, 15, 0, Math.PI * 2); mCtx.fill();
+            // POI Stars on Interactive Full Map Canvas
+            if (showLabels) {
+                const pois = MAP_POI_CONFIG[m] || MAP_POI_CONFIG.livik;
+                ctx.font = `bold ${Math.round(9.5 * s)}px Quicksand, sans-serif`;
+                ctx.textAlign = 'center';
+                pois.forEach(p => {
+                    const px = toMapX(p.x), pz = toMapZ(p.z);
+                    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+                    ctx.beginPath(); ctx.arc(px, pz, 5.5 * s, 0, Math.PI * 2); ctx.fill();
+                    ctx.strokeStyle = '#e84393'; ctx.lineWidth = 1.5; ctx.stroke();
+                    ctx.fillStyle = '#2d3436';
+                    ctx.fillText(p.icon, px, pz + 3.2 * s);
+                });
+            }
 
-            mCtx.fillStyle = '#fab1a0'; // Autumn farm SW
-            mCtx.beginPath(); mCtx.arc(w/2 - 20, h/2 + 20, 15, 0, Math.PI * 2); mCtx.fill();
-
-            mCtx.fillStyle = '#ffeaa7'; // Summer beach SE
-            mCtx.beginPath(); mCtx.arc(w/2 + 22, h/2 + 20, 15, 0, Math.PI * 2); mCtx.fill();
-
-            // Heart Lake Center
-            mCtx.fillStyle = '#0984e3';
-            mCtx.beginPath(); mCtx.arc(w/2, h/2, 6, 0, Math.PI * 2); mCtx.fill();
-
-            // Couple Amusement Park & 6 Minigame Landmarks on Minimap
-            // 1. Tag Arena (X:60 Z:0)
-            mCtx.fillStyle = '#ff7675';
-            mCtx.fillRect(toMapX(60) - 4, toMapZ(0) - 4, 8, 8);
-            // 2. Love Maze (X:-59 Z:0)
-            mCtx.fillStyle = '#00b894';
-            mCtx.fillRect(toMapX(-59) - 5, toMapZ(0) - 5, 10, 10);
-            // 3. Ferris Wheel (X:28.5 Z:-8)
-            mCtx.strokeStyle = '#e84393'; mCtx.lineWidth = 2;
-            mCtx.beginPath(); mCtx.arc(toMapX(28.5), toMapZ(-8), 4.5, 0, Math.PI * 2); mCtx.stroke();
-            // 4. Sakura Swing (X:-34 Z:-34)
-            mCtx.fillStyle = '#fd79a8';
-            mCtx.beginPath(); mCtx.arc(toMapX(-34), toMapZ(-34), 3, 0, Math.PI * 2); mCtx.fill();
-            // 5. ColorMatch Stage (X:10 Z:29)
-            mCtx.fillStyle = '#a29bfe';
-            mCtx.fillRect(toMapX(10) - 3.5, toMapZ(29) - 3.5, 7, 7);
-
-            // Partner Avatar Marker on Minimap (ONLY when real remote player is connected!)
+            // Partner Avatar Marker
             if (isCoopConnected && partnerAvatarGroup) {
                 const ppx = toMapX(partnerAvatarGroup.position.x);
                 const ppz = toMapZ(partnerAvatarGroup.position.z);
-                mCtx.fillStyle = myCoupleRole === 'uyen' ? '#0984e3' : '#ff6b81';
-                mCtx.beginPath(); mCtx.arc(ppx, ppz, 4.5, 0, Math.PI * 2); mCtx.fill();
-                mCtx.strokeStyle = '#ffffff'; mCtx.lineWidth = 1.5; mCtx.stroke();
+                ctx.fillStyle = myCoupleRole === 'uyen' ? '#0984e3' : '#ff6b81';
+                ctx.beginPath(); ctx.arc(ppx, ppz, 4.2 * s, 0, Math.PI * 2); ctx.fill();
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
             }
 
-            // Player Marker
+            // Local Player Marker + View Direction Wedge
             const px = toMapX(player.position.x);
             const pz = toMapZ(player.position.z);
+            const lookAng = -player.rotation.y - Math.PI / 2;
+            ctx.fillStyle = 'rgba(255, 71, 87, 0.32)';
+            ctx.beginPath();
+            ctx.moveTo(px, pz);
+            ctx.arc(px, pz, 9 * s, lookAng - 0.45, lookAng + 0.45);
+            ctx.closePath();
+            ctx.fill();
 
-            mCtx.fillStyle = '#ff4757';
-            mCtx.beginPath(); mCtx.arc(px, pz, 4.5, 0, Math.PI * 2); mCtx.fill();
-            mCtx.strokeStyle = '#ffffff'; mCtx.lineWidth = 1.5; mCtx.stroke();
+            ctx.fillStyle = '#ff4757';
+            ctx.beginPath(); ctx.arc(px, pz, 4.2 * s, 0, Math.PI * 2); ctx.fill();
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.stroke();
+        }
+
+        function drawMinimap() {
+            renderMapRadarOntoCanvas(minimapCanvas, mCtx, false);
+            updateMinimapPartnerUI();
+        }
+
+        function drawFullInteractiveMap() {
+            const fullCanvas = document.getElementById('fullmap-canvas');
+            if (!fullCanvas) return;
+            const ctx = fullCanvas.getContext('2d');
+            renderMapRadarOntoCanvas(fullCanvas, ctx, true);
+        }
+
+        function handleFullMapClick(e) {
+            const fullCanvas = document.getElementById('fullmap-canvas');
+            if (!fullCanvas) return;
+            const rect = fullCanvas.getBoundingClientRect();
+            const nx = (e.clientX - rect.left) / rect.width;
+            const ny = (e.clientY - rect.top) / rect.height;
+            const wx = Math.round((nx - 0.5) * WORLD_RADIUS * 2);
+            const wz = Math.round((ny - 0.5) * WORLD_RADIUS * 2);
+
+            const m = normalizeMapMode(currentWorldMapMode);
+            const pois = MAP_POI_CONFIG[m] || MAP_POI_CONFIG.livik;
+            let nearest = null, bestD = 18;
+            pois.forEach(p => {
+                const d = Math.hypot(p.x - wx, p.z - wz);
+                if (d < bestD) { bestD = d; nearest = p; }
+            });
+            if (nearest) {
+                teleportToPOI(nearest.id);
+                return;
+            }
+            if (typeof exitCurrentMinigameOrRide === 'function' && currentSeatedRide) exitCurrentMinigameOrRide(true);
+            player.velocity.set(0, 0, 0);
+            player.position.set(wx, findSafeSurfaceY(wx, wz, 8), wz);
+            showToast(`🧭 Đã dịch chuyển tới tọa độ (X:${wx}, Z:${wz})!`, "🧭", 2200);
+            const mm = document.getElementById('map-modal');
+            if (mm) mm.classList.add('hidden');
         }
 
         function showToast(message, icon = "✨", durationMs = 3000) {
@@ -4696,8 +5360,8 @@
             sCtx.drawImage(renderCanvas, pad, pad);
             sCtx.fillStyle = '#ff4d6d';
             sCtx.font = 'bold 26px Quicksand, sans-serif';
-            const mapName = currentWorldMapMode === 'minecraft' ? 'Lục Địa Minecraft 320x320' : 'Đại Lục Địa Livik 320x320';
-            sCtx.fillText(`🌸 KawaiiCraft V5.0 — ${mapName}`, pad + 8, renderCanvas.height + pad + 40);
+            const mapName = (MAP_META[normalizeMapMode(currentWorldMapMode)] || MAP_META.livik).fullName;
+            sCtx.fillText(`🌸 KawaiiCraft V5.1 — ${mapName}`, pad + 8, renderCanvas.height + pad + 40);
             sCtx.fillStyle = '#718096';
             sCtx.font = '500 16px Quicksand, sans-serif';
             sCtx.fillText(`Thế giới nhỏ dành tặng Bé Uyên 💕 • Tác giả: Phạm Ngọc Huân • ${new Date().toLocaleDateString('vi-VN')}`, pad + 8, renderCanvas.height + pad + 72);
@@ -4741,8 +5405,8 @@
         document.getElementById('btn-force-save').onclick = () => saveWorldToCurrentSlot(false);
         document.getElementById('btn-reset-world').onclick = () => {
             saveModal.classList.add('hidden');
-            if (currentWorldMapMode === 'minecraft') generateMinecraftOverworld();
-            else generateLivikContinent();
+            rebuildActiveWorldMap(currentWorldMapMode);
+            syncAllMapAndRadarUI();
             saveWorldToCurrentSlot(true);
             showToast("Đã làm mới lại bản đồ nguyên bản! 🏝️");
         };
@@ -4789,7 +5453,8 @@
                 if (raw && infoEl) {
                     try {
                         const parsed = JSON.parse(raw);
-                        const mapTag = parsed.mapMode === 'minecraft' ? 'Minecraft 320x320' : 'Livik 320x320';
+                        const normSaved = normalizeMapMode(parsed.mapMode);
+                        const mapTag = (MAP_META[normSaved] || MAP_META.livik).shortName;
                         infoEl.innerText = `${mapTag} | Tùy biến: ${parsed.editCount || parsed.blockCount || 0} khối | Lưu lúc: ${parsed.updatedAt || 'Mới'}`;
                     } catch (e) {
                         infoEl.innerText = "Chưa có dữ liệu lưu";
@@ -4820,7 +5485,8 @@
             }
             const milestonesState = {
                 livik: QUESTS_BY_MAP.livik.map(q => ({ action: q.action, cur: q.cur, done: q.done })),
-                minecraft: QUESTS_BY_MAP.minecraft.map(q => ({ action: q.action, cur: q.cur, done: q.done }))
+                vikendi: QUESTS_BY_MAP.vikendi.map(q => ({ action: q.action, cur: q.cur, done: q.done })),
+                sanhok: QUESTS_BY_MAP.sanhok.map(q => ({ action: q.action, cur: q.cur, done: q.done }))
             };
             const payload = {
                 version: "5.0",
@@ -4865,9 +5531,8 @@
                 try {
                     const parsed = JSON.parse(raw);
                     if (parsed && parsed.version === "5.0") {
-                        currentWorldMapMode = parsed.mapMode || 'livik';
-                        if (currentWorldMapMode === 'minecraft') generateMinecraftOverworld();
-                        else generateLivikContinent();
+                        rebuildActiveWorldMap(parsed.mapMode || 'livik');
+                        renderMapPOIGrid();
 
                         applyWorldDeltasArray(parsed.worldDeltas);
 
@@ -4878,9 +5543,10 @@
                             if (typeof updateCoupleScoreboardUI === 'function') updateCoupleScoreboardUI();
                         }
                         if (parsed.milestonesState) {
-                            ['livik', 'minecraft'].forEach(mode => {
-                                const savedArr = parsed.milestonesState[mode];
-                                if (Array.isArray(savedArr)) {
+                            ['livik', 'vikendi', 'sanhok'].forEach(mode => {
+                                const fallbackArr = (mode === 'vikendi' && !parsed.milestonesState.vikendi) ? parsed.milestonesState.minecraft : null;
+                                const savedArr = parsed.milestonesState[mode] || fallbackArr;
+                                if (Array.isArray(savedArr) && QUESTS_BY_MAP[mode]) {
                                     savedArr.forEach(st => {
                                         const match = QUESTS_BY_MAP[mode].find(q => q.action === st.action);
                                         if (match) {
@@ -4970,9 +5636,8 @@
                 try {
                     const parsed = JSON.parse(evt.target.result);
                     if (parsed && Array.isArray(parsed.worldDeltas)) {
-                        currentWorldMapMode = parsed.mapMode || 'livik';
-                        if (currentWorldMapMode === 'minecraft') generateMinecraftOverworld();
-                        else generateLivikContinent();
+                        rebuildActiveWorldMap(parsed.mapMode || 'livik');
+                        renderMapPOIGrid();
                         applyWorldDeltasArray(parsed.worldDeltas);
                         if (Array.isArray(parsed.signboards)) {
                             parsed.signboards.forEach(([k, txt]) => {
@@ -5308,6 +5973,10 @@
             log.appendChild(item);
             while (log.children.length > 6) log.removeChild(log.firstChild);
             log.scrollTop = log.scrollHeight;
+            if (!isSelf && isChatCollapsed) {
+                const unreadDot = document.getElementById('chat-unread-dot');
+                if (unreadDot) unreadDot.classList.remove('hidden');
+            }
         }
 
         function sendCoupleChatMessage() {
@@ -5546,8 +6215,73 @@
         /* ==========================================================================
            FIREBASE REALTIME DATABASE CO-OP MULTIPLAYER NETWORKING
            ========================================================================== */
+        let publicRoomsRef = null;
+        let lastSyncedMapInviteNonce = 0;
+
         function fbBlockKey(x, y, z) {
             return 'b_' + String(x).replace(/-/g, 'm') + '_' + String(y).replace(/-/g, 'm') + '_' + String(z).replace(/-/g, 'm');
+        }
+
+        function renderPublicRoomsList(roomsData) {
+            const listEl = document.getElementById('coop-active-rooms-list');
+            if (!listEl) return;
+            const entries = roomsData ? Object.entries(roomsData)
+                .map(([k, v]) => ({ code: k, ...(v || {}) }))
+                .filter(r => {
+                    if (!r || !r.code) return false;
+                    const ts = typeof r.updatedAt === 'number' ? r.updatedAt : (typeof r.createdClientAt === 'number' ? r.createdClientAt : Date.now());
+                    return (Date.now() - ts) < 3600000;
+                })
+                .sort((a, b) => {
+                    const ta = typeof a.updatedAt === 'number' ? a.updatedAt : (a.createdClientAt || Date.now());
+                    const tb = typeof b.updatedAt === 'number' ? b.updatedAt : (b.createdClientAt || Date.now());
+                    return tb - ta;
+                })
+                : [];
+
+            if (entries.length === 0) {
+                listEl.innerHTML = `<div class="text-[11px] text-gray-500 italic py-1.5 text-center bg-white/70 rounded-xl border border-emerald-100">Chưa có phòng nào đang mở — bấm "✨ Mở Phòng Ngay" để người yêu thấy phòng nhé!</div>`;
+                return;
+            }
+
+            listEl.innerHTML = entries.map(r => {
+                const mapMeta = MAP_META[normalizeMapMode(r.mapMode)] || MAP_META.livik;
+                const isMine = (r.code === currentRoomCode && (isCoopConnected || myPlayerRef));
+                const isFull = (r.playerCount || 1) >= 2;
+                return `
+                    <div class="bg-white/95 p-2 rounded-xl border border-emerald-200 flex items-center justify-between gap-2 shadow-xs">
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="font-black text-xs text-rose-600">[${r.code}]</span>
+                                <span class="text-[10px] font-bold text-gray-700 truncate">${r.hostName || 'Chủ phòng'}</span>
+                                <span class="text-[9.5px] font-bold px-1.5 py-0.5 rounded-full ${isFull ? 'bg-pink-100 text-pink-700' : 'bg-emerald-100 text-emerald-700'}">${r.playerCount || 1}/2</span>
+                            </div>
+                            <div class="text-[10px] text-sky-700 font-semibold">${mapMeta.icon} ${mapMeta.shortName}</div>
+                        </div>
+                        <button onclick="joinCoopRoom('${r.code}')" class="px-2.5 py-1.5 rounded-xl font-extrabold text-[11px] whitespace-nowrap transition active:scale-95 ${isMine ? 'bg-pink-100 text-pink-700 border border-pink-300' : 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow hover:opacity-95'}">
+                            ${isMine ? '✅ Đang ở phòng' : '💞 Vào Luôn'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function subscribePublicRooms() {
+            if (!db) return;
+            if (!publicRoomsRef) {
+                publicRoomsRef = db.ref('publicRooms');
+                publicRoomsRef.on('value', (snap) => {
+                    renderPublicRoomsList(snap.val() || {});
+                }, () => {});
+            }
+        }
+
+        function refreshPublicRoomsList() {
+            if (!db) return;
+            db.ref('publicRooms').once('value').then((snap) => {
+                renderPublicRoomsList(snap.val() || {});
+                showToast("📡 Đã cập nhật danh sách phòng đang mở!", "📡", 1600);
+            }).catch(() => {});
         }
 
         function toggleCoopModal() {
@@ -5555,6 +6289,8 @@
             if (!m) return;
             m.classList.toggle('hidden');
             if (!m.classList.contains('hidden')) {
+                subscribePublicRooms();
+                refreshPublicRoomsList();
                 document.exitPointerLock();
             }
         }
@@ -5607,6 +6343,12 @@
                     myPlayerRef.remove();
                 } catch (e) {}
                 myPlayerRef = null;
+            }
+            if (db && currentRoomCode && lastAttemptMode === 'host') {
+                try {
+                    db.ref('publicRooms/' + currentRoomCode).onDisconnect().cancel();
+                    db.ref('publicRooms/' + currentRoomCode).remove();
+                } catch (e) {}
             }
             detachRoomListeners();
             removeRemotePlayerAvatar();
@@ -5723,6 +6465,20 @@
                 if (typeof teleportCoupleToLocation === 'function') {
                     teleportCoupleToLocation(ev.x, ev.y, ev.z, ev.label || 'Điểm Hẹn Đôi', true);
                 }
+            } else if (ev.type === 'map_synced') {
+                const label = ev.mapName || (MAP_META[normalizeMapMode(ev.mapMode)] || MAP_META.livik).shortName;
+                audio.playGiftChime();
+                showToast(`✨ ${ev.sender || remotePartnerName} đã đổi sang ${label} cùng bạn! (Đã đồng bộ)`, "🗺️", 3600);
+            } else if (ev.type === 'battle_hit') {
+                if (typeof applyLocalBattleDamage === 'function') {
+                    applyLocalBattleDamage(ev.dmg || 15, ev.sender || remotePartnerName);
+                }
+            } else if (ev.type === 'battle_shield') {
+                if (typeof onRemoteBattleShield === 'function') {
+                    onRemoteBattleShield(ev.sender || remotePartnerName);
+                }
+            } else if (ev.type === 'map_special_prog') {
+                showToast(`🌟 ${ev.sender || remotePartnerName} thu thập báu vật (${ev.count}/${ev.total})!`, "💎", 2000);
             }
         }
 
@@ -5869,7 +6625,7 @@
                 roomRef.child('blocks').update(blockUpdates);
             }
 
-            // 3. Register host player with onDisconnect().remove()
+            // 3. Register host player with onDisconnect().remove() + publish room to publicRooms directory!
             myPlayerRef = roomRef.child('players/' + myPlayerId);
             myPlayerRef.set({
                 id: myPlayerId,
@@ -5885,6 +6641,20 @@
                 lastSeen: getFbTimestamp()
             });
             myPlayerRef.onDisconnect().remove();
+
+            const pubRef = db.ref('publicRooms/' + currentRoomCode);
+            pubRef.set({
+                code: currentRoomCode,
+                hostId: myPlayerId,
+                hostName: myName,
+                hostRole: myCoupleRole,
+                mapMode: currentWorldMapMode,
+                playerCount: 1,
+                createdClientAt: Date.now(),
+                updatedAt: getFbTimestamp()
+            });
+            pubRef.onDisconnect().remove();
+            subscribePublicRooms();
 
             // 4. Attach room listeners
             attachRoomListeners(currentRoomCode);
@@ -5975,13 +6745,15 @@
                     const meta = roomData.meta || {};
                     const existingPlayers = roomData.players || {};
 
-                    // 1. Sync mapMode & weather
-                    if (meta.mapMode && meta.mapMode !== currentWorldMapMode) {
-                        switchWorldMapMode(meta.mapMode);
+                    // 1. Sync mapMode & weather without re-inviting
+                    if (meta.mapMode && normalizeMapMode(meta.mapMode) !== normalizeMapMode(currentWorldMapMode)) {
+                        switchWorldMapMode(meta.mapMode, true);
                     }
                     if (typeof meta.weatherIdx === 'number') {
                         setWeather(meta.weatherIdx, true);
                     }
+
+                    db.ref('publicRooms/' + code).update({ playerCount: 2, updatedAt: getFbTimestamp() }).catch(() => {});
 
                     // 2. Pair up characters: if existing player has our role, auto-switch to partner role
                     const otherPId = Object.keys(existingPlayers).find(k => k !== myPlayerId);
@@ -6295,6 +7067,7 @@
             m.classList.toggle('hidden');
             if (!m.classList.contains('hidden')) {
                 updateCoupleScoreboardUI();
+                syncAllMapAndRadarUI();
                 document.exitPointerLock();
             }
         }
@@ -6570,8 +7343,8 @@
             const mm = document.getElementById('minigames-modal');
             if (mm) mm.classList.add('hidden');
             audio.playGiftChime();
-            showToast("🎡 Đã lên Cabin #0 Vòng Quay Mặt Trời! Nhìn ngắm Đảo Livik cùng nhau nhé 💕 (Bấm [E] hoặc [Space] để xuống)", "🎡", 3400);
-            updateMinigameHUD(true, "🎡 VÒNG QUAY MẶT TRỜI", "Đang Ngắm Cảnh", myCoupleRole === 'huan' ? "💙 Cabin #0 (Huân)" : "💖 Cabin #0 (Uyên)", "Bấm [E] hoặc [Space] để xuống");
+            showToast("🎡 Đã lên Cabin Kính #0 Siêu Cao (Đỉnh Y=56)! Ngắm toàn cảnh 360° 💕 (Bấm [E] hoặc [Space] để xuống)", "🎡", 3400);
+            updateMinigameHUD(true, "🎡 VÒNG QUAY SIÊU CAO (Y=56)", "Toàn Cảnh 360°", myCoupleRole === 'huan' ? "💙 Cabin Kính #0 (Huân)" : "💖 Cabin Kính #0 (Uyên)", "Bấm [E] hoặc [Space] để xuống");
             checkQuestProgress('ride_ferris', 1);
         }
 
@@ -6595,7 +7368,7 @@
                 return true;
             }
             const distFerris = Math.hypot(player.position.x - FERRIS_CENTER.x, player.position.z - FERRIS_CENTER.z);
-            if (distFerris <= 8.5 && player.position.y <= 14) {
+            if (distFerris <= 10.5 && player.position.y <= 15) {
                 boardFerrisWheel();
                 return true;
             }
@@ -6793,13 +7566,334 @@
             activeMinigame = null;
         }
 
+        /* ==========================================================================
+           GAME 7: 100-HP BATTLE ARENA & GAME 8: MAP-EXCLUSIVE SPECIAL MINIGAMES
+           ========================================================================== */
+        const battleState = {
+            hp: { huan: 100, uyen: 100 },
+            dummyHp: 100,
+            shieldUntil: 0,
+            shieldCooldownUntil: 0,
+            lastShotAt: 0,
+            partnerShieldUntil: 0,
+            lastDummyShotAt: 0,
+            projectiles: []
+        };
+        let battleSoloDummyGroup = null;
+        let mapSpecialProgress = 0;
+
+        function removeBattleSoloDummy() {
+            if (battleSoloDummyGroup) {
+                scene.remove(battleSoloDummyGroup);
+                battleSoloDummyGroup = null;
+            }
+        }
+
+        function clearBattleProjectiles() {
+            while (battleState.projectiles.length > 0) {
+                const p = battleState.projectiles.pop();
+                if (p && p.mesh) scene.remove(p.mesh);
+            }
+        }
+
+        function spawnBattleSoloDummy() {
+            removeBattleSoloDummy();
+            if (isCoopConnected && partnerAvatarGroup) return; // Zero fake NPC when real partner is in room!
+            const g = new THREE.Group();
+            const body = new THREE.Mesh(
+                new THREE.BoxGeometry(0.95, 1.45, 0.7),
+                new THREE.MeshStandardMaterial({ color: 0xff9ff3, emissive: 0xff6b81, emissiveIntensity: 0.25 })
+            );
+            body.position.y = 0.75;
+            const head = new THREE.Mesh(
+                new THREE.BoxGeometry(0.75, 0.75, 0.75),
+                new THREE.MeshStandardMaterial({ color: 0xffffff })
+            );
+            head.position.y = 1.85;
+            const visor = new THREE.Mesh(
+                new THREE.BoxGeometry(0.55, 0.2, 0.1),
+                new THREE.MeshBasicMaterial({ color: 0xff4757 })
+            );
+            visor.position.set(0, 1.9, 0.36);
+            g.add(body, head, visor);
+            g.position.set(57.5, 5, 46.5);
+            scene.add(g);
+            battleSoloDummyGroup = g;
+        }
+
+        function updateBattleHPHUDUI(visible) {
+            const hud = document.getElementById('battle-hp-hud');
+            if (!hud) return;
+            hud.classList.toggle('hidden', !visible);
+            if (!visible) return;
+
+            const isDualCoop = isCoopConnected && !!partnerAvatarGroup;
+            const leftLbl = document.getElementById('hp-label-left');
+            const rightLbl = document.getElementById('hp-label-right');
+            const leftVal = document.getElementById('hp-val-left');
+            const rightVal = document.getElementById('hp-val-right');
+            const leftBar = document.getElementById('hp-bar-left');
+            const rightBar = document.getElementById('hp-bar-right');
+
+            const hpL = isDualCoop ? Math.max(0, battleState.hp.huan) : Math.max(0, battleState.hp[myCoupleRole]);
+            const hpR = isDualCoop ? Math.max(0, battleState.hp.uyen) : Math.max(0, battleState.dummyHp);
+
+            if (leftLbl) leftLbl.innerText = isDualCoop ? '💙 Anh Huân' : (myCoupleRole === 'huan' ? '💙 Anh Huân' : '💖 Bé Uyên');
+            if (rightLbl) rightLbl.innerText = isDualCoop ? '💖 Bé Uyên' : '🤖 Bia Đấu Tập';
+            if (leftVal) leftVal.innerText = `${Math.round(hpL)}/100`;
+            if (rightVal) rightVal.innerText = `${Math.round(hpR)}/100`;
+            if (leftBar) leftBar.style.width = `${Math.min(100, Math.max(0, hpL))}%`;
+            if (rightBar) rightBar.style.width = `${Math.min(100, Math.max(0, hpR))}%`;
+        }
+
+        function prepareLocalBattleMatch(mg) {
+            exitCurrentMinigameOrRide(true);
+            player.isFlying = false;
+            updateFlyButtonUI();
+            player.velocity.set(0, 0, 0);
+
+            battleState.hp.huan = (mg.hp && typeof mg.hp.huan === 'number') ? mg.hp.huan : 100;
+            battleState.hp.uyen = (mg.hp && typeof mg.hp.uyen === 'number') ? mg.hp.uyen : 100;
+            battleState.dummyHp = 100;
+            battleState.shieldUntil = 0;
+            battleState.shieldCooldownUntil = 0;
+            battleState.lastShotAt = 0;
+            battleState.lastDummyShotAt = performance.now();
+            BATTLE_HEAL_SPOTS.forEach((s, idx) => {
+                s.active = true;
+                s.cooldownUntil = 0;
+                if (battleHealMeshes[idx] && battleHealMeshes[idx].mesh) battleHealMeshes[idx].mesh.visible = true;
+            });
+
+            if (myCoupleRole === 'huan') {
+                player.position.set(42.5, 6.6, 33.5);
+                player.rotation.set(0, -Math.PI * 0.75, 0);
+            } else {
+                player.position.set(58.5, 6.6, 47.5);
+                player.rotation.set(0, Math.PI * 0.25, 0);
+            }
+
+            if (!isCoopConnected || !partnerAvatarGroup) {
+                spawnBattleSoloDummy();
+            }
+
+            activeMinigame = {
+                id: 'battle',
+                matchId: mg.matchId,
+                phase: 'playing',
+                startedAt: performance.now(),
+                ended: false
+            };
+
+            const mm = document.getElementById('minigames-modal');
+            if (mm) mm.classList.add('hidden');
+            audio.playGiftChime();
+            updateBattleHPHUDUI(true);
+            updateMinigameHUD(true, "⚔️ ĐẤU TRƯỜNG THANH MÁU 100 HP", "Đối Kháng", myCoupleRole === 'huan' ? "💙 Anh Huân" : "💖 Bé Uyên", "[J/Q/Click] Ném • [K] Khiên • Bánh Kem +20 HP");
+            showToast("⚔️ ĐẤU TRƯỜNG 100 HP BẮT ĐẦU! Ai hết 100 HP trước là thua! [J/Q] Ném & [K] Khiên Tim!", "⚔️", 3400);
+        }
+
+        function startBattleHPMinigame() {
+            const matchId = 'bt_' + Date.now();
+            const mg = {
+                matchId,
+                id: 'battle',
+                phase: 'playing',
+                startedAt: Date.now(),
+                hp: { huan: 100, uyen: 100 },
+                winnerRole: null,
+                updatedBy: myPlayerId
+            };
+            lastSyncedMatchKey = matchId + '_playing';
+            prepareLocalBattleMatch(mg);
+            writeActiveMinigameState(mg);
+        }
+
+        function spawnBattleProjectileMesh(originVec, dirVec, ownerTag, colorHex) {
+            const orb = new THREE.Mesh(
+                new THREE.SphereGeometry(0.28, 10, 10),
+                new THREE.MeshBasicMaterial({ color: colorHex })
+            );
+            orb.position.copy(originVec);
+            scene.add(orb);
+            battleState.projectiles.push({
+                mesh: orb,
+                vel: dirVec.clone().multiplyScalar(ownerTag === 'dummy' ? 0.42 : 0.72),
+                owner: ownerTag,
+                life: 90
+            });
+        }
+
+        function fireBattleProjectile() {
+            if (!activeMinigame || activeMinigame.id !== 'battle' || activeMinigame.phase !== 'playing') return;
+            const now = performance.now();
+            if (now - battleState.lastShotAt < 420) return;
+            battleState.lastShotAt = now;
+
+            const lookDir = new THREE.Vector3(0, 0, -1).applyEuler(player.rotation).normalize();
+            const origin = player.position.clone().addScaledVector(lookDir, 0.9);
+            const col = myCoupleRole === 'uyen' ? 0xff758f : 0x54a0ff;
+            spawnBattleProjectileMesh(origin, lookDir, 'local', col);
+            audio.playJumpSound();
+        }
+
+        function activateBattleShield() {
+            if (!activeMinigame || activeMinigame.id !== 'battle' || activeMinigame.phase !== 'playing') return;
+            const now = performance.now();
+            if (now < battleState.shieldCooldownUntil) {
+                const waitS = ((battleState.shieldCooldownUntil - now) / 1000).toFixed(1);
+                showToast(`⏳ Khiên Tim hồi sau ${waitS}s!`, "🛡️", 1200);
+                return;
+            }
+            battleState.shieldUntil = now + 2200;
+            battleState.shieldCooldownUntil = now + 5000;
+            audio.playGiftChime();
+            spawnSparkleBurst(player.position.x, player.position.y, player.position.z, "#feca57", 14);
+            showToast("🛡️ Đã bật Khiên Trái Tim (2.2s giảm sát thương)!", "🛡️", 1800);
+            if (isCoopConnected) {
+                sendCoopPacket({ type: 'battle_shield', sender: myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân' });
+            }
+        }
+
+        function onRemoteBattleShield(senderName) {
+            battleState.partnerShieldUntil = performance.now() + 2200;
+            showToast(`🛡️ ${senderName} vừa bật Khiên Trái Tim!`, "🛡️", 1600);
+        }
+
+        function applyLocalBattleDamage(rawDmg, fromName) {
+            if (!activeMinigame || activeMinigame.id !== 'battle' || activeMinigame.ended) return;
+            const now = performance.now();
+            const mitigated = (now < battleState.shieldUntil) ? Math.max(4, Math.floor(rawDmg / 3)) : rawDmg;
+            battleState.hp[myCoupleRole] = Math.max(0, (battleState.hp[myCoupleRole] || 100) - mitigated);
+            updateBattleHPHUDUI(true);
+            audio.playBreakSound();
+            spawnSparkleBurst(player.position.x, player.position.y - 0.3, player.position.z, "#ff4757", 10);
+            showToast(now < battleState.shieldUntil ? `🛡️ Đỡ bằng Khiên! Chỉ mất -${mitigated} HP` : `💥 Trúng đòn từ ${fromName}: -${mitigated} HP!`, "💥", 1500);
+
+            if (isCoopConnected && db && currentRoomCode) {
+                db.ref('rooms/' + currentRoomCode + '/minigames/active/hp/' + myCoupleRole).set(battleState.hp[myCoupleRole]).catch(() => {});
+            }
+
+            if (battleState.hp[myCoupleRole] <= 0) {
+                const winner = myCoupleRole === 'huan' ? 'uyen' : 'huan';
+                finishBattleHPRound(winner, `${fromName} hạ gục tại Đấu Trường 100 HP`);
+            }
+        }
+
+        function finishBattleHPRound(winnerRole, reasonText) {
+            if (!activeMinigame || activeMinigame.id !== 'battle' || activeMinigame.ended) return;
+            activeMinigame.ended = true;
+            activeMinigame.phase = 'ended';
+            clearBattleProjectiles();
+            removeBattleSoloDummy();
+            updateBattleHPHUDUI(false);
+            updateMinigameHUD(false);
+            checkQuestProgress('minigame_tag', 1);
+
+            const matchId = activeMinigame.matchId;
+            if (winnerRole && lastSyncedMatchEndedKey !== matchId) {
+                lastSyncedMatchEndedKey = matchId;
+                awardCoupleScoreAndEndMatch(winnerRole, reasonText || 'Đấu Trường Thanh Máu 100 HP', {
+                    matchId,
+                    id: 'battle',
+                    phase: 'ended',
+                    winnerRole,
+                    updatedBy: myPlayerId
+                });
+            }
+            activeMinigame = null;
+        }
+
+        function prepareLocalMapSpecialMatch(mg) {
+            exitCurrentMinigameOrRide(true);
+            player.isFlying = false;
+            updateFlyButtonUI();
+            player.velocity.set(0, 0, 0);
+
+            const m = normalizeMapMode(mg.mapMode || currentWorldMapMode);
+            if (m !== normalizeMapMode(currentWorldMapMode)) {
+                rebuildActiveWorldMap(m);
+                renderMapPOIGrid();
+            }
+
+            mapSpecialProgress = 0;
+            mapSpecialCollectibles.forEach(c => {
+                c.collected = false;
+                if (c.mesh) c.mesh.visible = true;
+            });
+
+            player.position.set(0, 7.5, 10);
+            player.rotation.set(0, 0, 0);
+
+            activeMinigame = {
+                id: 'mapspecial',
+                mapMode: m,
+                matchId: mg.matchId,
+                phase: 'playing',
+                startedAt: performance.now(),
+                total: m === 'vikendi' ? VIKENDI_CRYSTAL_SPOTS.length : SANHOK_RELIC_SPOTS.length,
+                ended: false
+            };
+
+            const mm = document.getElementById('minigames-modal');
+            if (mm) mm.classList.add('hidden');
+            audio.playGiftChime();
+            const desc = m === 'vikendi'
+                ? '💎 Độc quyền Vikendi: Thu thập đủ 6 Tinh Thể Băng khắp Lâu Đài Tuyết & Cosmodrome!'
+                : '🏛️ Độc quyền Sanhok: Thu thập đủ 5 Cổ Vật Vàng qua Cầu Treo & né Bẫy Đền Cổ!';
+            showToast(desc, m === 'vikendi' ? "💎" : "🏛️", 3600);
+        }
+
+        function startMapSpecialMinigame() {
+            const m = normalizeMapMode(currentWorldMapMode);
+            if (m === 'livik') {
+                showToast("🏝️ Trên Map Livik 4 Mùa, chuyển sang Sàn Nhảy Sắc Màu hoặc hãy thử Map Vikendi / Sanhok để chơi Đặc Sản!", "💡", 3200);
+                startColorMatchMinigame();
+                return;
+            }
+            const matchId = 'ms_' + Date.now();
+            const mg = {
+                matchId,
+                id: 'mapspecial',
+                mapMode: m,
+                phase: 'playing',
+                startedAt: Date.now(),
+                winnerRole: null,
+                updatedBy: myPlayerId
+            };
+            lastSyncedMatchKey = matchId + '_playing';
+            prepareLocalMapSpecialMatch(mg);
+            writeActiveMinigameState(mg);
+        }
+
+        function finishMapSpecialRound(winnerRole, labelText) {
+            if (!activeMinigame || activeMinigame.id !== 'mapspecial' || activeMinigame.ended) return;
+            activeMinigame.ended = true;
+            activeMinigame.phase = 'ended';
+            updateMinigameHUD(false);
+            checkQuestProgress('minigame_maze', 1);
+
+            const matchId = activeMinigame.matchId;
+            if (winnerRole && lastSyncedMatchEndedKey !== matchId) {
+                lastSyncedMatchEndedKey = matchId;
+                awardCoupleScoreAndEndMatch(winnerRole, labelText || 'Trò Chơi Đặc Sản Map', {
+                    matchId,
+                    id: 'mapspecial',
+                    phase: 'ended',
+                    winnerRole,
+                    updatedBy: myPlayerId
+                });
+            }
+            activeMinigame = null;
+        }
+
         function exitCurrentMinigameOrRide(silent = false) {
             if (currentSeatedRide === 'ferris') {
                 currentSeatedRide = null;
                 player.position.set(FERRIS_CENTER.x, 6.6, FERRIS_CENTER.z + 4.5);
                 player.velocity.set(0, 0, 0);
                 updateMinigameHUD(false);
-                if (!silent) showToast("🎡 Đã xuống khỏi Vòng Quay Mặt Trời!", "🌸", 2000);
+                if (!silent) showToast("🎡 Đã xuống khỏi Vòng Quay Siêu Cao!", "🌸", 2000);
             } else if (currentSeatedRide === 'swing') {
                 currentSeatedRide = null;
                 player.position.set(SWING_ANCHOR.x + 0.5, 6.6, SWING_ANCHOR.z + 3.2);
@@ -6807,6 +7901,10 @@
                 updateMinigameHUD(false);
                 if (!silent) showToast("🎠 Đã bước xuống khỏi Xích Đu Đôi!", "🌸", 2000);
             }
+
+            if (typeof clearBattleProjectiles === 'function') clearBattleProjectiles();
+            if (typeof removeBattleSoloDummy === 'function') removeBattleSoloDummy();
+            if (typeof updateBattleHPHUDUI === 'function') updateBattleHPHUDUI(false);
 
             if (activeMinigame) {
                 const oldId = activeMinigame.id;
@@ -6832,6 +7930,20 @@
                     updateCoupleScoreboardUI();
                 }
             }
+            if (mgRoot.mapInvite && mgRoot.mapInvite.senderId !== myPlayerId && mgRoot.mapInvite.nonce !== lastSyncedMapInviteNonce) {
+                lastSyncedMapInviteNonce = mgRoot.mapInvite.nonce;
+                const targetMode = normalizeMapMode(mgRoot.mapInvite.mapMode);
+                if (targetMode !== normalizeMapMode(currentWorldMapMode)) {
+                    incomingPendingMapInvite = { mapMode: targetMode, senderName: mgRoot.mapInvite.senderName };
+                    const banner = document.getElementById('map-invite-banner');
+                    const textEl = document.getElementById('map-invite-text');
+                    const meta = MAP_META[targetMode];
+                    if (textEl) textEl.innerText = `${mgRoot.mapInvite.senderName || 'Người yêu'} đã sang ${meta.shortName} ${meta.icon} — Bấm để sang cùng!`;
+                    if (banner) banner.classList.remove('hidden');
+                    audio.playCollectPop();
+                    showToast(`🗺️ ${mgRoot.mapInvite.senderName || 'Người yêu'} mời bạn sang ${meta.shortName}!`, meta.icon, 3400);
+                }
+            }
             if (mgRoot.mazeSeed && mgRoot.mazeSeed !== lastSyncedMazeSeed) {
                 lastSyncedMazeSeed = mgRoot.mazeSeed;
                 buildLoveMazeVoxels(mgRoot.mazeSeed);
@@ -6841,6 +7953,12 @@
             const mg = mgRoot.active;
             if (!mg || !mg.matchId) return;
 
+            if (activeMinigame && activeMinigame.id === 'battle' && activeMinigame.matchId === mg.matchId && mg.hp) {
+                battleState.hp.huan = typeof mg.hp.huan === 'number' ? mg.hp.huan : battleState.hp.huan;
+                battleState.hp.uyen = typeof mg.hp.uyen === 'number' ? mg.hp.uyen : battleState.hp.uyen;
+                updateBattleHPHUDUI(true);
+            }
+
             const stateKey = mg.matchId + '_' + mg.phase;
             if (mg.phase === 'ended') {
                 if (lastSyncedMatchEndedKey !== mg.matchId) {
@@ -6849,13 +7967,15 @@
                         const rLabel = mg.id === 'tag' ? 'Đuổi Bắt 50/50'
                             : mg.id === 'maze' ? 'Đua Mê Cung Tình Yêu'
                             : mg.id === 'colormatch' ? 'Sàn Nhảy Sắc Màu'
+                            : mg.id === 'battle' ? 'Đấu Trường Thanh Máu 100 HP'
+                            : mg.id === 'mapspecial' ? 'Trò Chơi Đặc Sản Map'
                             : 'Parkour Cầu Vồng';
                         const winnerLabel = mg.winnerRole === 'huan' ? '💙 Anh Huân' : '💖 Bé Uyên';
                         audio.playFireworkSound();
                         spawnSparkleBurst(player.position.x, player.position.y + 2, player.position.z, mg.winnerRole === 'huan' ? "#0984e3" : "#ff6b81", 28);
                         showToast(`🏆 ${winnerLabel} thắng ${rLabel}! (+1 điểm Tỉ Số)`, "🏆", 3600);
-                        if (mg.id === 'tag') checkQuestProgress('minigame_tag', 1);
-                        if (mg.id === 'maze') checkQuestProgress('minigame_maze', 1);
+                        if (mg.id === 'tag' || mg.id === 'battle') checkQuestProgress('minigame_tag', 1);
+                        if (mg.id === 'maze' || mg.id === 'mapspecial') checkQuestProgress('minigame_maze', 1);
                         saveWorldToCurrentSlot(true);
                     }
                     if (activeMinigame && activeMinigame.matchId === mg.matchId) {
@@ -6872,6 +7992,8 @@
             else if (mg.id === 'maze' && mg.phase === 'countdown') prepareLocalMazeMatch(mg);
             else if (mg.id === 'colormatch' && mg.phase === 'playing') prepareLocalColorMatch(mg);
             else if (mg.id === 'parkour' && mg.phase === 'playing') prepareLocalParkourMatch(mg);
+            else if (mg.id === 'battle' && mg.phase === 'playing') prepareLocalBattleMatch(mg);
+            else if (mg.id === 'mapspecial' && mg.phase === 'playing') prepareLocalMapSpecialMatch(mg);
         }
 
         function updateMinigamesAndRides(now) {
@@ -6908,11 +8030,34 @@
                 parkourCheckpointRings[i].rotation.z += 0.04;
             }
 
-            // 4. Seated Ride Camera & Positioning (Side-by-Side Ferris Cabin #0 / Swing)
+            // Animate Healing Cakes & Map Special Crystals/Relics
+            for (let i = 0; i < battleHealMeshes.length; i++) {
+                const bh = battleHealMeshes[i];
+                if (!bh || !bh.spot) continue;
+                if (!bh.spot.active && now >= bh.spot.cooldownUntil) {
+                    bh.spot.active = true;
+                }
+                if (bh.mesh) {
+                    bh.mesh.visible = !!bh.spot.active;
+                    if (bh.mesh.visible) {
+                        bh.mesh.rotation.y += 0.05;
+                        bh.mesh.position.y = 6.2 + Math.sin(now * 0.006 + i) * 0.16;
+                    }
+                }
+            }
+            for (let i = 0; i < mapSpecialCollectibles.length; i++) {
+                const mc = mapSpecialCollectibles[i];
+                if (mc && mc.mesh && mc.mesh.visible) {
+                    mc.mesh.rotation.y += 0.04;
+                    mc.mesh.position.y = mc.y + 0.5 + Math.sin(now * 0.005 + i) * 0.22;
+                }
+            }
+
+            // 4. Seated Ride Camera & Positioning (Panoramic Ferris Cabin #0 Y=56 / Swing)
             if (currentSeatedRide === 'ferris' && ferrisCabinGroups[0]) {
                 ferrisCabinGroups[0].getWorldPosition(tmpRideVec);
                 const zSeat = myCoupleRole === 'uyen' ? -0.45 : 0.45;
-                player.position.set(tmpRideVec.x, tmpRideVec.y - 0.55, tmpRideVec.z + zSeat);
+                player.position.set(tmpRideVec.x, tmpRideVec.y - 0.15, tmpRideVec.z + zSeat);
                 if (!ferrisQuestCredited && now - currentSeatedAt > 1500) {
                     ferrisQuestCredited = true;
                     checkQuestProgress('ride_ferris', 1);
@@ -7090,6 +8235,102 @@
                     finishParkourRound(myCoupleRole, elapsed);
                     return;
                 }
+            } else if (activeMinigame.id === 'battle' && activeMinigame.phase === 'playing') {
+                // Heal Cake Pad pickups (+20 HP)
+                for (let i = 0; i < BATTLE_HEAL_SPOTS.length; i++) {
+                    const sp = BATTLE_HEAL_SPOTS[i];
+                    if (sp.active && Math.hypot(player.position.x - (sp.x + 0.5), player.position.z - (sp.z + 0.5)) < 1.9 && (battleState.hp[myCoupleRole] || 0) < 100) {
+                        sp.active = false;
+                        sp.cooldownUntil = now + 10000;
+                        battleState.hp[myCoupleRole] = Math.min(100, (battleState.hp[myCoupleRole] || 0) + 20);
+                        updateBattleHPHUDUI(true);
+                        audio.playGiftChime();
+                        spawnSparkleBurst(sp.x + 0.5, 6.2, sp.z + 0.5, "#55efc4", 16);
+                        showToast("🍰 Ăn Bánh Kem Dâu: +20 HP Hồi Phục!", "💖", 1800);
+                        if (isCoopConnected && db && currentRoomCode) {
+                            db.ref('rooms/' + currentRoomCode + '/minigames/active/hp/' + myCoupleRole).set(battleState.hp[myCoupleRole]).catch(() => {});
+                        }
+                    }
+                }
+
+                // Solo Dummy opponent (ONLY inside active Solo Battle Drill!)
+                if (isCoopConnected && partnerAvatarGroup && battleSoloDummyGroup) {
+                    removeBattleSoloDummy();
+                }
+                if (battleSoloDummyGroup && now - battleState.lastDummyShotAt > 2400) {
+                    battleState.lastDummyShotAt = now;
+                    const dPos = battleSoloDummyGroup.position.clone().add(new THREE.Vector3(0, 1.5, 0));
+                    battleSoloDummyGroup.lookAt(player.position.x, dPos.y - 1.5, player.position.z);
+                    const toPlayer = player.position.clone().sub(dPos).normalize();
+                    spawnBattleProjectileMesh(dPos.addScaledVector(toPlayer, 0.9), toPlayer, 'dummy', 0xff7675);
+                }
+
+                // Update Battle Projectiles
+                for (let i = battleState.projectiles.length - 1; i >= 0; i--) {
+                    const pr = battleState.projectiles[i];
+                    pr.mesh.position.add(pr.vel);
+                    pr.life--;
+                    let removePr = pr.life <= 0 || hasVoxel(pr.mesh.position.x, pr.mesh.position.y, pr.mesh.position.z);
+
+                    if (!removePr && pr.owner === 'local') {
+                        if (isCoopConnected && partnerAvatarGroup) {
+                            const dp = Math.hypot(pr.mesh.position.x - partnerAvatarGroup.position.x, pr.mesh.position.z - partnerAvatarGroup.position.z);
+                            const dy = Math.abs(pr.mesh.position.y - (partnerAvatarGroup.position.y + 1.0));
+                            if (dp < 1.5 && dy < 1.6) {
+                                removePr = true;
+                                spawnSparkleBurst(pr.mesh.position.x, pr.mesh.position.y, pr.mesh.position.z, "#ff758f", 14);
+                                sendCoopPacket({ type: 'battle_hit', dmg: 15, sender: myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân' });
+                                showToast("🎯 Trúng người yêu -15 HP!", "⚔️", 1200);
+                            }
+                        } else if (battleSoloDummyGroup) {
+                            const dd = Math.hypot(pr.mesh.position.x - battleSoloDummyGroup.position.x, pr.mesh.position.z - battleSoloDummyGroup.position.z);
+                            const dy = Math.abs(pr.mesh.position.y - (battleSoloDummyGroup.position.y + 1.1));
+                            if (dd < 1.65 && dy < 1.6) {
+                                removePr = true;
+                                battleState.dummyHp = Math.max(0, battleState.dummyHp - 15);
+                                updateBattleHPHUDUI(true);
+                                audio.playCollectPop();
+                                spawnSparkleBurst(pr.mesh.position.x, pr.mesh.position.y, pr.mesh.position.z, "#ff758f", 14);
+                                showToast(`🎯 Trúng Bia Đấu Tập! Còn ${battleState.dummyHp} HP`, "⚔️", 1200);
+                                if (battleState.dummyHp <= 0) {
+                                    finishBattleHPRound(myCoupleRole, 'Đấu Trường Thanh Máu 100 HP (Hạ Bia Tập)');
+                                    return;
+                                }
+                            }
+                        }
+                    } else if (!removePr && pr.owner === 'dummy') {
+                        if (pr.mesh.position.distanceTo(player.position) < 1.4) {
+                            removePr = true;
+                            applyLocalBattleDamage(12, '🤖 Bia Đấu Tập');
+                        }
+                    }
+
+                    if (removePr) {
+                        if (pr.mesh) scene.remove(pr.mesh);
+                        battleState.projectiles.splice(i, 1);
+                    }
+                }
+            } else if (activeMinigame.id === 'mapspecial' && activeMinigame.phase === 'playing') {
+                const m = activeMinigame.mapMode;
+                const total = activeMinigame.total || 5;
+                updateMinigameHUD(true, m === 'vikendi' ? "💎 SĂN TINH THỂ BĂNG" : "🏛️ SĂN CỔ VẬT SANHOK", `${mapSpecialProgress}/${total}`, myCoupleRole === 'huan' ? "💙 Anh Huân" : "💖 Bé Uyên", m === 'vikendi' ? "Tìm đủ 6 Tinh Thể Băng Vikendi" : "Tìm đủ 5 Cổ Vật Đền Cổ Sanhok");
+
+                for (let i = 0; i < mapSpecialCollectibles.length; i++) {
+                    const mc = mapSpecialCollectibles[i];
+                    if (mc && !mc.collected && Math.hypot(player.position.x - (mc.x + 0.5), player.position.z - (mc.z + 0.5)) < 2.6) {
+                        mc.collected = true;
+                        if (mc.mesh) mc.mesh.visible = false;
+                        mapSpecialProgress++;
+                        audio.playGiftChime();
+                        spawnSparkleBurst(mc.x + 0.5, mc.y + 1, mc.z + 0.5, m === 'vikendi' ? "#00cec9" : "#feca57", 20);
+                        showToast(`✨ Đã nhặt ${mc.label} (${mapSpecialProgress}/${total})!`, m === 'vikendi' ? "💎" : "🏛️", 2400);
+                        if (isCoopConnected) sendCoopPacket({ type: 'map_special_prog', sender: myCoupleRole === 'uyen' ? '💖 Bé Uyên' : '💙 Anh Huân', count: mapSpecialProgress, total });
+                        if (mapSpecialProgress >= total) {
+                            finishMapSpecialRound(myCoupleRole, m === 'vikendi' ? 'Săn 6 Tinh Thể Băng Vikendi' : 'Vượt Bẫy Đền Cổ Sanhok');
+                            return;
+                        }
+                    }
+                }
             }
         }
 
@@ -7131,7 +8372,13 @@
             updateParticles();
             updateItemDrops();
 
-            if (frameCount % 8 === 0) drawMinimap();
+            if (frameCount % 8 === 0) {
+                drawMinimap();
+                const mapModalEl = document.getElementById('map-modal');
+                if (mapModalEl && !mapModalEl.classList.contains('hidden')) {
+                    drawFullInteractiveMap();
+                }
+            }
             pets.forEach(p => p.update(player.position));
 
             renderer.render(scene, camera);
@@ -7149,8 +8396,10 @@
             setWeather(0);
             renderHotbar();
             loadWorldFromCurrentSlot();
+            syncAllMapAndRadarUI();
             initCoupleAvatarsAndResonance();
             updateQuestUI();
+            subscribePublicRooms();
             animate();
 
             // Auto-detect ?room=CODE in URL to auto-join Co-op room
