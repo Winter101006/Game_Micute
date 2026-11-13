@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KawaiiCraft V5.3 — Cẩm Nang Kiến Trúc, Cấu Trúc File & Giải Thích Các Công Đoạn</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Quicksand', sans-serif;
+            scroll-behavior: smooth;
+        }
+        code, pre, .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        body {
+            background: linear-gradient(135deg, #fff5f8 0%, #f0f9ff 50%, #fdf4ff 100%);
+            color: #1f2937;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(244, 114, 182, 0.28);
+            box-shadow: 0 12px 32px -8px rgba(236, 72, 153, 0.12);
+        }
+        .step-badge {
+            background: linear-gradient(135deg, #ec4899, #f43f5e);
+            color: white;
+        }
+        .nav-pill.active {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+        }
+        .custom-scroll::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: #fce7f3;
+            border-radius: 999px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #f472b6;
+            border-radius: 999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+
+    <!-- STICKY HEADER & NAVIGATION -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-pink-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl shadow-md text-white">
+                    📘
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-lg md:text-xl font-extrabold text-pink-600">KawaiiCraft V5.3 — Web Tài Liệu Kỹ Thuật & Cấu Trúc Dự Án</h1>
+                        <span class="px-2.5 py-0.5 text-[11px] font-black rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">Bản Đầy Đủ Chi Tiết</span>
+                    </div>
+                    <p class="text-xs text-gray-500 font-semibold">Giải thích chi tiết từng thư mục, từng file, 12 phân hệ code, cơ sở dữ liệu Firebase và 7 công đoạn vận hành</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <a href="index.html" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold text-xs md:text-sm shadow-md transition flex items-center gap-1.5">
+                    <span>🎮</span> Vào Chơi Game Ngay (index.html)
+                </a>
+                <a href="https://github.com/huan2022004/Game-cua-uyen" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-2xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs md:text-sm shadow transition flex items-center gap-1.5">
+                    <span>🐙</span> GitHub Repo
+                </a>
+            </div>
+        </div>
+
+        <!-- SECTION TABS -->
+        <div class="max-w-7xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto custom-scroll text-xs font-extrabold">
+            <a href="#sec-overview" class="nav-pill active px-3.5 py-1.5 rounded-xl bg-pink-50 text-pink-700 hover:bg-pink-100 transition whitespace-nowrap">1. 🗂️ Cây Thư Mục & Ý Nghĩa Từng File</a>
+            <a href="#sec-storage" class="nav-pill px-3.5 py-1.5 rounded-xl bg-sky-50 text-sky-700 hover:bg-sky-100 transition whitespace-nowrap">2. ☁️ Cấu Trúc Dữ Liệu Firebase & LocalStorage</a>
+            <a href="#sec-modules" class="nav-pill px-3.5 py-1.5 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition whitespace-nowrap">3. 🧩 Giải Phẫu 12 Phân Hệ Trong index.html</a>
+            <a href="#sec-pipeline" class="nav-pill px-3.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-100 transition whitespace-nowrap">4. ⚙️ 7 Công Đoạn Vận Hành Chi Tiết</a>
+            <a href="#sec-maps-data" class="nav-pill px-3.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition whitespace-nowrap">5. 🗺️ Dữ Liệu 3 Bản Đồ, 11 Trò Chơi & 36 Khối</a>
+            <a href="#sec-customize" class="nav-pill px-3.5 py-1.5 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 transition whitespace-nowrap">6. 🛠️ Hướng Dẫn Tự Chỉnh Sửa & Nâng Cấp Code</a>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 pt-6 space-y-10">
+
+        <!-- HERO SUMMARY BANNER -->
+        <section class="glass-card rounded-3xl p-6 md:p-8 border-2 border-pink-300 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
+                <div class="lg:col-span-2 space-y-3">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-extrabold">
+                        <span>💖 Dự Án Thế Giới 3D Co-op Dành Riêng Cho Anh Huân & Bé Uyên</span>
+                    </div>
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-800 leading-tight">
+                        Toàn Bộ Kiến Trúc <span class="text-pink-600">KawaiiCraft V5.3</span> Được Giải Thích Từ A Đến Z
+                    </h2>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        Trang web này (`huong-dan.html`) được thiết kế như một cuốn <b>Sổ Tay Kỹ Sư & Bản Đồ Dữ Liệu Trực Quan</b>. Tại đây, bạn có thể tra cứu chính xác <b>từng thư mục, từng file trong ổ đĩa `D:/Duan/Game_micute/` dùng để làm gì</b>, cách <b>9.200+ dòng code trong `index.html`</b> phối hợp với <b>Firebase Realtime Database</b> để đồng bộ 2 người chơi mượt 60 FPS, và <b>7 công đoạn kỹ thuật</b> từ lúc mở trình duyệt cho đến khi đẩy code lên GitHub & Vercel.
+                    </p>
+                    <!-- Quick Search Filter -->
+                    <div class="pt-2 flex flex-col sm:flex-row gap-2">
+                        <div class="relative flex-1">
+                            <input id="global-search" oninput="filterGuideCards(this.value)" type="text" placeholder="🔍 Tìm nhanh tên file, tên hàm, công đoạn (VD: vercel.json, Vikendi, Firebase, âm thanh, 100 HP)..." class="w-full px-4 py-2.5 rounded-2xl bg-white border-2 border-pink-300 text-xs md:text-sm font-bold text-gray-700 focus:outline-none focus:border-pink-500 shadow-inner">
+                        </div>
+                        <button onclick="document.getElementById('global-search').value=''; filterGuideCards('');" class="px-4 py-2.5 rounded-2xl bg-pink-100 hover:bg-pink-200 text-pink-700 font-extrabold text-xs transition">
+                            Hiện Tất Cả
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Key Metrics Grid -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-4 rounded-2xl border border-pink-200 text-center">
+                        <div class="text-2xl font-black text-pink-600">8 File & Folder</div>
+                        <div class="text-xs font-bold text-gray-600 mt-1">Cấu trúc gọn sạch, chuẩn Cloud Vercel</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-sky-50 to-indigo-100 p-4 rounded-2xl border border-sky-200 text-center">
+                        <div class="text-2xl font-black text-sky-600">3 Map × 320²</div>
+                        <div class="text-xs font-bold text-gray-600 mt-1">Livik • Vikendi Tuyết • Sanhok Rừng</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-amber-50 to-orange-100 p-4 rounded-2xl border border-amber-200 text-center">
+                        <div class="text-2xl font-black text-amber-600">11 Trò Chơi</div>
+                        <div class="text-xs font-bold text-gray-600 mt-1">Đồng bộ thời gian thực qua Firebase</div>
+                    </div>
+                    <div class="bg-gradient-to-br from-emerald-50 to-teal-100 p-4 rounded-2xl border border-emerald-200 text-center">
+                        <div class="text-2xl font-black text-emerald-600">12 Phân Hệ</div>
+                        <div class="text-xs font-bold text-gray-600 mt-1">Đồ họa 3D, Vật lý, Âm thanh, Mạng</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 1: BẢN ĐỒ CÂY THƯ MỤC & CHI TIẾT TỪNG FILE TRONG DỰ ÁN
+             ===================================================================== -->
+        <section id="sec-overview" class="space-y-5">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-2">
+                <div>
+                    <span class="text-xs font-black uppercase tracking-wider text-pink-600">Phần 1 • Cấu Trúc Thư Mục Vật Lý</span>
+                    <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">🗂️ Bản Đồ Thư Mục `D:/Duan/Game_micute/` & Chức Năng Từng File</h2>
+                </div>
+                <span class="text-xs font-bold text-gray-500 bg-white px-3 py-1.5 rounded-xl border border-pink-200">
+                    Bấm vào nút <b>"Xem chi tiết kỹ thuật"</b> trên mỗi thẻ để đọc sâu hơn
+                </span>
+            </div>
+
+            <!-- Visual Folder Tree Diagram -->
+            <div class="glass-card rounded-3xl p-5 md:p-6 bg-slate-900 text-slate-100 border-2 border-slate-700 shadow-xl">
+                <div class="flex items-center justify-between mb-3 pb-2 border-b border-slate-700">
+                    <span class="text-xs font-bold text-pink-400">💻 Sơ Đồ Cây Thư Mục Gốc (`D:\Duan\Game_micute\`)</span>
+                    <span class="text-[11px] font-mono text-emerald-400">Kiến trúc Zero-Build Static Web App (Chạy ngay không cần cài đặt phức tạp)</span>
+                </div>
+                <pre class="text-xs md:text-sm leading-relaxed overflow-x-auto custom-scroll text-slate-200"><code>📁 D:/Duan/Game_micute/                  <span class="text-pink-400">← Thư mục gốc của toàn bộ dự án Game</span>
+├── 📁 .git/                             <span class="text-sky-400">← [Thư mục ẩn] Cơ sở dữ liệu lịch sử Git & kết nối lên GitHub (huan2022004/Game-cua-uyen)</span>
+├── 📄 .gitignore                        <span class="text-slate-400">← [Cấu hình Git] Chặn các file rác (.DS_Store, Thumbs.db, *.log, node_modules) không đẩy lên GitHub</span>
+├── 🎮 index.html                        <span class="text-emerald-400 font-bold">← [TRÁI TIM CỦA GAME ~9.250 DÒNG] Chứa toàn bộ Giao diện, Engine 3D Three.js, Âm thanh, 3 Map & Firebase Co-op</span>
+├── 📘 huong-dan.html                    <span class="text-amber-300 font-bold">← [TRANG HƯỚNG DẪN NÀY] Web tài liệu tương tác giải thích từng file, kiến trúc code & 7 công đoạn</span>
+├── 🚀 kawaiicraft.html                  <span class="text-purple-300">← [Cổng Khởi Động Nhanh] Trang Portal gọn nhẹ giúp chọn vào thẳng Game hoặc mở Web Hướng Dẫn</span>
+├── 📖 README.md                         <span class="text-pink-300">← [Tài liệu GitHub] Trang giới thiệu chính thức hiển thị ngay mặt tiền kho mã nguồn GitHub</span>
+├── 📝 FEATURES_NOTE.md                  <span class="text-teal-300">← [Nhật ký Kỹ thuật] Ghi chép chi tiết các tính năng, thông số kỹ thuật & lịch sử nâng cấp V5.0 → V5.3</span>
+└── ⚡ vercel.json                       <span class="text-orange-300">← [Cấu hình Server Đám Mây] Thiết lập Clean URLs, Bảo mật Header & Bộ nhớ đệm cho Vercel Hosting</span></code></pre>
+            </div>
+
+            <!-- Detailed File Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                <!-- File 1: index.html -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-emerald-300 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-10 h-10 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center text-xl font-black">🎮</span>
+                                <div>
+                                    <h3 class="font-extrabold text-base text-gray-800 font-mono">index.html</h3>
+                                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded-full">File Chính Quan Trọng Nhất (~515 KB • ~9.250 dòng)</span>
+                                </div>
+                            </div>
+                            <a href="index.html" target="_blank" class="px-2.5 py-1 rounded-xl bg-emerald-600 text-white text-xs font-bold hover:bg-emerald-700 transition">Mở File ↗</a>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> Đây là file duy nhất chạy toàn bộ trò chơi 3D khi bạn mở web. Dự án sử dụng kiến trúc <b>Single-File Engine (Tất cả trong 1 file tự chủ)</b> để tránh lỗi đường dẫn (CORS / Module Import Error) khi mở trực tiếp trên máy tính hoặc khi triển khai lên bất kỳ hosting nào.
+                        </p>
+                        <div class="bg-emerald-50/80 rounded-2xl p-3 border border-emerald-200 text-xs space-y-1">
+                            <div class="font-extrabold text-emerald-800">📦 Bên trong `index.html` tích hợp 4 lớp công nghệ:</div>
+                            <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                <li><b>Lớp 1 (Dòng 1–125):</b> Khai báo thư viện CDN (`TailwindCSS`, `Three.js r128`, `Firebase v9.22.0`) và bộ CSS Glassmorphism.</li>
+                                <li><b>Lớp 2 (Dòng 126–1527):</b> Toàn bộ hệ thống thanh HUD chống đè nhau (`#hud-center-alerts-stack`), Radar bản đồ mini, cụm nút góc phải và 12 cửa sổ Modal.</li>
+                                <li><b>Lớp 3 (Dòng 1528–7540):</b> Engine âm thanh Lo-Fi, 36 chất liệu khối Voxel, thuật toán `InstancedMesh` 60 FPS, 3 hàm sinh bản đồ `320×320` (Livik, Vikendi, Sanhok), vật lý bay/nhảy và lưu trữ `localStorage`.</li>
+                                <li><b>Lớp 4 (Dòng 7541–9250):</b> Hệ thống mạng thời gian thực Firebase Realtime Database, danh sách phòng mở sẵn 1 chạm, đồng bộ lời mời đổi Map và 11 Minigame cặp đôi.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File 2: huong-dan.html -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-amber-300 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-start justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-10 h-10 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl font-black">📘</span>
+                                <div>
+                                    <h3 class="font-extrabold text-base text-gray-800 font-mono">huong-dan.html</h3>
+                                    <span class="text-[11px] font-bold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Web Cẩm Nang Kiến Trúc & Dữ Liệu (Trang hiện tại)</span>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-xl bg-amber-500 text-white text-xs font-bold">Đang Xem ✨</span>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> Là trang web hướng dẫn kỹ thuật độc lập bằng tiếng Việt dành cho Anh Huân. Giúp bạn tra cứu nhanh cấu trúc thư mục, hiểu rõ từng phân hệ bên trong `index.html`, xem sơ đồ nhánh dữ liệu Firebase và biết cách tự chỉnh sửa lời chúc, khối xây dựng hoặc thông số bản đồ.
+                        </p>
+                        <div class="bg-amber-50/80 rounded-2xl p-3 border border-amber-200 text-xs space-y-1">
+                            <div class="font-extrabold text-amber-900">🔗 Cách truy cập:</div>
+                            <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                <li>Mở trực tiếp từ trong game bằng nút <b>"📘 Web Giải Thích File & Code"</b> ở thanh Tiện Ích hoặc Cẩm Nang Hướng Dẫn.</li>
+                                <li>Hoặc truy cập đường dẫn `/huong-dan` (nhờ cấu hình `cleanUrls: true` trong `vercel.json`).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File 3: vercel.json -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-orange-200 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-2xl bg-orange-100 text-orange-700 flex items-center justify-center text-xl font-black">⚡</span>
+                            <div>
+                                <h3 class="font-extrabold text-base text-gray-800 font-mono">vercel.json</h3>
+                                <span class="text-[11px] font-bold text-orange-800 bg-orange-100 px-2 py-0.5 rounded-full">Cấu Hình Máy Chủ Triển Khai Vercel (14 dòng)</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> Khi bạn đẩy code lên GitHub, nền tảng đám mây <b>Vercel</b> sẽ đọc file `vercel.json` này để biết cách phục vụ trang web cho người chơi trên Internet.
+                        </p>
+                        <div class="bg-orange-50/80 rounded-2xl p-3 border border-orange-200 text-xs space-y-1">
+                            <div class="font-extrabold text-orange-900">⚙️ Giải thích từng dòng cấu hình trong `vercel.json`:</div>
+                            <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                                <li><code>"version": 2</code>: Sử dụng nền tảng định tuyến Vercel thế hệ 2.</li>
+                                <li><code>"cleanUrls": true</code>: Tự động lược bỏ đuôi `.html` trên thanh địa chỉ (ví dụ `/huong-dan.html` có thể vào gọn bằng `/huong-dan`).</li>
+                                <li><code>"X-Content-Type-Options": "nosniff"</code> & <code>"X-Frame-Options": "SAMEORIGIN"</code>: Bảo vệ trang web khỏi bị nhúng trái phép (Clickjacking) hoặc giả mạo kiểu MIME.</li>
+                                <li><code>"Cache-Control": "public, max-age=0, must-revalidate"</code>: <b>Cực kỳ quan trọng!</b> Bắt buộc trình duyệt của Huân và Bé Uyên luôn tải bản mới nhất ngay sau khi bạn `git push`, không bị dính bộ nhớ đệm (cache) cũ.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- File 4: kawaiicraft.html -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-purple-200 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2.5">
+                                <span class="w-10 h-10 rounded-2xl bg-purple-100 text-purple-700 flex items-center justify-center text-xl font-black">🚀</span>
+                                <div>
+                                    <h3 class="font-extrabold text-base text-gray-800 font-mono">kawaiicraft.html</h3>
+                                    <span class="text-[11px] font-bold text-purple-800 bg-purple-100 px-2 py-0.5 rounded-full">Cổng Khởi Động & Điều Hướng Nhanh (Landing Portal)</span>
+                                </div>
+                            </div>
+                            <a href="kawaiicraft.html" target="_blank" class="px-2.5 py-1 rounded-xl bg-purple-600 text-white text-xs font-bold hover:bg-purple-700 transition">Mở File ↗</a>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> Đóng vai trò là cổng chào nhẹ (Launcher) tương thích ngược với các đường link cũ (`/kawaiicraft.html`). Phiên bản V5.3 đã nâng cấp file này thành bảng chọn nhanh giữa 2 chế độ: <b>Vào thẳng Thế Giới 3D (`index.html`)</b> hoặc <b>Đọc Web Hướng Dẫn Kỹ Thuật (`huong-dan.html`)</b>.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- File 5: README.md -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-pink-200 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-2xl bg-pink-100 text-pink-700 flex items-center justify-center text-xl font-black">📖</span>
+                            <div>
+                                <h3 class="font-extrabold text-base text-gray-800 font-mono">README.md</h3>
+                                <span class="text-[11px] font-bold text-pink-800 bg-pink-100 px-2 py-0.5 rounded-full">Tài Liệu Mặt Tiền Trên GitHub (Định dạng Markdown)</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> GitHub tự động đọc file `README.md` và hiển thị ngay dưới danh sách file khi bạn mở trang `https://github.com/huan2022004/Game-cua-uyen`. Bản V5.3 đã cập nhật toàn bộ nội dung `README.md` theo đúng kiến trúc Firebase Realtime Database, 3 bản đồ `320×320` và 11 minigame mới nhất.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- File 6: FEATURES_NOTE.md -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-teal-200 flex flex-col justify-between">
+                    <div class="space-y-2.5">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-10 h-10 rounded-2xl bg-teal-100 text-teal-700 flex items-center justify-center text-xl font-black">📝</span>
+                            <div>
+                                <h3 class="font-extrabold text-base text-gray-800 font-mono">FEATURES_NOTE.md</h3>
+                                <span class="text-[11px] font-bold text-teal-800 bg-teal-100 px-2 py-0.5 rounded-full">Sổ Tay Nhật Ký Tính Năng & Bản Vá Kỹ Thuật</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            <b>Dùng để làm gì?</b> Lưu trữ tóm tắt nhanh các hạng mục đã nâng cấp qua từng phiên bản (như cách sửa lỗi các thanh thông báo đè nhau, cách đổi nhạc hộp nhạc dịu êm mặc định tắt, hay thiết kế lại Map Vikendi và Sanhok khác biệt hoàn toàn với Livik).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- File 7 & 8: .git/ and .gitignore -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-slate-300 md:col-span-2">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-sky-300 font-mono text-xs font-bold">📁 .git/</span>
+                                <span class="text-xs font-extrabold text-gray-700">Thư Mục Quản Lý Phiên Bản Git</span>
+                            </div>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                Đây là thư mục hệ thống ẩn của Git. Nó lưu toàn bộ lịch sử chỉnh sửa (commits), nhánh `main`, và địa chỉ kết nối tới kho lưu trữ từ xa (`origin` = `https://github.com/huan2022004/Game-cua-uyen.git`). <b>Lưu ý:</b> Tuyệt đối không xóa thư mục `.git/` này để luôn có thể `git push` cập nhật game.
+                            </p>
+                        </div>
+                        <div class="space-y-1.5">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-pink-300 font-mono text-xs font-bold">📄 .gitignore</span>
+                                <span class="text-xs font-extrabold text-gray-700">Bộ Lọc File Rác Khi Đẩy Lên GitHub</span>
+                            </div>
+                            <p class="text-xs text-gray-600 leading-relaxed">
+                                Liệt kê 5 mẫu file/thư mục tạm thời của Windows/macOS và công cụ phát triển (`.DS_Store`, `Thumbs.db`, `*.log`, `.vercel`, `node_modules/`) để Git tự động bỏ qua, giữ cho kho code trên GitHub luôn nhẹ và sạch 100%.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 2: CẤU TRÚC DỮ LIỆU FIREBASE REALTIME DATABASE & LOCALSTORAGE
+             ===================================================================== -->
+        <section id="sec-storage" class="space-y-5">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-sky-600">Phần 2 • Kiến Trúc Dữ Liệu Lưu Trữ & Đám Mây</span>
+                <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">☁️ Dữ Liệu Của Game Được Lưu Ở Đâu & Đồng Bộ Như Thế Nào?</h2>
+                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                    Ngoài các file vật lý trong ổ đĩa, khi trò chơi vận hành sẽ sử dụng <b>2 nguồn lưu trữ dữ liệu động</b>: (1) <b>Firebase Realtime Database</b> để đồng bộ 2 máy theo thời gian thực và (2) <b>Browser LocalStorage + File `.kawaii`</b> để lưu thế giới lâu dài.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                <!-- Firebase Realtime DB Tree -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-sky-300 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="text-2xl">🔥</span>
+                            <div>
+                                <h3 class="font-extrabold text-base text-sky-800">1. Cây Dữ Liệu Firebase Realtime Database</h3>
+                                <p class="text-[11px] text-gray-500 font-mono">Project ID: kawaii-craft-c7663 (Cụm máy chủ Singapore: asia-southeast1)</p>
+                            </div>
+                        </div>
+                        <span class="px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700 font-black text-[11px]">Realtime 15Hz</span>
+                    </div>
+
+                    <pre class="bg-slate-900 text-slate-100 p-4 rounded-2xl text-xs leading-relaxed overflow-x-auto custom-scroll"><code>📦 kawaii-craft-c7663-default-rtdb
+├── 📂 publicRooms/                  <span class="text-emerald-400">// Danh sách phòng đang mở (1-Click Join)</span>
+│   └── 📂 {ROOM_CODE}/              <span class="text-slate-400">// VD: "HUAN-UYEN"</span>
+│       ├── code: "HUAN-UYEN"
+│       ├── hostName: "Anh Huân 💙"
+│       ├── hostRole: "huan"
+│       ├── mapType: "livik_island"  <span class="text-amber-300">// Map hiện tại của chủ phòng</span>
+│       └── updatedAt: 1731500000000 <span class="text-pink-300">// Tự xóa khi tắt tab (onDisconnect)</span>
+│
+└── 📂 rooms/                        <span class="text-sky-400">// Dữ liệu chi tiết bên trong từng phòng chơi</span>
+    └── 📂 {ROOM_CODE}/
+        ├── 📂 meta/                 <span class="text-slate-400">// Thông tin trạng thái phòng & bản đồ chung</span>
+        │   └── { status, hostRole, mapType, updatedAt }
+        ├── 📂 players/              <span class="text-emerald-400">// Tọa độ & trạng thái 2 nhân vật (Chỉ hiện khi có thật)</span>
+        │   ├── 📂 huan/             <span class="text-sky-300">// { x, y, z, yaw, pitch, flying, emote, mapType }</span>
+        │   └── 📂 uyen/             <span class="text-pink-300">// { x, y, z, yaw, pitch, flying, emote, mapType }</span>
+        ├── 📂 blocks/               <span class="text-amber-300">// Các khối Voxel hai người cùng xây hoặc đập</span>
+        │   └── 📂 "{x}_{y}_{z}"/    <span class="text-slate-400">// { x, y, z, type: 12 (hoặc 0 nếu đập), by }</span>
+        ├── 📂 events/               <span class="text-purple-300">// Tin nhắn chat, thả tim, pháo hoa, mời đổi Map</span>
+        │   └── 📂 {pushId}/         <span class="text-slate-400">// { type: "CHAT"|"EMOTE"|"MAP_INVITE", sender, ts }</span>
+        └── 📂 minigames/            <span class="text-rose-400">// Đồng bộ điểm số & trạng thái 11 trò chơi</span>
+            ├── scoreHuan, scoreUyen
+            ├── hpBattle/            <span class="text-slate-400">// Máu 100 HP của Huân & Uyên, đường đạn, bánh kem</span>
+            ├── tag/, maze/, vikendiRace/, sanhokZone/
+            ├── tictactoe/, heartTap/
+            └── ferris/, swing/, danceFloor/</code></pre>
+                </div>
+
+                <!-- Browser LocalStorage & .kawaii File Structure -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-pink-300 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <span class="text-2xl">💾</span>
+                                <div>
+                                    <h3 class="font-extrabold text-base text-pink-800">2. Bộ Nhớ Trình Duyệt (`localStorage`) & File `.kawaii`</h3>
+                                    <p class="text-[11px] text-gray-500">Cơ chế Delta Compression — Chỉ lưu những khối thay đổi so với bản đồ gốc</p>
+                                </div>
+                            </div>
+                            <span class="px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-700 font-black text-[11px]">3 Slots Tự Động</span>
+                        </div>
+
+                        <p class="text-xs text-gray-600 leading-relaxed">
+                            Vì mỗi bản đồ rộng `320 × 320` chứa hơn <b>120.000 khối</b>, nếu lưu toàn bộ vào trình duyệt sẽ làm đầy bộ nhớ `5MB` của `localStorage`. Do đó, KawaiiCraft V5.3 sử dụng <b>Thuật toán Lưu Trữ Vi Sai (Delta Save)</b>: chỉ lưu danh sách các khối do người chơi đặt thêm (`added`) và các khối đã đập đi (`removed`).
+                        </p>
+
+                        <div class="space-y-2 text-xs">
+                            <div class="p-3 rounded-2xl bg-pink-50 border border-pink-200">
+                                <div class="font-mono font-bold text-pink-700">🔑 Khóa 1: kawaiicraft_v5_slot_1 (hoặc _2, _3)</div>
+                                <p class="text-gray-600 mt-0.5">Lưu toàn bộ trạng thái Slot đang chơi: `currentMapType` (`livik_island` / `vikendi_snow` / `sanhok_jungle`), `added` (`[[x,y,z,type], ...]`), `removed` (`[[x,y,z], ...]`), `playerPos`, `completedQuests`, `rewardCounts` (số phiếu Bóp Bóp, Hôn, Ôm, Lời Chúc), `unlockedCoupons` và `signboards` (lời nhắn khắc trên biển gỗ 3D).</p>
+                            </div>
+                            <div class="p-3 rounded-2xl bg-sky-50 border border-sky-200">
+                                <div class="font-mono font-bold text-sky-700">🔑 Khóa 2: kawaiicraft_couple_role</div>
+                                <p class="text-gray-600 mt-0.5">Lưu nhân vật bạn đã chọn (`"huan"` hoặc `"uyen"`) để lần sau mở game không phải chọn lại.</p>
+                            </div>
+                            <div class="p-3 rounded-2xl bg-amber-50 border border-amber-200">
+                                <div class="font-mono font-bold text-amber-800">📥 Định dạng File Xuất Thế Giới (*.kawaii)</div>
+                                <p class="text-gray-600 mt-0.5">Khi bấm <b>"Tải File Thế Giới (.kawaii)"</b> trong mục Lưu Trữ, game đóng gói toàn bộ dữ liệu JSON của Slot hiện tại thành 1 file tải về máy. Bạn có thể gửi file này qua Zalo/Messenger để người yêu mở lên xem toàn bộ ngôi nhà bạn đã xây.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 3: GIẢI PHẪU 12 PHÂN HỆ CODE BÊN TRONG INDEX.HTML
+             ===================================================================== -->
+        <section id="sec-modules" class="space-y-5">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-purple-600">Phần 3 • Sơ Đồ Giải Phẫu Mã Nguồn</span>
+                <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">🧩 Giải Phẫu 12 Phân Hệ Bên Trong File `index.html`</h2>
+                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                    Để bạn dễ đọc hiểu và chỉnh sửa một file lớn ~9.250 dòng, dưới đây là bản đồ chia `index.html` thành <b>12 phân hệ độc lập</b> theo đúng thứ tự từ trên xuống dưới.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Module 1 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-pink-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-pink-600">Phân hệ 01 • Dòng 1 – 440</span>
+                        <span class="text-[11px] font-mono bg-pink-100 text-pink-800 px-2 py-0.5 rounded-lg">HTML & HUD Stack</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Giao Diện HUD Chống Chồng Chéo</h3>
+                    <p class="text-xs text-gray-600">
+                        Chứa thanh trạng thái trên cùng (`#hud-top-bar`), ngăn kéo tiện ích (`#extra-tools-drawer`), cột thông báo trung tâm tự xếp tầng (`#hud-center-alerts-stack`), Radar góc phải (`#minimap-card`), khung chat thu gọn (`#bottom-left-hud-stack`) và cụm nút điều khiển nhanh góc dưới phải (`#quick-action-pad`).
+                    </p>
+                </div>
+
+                <!-- Module 2 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-rose-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-rose-600">Phân hệ 02 • Dòng 441 – 1527</span>
+                        <span class="text-[11px] font-mono bg-rose-100 text-rose-800 px-2 py-0.5 rounded-lg">12 Modals UI</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Hệ Thống 12 Hộp Thoại Chức Năng</h3>
+                    <p class="text-xs text-gray-600">
+                        Bao gồm: Túi đồ 36 khối (`#inventory-modal`), Bàn ghép đồ (`#craft-modal`), Bản đồ & dịch chuyển (`#map-modal`), Trung tâm Khu Vui Chơi tự đổi theo Map (`#minigames-modal`), 5 Cột Mốc (`#quest-modal`), Kho Phiếu Quà (`#coupon-modal`), Mẫu nhà 1 chạm (`#prefab-modal`), Lưu/Xuất file (`#save-modal`), Selfie đôi (`#photo-modal`), Phòng Co-op (`#coop-modal`), Biển gỗ (`#signboard-modal`) và Hướng dẫn (`#help-modal`).
+                    </p>
+                </div>
+
+                <!-- Module 3 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-purple-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-purple-600">Phân hệ 03 • Dòng 1530 – 1690</span>
+                        <span class="text-[11px] font-mono bg-purple-100 text-purple-800 px-2 py-0.5 rounded-lg">36 Blocks & Textures</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Bộ Vẽ Vật Liệu Voxel Tự Động</h3>
+                    <p class="text-xs text-gray-600">
+                        Định nghĩa mảng `BLOCKS` (ID từ `1` đến `36`) và hàm `createProceduralTexture()`. Thay vì phải tải 36 file ảnh `.png` nặng nề từ bên ngoài, game dùng HTML5 `<canvas>` 64×64 để tự vẽ vân cỏ, cánh hoa anh đào, băng tuyết, gạch kẹo ngọt và đóng gói thành `THREE.MeshLambertMaterial`.
+                    </p>
+                </div>
+
+                <!-- Module 4 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-indigo-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-indigo-600">Phân hệ 04 • Dòng 1691 – 1860</span>
+                        <span class="text-[11px] font-mono bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-lg">KawaiiAudioEngine</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Bộ Tổng Hợp Âm Thanh Hộp Nhạc Lo-Fi</h3>
+                    <p class="text-xs text-gray-600">
+                        Sử dụng `Web Audio API` với sóng `triangle` + `sine` đi qua bộ lọc thông thấp `BiquadFilterNode (950Hz)` để tạo tiếng đàn hộp nhạc dịu nhẹ. <b>Mặc định khi mới vào game nhạc sẽ TẮT (`isPlaying: false`)</b> để không làm giật mình; chỉ khi bấm nút `🔇 Nhạc: Tắt` mới bắt đầu ngân nga.
+                    </p>
+                </div>
+
+                <!-- Module 5 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-sky-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-sky-600">Phân hệ 05 • Dòng 1861 – 2260</span>
+                        <span class="text-[11px] font-mono bg-sky-100 text-sky-800 px-2 py-0.5 rounded-lg">InstancedMesh 60FPS</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Lõi Đồ Họa Voxel & Ẩn Khối Bị Che</h3>
+                    <p class="text-xs text-gray-600">
+                        Lưu toàn bộ thế giới vào mảng 1 chiều `worldVoxels = new Uint8Array(320 * 64 * 320)`. Hàm `isBlockExposed(x,y,z)` kiểm tra 6 mặt xung quanh: nếu 1 khối đất bị che kín cả 6 mặt bởi các khối khác thì sẽ <b>không gửi lên card đồ họa</b>, giúp giảm 80% tải GPU và giữ 60 FPS.
+                    </p>
+                </div>
+
+                <!-- Module 6 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-cyan-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-cyan-600">Phân hệ 06 • Dòng 2261 – 3045</span>
+                        <span class="text-[11px] font-mono bg-cyan-100 text-cyan-800 px-2 py-0.5 rounded-lg">3 World Generators</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Bộ Sinh 3 Bản Đồ Độc Bản `320×320`</h3>
+                    <p class="text-xs text-gray-600">
+                        Chứa `MAP_META`, `MAP_POI_CONFIG`, hàm dọn sạch công trình cũ `resetWorldLandmarkGroups()` và 3 thuật toán kiến tạo địa hình khác biệt 100%: `generateLivikContinent()` (4 mùa + công viên), `generateVikendiSnowMap()` (sông băng + đường đua trượt tuyết), `generateSanhokJungleMap()` (đền cổ Maya + đấu trường nhảy né vòng bo).
+                    </p>
+                </div>
+
+                <!-- Module 7 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-teal-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-teal-600">Phân hệ 07 • Dòng 3046 – 3810</span>
+                        <span class="text-[11px] font-mono bg-teal-100 text-teal-800 px-2 py-0.5 rounded-lg">Livik Landmarks 3D</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Công Trình 3D & Vòng Quay Khổng Lồ</h3>
+                    <p class="text-xs text-gray-600">
+                        Dựng Vòng Quay Mặt Trời siêu cao (`R=20`, tâm `Y=34`, đỉnh `Y=56`, 8 cabin mở thoáng 360° không có nóc che tầm nhìn), Xích Đu Đôi, Sàn Nhảy Disco 8×8, Mê Cung Tình Yêu, Đường Parkour Cầu Vồng và Lâu Đài Mây.
+                    </p>
+                </div>
+
+                <!-- Module 8 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-emerald-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-emerald-600">Phân hệ 08 • Dòng 3811 – 4420</span>
+                        <span class="text-[11px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-lg">Milestones & Coupons</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">5 Cột Mốc Cặp Đôi & Kho Phiếu Quà</h3>
+                    <p class="text-xs text-gray-600">
+                        Quản lý `REWARD_TYPES` (Phiếu Bóp Bóp, Phiếu Hôn, Phiếu Ôm, Lời Chúc), `ROMANTIC_WISHES_POOL` và 5 cột mốc lớn không làm gián đoạn chuột (Zero-Interruption Toast Banner).
+                    </p>
+                </div>
+
+                <!-- Module 9 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-amber-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-amber-600">Phân hệ 09 • Dòng 4421 – 5250</span>
+                        <span class="text-[11px] font-mono bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg">Pets, POIs & Prefabs</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Thú Cưng, Dịch Chuyển & Đài Ngắm Mây</h3>
+                    <p class="text-xs text-gray-600">
+                        Tạo đàn thú cưng (Thỏ, Corgi, Cáo Tuyết, Cánh Cụt), hệ thống dịch chuyển tức thì `teleportToPOI()`, chế độ Đài Ngắm Toàn Cảnh Trên Mây (`teleportToCloudObservatory()` ở độ cao `Y=54`) và 5 mẫu công trình 1 chạm (`buildPrefab()`).
+                    </p>
+                </div>
+
+                <!-- Module 10 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-orange-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-orange-600">Phân hệ 10 • Dòng 5251 – 6210</span>
+                        <span class="text-[11px] font-mono bg-orange-100 text-orange-800 px-2 py-0.5 rounded-lg">Physics & Controls</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Vật Lý Va Chạm, Bay Mượt & Radar</h3>
+                    <p class="text-xs text-gray-600">
+                        Xử lý bàn phím/chuột PointerLock, chống lỗi lặp phím `if (e.repeat) return;` để giữ `Space` bay lên cao mượt mà không bao giờ bị rớt xuống, nút Nhảy/Chạy nhanh góc phải và vẽ bản đồ Radar trực tiếp lên `<canvas>` theo đúng bảng màu của từng Map.
+                    </p>
+                </div>
+
+                <!-- Module 11 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-red-500 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-red-600">Phân hệ 11 • Dòng 6211 – 7540</span>
+                        <span class="text-[11px] font-mono bg-red-100 text-red-800 px-2 py-0.5 rounded-lg">Save/Load & Loop</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Lưu Trữ Delta & Vòng Lặp 60 FPS</h3>
+                    <p class="text-xs text-gray-600">
+                        Chứa hàm `saveWorldState()`, `loadWorldState()`, `switchMapType()` và vòng lặp `animate()` chạy 60 lần/giây để cập nhật mặt trời/mặt trăng, xoay vòng quay, kiểm tra va chạm và vẽ khung hình 3D.
+                    </p>
+                </div>
+
+                <!-- Module 12 -->
+                <div class="guide-card glass-card rounded-2xl p-4 border-l-4 border-l-fuchsia-600 space-y-1.5">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-fuchsia-600">Phân hệ 12 • Dòng 7541 – 9250</span>
+                        <span class="text-[11px] font-mono bg-fuchsia-100 text-fuchsia-800 px-2 py-0.5 rounded-lg">Firebase & 11 Games</span>
+                    </div>
+                    <h3 class="font-extrabold text-sm text-gray-800">Đồng Bộ Firebase Co-op & 11 Minigame</h3>
+                    <p class="text-xs text-gray-600">
+                        Kết nối Firebase Realtime Database, đăng ký phòng mở công khai (`publicRooms`), đồng bộ nhân vật 3D đối phương, gửi lời mời đổi bản đồ (`MAP_INVITE`) và vận hành toàn bộ 11 trò chơi cặp đôi (Đấu trường 100 HP, Đua Băng Vikendi, Vòng Bo Sanhok, Caro 3×3, Bắn Tim 10s...).
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 4: GIẢI THÍCH CHI TIẾT 7 CÔNG ĐOẠN VẬN HÀNH (END-TO-END PIPELINE)
+             ===================================================================== -->
+        <section id="sec-pipeline" class="space-y-5">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-amber-600">Phần 4 • Giải Thích Từng Công Đoạn Hoạt Động</span>
+                <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">⚙️ Giải Thích Chi Tiết 7 Công Đoạn Vận Hành Của KawaiiCraft V5.3</h2>
+                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                    Từ lúc bạn nhấp mở trang web cho đến khi 2 người chơi cùng nhau trên mạng và đẩy bản cập nhật lên GitHub, hệ thống trải qua <b>7 công đoạn nối tiếp nhau</b> như sau:
+                </p>
+            </div>
+
+            <div class="space-y-4">
+
+                <!-- STAGE 1 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-pink-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-pink-100">
+                        <div class="flex items-center gap-3">
+                            <span class="step-badge w-9 h-9 rounded-2xl flex items-center justify-center font-black text-sm shadow">01</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 1: Khởi Tạo Trình Duyệt, Thư Viện 3D & Bộ Âm Thanh Mặc Định Tắt</h3>
+                                <p class="text-xs text-pink-600 font-bold">Diễn ra trong 0.2 giây đầu tiên khi mở trang web</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: THREE.Scene(), KawaiiAudioEngine</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100">
+                            <div class="font-extrabold text-pink-800 mb-1">1.1. Dựng Sân Khấu 3D (`Three.js`)</div>
+                            Trình duyệt khởi tạo `THREE.Scene`, `PerspectiveCamera` (góc nhìn 70 độ) và `WebGLRenderer` gắn vào thẻ `<div id="canvas-container">`. Hệ thống đèn gồm ánh sáng vòm trời (`HemisphereLight`) và ánh sáng mặt trời (`DirectionalLight`) được bật lên.
+                        </div>
+                        <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100">
+                            <div class="font-extrabold text-pink-800 mb-1">1.2. Vẽ 36 Chất Liệu Khối Bằng Code</div>
+                            Hàm `createProceduralTexture()` tự động vẽ 36 mặt phẳng màu pastel (cỏ xuân, lá anh đào, tuyết tinh khiết, đá cổ Maya, đèn lồng...) ngay trong bộ nhớ RAM mà không cần tải bất kỳ file ảnh rời nào.
+                        </div>
+                        <div class="bg-pink-50/60 p-3.5 rounded-2xl border border-pink-100">
+                            <div class="font-extrabold text-pink-800 mb-1">1.3. Chế Độ Nhạc Nền Mặc Định Tắt</div>
+                            `KawaiiAudioEngine` khởi tạo ở trạng thái `isPlaying = false` và hiển thị nút `🔇 Nhạc: Tắt`. Khi bạn chủ động bấm bật, bộ tạo sóng `triangle + sine` mới gảy giai điệu Hộp Nhạc Lo-Fi (vòng hợp âm `Fmaj7 - Cmaj7 - Dm7 - G7`) qua bộ lọc âm trầm ấm `950Hz`.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 2 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-sky-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-sky-100">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 text-white flex items-center justify-center font-black text-sm shadow">02</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 2: Kiến Tạo 3 Bản Đồ `320×320` Khác Biệt Hoàn Toàn & Tối Ưu 60 FPS</h3>
+                                <p class="text-xs text-sky-600 font-bold">Quản lý hơn 120.000 khối Voxel mà không gây giật lag</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: rebuildAllInstancedMeshes(), resetWorldLandmarkGroups()</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100">
+                            <div class="font-extrabold text-sky-800 mb-1">2.1. Dọn Sạch Triệt Để Khi Đổi Map</div>
+                            Khi bạn chuyển giữa 3 Map, hàm `clearWorldVoxels()` xóa mảng khối cũ và `resetWorldLandmarkGroups()` gỡ toàn bộ Vòng Quay Mặt Trời, Xích Đu, Sàn Nhảy của Livik khỏi không gian 3D. Nhờ vậy <b>Vikendi và Sanhok hoàn toàn không còn dính vòng quay hay công trình của Livik</b>.
+                        </div>
+                        <div class="bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100">
+                            <div class="font-extrabold text-sky-800 mb-1">2.2. Ba Thuật Toán Địa Hình Riêng Biệt</div>
+                            • <b>Map 1 (Livik):</b> 4 vùng mùa, công viên cặp đôi, vòng quay Y=56.<br>
+                            • <b>Map 2 (Vikendi):</b> Hồ băng trung tâm, rừng thông tuyết, lâu đài băng pha lê & đường đua trượt băng.<br>
+                            • <b>Map 3 (Sanhok):</b> Sông ngọc lục bảo uốn lượn, đền tháp bậc thang Maya & đấu trường nhảy bục né vòng bo.
+                        </div>
+                        <div class="bg-sky-50/60 p-3.5 rounded-2xl border border-sky-100">
+                            <div class="font-extrabold text-sky-800 mb-1">2.3. Kỹ Thuật `O(1) Surface Culling`</div>
+                            Sau khi điền khối vào mảng `worldVoxels`, hàm `rebuildAllInstancedMeshes()` quét qua bản đồ: chỉ những khối có ít nhất 1 mặt tiếp xúc với không khí hoặc nước trong suốt mới được đưa vào `THREE.InstancedMesh`, giúp vẽ hàng chục nghìn khối chỉ trong 36 lệnh vẽ (Draw Calls).
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 3 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-purple-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-purple-100">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-purple-500 to-fuchsia-600 text-white flex items-center justify-center font-black text-sm shadow">03</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 3: Điều Khiển Nhân Vật, Vật Lý Bay Mượt & Giao Diện Không Chồng Chéo</h3>
+                                <p class="text-xs text-purple-600 font-bold">Xử lý chuyển động 60 lần/giây và sắp xếp HUD tự động</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: updatePlayerPhysics(), #hud-center-alerts-stack</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100">
+                            <div class="font-extrabold text-purple-800 mb-1">3.1. Chống Giật Khi Giữ Phím `Space` Bay</div>
+                            Khi bạn giữ phím `Space` quá 1 giây, Windows tự động bắn hàng loạt sự kiện `keydown` lặp lại (`e.repeat = true`). Nhờ dòng chặn `if (e.repeat && e.code === 'Space') return;`, game phân biệt chính xác giữa <b>nháy đúp Space (bật/tắt chế độ bay)</b> và <b>giữ chặt Space (bay vút lên cao mượt mà)</b>.
+                        </div>
+                        <div class="bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100">
+                            <div class="font-extrabold text-purple-800 mb-1">3.2. Cụm Nút Tốc Độ & Đài Ngắm Mây</div>
+                            Ở góc dưới bên phải (`#quick-action-pad`), 3 nút <b>⬆️ Nhảy</b>, <b>⚡ Chạy Nhanh</b> và <b>☁️ Ngắm Toàn Cảnh</b> cho phép người chơi thao tác nhanh hoặc bay thẳng lên độ cao `Y=54` nhìn bao quát toàn bộ hòn đảo.
+                        </div>
+                        <div class="bg-purple-50/60 p-3.5 rounded-2xl border border-purple-100">
+                            <div class="font-extrabold text-purple-800 mb-1">3.3. Ngăn Xếp Thông Báo (`Zero-Overlap`)</div>
+                            Mọi thanh thông báo (Toast, Điểm Minigame, Thanh Máu 100 HP, Bảng Mời Đổi Map) đều nằm chung trong `<div id="hud-center-alerts-stack" class="flex flex-col gap-1.5">`. Nhờ vậy khi 2-3 bảng hiện ra cùng lúc, chúng tự động xếp hàng dọc từ trên xuống dưới, <b>không bao giờ đè lên nhau</b>.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 4 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-rose-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-rose-100">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-600 text-white flex items-center justify-center font-black text-sm shadow">04</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 4: Ghép Đôi Online Qua Firebase & Danh Sách Phòng 1 Chạm</h3>
+                                <p class="text-xs text-rose-600 font-bold">Kết nối xuyên tường lửa giữa Anh Huân & Bé Uyên</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: startCoopHostRoom(), listenToPublicRooms()</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-100">
+                            <div class="font-extrabold text-rose-800 mb-1">4.1. Đăng Ký Phòng Mở Sẵn (`publicRooms`)</div>
+                            Khi Anh Huân bấm <b>"✨ Mở Phòng Ngay"</b>, game vừa tạo phòng tại `/rooms/{CODE}` vừa ghi tên phòng vào `/publicRooms/{CODE}`. Trên máy Bé Uyên, mục <b>"📡 Danh Sách Phòng Đang Mở"</b> lập tức hiện nút phòng của Huân để Uyên bấm 1 chạm vào luôn không cần gõ mã.
+                        </div>
+                        <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-100">
+                            <div class="font-extrabold text-rose-800 mb-1">4.2. Chính Sách `Zero Fake NPC`</div>
+                            Khi chơi 1 mình, trên bản đồ tuyệt đối không có nhân vật giả nào đứng đơ. Chỉ khi nhánh `/rooms/{CODE}/players/{partnerRole}` trên Firebase thực sự có dữ liệu của người thứ 2 đang online, hàm `ensureRemotePlayerAvatar()` mới tạo mô hình 3D của người yêu.
+                        </div>
+                        <div class="bg-rose-50/60 p-3.5 rounded-2xl border border-rose-100">
+                            <div class="font-extrabold text-rose-800 mb-1">4.3. Tự Dọn Dẹp Khi Tắt Tab (`onDisconnect`)</div>
+                            Ngay khi kết nối, game đăng ký `myPlayerRef.onDisconnect().remove()`. Nếu 1 người đóng trình duyệt hoặc mất mạng, máy chủ Firebase tự động xóa nhân vật đó ngay lập tức và báo cho người còn lại biết.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 5 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-emerald-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-emerald-100">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 text-white flex items-center justify-center font-black text-sm shadow">05</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 5: Đồng Bộ Đổi Bản Đồ Chung & 11 Trò Chơi Cặp Đôi Theo Từng Map</h3>
+                                <p class="text-xs text-emerald-600 font-bold">Mỗi bản đồ sở hữu bộ trò chơi đặc sản riêng biệt</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: renderMinigamesHubByMap(), acceptPartnerMapInvite()</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-100">
+                            <div class="font-extrabold text-emerald-800 mb-1">5.1. Lời Mời Đổi Map Thời Gian Thực (`Phím Y`)</div>
+                            Khi bạn chuyển sang bản đồ khác (VD: sang Vikendi Tuyết), game gửi sự kiện `MAP_INVITE` lên Firebase. Màn hình người yêu sẽ hiện thanh mời <b>"🗺️ Anh Huân vừa sang Map 2: Đảo Tuyết Vikendi! [Sang Cùng (Y)]"</b>. Khi người yêu bấm `Y`, cả hai sẽ hội ngộ và nhận thông báo xác nhận.
+                        </div>
+                        <div class="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-100">
+                            <div class="font-extrabold text-emerald-800 mb-1">5.2. Khu Vui Chơi Tự Đổi Theo Map (`Phím U`)</div>
+                            Bảng Khu Vui Chơi (`#minigames-modal`) tự động hiển thị đúng các trò chơi của bản đồ bạn đang đứng: <b>Livik</b> có Công viên 7 trò lớn; <b>Vikendi</b> có Đua Trượt Băng, Ném Cầu Tuyết 100 HP & Cờ Caro Băng Giá; <b>Sanhok</b> có Vòng Bo Nóng Bỏng, Bắn Tim 10s & Đấu Trường Rừng Xanh.
+                        </div>
+                        <div class="bg-emerald-50/60 p-3.5 rounded-2xl border border-emerald-100">
+                            <div class="font-extrabold text-emerald-800 mb-1">5.3. Đấu Trường Thanh Máu 100 HP</div>
+                            Trong trò Đấu Trường 100 HP (`hpBattle`), mỗi người bắt đầu với `100/100 HP`. Bấm Chuột trái / `J` / `Q` để bắn cầu tuyết hoặc pháo tim (`-12 HP`), bấm `K` bật khiên giảm một nửa sát thương, và nhặt bánh kem dâu trên sân để hồi `+20 HP`. Ai về `0 HP` trước sẽ thua hiệp đó!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 6 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-indigo-200">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-indigo-100">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-500 to-blue-600 text-white flex items-center justify-center font-black text-sm shadow">06</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 6: Lưu Trữ Tự Động (`Auto-Save`) & Đóng Gói File Kỷ Niệm `.kawaii`</h3>
+                                <p class="text-xs text-indigo-600 font-bold">Bảo toàn 100% công trình xây dựng và kho phiếu quà tình yêu</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Hàm: saveWorldState(), exportWorldToFile()</span>
+                    </div>
+                    <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs text-gray-600 leading-relaxed">
+                        <div class="bg-indigo-50/60 p-3.5 rounded-2xl border border-indigo-100">
+                            <div class="font-extrabold text-indigo-800 mb-1">6.1. Tự Động Lưu Sau Mỗi Thao Tác Xây/Đập</div>
+                            Mỗi khi bạn đặt hoặc đập 1 khối (hoặc định kỳ mỗi 20 giây), hàm `scheduleSave()` ghi lại tọa độ thay đổi vào `localStorage` ở Slot đang chọn (`Slot 1`, `Slot 2` hoặc `Slot 3`), kèm theo chữ `● Đã lưu` màu xanh ngọc trên thanh tiêu đề.
+                        </div>
+                        <div class="bg-indigo-50/60 p-3.5 rounded-2xl border border-indigo-100">
+                            <div class="font-extrabold text-indigo-800 mb-1">6.2. Xuất & Nhập File `.kawaii` Giữa 2 Máy</div>
+                            Khi bấm <b>"📥 Tải File Thế Giới (.kawaii)"</b>, trình duyệt tạo một `Blob` JSON chứa toàn bộ các khối đã xây, lời nhắn biển gỗ và phiếu thưởng. Người nhận chỉ cần bấm <b>"📂 Mở File Thế Giới"</b> là tái hiện nguyên vẹn thế giới đó.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STAGE 7 -->
+                <div class="guide-card glass-card rounded-3xl p-5 md:p-6 border-2 border-amber-300">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-3 border-b border-amber-200">
+                        <div class="flex items-center gap-3">
+                            <span class="w-9 h-9 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 text-white flex items-center justify-center font-black text-sm shadow">07</span>
+                            <div>
+                                <h3 class="font-extrabold text-base md:text-lg text-gray-800">Công Đoạn 7: Quy Trình Git Push Lên GitHub & Tự Động Xuất Bản Ra Link Web Vercel</h3>
+                                <p class="text-xs text-amber-700 font-bold">Cách đưa mọi thay đổi trên máy tính của bạn lên Internet trong 15 giây</p>
+                            </div>
+                        </div>
+                        <span class="text-xs font-mono bg-slate-100 px-3 py-1 rounded-xl text-slate-700">Git CLI → GitHub → Vercel Edge Network</span>
+                    </div>
+                    <div class="mt-3 space-y-3 text-xs text-gray-700">
+                        <p>Mỗi khi chỉnh sửa bất kỳ file nào trong thư mục `D:/Duan/Game_micute/`, quy trình cập nhật lên mạng diễn ra qua 3 lệnh chuẩn:</p>
+                        <pre class="bg-slate-900 text-emerald-300 p-3.5 rounded-2xl font-mono text-xs overflow-x-auto"><code># Bước 1: Đưa các file đã nâng cấp vào vùng chuẩn bị (Staging Area)
+git add index.html huong-dan.html README.md FEATURES_NOTE.md kawaiicraft.html
+
+# Bước 2: Đóng gói phiên bản mới kèm ghi chú rõ ràng
+git commit -m "Upgrade KawaiiCraft V5.3: Full interactive web guide & updated documentation"
+
+# Bước 3: Đẩy thẳng lên nhánh main của GitHub (Vercel sẽ tự động bắt sự kiện này và cập nhật web sau ~15 giây)
+git push origin main</code></pre>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 5: BẢNG DỮ LIỆU 3 BẢN ĐỒ, 11 TRÒ CHƠI & 36 KHỐI VOXEL
+             ===================================================================== -->
+        <section id="sec-maps-data" class="space-y-5">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-emerald-600">Phần 5 • Từ Điển Dữ Liệu Trong Game</span>
+                <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">🗺️ Bảng So Sánh 3 Bản Đồ `320×320` & 11 Trò Chơi Đặc Sản</h2>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <!-- Map 1 Card -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-pink-300 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 font-extrabold text-xs">Map 1 • Mặc định</span>
+                        <span class="font-mono text-xs text-gray-500">ID: livik_island</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-pink-600">🌸 Đảo Livik 4 Mùa (`320×320`)</h3>
+                    <p class="text-xs text-gray-600">
+                        <b>Đặc trưng địa hình:</b> Chia làm 4 vùng khí hậu (Thung Lũng Hoa Anh Đào, Bãi Biển Nhiệt Đới, Rừng Phong Lá Đỏ, Đỉnh Tuyết) hội tụ quanh Công Viên Giải Trí Cặp Đôi ở trung tâm.
+                    </p>
+                    <div class="bg-pink-50 p-3 rounded-2xl border border-pink-200 text-xs space-y-1">
+                        <div class="font-extrabold text-pink-800">🎪 7 Trò Chơi Tại Đảo Livik:</div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-0.5">
+                            <li><b>⚔️ Đấu Trường Thanh Máu 100 HP</b> (`X=0, Z=8`)</li>
+                            <li><b>🎡 Vòng Quay Mặt Trời Y=56</b> (`X=0, Z=22`)</li>
+                            <li><b>🏃‍♂️ Đuổi Bắt Tình Yêu 60s</b> (`X=0, Z=0`)</li>
+                            <li><b>🧩 Đua Mê Cung Trái Tim</b> (`X=-34, Z=18`)</li>
+                            <li><b>🎠 Xích Đu Đôi Lãng Mạn</b> (`X=-16, Z=8`)</li>
+                            <li><b>🕺 Sàn Nhảy Disco 8×8</b> (`X=18, Z=14`)</li>
+                            <li><b>🌈 Parkour Cầu Vồng Lên Mây</b> (`X=18, Z=-18`)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Map 2 Card -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-sky-300 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-sky-100 text-sky-700 font-extrabold text-xs">Map 2 • Thế Giới Băng</span>
+                        <span class="font-mono text-xs text-gray-500">ID: vikendi_snow</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-sky-600">❄️ Đảo Tuyết Vikendi (`320×320`)</h3>
+                    <p class="text-xs text-gray-600">
+                        <b>Đặc trưng địa hình:</b> Hoàn toàn không có vòng quay Livik! Toàn bộ đảo phủ tuyết trắng và băng pha lê, ở giữa là <b>Đấu Trường Trượt Băng</b>, phía Bắc là <b>Lâu Đài Băng Hoàng Gia</b>, xung quanh là <b>Làng Lều Tuyết Igloo</b>.
+                    </p>
+                    <div class="bg-sky-50 p-3 rounded-2xl border border-sky-200 text-xs space-y-1">
+                        <div class="font-extrabold text-sky-800">🛷 3 Trò Chơi Nhanh Độc Quyền Vikendi:</div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li><b>🛷 Đua Trượt Băng Cặp Đôi (`vikendiRace`):</b> Xuất phát tại `Z=-42`, lướt siêu tốc trên mặt băng xanh lấy 5 Cờ Tuyết để về đích tại Lâu Đài Băng (`Z=42`).</li>
+                            <li><b>⛄ Đại Chiến Cầu Tuyết 100 HP (`hpBattle`):</b> Ném cầu tuyết giảm máu trên mặt hồ đóng băng có tường băng che chắn.</li>
+                            <li><b>⭕ Cờ Caro Băng Giá 3×3 (`tictactoe`):</b> Trò chơi trí tuệ nhẹ nhàng — Huân (`❌`) và Uyên (`⭕`) đấu cờ 3×3 ngay trên bảng đồng bộ.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Map 3 Card -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-emerald-300 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-extrabold text-xs">Map 3 • Rừng Nhiệt Đới</span>
+                        <span class="font-mono text-xs text-gray-500">ID: sanhok_jungle</span>
+                    </div>
+                    <h3 class="text-lg font-extrabold text-emerald-600">🌴 Rừng Nhiệt Đới Sanhok (`320×320`)</h3>
+                    <p class="text-xs text-gray-600">
+                        <b>Đặc trưng địa hình:</b> Rừng rậm nhiệt đới xanh thẫm chia cắt bởi dòng sông Ngọc Lục Bảo, ở trung tâm là <b>Đền Tháp Cổ Maya Bậc Thang (`Bootcamp`)</b>, phía Đông là <b>Bến Thuyền Paradise</b>, phía Tây là <b>Nhà Sàn Rừng Đước</b>.
+                    </p>
+                    <div class="bg-emerald-50 p-3 rounded-2xl border border-emerald-200 text-xs space-y-1">
+                        <div class="font-extrabold text-emerald-800">🔥 3 Trò Chơi Phản Xạ Độc Quyền Sanhok:</div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                            <li><b>🔥 Nhảy Bục Né Nước Nóng (`sanhokZone`):</b> Nhảy qua 16 bục đá cổ trên hồ dung nham nhiệt đới để nhặt Ngọc Rừng Xanh, ngã xuống nước sẽ tự hồi về bục.</li>
+                            <li><b>💓 Thi Bấm Tim Tốc Độ 10s (`heartTap`):</b> Trong 10 giây ai bấm nút Thả Tim nhanh hơn sẽ thắng điểm cặp đôi.</li>
+                            <li><b>🏹 Đấu Trường Rừng Xanh 100 HP (`hpBattle`):</b> Đấu 100 HP quanh tháp đá cổ Bootcamp.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- =====================================================================
+             SECTION 6: CẨM NANG TỰ CHỈNH SỬA & NÂNG CẤP DỮ LIỆU CHO HUÂN
+             ===================================================================== -->
+        <section id="sec-customize" class="space-y-5">
+            <div>
+                <span class="text-xs font-black uppercase tracking-wider text-rose-600">Phần 6 • Hướng Dẫn Dành Cho Nhà Phát Triển (Anh Huân)</span>
+                <h2 class="text-xl md:text-2xl font-extrabold text-gray-800">🛠️ Cách Tự Chỉnh Sửa Lời Chúc, Phiếu Quà, Nhạc Nền & Khối Xây Dựng</h2>
+                <p class="text-xs md:text-sm text-gray-600 mt-1">
+                    Nếu sau này Anh Huân muốn tự tay thêm lời chúc mới cho Bé Uyên, đổi số lượng phiếu thưởng hoặc chỉnh lại âm lượng nhạc, bạn chỉ cần mở file `D:/Duan/Game_micute/index.html` và tìm đúng các từ khóa dưới đây (bấm `Ctrl + F` trong VS Code):
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Recipe 1 -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-pink-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-extrabold text-sm text-pink-700">💌 1. Cách Thêm Lời Chúc & Thư Tình Mới Cho Bé Uyên</h3>
+                        <span class="text-[11px] font-mono bg-pink-100 text-pink-800 px-2 py-0.5 rounded-lg">Ctrl+F: ROMANTIC_WISHES_POOL</span>
+                    </div>
+                    <p class="text-xs text-gray-600">
+                        Tìm mảng `const ROMANTIC_WISHES_POOL = [` trong `index.html`. Bạn có thể thêm bất kỳ câu chúc nào vào danh sách này, game sẽ tự động chọn để trao tặng khi hoàn thành cột mốc:
+                    </p>
+                    <pre class="bg-slate-900 text-pink-300 p-3 rounded-2xl text-[11px] overflow-x-auto"><code>const ROMANTIC_WISHES_POOL = [
+    "Chúc công chúa Uyên của anh mỗi ngày đều cười tươi rạng rỡ như nắng mùa xuân trên đảo Livik nhé! 💖",
+    "Thêm lời chúc mới của Huân dành cho Bé Uyên ở đây... 💕"
+];</code></pre>
+                </div>
+
+                <!-- Recipe 2 -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-amber-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-extrabold text-sm text-amber-800">🎟️ 2. Cách Chỉnh Sửa Các Loại Phiếu Đặc Quyền Tình Yêu</h3>
+                        <span class="text-[11px] font-mono bg-amber-100 text-amber-800 px-2 py-0.5 rounded-lg">Ctrl+F: const REWARD_TYPES</span>
+                    </div>
+                    <p class="text-xs text-gray-600">
+                        Tìm đối tượng `const REWARD_TYPES = {` để đổi tên phiếu, biểu tượng emoji hoặc danh sách nội dung phiếu (`vouchers`) cho 4 nhóm `bop`, `kiss`, `hug`, `wish`:
+                    </p>
+                    <pre class="bg-slate-900 text-amber-300 p-3 rounded-2xl text-[11px] overflow-x-auto"><code>bop: {
+    id: 'bop',
+    title: 'Phiếu Đặc Quyền "Bóp Bóp"',
+    icon: '👐💖',
+    vouchers: [
+        'Đặc quyền "Bóp Bóp" vai & má anh Huân 10 phút không được trốn! 👐💖'
+    ]
+}</code></pre>
+                </div>
+
+                <!-- Recipe 3 -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-indigo-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-extrabold text-sm text-indigo-700">🎵 3. Cách Đổi Giai Điệu Hoặc Âm Lượng Hộp Nhạc</h3>
+                        <span class="text-[11px] font-mono bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-lg">Ctrl+F: KawaiiAudioEngine</span>
+                    </div>
+                    <p class="text-xs text-gray-600">
+                        Tìm đối tượng `const KawaiiAudioEngine = {`. Mảng `melody` chứa từng nốt nhạc với tần số `f` (Hz) và độ ngân `d` (giây). Bạn có thể chỉnh số `0.026` trong `playSoftNote(note.f, note.d, 0.026)` để tăng hoặc giảm âm lượng nhạc nền.
+                    </p>
+                    <pre class="bg-slate-900 text-indigo-300 p-3 rounded-2xl text-[11px] overflow-x-auto"><code>// Mặc định tắt nhạc khi mới vào game:
+isPlaying: false,
+// Chỉnh độ êm của bộ lọc âm thanh hộp nhạc (Hz):
+this.masterFilter.frequency.setValueAtTime(950, this.ctx.currentTime);</code></pre>
+                </div>
+
+                <!-- Recipe 4 -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-emerald-200 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-extrabold text-sm text-emerald-700">🔥 4. Cách Đổi Cấu Hình Firebase Hoặc Mã Phòng Mặc Định</h3>
+                        <span class="text-[11px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-lg">Ctrl+F: firebaseConfig</span>
+                    </div>
+                    <p class="text-xs text-gray-600">
+                        Tìm `const firebaseConfig = {` (ở khoảng dòng 7555 của `index.html`) nếu bạn muốn đổi sang project Firebase khác, hoặc tìm `value="HUAN-UYEN"` để đổi tên mã phòng mặc định khi mở bảng Co-op.
+                    </p>
+                    <pre class="bg-slate-900 text-emerald-300 p-3 rounded-2xl text-[11px] overflow-x-auto"><code>const firebaseConfig = {
+    projectId: "kawaii-craft-c7663",
+    databaseURL: "https://kawaii-craft-c7663-default-rtdb.asia-southeast1.firebasedatabase.app"
+};</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="glass-card rounded-3xl p-6 text-center space-y-3 border-2 border-pink-200">
+            <div class="text-base font-extrabold text-pink-600">
+                💖 KawaiiCraft V5.3 — Thế Giới 3D & Công Viên Cặp Đôi Của Anh Huân & Bé Uyên 💖
+            </div>
+            <p class="text-xs text-gray-500 max-w-2xl mx-auto">
+                Tài liệu này (`huong-dan.html`) luôn đi kèm trực tiếp trong mã nguồn dự án `D:/Duan/Game_micute/`. Bạn có thể mở bất cứ lúc nào trên máy tính hoặc trên link web Vercel.
+            </p>
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-1">
+                <a href="index.html" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 text-white font-extrabold text-xs shadow hover:opacity-95 transition">
+                    🎮 Quay Lại Chơi Game (index.html)
+                </a>
+                <a href="kawaiicraft.html" class="px-4 py-2.5 rounded-2xl bg-purple-100 hover:bg-purple-200 text-purple-800 font-bold text-xs transition">
+                    🚀 Mở Cổng Khởi Động (kawaiicraft.html)
+                </a>
+            </div>
+        </footer>
+
+    </main>
+
+    <script>
+        function filterGuideCards(query) {
+            const normalized = (query || '').trim().toLowerCase();
+            const cards = document.querySelectorAll('.guide-card');
+            cards.forEach(card => {
+                if (!normalized) {
+                    card.style.display = '';
+                    return;
+                }
+                const text = (card.innerText || '').toLowerCase();
+                card.style.display = text.includes(normalized) ? '' : 'none';
+            });
+        }
+
+        // Highlight active section pill on click
+        document.querySelectorAll('.nav-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

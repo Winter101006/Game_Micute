@@ -1,17 +1,43 @@
-<!--
-    KawaiiCraft - Phiên bản nâng cấp toàn diện
-    Chuyển hướng hoặc mở trực tiếp index.html
--->
 <!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=index.html">
-    <title>Đang mở KawaiiCraft...</title>
-    <script>window.location.href = "index.html";</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KawaiiCraft V5.3 — Cổng Khởi Động & Hướng Dẫn Dành Tặng Bé Uyên</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'Quicksand', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #ffe4ec 0%, #e0f2fe 50%, #fae8ff 100%);
+        }
+    </style>
 </head>
-<body style="background:#ffd8e4; font-family:sans-serif; text-align:center; padding-top:20vh;">
-    <h2 style="color:#d63384;">🌸 Đang mở KawaiiCraft dành tặng Bé Uyên...</h2>
-    <p>Nếu không tự động chuyển tiếp, vui lòng <a href="index.html" style="color:#e83e8c; font-weight:bold;">bấm vào đây để vào chơi</a>.</p>
+<body class="min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-2 border-pink-300 text-center space-y-5">
+        <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center text-3xl shadow-lg">
+            🌸
+        </div>
+        <div class="space-y-1.5">
+            <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 font-extrabold text-xs">Phiên Bản KawaiiCraft V5.3</span>
+            <h1 class="text-2xl font-extrabold text-pink-600">Thế Giới 3D Của Anh Huân & Bé Uyên 💕</h1>
+            <p class="text-xs md:text-sm text-gray-600 font-semibold">
+                3 Bản Đồ `320×320` (Livik • Vikendi Tuyết • Sanhok Rừng) • 11 Minigame Đồng Bộ Firebase • Nhạc Hộp Nhạc Dịu Êm
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-3 pt-1">
+            <a href="index.html" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold text-sm shadow-lg transition flex items-center justify-center gap-2">
+                <span>🎮</span> Vào Chơi Game Ngay (index.html)
+            </a>
+            <a href="huong-dan.html" class="w-full py-3 px-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs md:text-sm shadow-md transition flex items-center justify-center gap-2">
+                <span>📘</span> Mở Web Giải Thích Cấu Trúc File, Thư Mục & 7 Công Đoạn (huong-dan.html)
+            </a>
+        </div>
+
+        <div class="text-[11px] text-gray-500 pt-2 border-t border-pink-100">
+            Mẹo: Khi mở link chính của dự án, trình duyệt sẽ tự động vào thẳng `index.html`.
+        </div>
+    </div>
 </body>
 </html>

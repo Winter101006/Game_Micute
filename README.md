@@ -1,119 +1,80 @@
-# 🌸 KawaiiCraft V4.0: Online Co-op Couple Edition 💕
+# 🌸 KawaiiCraft V5.3 — Thế Giới 3D Co-op 3 Bản Đồ (`320×320`) & 11 Minigame Dành Tặng Bé Uyên 💕
 
-> **Bản Đại Tu Toàn Diện V4.0 (Online Co-op Couple Edition):** Hỗ trợ **Chơi Chung 2 Người Thời Gian Thực (WebRTC PeerJS P2P)** không độ trễ, **Avatar Chibi 3D Huân & Bé Uyên**, **Hiệu ứng Cộng Hưởng Tình Yêu**, **Biển Gỗ Lưu Bút 3D**, **Selfie Đôi Polaroid**, cùng 2 Bản Đồ Thế Giới (`300 x 300` blocks), chuỗi **200 Nhiệm Vụ** và **Kho Quà & Phiếu Đặc Quyền Tình Yêu** ("Chúc mừng Uyên được 'bóp bóp'") dành tặng **Bé Uyên**.  
->  
-> 👑 **Nhà sáng tạo:** Phạm Ngọc Huân ✨  
-> 💖 **Dành tặng:** Bé Uyên
+> **Phiên bản V5.3 (Couple Amusement Park, 3 Distinct Maps & Interactive Architecture Guide Edition)**
+> Một thế giới Voxel 3D pastel lãng mạn chạy trực tiếp trên trình duyệt với tốc độ **60 FPS**, đồng bộ **2 người chơi thời gian thực qua Firebase Realtime Database** (`kawaii-craft-c7663`), sở hữu **3 bản đồ độc bản rộng `320 × 320`**, **11 trò chơi cặp đôi**, hệ thống **Hộp Nhạc Lo-Fi dịu êm (mặc định tắt khi mới vào)** và **Web Cẩm Nang Kiến Trúc Tương Tác (`huong-dan.html`)**.
 
 ---
 
-## 🌟 TÍNH NĂNG NỔI BẬT BẢN V4.0 (ONLINE CO-OP COUPLE EDITION)
+## 🗂️ 1. Cấu Trúc Thư Mục & Ý Nghĩa Từng File Trong Dự Án (`D:/Duan/Game_micute/`)
 
-### 0. 💑 Chế Độ Chơi Chung 2 Người Thời Gian Thực (WebRTC P2P) & Tương Tác Cặp Đôi
-- **Phòng Chơi Đôi Siêu Dễ Dùng (`💑 Chơi Chung (Co-op)`):**
-  - Chọn vai trò nhân vật **`👧💖 Bé Uyên`** hoặc **`👦💙 Anh Huân`**.
-  - **Tạo Phòng (Host):** Tự đặt mã phòng (ví dụ: `HUAN-UYEN`), sao chép mã hoặc **Sao Chép Link Mời Trực Tiếp** (`?room=HUAN-UYEN`) để người yêu bấm vào là tự động kết nối ngay!
-  - **Đồng Bộ Thời Gian Thực 100%:** Đặt/đập khối, dựng nhà mẫu, đổi thời tiết, bật hộp nhạc, bắn pháo hoa, khắc biển gỗ 3D, chat bong bóng và biểu cảm đều đồng bộ tức thì kèm hiển thị Ping (`🟢 Đang kết nối cùng người ấy`).
-- **Avatar 3D Chibi Đáng Yêu & Cộng Hưởng Tình Yêu:**
-  - Hiển thị mô hình Voxel Chibi 3D của người ấy với bảng tên nổi trên đầu, chuyển động chân tay mượt mà 60 FPS (khi chơi 1 mình, Avatar người yêu sẽ tự động đi dạo bên cạnh và trò chuyện cùng bạn!).
-  - **Cộng Hưởng Tình Yêu (`< 4 blocks`):** Khi Huân và Uyên đứng gần nhau, vòng hào quang trái tim dưới chân sẽ phát sáng và tự động cộng thêm điểm **`+💖`** định kỳ.
-  - **Dịch Chuyển Tức Thời (`📍 Bay Tới Người Ấy`):** Bay ngay về sát cạnh người yêu kèm la bàn chỉ hướng và vị trí trên Minimap.
-  - **Hành Động Cặp Đôi (`Phím T, V, K`) & Chat Bong Bóng (`Enter`):** Thả mưa tim (`T`), nhảy múa vui nhộn (`V`), tặng hoa hồng đỏ 3D (`K`), và chat hiện bong bóng thoại ngay trên đầu nhân vật.
-  - **Biển Gỗ Lưu Bút 3D (`Phím 8` - `🪧 Biển Gỗ Lời Nhắn`):** Đặt biển gỗ ở bất kỳ đâu và viết lời nhắn kỷ niệm hiển thị nổi 3D trong thế giới.
-  - **Chụp Ảnh Selfie Đôi (`🤳 Selfie Đôi` / `Phím P`):** Tự động chuyển góc máy 3rd-person chụp cả 2 nhân vật Huân & Uyên đứng cạnh nhau trong khung ảnh Polaroid kỷ niệm.
-
-### 1. 🗺️ Hai Bản Đồ Thế Giới Rộng Lớn (Diện Tích Gấp 4 Lần — `300 x 300` Blocks)
-Người chơi có thể chuyển đổi mượt mà giữa 2 thế giới ngay trên thanh công cụ hoặc trong Bản Đồ (`Phím M`):
-
-- **🏝️ Map 1: Quần Đảo Livik 4 Mùa (`300 x 300` Blocks):**
-  1. 🏔️ *Đỉnh Tuyết & Suối Nước Nóng:* Dãy núi tuyết phân tầng hùng vĩ, hồ nước nóng bốc hơi ấm áp viền đá cuội và đèn lồng.
-  2. 🌸 *Thung Lũng Hoa & Cối Xay Gió:* Rừng anh đào rực rỡ và 2 cối xay gió khổng lồ tự quay cánh quạt.
-  3. 🌊 *Thác Nước Pha Lê & Hồ Trái Tim:* Thác nước đổ xuống hồ pha lê trung tâm, cầu vòm gỗ và vọng lâu tình yêu.
-  4. 🍁 *Trang Trại Mùa Thu & Vườn Bí Ngô:* Đồi lá phong đỏ cam, 2 nhà kho gỗ đỏ ấm áp, ruộng lúa mì và bí ngô.
-  5. 🏖️ *Vịnh Nắng Hạ & Bến Cảng:* Bãi cát vàng ven biển, bến cảng gỗ vươn dài ra biển cùng Chú Vịt Vàng khổng lồ.
-  6. 🏰 *Lâu Đài Mây Trên Không (`Y = 22`):* Hòn đảo mây hồng bồng bềnh với đài kỷ niệm tình yêu Huân & Uyên.
-
-- **⛏️ Map 2: Lục Địa Minecraft Cổ Điển (`300 x 300` Blocks):**
-  1. 🏡 *Làng Dân Làng Bình Nguyên (Village):* Ngôi làng Minecraft với những căn nhà gỗ sồi ấm cúng, đường đá cuội và ruộng lúa.
-  2. ⛲ *Quảng Trường Giếng Làng Trung Tâm:* Giếng nước đá cổ điển và cột đèn Trái Tim.
-  3. 🌲 *Đỉnh Núi Taiga & Rừng Thông Tuyết:* Dãy núi đá Taiga phủ tuyết trắng và thung lũng thông cổ điển.
-  4. 💎 *Hẻm Núi Mỏ Kim Cương (Diamond Ravine):* Khu mỏ lộ thiên sâu thẳm chứa đầy quặng Pha Lê Kim Cương lấp lánh.
-  5. 🏜️ *Kim Tự Tháp Sa Mạc & Ốc Đảo:* Kim tự tháp bậc thang bằng đá cát vàng ẩn giấu kho báu bí mật của Huân.
-  6. 🏰 *Pháo Đài Bầu Trời Minecraft (`Y = 22`):* Đảo bay cổ điển phía trên ngôi làng với Đài Kỷ Niệm Tình Yêu.
-
----
-
-### 2. ⚡ Hiệu Năng Vượt Trội (Locked 60 FPS Trên Laptop Yếu)
-- **Zero-Lag Surface Architecture:** Chỉ sinh lớp vỏ bề mặt có thể nhìn thấy, giữ số instance ổn định trong ngưỡng an toàn (~80.000 khối).
-- **Cập nhật tức thì (Incremental Instanced Updates):** Đặt hoặc phá khối tính toán trong `< 0.5ms`, không render lại cả bản đồ.
-- **Sương mù trong trẻo:** `THREE.Fog(0xdff9fb, 110, 340)` không bị lóa trắng, nhìn xa bao quát toàn bộ chân trời.
-
----
-
-### 3. 📜 Hệ Thống 200 Nhiệm Vụ Mở Khóa Cuốn Chiếu (100 NV / Map)
-- Mỗi bản đồ có **100 nhiệm vụ** chia làm **10 Chương (10 NV / Chương)**.
-- **Mở khóa từng đợt 10 nhiệm vụ:** Chỉ hiển thị 10 nhiệm vụ của chương hiện tại để không bị rối mắt. Hoàn thành trọn vẹn 10 nhiệm vụ sẽ tự động mở khóa chương tiếp theo kèm pháo hoa chúc mừng!
-- Có nút **"Nhận Quà Ngay 🎁"** để Uyên có thể mở khóa quà và thư tình bất cứ lúc nào.
-
----
-
-### 4. 🎟️ Kho Phiếu Đặc Quyền Tình Yêu Của Bé Uyên
-Mỗi nhiệm vụ hoàn thành trao tặng Tim `💖`, Thư Tình của Huân và phiếu thưởng tích lũy vào **Kho Quà Yêu**:
-- 👐💖 **Chúc mừng Uyên được "bóp bóp"** (Đặc quyền VIP xuất hiện thường xuyên và ở các mốc chương!).
-- 💋 **Phiếu Hôn Ngọt Ngào:** Chúc mừng Uyên nhận được 10 cái hôn má/môi từ anh Huân.
-- 🫂 **Phiếu Ôm Ấm Áp:** Một cái ôm thật chặt từ phía sau bất cứ khi nào Uyên muốn.
-- 💌 **Lời Chúc & Thư Tình:** Những lời nhắn gửi ngọt ngào của Huân.
-- Uyên có thể bấm **"Đổi Quà Với Huân 💖"** trên giao diện để yêu cầu anh Huân thực hiện ngay ngoài đời!
-
----
-
-### 5. 👁️ Giao Diện Điện Ảnh Tối Ưu Tầm Nhìn & Dễ Điều Khiển
-- **Ngăn kéo tiện ích (`⚙️ Tiện Ích ▾`):** Thu gọn các nút phụ để màn hình thoáng đãng.
-- **Chế độ Toàn Màn Hình Điện Ảnh (`👁️` hoặc `Phím Tab`):** Ẩn thanh công cụ để ngắm trọn vẹn 100% khung cảnh 3D.
-- **Nút Hướng Dẫn Chi Tiết (`❓ Hướng Dẫn`):** Giúp Uyên nắm bắt mọi tính năng trong 30 giây.
-- **Nút cảm ứng trên màn hình:** Đặt, đập khối và nhảy dễ dàng trên laptop cảm ứng, iPad và điện thoại.
-
----
-
-## 🕹️ BẢNG PHÍM TẮT
-
-| Phím | Tác Dụng |
-| :---: | :--- |
-| **`W, A, S, D`** | Di chuyển (Tự động leo bậc 1 khối) |
-| **Giữ `Shift`** | Chạy nhanh siêu tốc (1.8x Speed) |
-| **`Chuột Phải` / `E`** | Đặt khối / Mở rương quà / Bắn pháo hoa |
-| **`Chuột Trái` / `Q`** | Đập phá khối |
-| **`Tab`** | **Bật/Tắt Chế Độ Điện Ảnh (Ẩn toàn bộ nút để ngắm cảnh)** |
-| **`F` / Đúp `Space`** | Bay tự do trên không (Fly Mode) |
-| **`M`** | Mở Bản Đồ & Dịch chuyển tức thời đến 6 Địa Danh |
-| **`N`** | Mở Bảng 100 Nhiệm Vụ & Kho Thư Tình |
-| **`C`** | Xưởng Chế Tạo & Đổi Quà VIP |
-| **`G`** | Dựng Công Trình Mẫu 1-Chạm (Nhà gỗ, Lều tuyết, Cổng tim...) |
-| **`B` / `I`** | Mở Kho 36 Khối Xây Dựng |
-| **`P`** | Dắt Thú Cưng (Thỏ, Corgi, Cáo, Penguin) đi dạo |
-| **`H`** | Bay về ngay Hồ Trái Tim / Giếng Làng Trung Tâm |
-| **`Z`** | Hoàn tác (Undo) thao tác vừa đặt/phá |
-| **`1` – `9`** | Chọn nhanh khối trên thanh Hotbar |
-
----
-
-## 🚀 HƯỚNG DẪN DEPLOY LÊN VERCEL (1-CLICK)
-
-Dự án đã được cấu hình sẵn chuẩn tĩnh 100% (không cần build, không phụ thuộc nặng):
-
-### Cách 1: Deploy qua GitHub (Khuyên dùng - Tự động cập nhật)
-1. Repository đã được đẩy lên GitHub: `https://github.com/Winter101006/Game_micute`
-2. Truy cập [vercel.com](https://vercel.com) và đăng nhập bằng tài khoản GitHub.
-3. Bấm **Add New...** -> **Project**.
-4. Chọn repository **`Game_micute`** từ danh sách.
-5. Phần **Framework Preset**: Chọn **Other**.
-6. Bấm **Deploy**. Sau 10 giây, Vercel sẽ cấp link web (ví dụ: `https://game-micute.vercel.app`) để gửi ngay cho Bé Uyên!
-
-### Cách 2: Deploy bằng Vercel CLI (Nếu có cài đặt `vercel`)
-```bash
-vercel --prod
+```text
+📁 D:/Duan/Game_micute/
+├── 📁 .git/                # Cơ sở dữ liệu lịch sử Git & kết nối GitHub (huan2022004/Game-cua-uyen)
+├── 📄 .gitignore           # Danh sách file rác hệ thống không đẩy lên GitHub (.DS_Store, Thumbs.db, *.log...)
+├── 🎮 index.html           # [FILE CHÍNH ~9.250 DÒNG] Chứa toàn bộ Giao diện, Engine 3D Three.js, Âm thanh, 3 Map & Firebase Co-op
+├── 📘 huong-dan.html       # [WEB HƯỚNG DẪN TƯƠNG TÁC] Trang web giải thích từng file, 12 phân hệ code & 7 công đoạn vận hành
+├── 🚀 kawaiicraft.html     # [CỔNG KHỞI ĐỘNG NHANH] Trang Portal điều hướng vào thẳng Game (index.html) hoặc Web Hướng Dẫn
+├── 📖 README.md            # [TÀI LIỆU MẶT TIỀN GITHUB] Hướng dẫn toàn diện dự án ở phiên bản V5.3
+├── 📝 FEATURES_NOTE.md     # [NHẬT KÝ KỸ THUẬT] Ghi chép chi tiết các nâng cấp & bản vá từ V5.0 → V5.3
+└── ⚡ vercel.json          # [CẤU HÌNH SERVER VERCEL] Thiết lập Clean URLs, Bảo mật Header & chống lưu Cache cũ
 ```
 
 ---
 
-*Thương tặng Bé Uyên — Chúc em luôn vui vẻ, hạnh phúc và có những phút giây thư giãn tuyệt vời nhất bên thế giới nhỏ của chúng mình! 🌸💖✨*
+## 🌟 2. Các Điểm Nổi Bật Ở Phiên Bản V5.3
+
+### 🗺️ A. 3 Bản Đồ `320 × 320` Khác Biệt Hoàn Toàn & Bộ Trò Chơi Đặc Sản Riêng
+Khi chuyển Map bằng **Phím `M`** hoặc bấm vào **Radar góc trên phải**, hàm `resetWorldLandmarkGroups()` sẽ dọn sạch toàn bộ công trình của bản đồ cũ và kiến tạo thế giới mới hoàn toàn:
+
+| Bản Đồ (`320×320`) | Địa Hình & Công Trình Đặc Trưng | Các Trò Chơi Đặc Sản (Mở bằng Phím `U`) |
+| :--- | :--- | :--- |
+| **1. 🌸 Đảo Livik 4 Mùa** (`livik_island`) | 4 vùng khí hậu (Xuân Anh Đào, Biển Hè, Rừng Thu, Đỉnh Tuyết), Vòng Quay Mặt Trời siêu cao `Y=56` (cabin mở 360° không bị che), Lâu Đài Mây. | • **⚔️ Đấu Trường Thanh Máu 100 HP**<br>• **🎡 Vòng Quay Mặt Trời Y=56**<br>• **🏃‍♂️ Đuổi Bắt Tình Yêu 60s**<br>• **🧩 Đua Mê Cung Trái Tim**<br>• **🎠 Xích Đu Đôi**, **🕺 Sàn Nhảy Disco**, **🌈 Parkour Cầu Vồng** |
+| **2. ❄️ Đảo Tuyết Vikendi** (`vikendi_snow`) | **Không có vòng quay Livik.** Toàn đảo phủ băng tuyết pha lê, Hồ Băng Trung Tâm, Lâu Đài Băng Hoàng Gia, Làng Lều Tuyết Igloo & Đường Đua Trượt Tuyết. | • **🛷 Đua Trượt Băng Cặp Đôi (`vikendiRace`)**: Lướt băng siêu tốc qua 5 Cờ Tuyết.<br>• **⛄ Đại Chiến Cầu Tuyết 100 HP (`hpBattle`)**<br>• **⭕ Cờ Caro Băng Giá 3×3 (`tictactoe`)** |
+| **3. 🌴 Rừng Nhiệt Đới Sanhok** (`sanhok_jungle`) | **Không có vòng quay Livik.** Rừng nhiệt đới xanh thẫm chia cắt bởi sông Ngọc Lục Bảo, Đền Tháp Cổ Maya (`Bootcamp`), Bến Thuyền Paradise & Nhà Sàn. | • **🔥 Nhảy Bục Né Nước Nóng (`sanhokZone`)**: Nhảy qua 16 bục đá cổ nhặt Ngọc Rừng Xanh.<br>• **💓 Thi Bấm Tim Tốc Độ 10s (`heartTap`)**<br>• **🏹 Đấu Trường Rừng Xanh 100 HP (`hpBattle`)** |
+
+### 🛡️ B. Hệ Thống Thanh Thông Báo Chống Đè Nhau (`Zero-Overlap HUD Stack`)
+- Toàn bộ các bảng thông báo ở giữa màn hình (Thông báo hoàn thành cột mốc, Thanh điểm Minigame, Thanh máu đối kháng 100 HP, Bảng mời đổi Map cùng người yêu) đều được đặt chung trong container dọc `#hud-center-alerts-stack` (`flex-col gap-1.5`).
+- Khi nhiều bảng cùng xuất hiện, chúng **tự động xếp chồng xuống dưới gọn gàng**, tuyệt đối không bao giờ đè chữ lên nhau.
+
+### 🎵 C. Hộp Nhạc Lo-Fi Dịu Êm & Mặc Định Tắt Khi Mới Vào Game
+- Khi mới mở game, âm nhạc **mặc định ở trạng thái TẮT (`🔇 Tắt Nhạc`)** để không gây giật mình.
+- Khi người chơi bấm nút bật nhạc trên thanh công cụ, `KawaiiAudioEngine` tạo giai điệu Hộp Nhạc Lo-Fi (`Fmaj7 – Cmaj7 – Dm7 – G7`) bằng sóng âm `triangle + sine` lọc qua `BiquadFilterNode (950Hz)` vô cùng êm dịu.
+
+### 💑 D. Chơi Chung 2 Người Qua Firebase Realtime Database (`Zero Fake NPC`)
+- **Không có NPC giả:** Khi chơi 1 mình, trên bản đồ hoàn toàn không có nhân vật thứ 2 đứng đơ. Chỉ khi người yêu thực sự kết nối vào nhánh `/rooms/{ROOM_ID}/players`, mô hình 3D của đối phương mới xuất hiện.
+- **Danh Sách Phòng Đang Mở (1 Chạm Vào Luôn):** Khi Anh Huân tạo phòng, tên phòng tự động hiện lên mục **📡 Danh Sách Phòng Đang Mở** (`/publicRooms`) để Bé Uyên bấm 1 chạm vào thẳng phòng mà không cần gõ mật khẩu.
+- **Đồng Bộ Đổi Map Chung (`Phím Y`):** Khi 1 người chuyển sang bản đồ khác, người kia nhận được thông báo mời và chỉ cần bấm phím `Y` để bay sang cùng bản đồ ngay lập tức.
+
+---
+
+## ⚙️ 3. Tóm Tắt 7 Công Đoạn Vận Hành Của Hệ Thống
+
+1. **Công đoạn 1 — Khởi tạo & Vẽ vật liệu tự động:** Nạp `Three.js r128`, khởi tạo `KawaiiAudioEngine` ở chế độ tắt nhạc mặc định, và dùng `<canvas>` vẽ 36 chất liệu khối Voxel trong RAM.
+2. **Công đoạn 2 — Sinh bản đồ `320×320` & Tối ưu `InstancedMesh`:** Dọn sạch công trình cũ bằng `resetWorldLandmarkGroups()`, sinh địa hình mới và dùng `isBlockExposed()` ẩn các khối bị che khuất để giữ 60 FPS.
+3. **Công đoạn 3 — Vật lý 60 FPS & Điều khiển bay mượt:** Xử lý va chạm AABB, lọc bỏ sự kiện lặp phím (`e.repeat`) để giữ phím `Space` bay vút lên cao không bao giờ bị giật hay rơi xuống.
+4. **Công đoạn 4 — Ghép đôi Firebase & Danh sách phòng `publicRooms`:** Đồng bộ vị trí `x, y, z, yaw, pitch` ở tần số 15Hz kết hợp nội suy `Lerp` 60 FPS, tự động xóa nhân vật khi đóng tab (`onDisconnect().remove()`).
+5. **Công đoạn 5 — Vận hành 11 Minigame & Đấu Trường 100 HP:** Đồng bộ điểm số, thanh máu 100 HP, đường đạn cầu tuyết/pháo tim, bánh kem hồi `+20 HP`, cờ Caro 3×3 và lời mời đổi Map qua nhánh `/rooms/{ROOM_ID}/minigames`.
+6. **Công đoạn 6 — Lưu trữ vi sai (`Delta Compression`):** Tự động lưu các khối xây thêm (`added`), khối đập đi (`removed`), 5 cột mốc và Kho Phiếu Quà vào 3 Slot `localStorage` hoặc xuất ra file `.kawaii`.
+7. **Công đoạn 7 — Triển khai GitHub & Vercel Cloud:** Đẩy code lên nhánh `main` của GitHub (`git push origin main`), máy chủ Vercel đọc `vercel.json` và tự động xuất bản phiên bản mới sau ~15 giây.
+
+> 💡 **Xem bản giải thích trực quan đầy đủ nhất:** Hãy mở file **[huong-dan.html](huong-dan.html)** trên trình duyệt (hoặc bấm nút **`📘 Web Giải Thích File`** ngay trong game)!
+
+---
+
+## 🎮 4. Bảng Phím Tắt Điều Khiển Nhanh
+
+| Phím / Thao tác | Chức năng |
+| :--- | :--- |
+| **`W, A, S, D`** | Di chuyển nhân vật |
+| **`Space`** (Bấm 1 lần) / Nút **`⬆️ Nhảy`** | Nhảy lên (hoặc giữ chặt `Space` để bay lên cao khi đang ở chế độ Bay) |
+| **`Shift`** / Nút **`⚡ Chạy Nhanh`** | Tăng tốc chạy nhanh |
+| **`Phím F`** (hoặc nháy đúp `Space`) | Bật / Tắt chế độ Bay tự do |
+| **`Phím E`** / Chuột phải | Đặt khối xây dựng / Ngồi lên Vòng Quay hoặc Xích Đu |
+| **`Chuột trái` / `Phím Q` / `Phím J`** | Đập khối / Bắn cầu tuyết hoặc pháo tim trong Đấu Trường 100 HP |
+| **`Phím K`** | Bật Khiên Trái Tim giảm 50% sát thương (trong Đấu Trường) / Tặng Hoa |
+| **`Phím U`** | Mở Trung Tâm Khu Vui Chơi & 11 Minigame theo từng Map |
+| **`Phím M`** | Mở Bản Đồ Hướng Dẫn `320×320`, Dịch chuyển nhanh & Đổi giữa 3 Map |
+| **`Phím G`** | Bay tức thì tới cạnh người yêu (khi đang chơi Co-op) |
+| **`Phím Y`** | Đồng ý đi theo người yêu sang Bản đồ mới |
+| **`Phím T` / `Phím V` / `Phím P`** | Thả mưa tim 💖 / Múa vẫy tay 💃 / Chụp ảnh Selfie Đôi Polaroid 📸 |
+| **`Phím Tab`** | Ẩn / Hiện giao diện HUD để ngắm cảnh toàn màn hình |

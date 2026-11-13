@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>KawaiiCraft V5.2 — Livik, Vikendi Tuyết & Sanhok 3 Đảo Dành Tặng Bé Uyên</title>
+    <title>KawaiiCraft V5.3 — Livik, Vikendi Tuyết & Sanhok 3 Đảo Dành Tặng Bé Uyên</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js r128 CDN -->
@@ -129,7 +129,7 @@
         <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS -->
         <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1 rounded-2xl shadow-sm">
             <span class="text-lg pulse-heart">💖</span>
-            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.2</h1>
+            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.3</h1>
             <!-- Unified Map Switcher & Guide Trigger -->
             <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-extrabold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-sm transition flex items-center gap-1 cursor-pointer">
                 <span id="world-mode-icon">🌸</span>
@@ -227,6 +227,7 @@
             <button id="btn-perf" title="Chế độ Siêu Mượt cho máy yếu" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-600 font-bold text-xs border border-emerald-200 transition"><span id="perf-icon">⚡</span> Mượt</button>
             <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-500 font-bold text-xs border border-rose-200 transition">📸</button>
             <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs border border-gray-200 transition">👁️ Ẩn HUD</button>
+            <a href="huong-dan.html" target="_blank" title="Mở Web Tài Liệu Giải Thích Từng File, Thư Mục & 7 Công Đoạn Vận Hành" class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-black text-xs transition flex items-center gap-1">📘 Web Giải Thích File</a>
             <button id="btn-help" title="Hướng dẫn sử dụng chi tiết cho Uyên" class="px-2.5 py-1.5 rounded-xl bg-pink-500 hover:bg-pink-600 text-white font-black text-xs transition">❓ Hướng Dẫn</button>
         </div>
     </div>
@@ -1481,20 +1482,20 @@
             <div class="flex items-center gap-2 mb-2">
                 <span class="text-2xl">🧸</span>
                 <div>
-                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.1 💕</h2>
-                    <p class="text-xs text-gray-500 font-semibold">3 Bản Đồ (Livik, Vikendi Tuyết, Sanhok Rừng) • Vòng Quay Y=56 • Đấu Trường 100 HP!</p>
+                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.3 💕</h2>
+                    <p class="text-xs text-gray-500 font-semibold">3 Bản Đồ Độc Bản (Livik, Vikendi Tuyết, Sanhok Rừng) • 11 Minigame • Đấu Trường 100 HP!</p>
                 </div>
             </div>
 
             <div class="space-y-1.5 text-xs md:text-sm font-medium">
                 <div class="bg-gradient-to-r from-amber-50 to-orange-50 p-2.5 rounded-xl border border-amber-300">
-                    <div class="font-extrabold text-rose-700 mb-0.5">🎪 1. Khu Vui Chơi & 8 Minigame Cặp Đôi (Phím U):</div>
-                    <p class="text-xs text-gray-600">Bấm <b class="text-amber-700">Phím U</b> để mở 8 trò đồng bộ 2 máy: Đuổi Bắt, Mê Cung, Vòng Quay Toàn Cảnh (Y=56), Xích Đu, Sàn Nhảy, Parkour, <b>⚔️ Đấu Trường Thanh Máu 100 HP</b> & <b>Đặc Sản Vikendi / Sanhok</b>!</p>
+                    <div class="font-extrabold text-rose-700 mb-0.5">🎪 1. Khu Vui Chơi Tự Đổi Theo Map & 11 Minigame Cặp Đôi (Phím U):</div>
+                    <p class="text-xs text-gray-600">Bấm <b class="text-amber-700">Phím U</b> để mở các trò chơi đặc sản theo từng Map: <b>Livik</b> (Công viên 7 trò & Vòng Quay Y=56), <b>Vikendi Tuyết</b> (Đua Trượt Băng, Ném Cầu Tuyết 100 HP, Cờ Caro 3×3), <b>Sanhok Rừng</b> (Nhảy Bục Né Nước Nóng, Bắn Tim 10s, Đấu Trường 100 HP)!</p>
                 </div>
 
                 <div class="bg-gradient-to-r from-pink-100 to-rose-100 p-2.5 rounded-xl border border-pink-200">
-                    <div class="font-extrabold text-rose-700 mb-0.5">📜 2. Đổi Bản Đồ Chung & Đài Ngắm Mây (Y=54):</div>
-                    <p class="text-xs text-gray-600">Bấm <b class="text-purple-700">Phím M</b> chọn Map (<b>Livik / Vikendi Tuyết / Sanhok Rừng</b>). Khi 1 người đổi Map, người yêu nhận bảng mời ở góc trên và bấm <kbd class="px-1 bg-white rounded border">Y</kbd> để sang cùng! Đài Ngắm Mây ở góc dưới phải giúp ngắm toàn đảo.</p>
+                    <div class="font-extrabold text-rose-700 mb-0.5">📜 2. Đổi Bản Đồ Chung, Nhạc Dịu Êm & Đài Ngắm Mây (Y=54):</div>
+                    <p class="text-xs text-gray-600">Bấm <b class="text-purple-700">Phím M</b> chọn Map. Khi 1 người đổi Map, người yêu nhận lời mời ở góc trên và bấm <kbd class="px-1 bg-white rounded border">Y</kbd> để sang cùng! Mặc định vào game nhạc sẽ <b>Tắt</b>, bấm nút <b>🔇 Tắt Nhạc</b> trên thanh trên cùng để bật tiếng đàn hộp nhạc Lo-Fi dịu êm.</p>
                 </div>
 
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
@@ -1519,9 +1520,14 @@
                 </div>
             </div>
 
-            <button id="btn-got-it" class="mt-4 w-full py-2.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-extrabold rounded-2xl shadow hover:from-pink-500 hover:to-rose-500 transition text-sm">
-                Uyên Đã Hiểu — Vào Chơi Ngay Thôi! 💖
-            </button>
+            <div class="mt-4 flex flex-col sm:flex-row gap-2">
+                <a href="huong-dan.html" target="_blank" class="flex-1 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-extrabold rounded-2xl shadow hover:opacity-95 transition text-xs md:text-sm text-center flex items-center justify-center gap-1.5">
+                    📘 Mở Web Giải Thích Cấu Trúc File & 7 Công Đoạn
+                </a>
+                <button id="btn-got-it" class="flex-1 py-2.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-extrabold rounded-2xl shadow hover:from-pink-500 hover:to-rose-500 transition text-xs md:text-sm">
+                    Uyên Đã Hiểu — Vào Chơi Ngay! 💖
+                </button>
+            </div>
         </div>
     </div>
 
@@ -4087,11 +4093,12 @@
         ];
 
         const ROMANTIC_WISHES_POOL = [
-            "Gửi Bé Uyên yêu dấu! Nhìn hai đứa mình rượt đuổi cười giòn tan trong Đấu Trường Đuổi Bắt 50/50, anh chỉ muốn ôm em thật chặt mãi thôi! 💕",
-            "Uyên giỏi quá! Vượt qua Mê Cung Tình Yêu để chạm tới Cúp Trái Tim rồi nè — dù đường đời có quanh co thế nào, anh Huân luôn ở cuối con đường đón em! 🌿🏆💖",
-            "Ngồi cạnh bên Uyên trên Cabin Vòng Quay Mặt Trời cao 28m ngắm toàn cảnh đảo Livik 320x320, thế giới đẹp nhất chính là có em ở ngay bên cạnh! 🎡✨",
-            "Bé Uyên ơi! Giữa đỉnh núi tuyết trắng buốt giá, suối nước nóng vẫn bốc khói ấm áp như tình cảm của anh dành cho em vậy: luôn nồng nàn và bền chặt! 🏔️♨️💖",
-            "Ngôi nhà em vừa xây đẹp lắm! Sau này chúng mình cũng sẽ cùng nhau xây dựng một tổ ấm thật ngọt ngào, ấm cúng và tràn ngập tiếng cười như vậy nhé! 🏡💕"
+            "Gửi Bé Uyên yêu dấu! Nhìn hai đứa mình rượt đuổi cười giòn tan trong Đấu Trường Cặp Đôi, anh chỉ muốn ôm em thật chặt mãi thôi! 💕",
+            "Uyên giỏi quá! Vượt qua Mê Cung Tình Yêu & Đường Đua Trượt Băng để chạm tới Cúp Trái Tim rồi nè — dù đường đời có quanh co thế nào, anh Huân luôn ở cuối con đường đón em! 🌿🏆💖",
+            "Ngồi cạnh bên Uyên trên Cabin Vòng Quay Mặt Trời Y=56 và Đài Ngắm Mây ngắm toàn cảnh 3 đảo 320x320, thế giới đẹp nhất chính là có em ở ngay bên cạnh! 🎡✨",
+            "Bé Uyên ơi! Dù ở Đảo Tuyết Vikendi băng giá hay Rừng Nhiệt Đới Sanhok xanh thẫm, tình cảm của anh dành cho em luôn ấm áp, nồng nàn và bền chặt! 🏔️🌴💖",
+            "Ngôi nhà em vừa xây đẹp lắm! Sau này chúng mình cũng sẽ cùng nhau xây dựng một tổ ấm thật ngọt ngào, ấm cúng và tràn ngập tiếng cười như vậy nhé! 🏡💕",
+            "Chúc công chúa nhỏ Bé Uyên của anh Huân lúc nào cũng vui vẻ, bình yên và hạnh phúc trọn vẹn trong thế giới KawaiiCraft V5.3 của hai đứa mình nhé! 💌🌸"
         ];
 
         function generate5MilestonesForMap(mapMode) {
@@ -4101,7 +4108,7 @@
                 {
                     id: 1,
                     action: 'minigame_tag',
-                    title: norm === 'vikendi' ? '⛄ Chơi Ném Tuyết Trúng Bia (30s) ở Quảng Trường Tuyết' : (norm === 'sanhok' ? '🥭 Chơi Nhặt Trái Vàng Trên Đảo Sanhok (30s)' : '🏃 Chơi Đấu Trường Đuổi Bắt hoặc Đấu Trường Thanh Máu 100 HP'),
+                    title: norm === 'vikendi' ? '⛄ Chơi Đại Chiến Cầu Tuyết 100 HP hoặc Cờ Caro 3×3 tại Vikendi' : (norm === 'sanhok' ? '💓 Chơi Bắn Tim Tốc Độ 10s hoặc Đấu Trường 100 HP tại Sanhok' : '🏃 Chơi Đấu Trường Đuổi Bắt hoặc Đấu Trường Thanh Máu 100 HP'),
                     desc: 'Mở Hub Minigame (U) để cùng thi đấu vui vẻ và tích điểm tình yêu!',
                     max: 1,
                     rewardIdx: 0
@@ -4109,15 +4116,15 @@
                 {
                     id: 2,
                     action: 'minigame_maze',
-                    title: norm === 'vikendi' ? '🛷 Đua Trượt Dốc Băng Bắc Cực xuống Hồ Băng' : (norm === 'sanhok' ? '🌉 Chạy Đua Cầu Treo qua 3 Đảo Sanhok' : '🌿 Đua Mê Cung Tình Yêu & chạm Cúp Trái Tim'),
-                    desc: norm === 'vikendi' ? 'Trượt từ đỉnh dốc Z:-94 qua 5 Cổng Cực Quang tới Hồ Băng!' : (norm === 'sanhok' ? 'Xuất phát từ Đảo Tây (-82,0) vượt Cầu Treo qua Đảo Đông (+72,0)!' : 'Chạy từ Cổng Vào (-80, 0) tới Cúp Vàng Vô Địch (-58, 0)!'),
+                    title: norm === 'vikendi' ? '🛷 Đua Trượt Băng Cặp Đôi qua 5 Cờ Tuyết về Lâu Đài Băng' : (norm === 'sanhok' ? '🔥 Chơi Nhảy Bục Đá Né Nước Nóng thu thập Ngọc Rừng Xanh' : '🌿 Đua Mê Cung Tình Yêu & chạm Cúp Trái Tim'),
+                    desc: norm === 'vikendi' ? 'Xuất phát tại Z:-42 lướt siêu tốc qua 5 Cờ Tuyết tới Lâu Đài Băng!' : (norm === 'sanhok' ? 'Nhảy qua các bục đá cổ Maya thu thập đủ 5 Ngọc Rừng Xanh!' : 'Chạy từ Cổng Vào (-80, 0) tới Cúp Vàng Vô Địch (-58, 0)!'),
                     max: 1,
                     rewardIdx: 1
                 },
                 {
                     id: 3,
                     action: 'ride_ferris',
-                    title: norm === 'livik' ? '🎡 Ngồi chung Cabin Vòng Quay Siêu Cao (Y=56) ngắm toàn cảnh' : `☁️ Lên Đài Quan Sát Trên Mây tại ${mapLabel}`,
+                    title: norm === 'livik' ? '🎡 Ngồi chung Cabin Vòng Quay Siêu Cao (Y=56) ngắm toàn cảnh' : `☁️ Lên Đài Quan Sát Trên Mây (Y=54) tại ${mapLabel}`,
                     desc: norm === 'livik' ? 'Tới chân Vòng Quay (X:32 Z:-12) bấm phím E — cabin thoáng 360° ngắm toàn đảo!' : 'Bấm nút View Trên Mây ở góc phải để chiêm ngưỡng toàn bộ bản đồ từ trên cao!',
                     max: 1,
                     rewardIdx: 2
@@ -4125,7 +4132,7 @@
                 {
                     id: 4,
                     action: 'visit_hotspring',
-                    title: norm === 'vikendi' ? '🏰 Chinh phục Pháo Đài Tuyết Đỉnh Bắc Vikendi' : (norm === 'sanhok' ? '⛩️ Chinh phục Đảo Đông Đền Cổ & Thác Nước Sanhok' : '🏔️ Chinh phục Đỉnh Tuyết Livik & Suối Nước Nóng'),
+                    title: norm === 'vikendi' ? '🏰 Khám phá Lâu Đài Băng Hoàng Gia & Làng Lều Tuyết Igloo' : (norm === 'sanhok' ? '🏛️ Khám phá Đền Tháp Cổ Maya Bootcamp & Bến Thuyền Sanhok' : '🏔️ Chinh phục Đỉnh Tuyết Livik & Suối Nước Nóng'),
                     desc: `Khám phá địa danh nổi tiếng nhất của ${mapLabel}!`,
                     max: 1,
                     rewardIdx: 3
