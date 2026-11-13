@@ -5308,7 +5308,7 @@
 
         function resolveInitialEmbedIfNeeded() {
             if (!collidesPlayerAABB(player.position.x, player.position.y, player.position.z)) return;
-            for (let up = 0.5; up <= 3.0; up += 0.5) {
+            for (let up = 0.25; up <= 6.0; up += 0.25) {
                 if (!collidesPlayerAABB(player.position.x, player.position.y + up, player.position.z)) {
                     player.position.y += up;
                     return;
