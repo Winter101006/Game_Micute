@@ -1,3 +1,20 @@
+# KawaiiCraft V5.5 — Đồ Họa 4 Mức Tăng Dần (Mức 3 = V5.3, Mức 4 = Cực Phẩm), Texture 64×64 Nét Căng & Va Chạm AABB Chuẩn
+
+## 1. Sửa Triệt Để Lỗi Đi Xuyên Khối (`collidesPlayerAABB` & Sub-Stepping)
+- Thay thế kiểm tra 1 điểm đơn giản bằng **Hộp Va Chạm 3D AABB (`PLAYER_RADIUS = 0.28`, `PLAYER_HEAD_CLEAR = 0.16`, `player.height = 1.6`)** kiểm tra đồng đều từ bàn chân tới đỉnh đầu.
+- Áp dụng va chạm chuẩn trên cả **Đi Bộ**, **Chạy Nhanh / Trượt Băng (`subSteps <= 0.16m`)**, **Nhảy Đụng Trần (`ceilBlockBottom`)** và **Bay Tự Do (`player.isFlying`)** — không còn đi hoặc bay xuyên tường, nhà, cây hay cầu đá!
+- Tự động tách trục X/Z mượt dọc tường (`wall sliding`), hỗ trợ leo bậc cao 1 khối hợp lệ khi thoáng đầu, bơi nhẹ nhàng qua Nước (`id: 7`) và lướt qua Hoa/Lúa nhỏ (`id: 30, 33`). Chặn đặt khối mới đè vào thân người chơi (`doesBlockOverlapPlayer`).
+
+## 2. Nâng Cấp Đồ Họa Sắc Nét & Chia 4 Mức Tăng Dần (`GRAPHICS_LEVELS 1 → 4`)
+- **Texture 64×64 sắc nét & Khử răng cưa (`antialias: true`):** Vẽ lại toàn bộ texture thủ công `64×64` có viền bevel 3 mặt rõ rệt, họa tiết gạch/cỏ/gỗ/nước/pha lê chi tiết kết hợp lọc `NearestFilter + anisotropy` và tầm nhìn `camera.far = 1000`.
+- **4 Mức Đồ Họa chọn trực tiếp trong bảng `🎨 Đồ họa` (`#perf-modal`), tự lưu vào `localStorage`:**
+  1. **Mức 1 — Siêu Nhẹ (`0.9x`, Fog `215m`, Lambert):** Tắt hạt, sinh vật, bóng, mây & cầu vồng để đạt FPS cao nhất trên máy yếu.
+  2. **Mức 2 — Nhẹ Mượt (`1.0x`, Fog `300m`, Lambert):** Bật đầy đủ sinh vật, cầu vồng và hạt môi trường tiết kiệm (`max 16`).
+  3. **Mức 3 — Chuẩn Đẹp V5.3 ⭐ (Mặc Định — `1.25x`, Fog `380m`, PBR `MeshStandardMaterial` `roughness 0.50`):** Giữ đúng chất đồ họa sắc nét, sáng mịn và thông thoáng nguyên bản của bản V5.3.
+  4. **Mức 4 — Cực Phẩm Sáng Tạo ✨ (`2.0x Ultra HD`, Fog `560m`, `ACESFilmicToneMapping`):** Kích hoạt **Bóng đổ nắng thật (`PCFSoftShadowMap` bám theo người chơi)**, **Tầng Mây Kẹo Bông 3D bay trôi + Đĩa Mặt Trời / Vầng Trăng & Sao đêm**, **Ánh sáng vòm trời 3 chiều (`HemisphereLight`)**, **Pha lê / Nước / Băng bóng phản chiếu & nước gợn sáng**, cùng hiệu ứng hạt dày gấp đôi.
+
+---
+
 # KawaiiCraft V5.4 — Tối Ưu Siêu Nhẹ 60 FPS, Bảng Độ Nặng & HUD Góc Gọn
 
 ## 1. Dời Toàn Bộ Thanh Trạng Thái Vào Góc Trái Gọn Gàng (`#hud-center-alerts-stack`)

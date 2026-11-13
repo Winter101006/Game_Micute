@@ -937,16 +937,17 @@ this.masterFilter.frequency.setValueAtTime(950, this.ctx.currentTime);</code></p
 };</code></pre>
                 </div>
 
-                <!-- V5.4 Performance & Corner HUD Summary -->
-                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-teal-300 bg-gradient-to-br from-teal-50/70 to-emerald-50/70 space-y-2 md:col-span-2">
+                <!-- V5.5 Performance, Graphics Tiers & AABB Collision Summary -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-teal-300 bg-gradient-to-br from-teal-50/70 to-purple-50/70 space-y-2 md:col-span-2">
                     <div class="flex flex-wrap items-center justify-between gap-2">
-                        <h3 class="font-extrabold text-sm text-teal-800">📊 5. Nâng Cấp Mới Nhất (V5.4): HUD Góc Gọn, Chống Lag/Khựng & Bảng Kiểm Soát Độ Nặng</h3>
-                        <span class="text-[11px] font-mono bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-lg font-bold">Mở ngay trong game: Nút "📊 Độ nặng"</span>
+                        <h3 class="font-extrabold text-sm text-teal-800">🎨 5. Nâng Cấp V5.4 → V5.5: Đồ Họa 4 Mức Tăng Dần (M3 = V5.3, M4 = Cực Phẩm), Khối Nét 64×64 & Va Chạm AABB Chuẩn</h3>
+                        <span class="text-[11px] font-mono bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-lg font-bold">Mở ngay: Nút "🎨 Đồ họa" góc trên</span>
                     </div>
                     <ul class="text-xs text-gray-700 space-y-1 list-disc pl-4 leading-relaxed">
-                        <li><b>Thu gọn cụm thông báo vào góc trên trái:</b> Toàn bộ `#minigame-hud-banner`, `#battle-hp-hud`, `#toast` và bảng mời đổi map được thu nhỏ bề rộng (`~245px`) và gắn gọn ở góc trên bên trái (`top-[78px] left-2.5`), chừa 100% tầm nhìn chính giữa màn hình.</li>
-                        <li><b>Xóa độ trễ khi chọn Minigame & di chuyển:</b> Gỡ bỏ `backdrop-filter: blur` trên các modal & HUD, giảm tải render 3D còn 1/4 khi mở bảng, nâng cấp shader khối sang `MeshLambertMaterial`, bật Delta-Time + Particle Pool + chống GC khi chạy, và bỏ ghi `localStorage` thừa khi chưa sửa khối (`isWorldSaveDirty`).</li>
-                        <li><b>Bảng Bắt Bệnh Độ Nặng (`#perf-modal`):</b> Bấm nút `60 FPS 📊 Độ nặng` trên góc trên hoặc `⚙️ Thêm ▾ -> 📊 Độ Nặng / Mượt` để theo dõi trực tiếp % tải của 5 phân hệ (Địa hình Voxel, GPU/Fog, Sinh vật 3D, Hạt bay, HUD) và bật chế độ <b>🚀 Siêu Nhẹ / ⚖️ Cân Bằng / ✨ Nét Cao</b>.</li>
+                        <li><b>Chặn đi xuyên hình khối (`collidesPlayerAABB` 3D):</b> Bổ sung hộp va chạm thân người (`PLAYER_RADIUS = 0.28`), chia nhỏ bước `subSteps` khi chạy/trượt băng, chặn đụng trần khi nhảy và va chạm cả khi Bay (`player.isFlying`) để không bao giờ xuyên tường hay nhà!</li>
+                        <li><b>Hình khối sắc nét 64×64 + Khử răng cưa (`antialias: true`):</b> Bật lại khử răng cưa, tăng độ phân giải texture từ `32×32` lên `64×64` có vát viền 3D + `anisotropy` cho từng thớ gỗ, chỉ gạch, sóng nước, băng pha lê.</li>
+                        <li><b>4 Mức Đồ Họa Tăng Dần (`applyGraphicsLevel(1..4)`):</b> <b>Mức 1 Siêu Nhẹ</b> (`0.9x Lambert`) → <b>Mức 2 Nhẹ Mượt</b> (`1.0x`) → <b>Mức 3 Chuẩn V5.3</b> (`1.25x PBR • Fog 380m` mặc định) → <b>Mức 4 Cực Phẩm</b> (`2.0x Ultra HD • Bóng đổ nắng thật • Mây 3D trôi • Mặt Trời/Trăng • Pha lê & Nước lấp lánh`)!</li>
+                        <li><b>Giữ nguyên tối ưu V5.4:</b> HUD thông báo xếp gọn góc trên bên trái (`top-[78px] left-2.5`), xóa GPU Blur khỏi modal, giảm render nền khi mở bảng, Delta-Time, Particle Pool & Dirty Auto-Save 10s.</li>
                     </ul>
                 </div>
             </div>

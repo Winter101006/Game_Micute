@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>KawaiiCraft V5.4 — Siêu Mượt 60 FPS • Livik, Vikendi Tuyết & Sanhok Dành Tặng Bé Uyên</title>
+    <title>KawaiiCraft V5.5 — Đồ Họa 4 Mức Sắc Nét • Va Chạm Chuẩn • Livik, Vikendi & Sanhok</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js r128 CDN -->
@@ -127,7 +127,7 @@
         <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS/Weight -->
         <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1 rounded-2xl shadow-sm">
             <span class="text-lg">💖</span>
-            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.4</h1>
+            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.5</h1>
             <!-- Unified Map Switcher & Guide Trigger -->
             <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-extrabold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-sm transition flex items-center gap-1 cursor-pointer">
                 <span id="world-mode-icon">🌸</span>
@@ -146,9 +146,10 @@
             <span id="active-slot-badge" class="bg-pink-50 text-pink-600 font-bold text-[10px] px-2 py-0.5 rounded-full border border-pink-200 hidden xl:inline">
                 Slot 1
             </span>
-            <button onclick="togglePerfModal()" title="Bấm để xem Độ Nặng từng phần & Bật Chế Độ Siêu Nhẹ" class="text-emerald-700 font-black text-[10px] bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1 transition cursor-pointer">
+            <button onclick="togglePerfModal()" title="Bấm để chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="text-emerald-700 font-black text-[10px] bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1 transition cursor-pointer">
                 <span id="fps-counter">60 FPS</span>
-                <span class="text-[9px] text-sky-600 font-extrabold">📊 Độ nặng</span>
+                <span id="hud-gfx-badge" class="text-[9px] bg-purple-100 text-purple-700 px-1.5 py-0.2 rounded-full font-black">M3 V5.3</span>
+                <span class="text-[9px] text-sky-600 font-extrabold hidden sm:inline">🎨 Đồ họa</span>
             </button>
             <span id="save-status-indicator" class="text-pink-400 font-bold text-[10px] hidden lg:flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> Lưu
@@ -225,7 +226,7 @@
             </button>
             <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-50 text-sky-600 font-bold text-xs border border-sky-200 transition">🌈</button>
             <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-blue-600 font-bold text-xs border border-blue-200 transition">💾 Lưu</button>
-            <button id="btn-perf" onclick="togglePerfModal()" title="Xem Độ Nặng từng phần & Bật Chế Độ Siêu Nhẹ" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold text-xs border border-emerald-300 transition"><span id="perf-icon">📊</span> Độ Nặng / Mượt</button>
+            <button id="btn-perf" onclick="togglePerfModal()" title="Chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold text-xs border border-emerald-300 transition"><span id="perf-icon">🎨</span> Đồ Họa 4 Mức</button>
             <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-500 font-bold text-xs border border-rose-200 transition">📸</button>
             <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs border border-gray-200 transition">👁️ Ẩn HUD</button>
             <a href="huong-dan.html" target="_blank" title="Mở Web Tài Liệu Giải Thích Từng File, Thư Mục & 7 Công Đoạn Vận Hành" class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-black text-xs transition flex items-center gap-1">📘 Web Giải Thích File</a>
@@ -266,7 +267,7 @@
         <!-- 1. Compact Corner Toast Banner -->
         <div id="toast" class="hidden cozy-glass px-3 py-1 rounded-2xl border border-pink-400 bg-white/95 text-[11px] font-black text-rose-600 shadow-lg opacity-0 pointer-events-none flex items-center gap-1.5 transition-all duration-200 max-w-full">
             <span id="toast-icon" class="text-sm shrink-0">✨</span>
-            <span id="toast-msg" class="leading-snug">Chào mừng Uyên đến với KawaiiCraft V5.4!</span>
+            <span id="toast-msg" class="leading-snug">Chào mừng Uyên đến với KawaiiCraft V5.5!</span>
         </div>
 
         <!-- 2. Compact Partner Map Change Invite Banner -->
@@ -1492,7 +1493,7 @@
             <div class="flex items-center gap-2 mb-2">
                 <span class="text-2xl">🧸</span>
                 <div>
-                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.3 💕</h2>
+                    <h2 class="text-lg md:text-xl font-extrabold text-pink-600">Cẩm Nang Hướng Dẫn KawaiiCraft V5.5 💕</h2>
                     <p class="text-xs text-gray-500 font-semibold">3 Bản Đồ Độc Bản (Livik, Vikendi Tuyết, Sanhok Rừng) • 11 Minigame • Đấu Trường 100 HP!</p>
                 </div>
             </div>
@@ -1548,10 +1549,10 @@
                 ✕
             </button>
             <div class="flex items-center gap-2.5 mb-3 pr-8">
-                <span class="text-2xl">📊</span>
+                <span class="text-2xl">🎨</span>
                 <div>
-                    <h2 class="text-lg md:text-xl font-black text-emerald-700">Bảng Kiểm Soát Độ Nặng & Tối Ưu Siêu Mượt V5.4</h2>
-                    <p class="text-xs text-gray-500 font-semibold">Theo dõi trực tiếp mức tải từng phần của game và bật/tắt bớt hiệu ứng nặng khi cần</p>
+                    <h2 class="text-lg md:text-xl font-black text-emerald-700">Đồ Họa 4 Mức Tăng Dần & Kiểm Soát Độ Nặng V5.5</h2>
+                    <p class="text-xs text-gray-500 font-semibold">Mức 3 là chuẩn đẹp sắc nét V5.3 — Mức 4 nâng cấp bóng đổ thật, mây 3D & pha lê phản sáng!</p>
                 </div>
             </div>
 
@@ -1599,25 +1600,43 @@
                     </div>
                 </div>
 
-                <!-- 1-Click Optimization Presets & Individual Controls -->
-                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-300 p-3 space-y-2.5">
-                    <div class="font-extrabold text-emerald-800">🎛️ Tinh Giảm Độ Nặng 1 Chạm (Tự Chủ Kiểm Soát)</div>
-                    <div class="grid grid-cols-3 gap-2">
-                        <button onclick="applyPerfPreset('ultralight')" id="perf-preset-ultralight" class="py-2 px-2 rounded-xl border-2 border-emerald-300 bg-white hover:bg-emerald-100 font-extrabold text-[11px] text-emerald-800 transition">
-                            🚀 Siêu Nhẹ (60 FPS)
+                <!-- 4-Tier Progressive Graphics Selector & Fine Controls -->
+                <div class="bg-gradient-to-br from-emerald-50 to-purple-50 rounded-2xl border border-emerald-300 p-3 space-y-2.5">
+                    <div class="flex items-center justify-between flex-wrap gap-1">
+                        <span class="font-extrabold text-emerald-800">🎚️ Chọn Nhanh 4 Mức Đồ Họa Tăng Dần</span>
+                        <span id="perf-active-level-desc" class="text-[10px] font-extrabold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full">Đang dùng: Mức 3 — Chuẩn Đẹp V5.3</span>
+                    </div>
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                        <button onclick="applyGraphicsLevel(1)" id="perf-level-1" class="p-2 rounded-xl border-2 border-emerald-200 bg-white hover:bg-emerald-50 text-left transition flex flex-col gap-0.5">
+                            <span class="font-black text-[11px] text-emerald-700">1️⃣ Siêu Nhẹ</span>
+                            <span class="text-[10px] font-bold text-gray-500 leading-tight">0.9x • Flat • Tắt hiệu ứng phụ (Max FPS)</span>
                         </button>
-                        <button onclick="applyPerfPreset('balanced')" id="perf-preset-balanced" class="py-2 px-2 rounded-xl border-2 border-sky-500 bg-sky-100 font-extrabold text-[11px] text-sky-900 transition">
-                            ⚖️ Cân Bằng (V5.4)
+                        <button onclick="applyGraphicsLevel(2)" id="perf-level-2" class="p-2 rounded-xl border-2 border-sky-200 bg-white hover:bg-sky-50 text-left transition flex flex-col gap-0.5">
+                            <span class="font-black text-[11px] text-sky-700">2️⃣ Nhẹ Mượt</span>
+                            <span class="text-[10px] font-bold text-gray-500 leading-tight">1.0x • Khối mượt • Đủ thú & cá koi</span>
                         </button>
-                        <button onclick="applyPerfPreset('hd')" id="perf-preset-hd" class="py-2 px-2 rounded-xl border-2 border-purple-200 bg-white hover:bg-purple-100 font-extrabold text-[11px] text-purple-800 transition">
-                            ✨ Nét Cao (HD)
+                        <button onclick="applyGraphicsLevel(3)" id="perf-level-3" class="p-2 rounded-xl border-2 border-pink-400 bg-pink-50 hover:bg-pink-100 text-left transition flex flex-col gap-0.5 ring-2 ring-pink-400">
+                            <span class="font-black text-[11px] text-pink-700">3️⃣ Chuẩn V5.3 ⭐</span>
+                            <span class="text-[10px] font-bold text-gray-600 leading-tight">1.25x • PBR Sắc nét • Fog 380m (V5.3)</span>
+                        </button>
+                        <button onclick="applyGraphicsLevel(4)" id="perf-level-4" class="p-2 rounded-xl border-2 border-purple-300 bg-gradient-to-br from-purple-50 to-amber-50 hover:from-purple-100 hover:to-amber-100 text-left transition flex flex-col gap-0.5">
+                            <span class="font-black text-[11px] text-purple-800">4️⃣ Cực Phẩm ✨</span>
+                            <span class="text-[10px] font-bold text-purple-700 leading-tight">2.0x HD • Bóng Đổ • Mây 3D & Pha Lê</span>
                         </button>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button onclick="togglePerfOption('shadows')" id="perf-opt-shadows" class="p-2 rounded-xl bg-white border border-amber-200 flex items-center justify-between font-bold hover:bg-amber-50 transition">
+                            <span>☀️ Bóng Đổ Nắng Thật (Shadow)</span>
+                            <span id="perf-opt-shadows-val" class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px]">Đã Tắt</span>
+                        </button>
+                        <button onclick="togglePerfOption('clouds')" id="perf-opt-clouds" class="p-2 rounded-xl bg-white border border-pink-200 flex items-center justify-between font-bold hover:bg-pink-50 transition">
+                            <span>☁️ Mây 3D & Vầng Thái Dương</span>
+                            <span id="perf-opt-clouds-val" class="px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px]">Đã Tắt</span>
+                        </button>
                         <button onclick="togglePerfOption('particles')" id="perf-opt-particles" class="p-2 rounded-xl bg-white border border-emerald-200 flex items-center justify-between font-bold hover:bg-emerald-50 transition">
                             <span>🌸 Hạt Hoa & Tuyết Rơi</span>
-                            <span id="perf-opt-particles-val" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px]">Nhẹ (Bật)</span>
+                            <span id="perf-opt-particles-val" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px]">Đang Bật</span>
                         </button>
                         <button onclick="togglePerfOption('creatures')" id="perf-opt-creatures" class="p-2 rounded-xl bg-white border border-emerald-200 flex items-center justify-between font-bold hover:bg-emerald-50 transition">
                             <span>🦋 Cá Koi, Bướm & Cối Xay</span>
@@ -1625,18 +1644,18 @@
                         </button>
                         <button onclick="cyclePerfFogFar()" class="p-2 rounded-xl bg-white border border-sky-200 flex items-center justify-between font-bold hover:bg-sky-50 transition">
                             <span>🌫️ Tầm Nhìn Sương Mù</span>
-                            <span id="perf-opt-fog-val" class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 text-[10px]">290m (Vừa)</span>
+                            <span id="perf-opt-fog-val" class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 text-[10px]">380m (V5.3)</span>
                         </button>
                         <button onclick="cyclePerfPixelRatio()" class="p-2 rounded-xl bg-white border border-purple-200 flex items-center justify-between font-bold hover:bg-purple-50 transition">
-                            <span>🖥️ Độ Nét Khung Hình</span>
-                            <span id="perf-opt-dpr-val" class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px]">1.0x (Chuẩn)</span>
+                            <span>🖥️ Độ Nét Khung Hình (DPR)</span>
+                            <span id="perf-opt-dpr-val" class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px]">1.25x (V5.3)</span>
                         </button>
                     </div>
                 </div>
             </div>
 
             <div class="mt-3 pt-2 border-t border-emerald-200 flex items-center justify-between text-[11px]">
-                <span class="text-gray-500 font-semibold">💡 V5.4 đã tắt GPU Blur nặng, thêm Delta-Time & Lambert Shader giúp nhẹ hơn ~45%!</span>
+                <span class="text-gray-500 font-semibold">💡 Đã bật Khử răng cưa + Texture 64×64 nét căng! Mức 3 giữ đúng chuẩn V5.3, Mức 4 nâng cấp bóng đổ & bầu trời!</span>
                 <button onclick="togglePerfModal()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl shadow transition">Đóng</button>
             </div>
         </div>
@@ -1713,94 +1732,156 @@
         const undoStack = [];
 
         /* ==========================================================================
-           2. PROCEDURAL TEXTURES (ZERO MB DOWNLOAD & MULTI-FACE SHADING)
+           2. PROCEDURAL TEXTURES (CRISP 64x64 PIXEL-ART & 3D BEVEL DEPTH)
            ========================================================================== */
         function createProceduralTexture(block, isSide = false) {
             const canvas = document.createElement('canvas');
-            canvas.width = 32; canvas.height = 32;
+            canvas.width = 64; canvas.height = 64;
             const ctx = canvas.getContext('2d');
 
             if (isSide && block.sideColor) {
                 ctx.fillStyle = block.sideColor;
-                ctx.fillRect(0, 0, 32, 32);
-                // Top grass/snow overhang strip for natural blocks
+                ctx.fillRect(0, 0, 64, 64);
+                // Đất xốp nhẹ ở mặt bên của cỏ / tuyết
+                if ([1, 2, 3, 4, 5, 6].includes(block.id)) {
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+                    for (let i = 0; i < 18; i++) {
+                        const sx = ((i * 23 + block.id * 7) % 14) * 4 + 4;
+                        const sy = 20 + ((i * 17 + block.id * 11) % 10) * 4;
+                        ctx.fillRect(sx, sy, 4, 4);
+                    }
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
+                    for (let i = 0; i < 10; i++) {
+                        const sx = ((i * 31 + block.id * 5) % 14) * 4 + 2;
+                        const sy = 24 + ((i * 13 + block.id * 3) % 9) * 4;
+                        ctx.fillRect(sx, sy, 3, 3);
+                    }
+                }
+                // Lớp rìa cỏ/tuyết rủ sắc nét
                 if ([1, 2, 3, 4].includes(block.id)) {
                     ctx.fillStyle = block.color;
-                    ctx.fillRect(0, 0, 32, 7);
-                    for (let gx = 0; gx < 32; gx += 4) {
-                        ctx.fillRect(gx, 7, 2, (gx % 8 === 0) ? 3 : 2);
+                    ctx.fillRect(0, 0, 64, 14);
+                    for (let gx = 0; gx < 64; gx += 4) {
+                        const drop = ((gx * 7 + block.id * 3) % 12 === 0) ? 8 : ((gx % 8 === 0) ? 5 : 2);
+                        ctx.fillRect(gx, 14, 4, drop);
                     }
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.10)';
+                    for (let gx = 0; gx < 64; gx += 8) ctx.fillRect(gx, 13, 4, 2);
                 }
             } else {
                 ctx.fillStyle = block.color;
-                ctx.fillRect(0, 0, 32, 32);
+                ctx.fillRect(0, 0, 64, 64);
             }
 
-            // 3D Voxel Bevel Edges (high contrast so blocks never look flat!)
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.45)';
-            ctx.fillRect(0, 0, 32, 2); ctx.fillRect(0, 0, 2, 32);
-            ctx.fillStyle = isSide ? 'rgba(0, 0, 0, 0.20)' : 'rgba(0, 0, 0, 0.14)';
-            ctx.fillRect(0, 30, 32, 2); ctx.fillRect(30, 0, 2, 32);
+            // Viền nổi 3D Voxel sắc nét giúp cạnh khối tách bạch, không bị bệt mờ!
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.44)';
+            ctx.fillRect(0, 0, 64, 3); ctx.fillRect(0, 0, 3, 64);
+            ctx.fillStyle = isSide ? 'rgba(0, 0, 0, 0.22)' : 'rgba(0, 0, 0, 0.15)';
+            ctx.fillRect(0, 61, 64, 3); ctx.fillRect(61, 0, 3, 64);
+            // Viền phụ mảnh trong lòng 1px để phân tách từng viên gạch/cỏ kề nhau
+            ctx.strokeStyle = 'rgba(0, 0, 0, 0.08)';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(0.5, 0.5, 63, 63);
 
-            if (block.pattern === 'heart') {
+            // Họa tiết chi tiết 64x64 theo chất liệu
+            if ([1, 2, 3, 4].includes(block.id) && !isSide) {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.28)';
+                [[10, 14], [46, 12], [28, 34], [14, 48], [50, 44], [36, 18]].forEach(([px, py]) => {
+                    ctx.fillRect(px, py, 4, 4);
+                });
+                ctx.fillStyle = block.id === 1 ? 'rgba(255, 117, 143, 0.55)' : (block.id === 2 ? 'rgba(254, 202, 87, 0.55)' : (block.id === 3 ? 'rgba(255, 159, 67, 0.55)' : 'rgba(116, 185, 255, 0.45)'));
+                [[16, 22], [44, 26], [26, 48], [50, 16]].forEach(([px, py]) => {
+                    ctx.fillRect(px, py, 3, 3);
+                });
+            } else if ([12, 13, 14, 15].includes(block.id)) {
+                // Vân thớ gỗ dọc sắc nét
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+                for (let wx = 8; wx < 60; wx += 12) ctx.fillRect(wx, 4, 2, 56);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.18)';
+                for (let wx = 12; wx < 58; wx += 12) ctx.fillRect(wx, 6, 2, 52);
+            } else if (block.pattern === 'water' || block.pattern === 'ice') {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.52)';
+                ctx.fillRect(10, 14, 22, 3);
+                ctx.fillRect(30, 30, 20, 3);
+                ctx.fillRect(14, 46, 24, 3);
+                if (block.pattern === 'ice') {
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.65)';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.moveTo(10, 52); ctx.lineTo(28, 12); ctx.moveTo(36, 52); ctx.lineTo(52, 22); ctx.stroke();
+                }
+            } else if (block.pattern === 'heart') {
                 ctx.fillStyle = '#ffffff';
                 ctx.beginPath();
-                ctx.arc(12, 12, 5, Math.PI, 0, false); ctx.arc(20, 12, 5, Math.PI, 0, false);
-                ctx.lineTo(24, 16); ctx.lineTo(16, 24); ctx.lineTo(8, 16); ctx.closePath(); ctx.fill();
+                ctx.arc(24, 24, 10, Math.PI, 0, false); ctx.arc(40, 24, 10, Math.PI, 0, false);
+                ctx.lineTo(48, 32); ctx.lineTo(32, 48); ctx.lineTo(16, 32); ctx.closePath(); ctx.fill();
             } else if (block.pattern === 'wheat') {
-                ctx.fillStyle = '#f39c12';
-                ctx.fillRect(8, 4, 4, 24); ctx.fillRect(20, 4, 4, 24);
-                ctx.fillStyle = '#f1c40f';
-                ctx.fillRect(6, 6, 8, 4); ctx.fillRect(18, 6, 8, 4);
+                ctx.fillStyle = '#e67e22';
+                ctx.fillRect(16, 8, 6, 48); ctx.fillRect(42, 8, 6, 48); ctx.fillRect(29, 14, 6, 42);
+                ctx.fillStyle = '#fff200';
+                ctx.fillRect(12, 12, 14, 7); ctx.fillRect(38, 12, 14, 7); ctx.fillRect(25, 18, 14, 7);
             } else if (block.pattern === 'music_box') {
-                ctx.fillStyle = '#f1c40f';
+                ctx.fillStyle = '#feca57';
                 ctx.beginPath();
-                ctx.arc(12, 22, 4, 0, Math.PI * 2); ctx.arc(22, 19, 4, 0, Math.PI * 2); ctx.fill();
-                ctx.fillRect(15, 8, 3, 14); ctx.fillRect(25, 5, 3, 14); ctx.fillRect(15, 5, 13, 4);
+                ctx.arc(24, 44, 8, 0, Math.PI * 2); ctx.arc(44, 38, 8, 0, Math.PI * 2); ctx.fill();
+                ctx.fillRect(29, 16, 6, 28); ctx.fillRect(49, 10, 6, 28); ctx.fillRect(29, 10, 26, 8);
             } else if (block.pattern === 'crystal') {
                 ctx.fillStyle = '#ffffff';
                 ctx.beginPath();
-                ctx.moveTo(16, 4); ctx.lineTo(26, 16); ctx.lineTo(16, 28); ctx.lineTo(6, 16); ctx.closePath(); ctx.fill();
+                ctx.moveTo(32, 8); ctx.lineTo(52, 32); ctx.lineTo(32, 56); ctx.lineTo(12, 32); ctx.closePath(); ctx.fill();
+                ctx.fillStyle = 'rgba(116, 185, 255, 0.45)';
+                ctx.beginPath();
+                ctx.moveTo(32, 16); ctx.lineTo(44, 32); ctx.lineTo(32, 48); ctx.lineTo(32, 16); ctx.closePath(); ctx.fill();
             } else if (block.pattern === 'gift') {
                 ctx.fillStyle = '#f1c40f';
-                ctx.fillRect(13, 0, 6, 32); ctx.fillRect(0, 13, 32, 6);
+                ctx.fillRect(26, 0, 12, 64); ctx.fillRect(0, 26, 64, 12);
                 ctx.fillStyle = '#ffd32a';
-                ctx.beginPath(); ctx.arc(16, 16, 5, 0, Math.PI * 2); ctx.fill();
+                ctx.beginPath(); ctx.arc(32, 32, 10, 0, Math.PI * 2); ctx.fill();
             } else if (block.pattern === 'pumpkin') {
                 ctx.fillStyle = '#2c3e50';
                 ctx.beginPath();
-                ctx.moveTo(9, 12); ctx.lineTo(13, 16); ctx.lineTo(9, 16); ctx.fill();
-                ctx.moveTo(23, 12); ctx.lineTo(19, 16); ctx.lineTo(23, 16); ctx.fill();
-                ctx.arc(16, 18, 6, 0, Math.PI); ctx.fill();
+                ctx.moveTo(18, 24); ctx.lineTo(26, 32); ctx.lineTo(18, 32); ctx.fill();
+                ctx.moveTo(46, 24); ctx.lineTo(38, 32); ctx.lineTo(46, 32); ctx.fill();
+                ctx.arc(32, 36, 12, 0, Math.PI); ctx.fill();
             } else if (block.pattern === 'brick') {
-                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 1.5; ctx.beginPath();
-                ctx.moveTo(0, 8); ctx.lineTo(32, 8); ctx.moveTo(0, 16); ctx.lineTo(32, 16); ctx.moveTo(0, 24); ctx.lineTo(32, 24);
-                ctx.moveTo(16, 0); ctx.lineTo(16, 8); ctx.moveTo(8, 8); ctx.lineTo(8, 16); ctx.moveTo(24, 8); ctx.lineTo(24, 16);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.85)'; ctx.lineWidth = 2.5; ctx.beginPath();
+                ctx.moveTo(0, 16); ctx.lineTo(64, 16); ctx.moveTo(0, 32); ctx.lineTo(64, 32); ctx.moveTo(0, 48); ctx.lineTo(64, 48);
+                ctx.moveTo(32, 0); ctx.lineTo(32, 16); ctx.moveTo(16, 16); ctx.lineTo(16, 32); ctx.moveTo(48, 16); ctx.lineTo(48, 32);
+                ctx.moveTo(32, 32); ctx.lineTo(32, 48); ctx.moveTo(16, 48); ctx.lineTo(16, 64); ctx.moveTo(48, 48); ctx.lineTo(48, 64);
                 ctx.stroke();
             } else if (block.pattern === 'tile') {
-                ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)'; ctx.lineWidth = 2; ctx.beginPath();
-                ctx.arc(8, 10, 6, 0, Math.PI); ctx.arc(24, 10, 6, 0, Math.PI); ctx.arc(16, 22, 6, 0, Math.PI); ctx.stroke();
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)'; ctx.lineWidth = 2.5; ctx.beginPath();
+                ctx.arc(16, 20, 12, 0, Math.PI); ctx.arc(48, 20, 12, 0, Math.PI); ctx.arc(32, 44, 12, 0, Math.PI); ctx.stroke();
             } else if (block.pattern === 'glass') {
-                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2.5; ctx.strokeRect(2, 2, 28, 28);
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
-                ctx.beginPath(); ctx.moveTo(6, 20); ctx.lineTo(20, 6); ctx.lineTo(24, 6); ctx.lineTo(6, 24); ctx.fill();
+                ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4; ctx.strokeRect(4, 4, 56, 56);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.72)';
+                ctx.beginPath(); ctx.moveTo(12, 40); ctx.lineTo(40, 12); ctx.lineTo(48, 12); ctx.lineTo(12, 48); ctx.fill();
             } else if (block.pattern === 'lantern') {
-                ctx.fillStyle = '#fffae6'; ctx.fillRect(5, 5, 22, 22);
+                ctx.fillStyle = '#fffae6'; ctx.fillRect(10, 10, 44, 44);
                 ctx.fillStyle = '#c77d48';
-                ctx.fillRect(0, 0, 32, 4); ctx.fillRect(0, 28, 32, 4); ctx.fillRect(0, 0, 4, 32); ctx.fillRect(28, 0, 4, 32);
-                ctx.fillStyle = '#ff793f'; ctx.beginPath(); ctx.arc(16, 16, 5, 0, Math.PI * 2); ctx.fill();
+                ctx.fillRect(0, 0, 64, 8); ctx.fillRect(0, 56, 64, 8); ctx.fillRect(0, 0, 8, 64); ctx.fillRect(56, 0, 8, 64);
+                ctx.fillStyle = '#ff793f'; ctx.beginPath(); ctx.arc(32, 32, 10, 0, Math.PI * 2); ctx.fill();
             } else if (block.pattern === 'signboard') {
-                ctx.fillStyle = '#fff5ea'; ctx.fillRect(4, 6, 24, 16);
-                ctx.strokeStyle = '#b33939'; ctx.lineWidth = 2; ctx.strokeRect(4, 6, 24, 16);
-                ctx.fillStyle = '#ff4d6d'; ctx.fillRect(8, 11, 16, 2); ctx.fillRect(10, 15, 12, 2);
+                ctx.fillStyle = '#fff5ea'; ctx.fillRect(8, 12, 48, 34);
+                ctx.strokeStyle = '#b33939'; ctx.lineWidth = 3; ctx.strokeRect(8, 12, 48, 34);
+                ctx.fillStyle = '#ff4d6d'; ctx.fillRect(16, 22, 32, 4); ctx.fillRect(20, 32, 24, 4);
+            } else if (block.pattern === 'pebble') {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.14)';
+                ctx.fillRect(10, 12, 18, 14); ctx.fillRect(36, 10, 16, 18); ctx.fillRect(14, 34, 22, 18); ctx.fillRect(42, 36, 12, 16);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
+                ctx.fillRect(12, 14, 12, 4); ctx.fillRect(38, 12, 10, 4); ctx.fillRect(16, 36, 14, 4);
             } else {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.22)';
-                ctx.fillRect(6, 6, 4, 4); ctx.fillRect(20, 18, 4, 4);
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+                ctx.fillRect(12, 12, 8, 8); ctx.fillRect(40, 36, 8, 8);
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.08)';
+                ctx.fillRect(38, 14, 6, 6); ctx.fillRect(14, 42, 6, 6);
             }
 
             const texture = new THREE.CanvasTexture(canvas);
             texture.magFilter = THREE.NearestFilter;
             texture.minFilter = THREE.NearestFilter;
+            if (typeof renderer !== 'undefined' && renderer && renderer.capabilities && typeof renderer.capabilities.getMaxAnisotropy === 'function') {
+                texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+            }
             return texture;
         }
 
@@ -2021,21 +2102,55 @@
         const audio = new KawaiiAudioEngine();
 
         /* ==========================================================================
-           4. THREE.JS INSTANCED RENDERING ENGINE (TUNED FOG & CONTRAST)
+           4. THREE.JS 4-TIER GRAPHICS ENGINE & ATMOSPHERE (M3 = V5.3, M4 = ULTRA+)
            ========================================================================== */
         const container = document.getElementById('game-container');
         const canvas = document.getElementById('voxel-canvas');
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 360);
+        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
         let isLowSpecMode = false;
         let mouseSensitivity = 0.0022;
+
+        const GRAPHICS_LEVELS = {
+            1: {
+                level: 1, preset: 'level1', badge: 'M1 Nhẹ', name: 'Mức 1: Siêu Nhẹ (60 FPS Máy Yếu)',
+                pixelRatioCap: 0.9, fogNear: 85, fogFar: 215, materialMode: 'lambert',
+                shadows: false, clouds: false, particles: false, creatures: false, rainbow: false,
+                waterShimmer: false, hemiInt: 0.0, toneExposure: 1.0, maxAmbientParticles: 0
+            },
+            2: {
+                level: 2, preset: 'level2', badge: 'M2 Mượt', name: 'Mức 2: Nhẹ Mượt (Laptop Thường)',
+                pixelRatioCap: 1.0, fogNear: 110, fogFar: 300, materialMode: 'lambert',
+                shadows: false, clouds: false, particles: true, creatures: true, rainbow: true,
+                waterShimmer: false, hemiInt: 0.12, toneExposure: 1.0, maxAmbientParticles: 16
+            },
+            3: {
+                level: 3, preset: 'level3', badge: 'M3 V5.3', name: 'Mức 3: Chuẩn Đẹp V5.3 (PBR Sắc Nét)',
+                pixelRatioCap: 1.25, fogNear: 130, fogFar: 380, materialMode: 'standard',
+                shadows: false, clouds: false, particles: true, creatures: true, rainbow: true,
+                waterShimmer: false, hemiInt: 0.15, toneExposure: 1.0, maxAmbientParticles: 28
+            },
+            4: {
+                level: 4, preset: 'level4', badge: 'M4 Cực Phẩm', name: 'Mức 4: Cực Phẩm HD+ (Bóng Đổ & Mây 3D)',
+                pixelRatioCap: 2.0, fogNear: 185, fogFar: 560, materialMode: 'standard_ultra',
+                shadows: true, clouds: true, particles: true, creatures: true, rainbow: true,
+                waterShimmer: true, hemiInt: 0.36, toneExposure: 1.08, maxAmbientParticles: 48
+            }
+        };
+
         const perfSettings = {
-            preset: 'balanced', // 'ultralight' | 'balanced' | 'hd'
+            level: 3,
+            preset: 'level3',
             particles: true,
             creatures: true,
-            pixelRatioCap: 1.0,
-            fogFar: 290
+            shadows: false,
+            clouds: false,
+            waterShimmer: false,
+            materialMode: 'standard',
+            pixelRatioCap: 1.25,
+            fogNear: 130,
+            fogFar: 380
         };
         const perfMetrics = {
             fps: 60,
@@ -2049,31 +2164,107 @@
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
-            antialias: false, // Faster crisp pixel fill without MSAA stall on integrated GPUs
+            antialias: true, // Crisp antialiased edges across all 4 tiers!
             powerPreference: "high-performance",
             preserveDrawingBuffer: false // Eliminates per-frame buffer copy stutter (Snapshots render explicitly!)
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
-        renderer.shadowMap.enabled = false; // Kept off for locked 60 FPS
+        if (renderer.shadowMap) {
+            renderer.shadowMap.enabled = false;
+            if (THREE.PCFSoftShadowMap !== undefined) renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        }
 
-        // Lighting with clear pastel contrast
+        // Lighting: V5.3 Clear Pastel Contrast + Tier-4 Hemisphere Sky Fill & Crisp Sun Shadow
         const ambientLight = new THREE.AmbientLight(0xfcf0f5, 0.88);
         scene.add(ambientLight);
 
-        const sunLight = new THREE.DirectionalLight(0xfff8ee, 0.85);
+        let hemiLight = null;
+        if (typeof THREE.HemisphereLight === 'function') {
+            hemiLight = new THREE.HemisphereLight(0xdff9fb, 0xffd6e0, 0.15);
+            hemiLight.position.set(0, 80, 0);
+            scene.add(hemiLight);
+        }
+
+        const sunLight = new THREE.DirectionalLight(0xfff8ee, 0.88);
         sunLight.position.set(60, 90, 45);
+        if (sunLight.shadow && sunLight.shadow.camera) {
+            sunLight.castShadow = false;
+            sunLight.shadow.mapSize.width = 1024;
+            sunLight.shadow.mapSize.height = 1024;
+            sunLight.shadow.camera.near = 10;
+            sunLight.shadow.camera.far = 220;
+            sunLight.shadow.camera.left = -52;
+            sunLight.shadow.camera.right = 52;
+            sunLight.shadow.camera.top = 52;
+            sunLight.shadow.camera.bottom = -52;
+            sunLight.shadow.bias = -0.0008;
+            if (sunLight.target) scene.add(sunLight.target);
+        }
         scene.add(sunLight);
 
-        // Tuned Lightweight Fog: Clean horizon & faster GPU clipping across 320x320 map!
-        scene.fog = new THREE.Fog(0xdff9fb, 100, perfSettings.fogFar);
+        // Creative Tier-4 Atmosphere Group (Glowing Sun/Moon Disc, Halo & Volumetric Voxel Clouds)
+        const skyAtmosphereGroup = new THREE.Group();
+        const volumetricCloudsGroup = new THREE.Group();
+        let sunDiscMesh = null, sunHaloMesh = null, nightStarsGroup = null;
+        (function initTier4SkyAtmosphere() {
+            const sunCoreMat = new THREE.MeshBasicMaterial({ color: 0xfff5b8, fog: false });
+            sunDiscMesh = new THREE.Mesh(new THREE.SphereGeometry(7.5, 16, 16), sunCoreMat);
+            sunDiscMesh.position.set(160, 145, 110);
+            skyAtmosphereGroup.add(sunDiscMesh);
 
-        // Geometries and Materials (Fast Lambert Shader cuts fragment cost ~50% while keeping identical Kawaii pastel look)
+            const haloMat = new THREE.MeshBasicMaterial({ color: 0xffd38a, transparent: true, opacity: 0.34, fog: false });
+            sunHaloMesh = new THREE.Mesh(new THREE.SphereGeometry(12.5, 16, 16), haloMat);
+            sunHaloMesh.position.copy(sunDiscMesh.position);
+            skyAtmosphereGroup.add(sunHaloMesh);
+
+            nightStarsGroup = new THREE.Group();
+            const starGeo = new THREE.BoxGeometry(0.9, 0.9, 0.9);
+            const starMat = new THREE.MeshBasicMaterial({ color: 0xffffff, fog: false });
+            for (let i = 0; i < 42; i++) {
+                const ang = (i / 42) * Math.PI * 2;
+                const rad = 120 + (i % 5) * 32;
+                const star = new THREE.Mesh(starGeo, starMat);
+                star.position.set(Math.cos(ang) * rad, 110 + (i % 7) * 14, Math.sin(ang) * rad);
+                nightStarsGroup.add(star);
+            }
+            nightStarsGroup.visible = false;
+            skyAtmosphereGroup.add(nightStarsGroup);
+
+            const CloudMatClass = THREE.MeshLambertMaterial || THREE.MeshStandardMaterial;
+            const cloudMat = new CloudMatClass({ color: 0xffffff, transparent: true, opacity: 0.88 });
+            const cloudGeo = new THREE.BoxGeometry(1, 1, 1);
+            for (let c = 0; c < 12; c++) {
+                const puff = new THREE.Group();
+                const cx = -130 + ((c * 53) % 260);
+                const cy = 66 + (c % 4) * 4.5;
+                const cz = -125 + ((c * 79) % 250);
+                [[0, 0, 0, 12, 2.6, 7], [-4, 1.4, 0.5, 6.5, 2.0, 5], [4.2, 1.1, -0.5, 5.8, 1.8, 4.5]].forEach(([ox, oy, oz, sx, sy, sz]) => {
+                    const m = new THREE.Mesh(cloudGeo, cloudMat);
+                    m.position.set(ox, oy, oz);
+                    m.scale.set(sx, sy, sz);
+                    puff.add(m);
+                });
+                puff.position.set(cx, cy, cz);
+                puff.userData = { speed: 0.018 + (c % 4) * 0.006, baseX: cx };
+                volumetricCloudsGroup.add(puff);
+            }
+            skyAtmosphereGroup.add(volumetricCloudsGroup);
+            skyAtmosphereGroup.visible = false;
+            scene.add(skyAtmosphereGroup);
+        })();
+
+        // Tuned Fog matching V5.3 defaults (130..380)
+        scene.fog = new THREE.Fog(0xdff9fb, perfSettings.fogNear, perfSettings.fogFar);
+
+        // Geometries & Dual Cached Materials (Lambert for Level 1-2, Crisp V5.3 Standard PBR for Level 3-4)
         const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
         const blockMaterials = {};
+        const blockMaterialsLight = {};
+        const blockMaterialsPBR = {};
         const instancedMeshes = {};
         const blockMaxCapacity = {};
-        const BlockMatClass = THREE.MeshLambertMaterial || THREE.MeshStandardMaterial;
+        const LightMatClass = THREE.MeshLambertMaterial || THREE.MeshStandardMaterial;
 
         function getMaxInstancesForBlock(id) {
             if ([1, 2, 3, 4, 5, 6, 7, 34].includes(id)) return 55000;
@@ -2092,11 +2283,21 @@
                 baseOpts.emissive = new THREE.Color(b.emissive);
                 baseOpts.emissiveIntensity = 0.65;
             }
-            const topMat = new BlockMatClass({ ...baseOpts, map: topTex });
-            const sideMat = new BlockMatClass({ ...baseOpts, map: sideTex });
+            const topMatLight = new LightMatClass({ ...baseOpts, map: topTex });
+            const sideMatLight = new LightMatClass({ ...baseOpts, map: sideTex });
+            blockMaterialsLight[b.id] = [sideMatLight, sideMatLight, topMatLight, sideMatLight, sideMatLight, sideMatLight];
 
-            // [+x, -x, +y (top), -y (bottom), +z, -z]
-            blockMaterials[b.id] = [sideMat, sideMat, topMat, sideMat, sideMat, sideMat];
+            const pbrOpts = {
+                ...baseOpts,
+                roughness: 0.50,
+                metalness: 0.05
+            };
+            const topMatPBR = new THREE.MeshStandardMaterial({ ...pbrOpts, map: topTex });
+            const sideMatPBR = new THREE.MeshStandardMaterial({ ...pbrOpts, map: sideTex });
+            blockMaterialsPBR[b.id] = [sideMatPBR, sideMatPBR, topMatPBR, sideMatPBR, sideMatPBR, sideMatPBR];
+
+            // Default Mức 3 (V5.3 Standard PBR)
+            blockMaterials[b.id] = blockMaterialsPBR[b.id];
 
             const cap = getMaxInstancesForBlock(b.id);
             blockMaxCapacity[b.id] = cap;
@@ -2104,6 +2305,8 @@
             instMesh.count = 0;
             instMesh.visible = false; // Skip unused block types completely in render loop!
             instMesh.frustumCulled = false; // Prevent vanishing blocks when camera looks away from origin on 320x320 map!
+            instMesh.castShadow = !b.transparent;
+            instMesh.receiveShadow = true;
             instMesh.userData = { blockId: b.id, maxCount: cap };
             scene.add(instMesh);
             instancedMeshes[b.id] = instMesh;
@@ -4973,10 +5176,10 @@
 
             if (!currentRayTarget) return;
             const p = currentRayTarget.place;
-            const px = Math.floor(player.position.x);
-            const py = Math.floor(player.position.y);
-            const pz = Math.floor(player.position.z);
-            if (p.x === px && (p.y === py || p.y === py - 1) && p.z === pz) return;
+            if (typeof doesBlockOverlapPlayer === 'function' && doesBlockOverlapPlayer(p.x, p.y, p.z)) {
+                showToast("Không thể đặt khối trùng vào vị trí bạn đang đứng! 🧱", "⚠️", 1400);
+                return;
+            }
 
             const activeBlockId = hotbarBlockIds[selectedHotbarIndex];
             setBlock(p.x, p.y, p.z, activeBlockId, true, true, false);
@@ -5051,6 +5254,68 @@
         const _mvEuler = new THREE.Euler();
         let _lastCoordsStr = '';
 
+        const PLAYER_RADIUS = 0.28;
+        const PLAYER_HEAD_CLEAR = 0.16;
+        const NON_SOLID_BLOCK_IDS = new Set([0, 7, 30, 33]); // Không khí, Nước (bơi qua), Hoa & Lúa nhỏ
+
+        function isSolidVoxelAt(x, y, z) {
+            const v = getVoxel(x, y, z);
+            return v !== undefined && !NON_SOLID_BLOCK_IDS.has(v);
+        }
+
+        function collidesPlayerAABB(px, eyeY, pz, radius = PLAYER_RADIUS) {
+            const minX = Math.floor(px - radius), maxX = Math.floor(px + radius);
+            const minY = Math.floor(eyeY - player.height + 0.04);
+            const maxY = Math.floor(eyeY + PLAYER_HEAD_CLEAR);
+            const minZ = Math.floor(pz - radius), maxZ = Math.floor(pz + radius);
+            for (let ix = minX; ix <= maxX; ix++) {
+                for (let iy = minY; iy <= maxY; iy++) {
+                    for (let iz = minZ; iz <= maxZ; iz++) {
+                        if (isSolidVoxelAt(ix, iy, iz)) return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        function getSupportBlockTopY(px, eyeY, pz, radius = PLAYER_RADIUS) {
+            const feetY = eyeY - player.height;
+            const probeY = Math.floor(feetY - 0.04);
+            const minX = Math.floor(px - radius), maxX = Math.floor(px + radius);
+            const minZ = Math.floor(pz - radius), maxZ = Math.floor(pz + radius);
+            let bestTop = null;
+            for (let ix = minX; ix <= maxX; ix++) {
+                for (let iz = minZ; iz <= maxZ; iz++) {
+                    if (isSolidVoxelAt(ix, probeY, iz)) {
+                        const top = probeY + 1;
+                        if (feetY >= top - 0.25 && feetY <= top + 0.09) {
+                            if (bestTop === null || top > bestTop) bestTop = top;
+                        }
+                    }
+                }
+            }
+            return bestTop;
+        }
+
+        function doesBlockOverlapPlayer(bx, by, bz) {
+            const activeId = (typeof hotbarBlockIds !== 'undefined' && hotbarBlockIds[selectedHotbarIndex]) || 1;
+            if (NON_SOLID_BLOCK_IDS.has(activeId)) return false;
+            const r = PLAYER_RADIUS;
+            return !(bx + 1 <= player.position.x - r || bx >= player.position.x + r ||
+                     bz + 1 <= player.position.z - r || bz >= player.position.z + r ||
+                     by + 1 <= player.position.y - player.height + 0.04 || by >= player.position.y + PLAYER_HEAD_CLEAR);
+        }
+
+        function resolveInitialEmbedIfNeeded() {
+            if (!collidesPlayerAABB(player.position.x, player.position.y, player.position.z)) return;
+            for (let up = 0.5; up <= 3.0; up += 0.5) {
+                if (!collidesPlayerAABB(player.position.x, player.position.y + up, player.position.z)) {
+                    player.position.y += up;
+                    return;
+                }
+            }
+        }
+
         function updatePlayerMovement(dtScale = 1.0) {
             const now = performance.now();
 
@@ -5070,6 +5335,8 @@
                 player.isFlying = false;
                 updateFlyButtonUI();
             }
+
+            resolveInitialEmbedIfNeeded();
 
             _mvEuler.set(0, player.rotation.y, 0);
             const forward = _mvForward.set(0, 0, -1).applyEuler(_mvEuler);
@@ -5096,6 +5363,8 @@
             const underY1 = Math.floor(player.position.y - player.height - 0.15);
             const underY2 = Math.floor(player.position.y - player.height + 0.05);
             const underBlockId = getVoxel(bx, underY1, bz) || getVoxel(bx, underY2, bz);
+            const bodyVoxelId = getVoxel(bx, Math.floor(player.position.y - 0.9), bz);
+            const inWater = (bodyVoxelId === 7 || underBlockId === 7);
 
             // Minigame Speed Buffs (Balanced 50/50 Tag, Maze Boost, 2.5x Ice Slide!)
             if (activeMinigame && activeMinigame.id === 'tag' && activeMinigame.phase === 'playing') {
@@ -5108,7 +5377,9 @@
             if (activeMinigame && activeMinigame.id === 'maze' && now < mazeSpeedBoostUntil) {
                 curSpeed *= 1.55;
             }
-            if (!player.isFlying && underBlockId === 8) {
+            if (!player.isFlying && inWater) {
+                curSpeed *= 0.72; // Water swimming resistance
+            } else if (!player.isFlying && underBlockId === 8) {
                 curSpeed *= 2.5; // 2.5x speed on Ice Slide & Crystal Ice!
                 if (player.position.x >= 46 && player.position.x <= 88 && player.position.z >= -74 && player.position.z <= -24) {
                     if (now - lastIceSlideToastTime > 6000) {
@@ -5125,32 +5396,71 @@
 
             if (player.isFlying) {
                 const spd = (isSprinting ? player.flySpeed * 1.45 : player.flySpeed) * dtScale;
-                player.position.x = THREE.MathUtils.clamp(player.position.x + moveDir.x * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
-                player.position.z = THREE.MathUtils.clamp(player.position.z + moveDir.z * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
-                if (keys['Space'] || touchHoldJump) player.position.y += spd;
-                if (keys['ShiftLeft'] || keys['KeyC']) player.position.y -= spd;
-                player.position.y = THREE.MathUtils.clamp(player.position.y, 2.0, 110);
+                const fx = moveDir.x * spd;
+                const fz = moveDir.z * spd;
+                let fy = 0;
+                if (keys['Space'] || touchHoldJump) fy += spd;
+                if (keys['ShiftLeft'] || keys['KeyC']) fy -= spd;
+
+                const subF = Math.max(1, Math.ceil(Math.max(Math.abs(fx), Math.abs(fy), Math.abs(fz)) / 0.18));
+                const sfx = fx / subF, sfy = fy / subF, sfz = fz / subF;
+                for (let s = 0; s < subF; s++) {
+                    if (sfx !== 0) {
+                        const nx = Math.max(-WORLD_RADIUS + 2, Math.min(WORLD_RADIUS - 2, player.position.x + sfx));
+                        if (!collidesPlayerAABB(nx, player.position.y, player.position.z)) player.position.x = nx;
+                    }
+                    if (sfz !== 0) {
+                        const nz = Math.max(-WORLD_RADIUS + 2, Math.min(WORLD_RADIUS - 2, player.position.z + sfz));
+                        if (!collidesPlayerAABB(player.position.x, player.position.y, nz)) player.position.z = nz;
+                    }
+                    if (sfy !== 0) {
+                        const ny = Math.max(2.0, Math.min(110, player.position.y + sfy));
+                        if (!collidesPlayerAABB(player.position.x, ny, player.position.z)) player.position.y = ny;
+                    }
+                }
             } else {
-                const nextX = player.position.x + moveDir.x * scaledSpeed;
-                const nextZ = player.position.z + moveDir.z * scaledSpeed;
-                const py = player.position.y;
+                // Sub-stepped 3D AABB Walking + Wall Sliding + Auto-Step (Never tunnels through 1-block walls!)
+                const totalDx = moveDir.x * scaledSpeed;
+                const totalDz = moveDir.z * scaledSpeed;
+                const subSteps = Math.max(1, Math.ceil(Math.max(Math.abs(totalDx), Math.abs(totalDz)) / 0.16));
+                const stepDx = totalDx / subSteps;
+                const stepDz = totalDz / subSteps;
 
-                // Auto-Step
-                if (hasVoxel(nextX, py - 0.5, player.position.z) && !hasVoxel(nextX, py + 0.6, player.position.z)) {
-                    player.position.y = Math.floor(py - 0.5) + 1 + player.height;
-                }
-                if (hasVoxel(player.position.x, py - 0.5, nextZ) && !hasVoxel(player.position.x, py + 0.6, nextZ)) {
-                    player.position.y = Math.floor(py - 0.5) + 1 + player.height;
+                for (let s = 0; s < subSteps; s++) {
+                    if (stepDx !== 0) {
+                        const nextX = player.position.x + stepDx;
+                        if (!collidesPlayerAABB(nextX, player.position.y, player.position.z)) {
+                            player.position.x = nextX;
+                        } else if (player.isGrounded || inWater) {
+                            const feetBlockTop = Math.floor(player.position.y - player.height + 0.04) + 1;
+                            const stepEyeY = feetBlockTop + player.height;
+                            if (stepEyeY - player.position.y <= 1.08 &&
+                                !collidesPlayerAABB(player.position.x, stepEyeY, player.position.z) &&
+                                !collidesPlayerAABB(nextX, stepEyeY, player.position.z)) {
+                                player.position.y = stepEyeY;
+                                player.position.x = nextX;
+                            }
+                        }
+                    }
+
+                    if (stepDz !== 0) {
+                        const nextZ = player.position.z + stepDz;
+                        if (!collidesPlayerAABB(player.position.x, player.position.y, nextZ)) {
+                            player.position.z = nextZ;
+                        } else if (player.isGrounded || inWater) {
+                            const feetBlockTop = Math.floor(player.position.y - player.height + 0.04) + 1;
+                            const stepEyeY = feetBlockTop + player.height;
+                            if (stepEyeY - player.position.y <= 1.08 &&
+                                !collidesPlayerAABB(player.position.x, stepEyeY, player.position.z) &&
+                                !collidesPlayerAABB(player.position.x, stepEyeY, nextZ)) {
+                                player.position.y = stepEyeY;
+                                player.position.z = nextZ;
+                            }
+                        }
+                    }
                 }
 
-                if (!hasVoxel(nextX, py - 0.5, player.position.z) && !hasVoxel(nextX, py + 0.2, player.position.z)) {
-                    player.position.x = nextX;
-                }
-                if (!hasVoxel(player.position.x, py - 0.5, nextZ) && !hasVoxel(player.position.x, py + 0.2, nextZ)) {
-                    player.position.z = nextZ;
-                }
-
-                // World / Arena Boundaries
+                // World / Arena Boundaries (with AABB clamp)
                 player.position.x = THREE.MathUtils.clamp(player.position.x, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
                 player.position.z = THREE.MathUtils.clamp(player.position.z, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
                 if (activeMinigame && activeMinigame.id === 'tag' && activeMinigame.phase === 'playing') {
@@ -5190,31 +5500,61 @@
                     }
                 }
 
-                // Delta-Time Smoothed Gravity
-                const blockUnder = hasVoxel(player.position.x, player.position.y - player.height, player.position.z);
-                if (blockUnder) {
-                    player.isGrounded = true;
-                    player.velocity.y = 0;
-                    const targetY = Math.floor(player.position.y - player.height) + 1 + player.height;
-                    const smoothAlpha = 1 - Math.pow(0.55, dtScale);
-                    player.position.y = THREE.MathUtils.lerp(player.position.y, targetY, smoothAlpha);
-
-                    if (keys['Space'] && !inStartCountdown) {
-                        player.velocity.y = 0.21;
-                        player.isGrounded = false;
-                        audio.playJumpSound();
+                // Vertical Physics: Sub-stepped Gravity, Water Buoyancy & Ceiling Clamp
+                if (inWater && !inStartCountdown) {
+                    if (keys['Space'] || touchHoldJump) {
+                        player.velocity.y = 0.095;
+                    } else {
+                        player.velocity.y = Math.max(player.velocity.y - 0.004 * dtScale, -0.065);
                     }
                 } else {
-                    player.isGrounded = false;
-                    player.velocity.y -= 0.011 * dtScale;
-                    player.position.y += player.velocity.y * dtScale;
+                    const supportTop = (player.velocity.y <= 0) ? getSupportBlockTopY(player.position.x, player.position.y, player.position.z) : null;
+                    if (supportTop !== null) {
+                        player.isGrounded = true;
+                        player.velocity.y = 0;
+                        const targetY = supportTop + player.height;
+                        const smoothAlpha = 1 - Math.pow(0.55, dtScale);
+                        player.position.y = THREE.MathUtils.lerp(player.position.y, targetY, smoothAlpha);
 
-                    if (activeMinigame && activeMinigame.id === 'colormatch' && activeMinigame.phase === 'playing' && player.position.y < 4.0) {
-                        if (typeof onLocalColorMatchFell === 'function') onLocalColorMatchFell();
-                    } else if (player.position.y < -15) {
-                        teleportToPOI('waterfall');
-                        showToast("Đã đưa bạn trở về trung tâm an toàn! 🌸");
+                        if (keys['Space'] && !inStartCountdown && !collidesPlayerAABB(player.position.x, player.position.y + 0.2, player.position.z)) {
+                            player.velocity.y = 0.21;
+                            player.isGrounded = false;
+                            audio.playJumpSound();
+                        }
+                    } else {
+                        player.isGrounded = false;
+                        player.velocity.y -= 0.011 * dtScale;
                     }
+                }
+
+                const dy = player.velocity.y * dtScale;
+                if (dy !== 0) {
+                    const subY = Math.max(1, Math.ceil(Math.abs(dy) / 0.25));
+                    const stepY = dy / subY;
+                    for (let s = 0; s < subY; s++) {
+                        const tryEyeY = player.position.y + stepY;
+                        if (collidesPlayerAABB(player.position.x, tryEyeY, player.position.z)) {
+                            if (stepY < 0) {
+                                const landBlockTop = Math.floor(tryEyeY - player.height + 0.04) + 1;
+                                player.position.y = landBlockTop + player.height;
+                                player.isGrounded = true;
+                            } else {
+                                const ceilBlockBottom = Math.floor(tryEyeY + PLAYER_HEAD_CLEAR);
+                                player.position.y = Math.min(player.position.y, ceilBlockBottom - PLAYER_HEAD_CLEAR - 0.01);
+                            }
+                            player.velocity.y = 0;
+                            break;
+                        } else {
+                            player.position.y = tryEyeY;
+                        }
+                    }
+                }
+
+                if (activeMinigame && activeMinigame.id === 'colormatch' && activeMinigame.phase === 'playing' && player.position.y < 4.0) {
+                    if (typeof onLocalColorMatchFell === 'function') onLocalColorMatchFell();
+                } else if (player.position.y < -15) {
+                    teleportToPOI('waterfall');
+                    showToast("Đã đưa bạn trở về trung tâm an toàn! 🌸");
                 }
             }
 
@@ -5302,7 +5642,7 @@
             }
         }
 
-        const MAX_PARTICLES_POOL = 36;
+        const MAX_PARTICLES_POOL = 56;
         const particlesList = [];
         const particlePool = [];
         const sparkleGeo = new THREE.BoxGeometry(0.12, 0.12, 0.12);
@@ -5351,7 +5691,9 @@
         }
 
         function spawnAmbientParticles() {
-            if (isLowSpecMode || !perfSettings.particles || particlesList.length > 22) return;
+            const tierCfg = GRAPHICS_LEVELS[perfSettings.level] || GRAPHICS_LEVELS[3];
+            const ambCap = tierCfg.maxAmbientParticles || 24;
+            if (isLowSpecMode || !perfSettings.particles || particlesList.length >= ambCap) return;
 
             // 1. Hot Spring Steam (around 75, 13, -91) ONLY if within 20 blocks of camera
             const distHotSpring = Math.hypot(camera.position.x - 75, camera.position.z + 91);
@@ -5933,6 +6275,21 @@
             ambientLight.intensity = w.ambInt;
             sunLight.color.setHex(w.sun);
             sunLight.intensity = w.sunInt;
+            if (typeof hemiLight !== 'undefined' && hemiLight) {
+                const lvCfg = (typeof GRAPHICS_LEVELS !== 'undefined' && GRAPHICS_LEVELS[perfSettings.level]) || { hemiInt: 0.15 };
+                const isNight = (curWeatherIdx === 2);
+                const isSunset = (curWeatherIdx === 1);
+                hemiLight.color.setHex(isNight ? 0x6c5ce7 : (isSunset ? 0xffd1dc : 0xdff9fb));
+                if (hemiLight.groundColor) hemiLight.groundColor.setHex(isNight ? 0x16162b : 0xffd6e0);
+                hemiLight.intensity = isNight ? (lvCfg.hemiInt || 0) * 0.35 : (lvCfg.hemiInt || 0);
+            }
+            if (typeof sunDiscMesh !== 'undefined' && sunDiscMesh && sunHaloMesh) {
+                const isNight = (curWeatherIdx === 2);
+                const isSunset = (curWeatherIdx === 1);
+                sunDiscMesh.material.color.setHex(isNight ? 0xf5f6fa : (isSunset ? 0xff9f43 : 0xfff5b8));
+                sunHaloMesh.material.color.setHex(isNight ? 0xa29bfe : (isSunset ? 0xff6b81 : 0xffd38a));
+                if (nightStarsGroup) nightStarsGroup.visible = isNight;
+            }
             document.getElementById('time-icon').innerText = w.icon;
             document.getElementById('time-label').innerText = w.name;
             if (!isRemote && typeof sendCoopPacket === 'function') {
@@ -6073,7 +6430,72 @@
             if (giantDuckGroup) giantDuckGroup.visible = vis;
         }
 
+        function updateDynamicSunShadowTarget() {
+            if (!perfSettings.shadows || !sunLight.shadow || !sunLight.target) {
+                sunLight.position.set(60, 90, 45);
+                return;
+            }
+            const px = Math.round(player.position.x);
+            const pz = Math.round(player.position.z);
+            sunLight.target.position.set(px, 4, pz);
+            sunLight.target.updateMatrixWorld();
+            sunLight.position.set(px + 42, 74, pz + 32);
+        }
+
+        function applyMaterialMode(mode) {
+            perfSettings.materialMode = mode;
+            const usePBR = (mode === 'standard' || mode === 'standard_ultra');
+            const isUltra = (mode === 'standard_ultra');
+
+            BLOCKS.forEach(b => {
+                const targetMats = usePBR ? blockMaterialsPBR[b.id] : blockMaterialsLight[b.id];
+                blockMaterials[b.id] = targetMats;
+                const mesh = instancedMeshes[b.id];
+                if (mesh && mesh.material !== targetMats) {
+                    mesh.material = targetMats;
+                }
+                if (usePBR) {
+                    const isShiny = (b.id === 7 || b.id === 8 || b.id === 21 || b.id === 35);
+                    for (let i = 0; i < targetMats.length; i++) {
+                        const m = targetMats[i];
+                        if (!m) continue;
+                        m.roughness = isUltra ? (isShiny ? 0.14 : 0.44) : 0.50;
+                        m.metalness = isUltra ? (isShiny ? 0.26 : 0.08) : 0.05;
+                        if (b.emissive) {
+                            m.emissiveIntensity = isUltra ? 0.92 : 0.65;
+                        }
+                    }
+                }
+            });
+        }
+
+        function applyShadowsSetting(enabled) {
+            perfSettings.shadows = !!enabled;
+            if (renderer.shadowMap) {
+                renderer.shadowMap.enabled = !!enabled;
+                renderer.shadowMap.needsUpdate = true;
+            }
+            if (sunLight.shadow && sunLight.shadow.camera) {
+                sunLight.castShadow = !!enabled;
+                if (enabled) updateDynamicSunShadowTarget();
+                else sunLight.position.set(60, 90, 45);
+            }
+            if (typeof partnerAvatarGroup !== 'undefined' && partnerAvatarGroup && typeof partnerAvatarGroup.traverse === 'function') {
+                partnerAvatarGroup.traverse(o => { if (o.isMesh) o.castShadow = !!enabled; });
+            }
+            if (amusementGroup && typeof amusementGroup.traverse === 'function') {
+                amusementGroup.traverse(o => { if (o.isMesh) { o.castShadow = !!enabled; o.receiveShadow = !!enabled; } });
+            }
+            pets.forEach(p => {
+                if (p && p.group && typeof p.group.traverse === 'function') p.group.traverse(o => { if (o.isMesh) o.castShadow = !!enabled; });
+            });
+        }
+
         function refreshPerfBreakdownUI() {
+            const levelCfg = GRAPHICS_LEVELS[perfSettings.level] || GRAPHICS_LEVELS[3];
+            const hudBadge = document.getElementById('hud-gfx-badge');
+            if (hudBadge) hudBadge.innerText = perfSettings.preset === 'custom' ? `M${perfSettings.level}*` : levelCfg.badge;
+
             const m = document.getElementById('perf-modal');
             if (!m || m.classList.contains('hidden')) return;
 
@@ -6091,7 +6513,9 @@
             const ramEl = document.getElementById('perf-live-ram');
             const crtEl = document.getElementById('perf-live-creatures');
             const mapTagEl = document.getElementById('perf-map-tag');
+            const descEl = document.getElementById('perf-active-level-desc');
 
+            if (descEl) descEl.innerText = perfSettings.preset === 'custom' ? `Đang dùng: Tùy chỉnh (nền Mức ${perfSettings.level})` : `Đang dùng: ${levelCfg.name}`;
             if (fpsEl) fpsEl.innerText = `${perfMetrics.fps} FPS`;
             if (msEl) msEl.innerText = `~${perfMetrics.frameMs.toFixed(1)} ms (${perfMetrics.renderMs.toFixed(1)}ms GPU)`;
             if (voxEl) voxEl.innerText = `${visible.toLocaleString('vi-VN')} / ${total.toLocaleString('vi-VN')}`;
@@ -6112,19 +6536,20 @@
 
             // Compute weight percentage of major subsystems
             const voxelLoadPct = Math.min(100, Math.round((visible / 115000) * 100));
-            const gpuFillPct = Math.min(100, Math.round(((perfSettings.pixelRatioCap / 1.25) * 0.6 + (perfSettings.fogFar / 360) * 0.4) * 100));
+            const gpuFillPct = Math.min(100, Math.round(((perfSettings.pixelRatioCap / 2.0) * 0.55 + (perfSettings.fogFar / 560) * 0.25 + (perfSettings.shadows ? 0.20 : 0)) * 100));
             const creaturePct = perfSettings.creatures ? Math.min(100, Math.round((creatureCount / 28) * 100)) : 0;
             const particlePct = (perfSettings.particles && !isLowSpecMode) ? Math.min(100, Math.round((Math.max(8, particlesList.length) / MAX_PARTICLES_POOL) * 100)) : 0;
             const netPct = isCoopConnected ? 35 : 0;
 
             const barsContainer = document.getElementById('perf-subsystem-bars');
             if (barsContainer) {
+                const shaderTag = perfSettings.materialMode === 'lambert' ? 'Lambert nhẹ' : (perfSettings.shadows ? 'PBR + Bóng Đổ' : 'PBR V5.3');
                 const rows = [
-                    { label: `1. Địa hình 320×320 (${visible.toLocaleString('vi-VN')} khối lộ mặt)`, pct: voxelLoadPct, col: 'bg-sky-500', note: voxelLoadPct > 75 ? 'Chiếm ~60% GPU (Chính)' : 'Ổn định' },
-                    { label: `2. Độ nét & Tầm nhìn GPU (${perfSettings.pixelRatioCap}x • Fog ${perfSettings.fogFar}m)`, pct: gpuFillPct, col: 'bg-purple-500', note: perfSettings.pixelRatioCap > 1.0 ? 'Tải cao' : 'Nhẹ' },
-                    { label: `3. Sinh vật & Công trình động (${creatureCount} nhóm 3D)`, pct: creaturePct, col: 'bg-amber-500', note: perfSettings.creatures ? 'Đang bật' : 'Đã tắt (0%)' },
-                    { label: `4. Hạt hoa/tuyết bay (${particlesList.length}/${MAX_PARTICLES_POOL} pool)`, pct: particlePct, col: 'bg-pink-500', note: perfSettings.particles && !isLowSpecMode ? 'Pool nhẹ' : 'Đã tắt (0%)' },
-                    { label: `5. Giao diện HUD (Không GPU Blur) & Mạng Firebase`, pct: Math.max(8, netPct), col: 'bg-emerald-500', note: isCoopConnected ? 'Co-op 16Hz' : 'Offline nhẹ (0%)' }
+                    { label: `1. Địa hình 320×320 (${visible.toLocaleString('vi-VN')} khối lộ • ${shaderTag})`, pct: voxelLoadPct, col: 'bg-sky-500', note: voxelLoadPct > 75 ? 'Tải chính' : 'Ổn định' },
+                    { label: `2. Độ nét & Bóng đổ (${perfSettings.pixelRatioCap}x • Fog ${perfSettings.fogFar}m • ${perfSettings.shadows ? 'Bóng BẬT' : 'Không bóng'})`, pct: gpuFillPct, col: 'bg-purple-500', note: gpuFillPct > 70 ? 'Nét Ultra' : (gpuFillPct > 45 ? 'Chuẩn V5.3' : 'Siêu nhẹ') },
+                    { label: `3. Sinh vật, Mây 3D & Công trình (${creatureCount} nhóm${perfSettings.clouds ? ' + Mây 3D' : ''})`, pct: perfSettings.clouds ? Math.min(100, creaturePct + 18) : creaturePct, col: 'bg-amber-500', note: perfSettings.creatures ? 'Đang bật' : 'Đã tắt (0%)' },
+                    { label: `4. Hạt hoa/tuyết/nước (${particlesList.length}/${MAX_PARTICLES_POOL} pool)`, pct: particlePct, col: 'bg-pink-500', note: perfSettings.particles && !isLowSpecMode ? 'Đang bật' : 'Đã tắt (0%)' },
+                    { label: `5. Giao diện HUD & Mạng Firebase`, pct: Math.max(8, netPct), col: 'bg-emerald-500', note: isCoopConnected ? 'Co-op 16Hz' : 'Offline nhẹ (0%)' }
                 ];
                 barsContainer.innerHTML = rows.map(r => `
                     <div>
@@ -6166,21 +6591,32 @@
             }
 
             // Update toggle labels
+            const sVal = document.getElementById('perf-opt-shadows-val');
+            const clVal = document.getElementById('perf-opt-clouds-val');
             const pVal = document.getElementById('perf-opt-particles-val');
             const cVal = document.getElementById('perf-opt-creatures-val');
             const fVal = document.getElementById('perf-opt-fog-val');
             const dVal = document.getElementById('perf-opt-dpr-val');
-            if (pVal) pVal.innerText = (perfSettings.particles && !isLowSpecMode) ? 'Nhẹ (Bật)' : 'Đã Tắt';
-            if (cVal) cVal.innerText = perfSettings.creatures ? 'Đang Bật' : 'Đã Tắt';
-            if (fVal) fVal.innerText = `${perfSettings.fogFar}m (${perfSettings.fogFar <= 225 ? 'Nhẹ' : (perfSettings.fogFar >= 340 ? 'Xa' : 'Vừa')})`;
-            if (dVal) dVal.innerText = `${perfSettings.pixelRatioCap}x (${perfSettings.pixelRatioCap < 1 ? 'Siêu Nhẹ' : (perfSettings.pixelRatioCap > 1 ? 'Nét HD' : 'Chuẩn')})`;
 
-            ['ultralight', 'balanced', 'hd'].forEach(p => {
-                const btn = document.getElementById(`perf-preset-${p}`);
+            if (sVal) {
+                sVal.innerText = perfSettings.shadows ? 'Bật (Nắng thật)' : 'Đã Tắt';
+                sVal.className = perfSettings.shadows ? 'px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px]' : 'px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px]';
+            }
+            if (clVal) {
+                clVal.innerText = perfSettings.clouds ? 'Bật (Mây & Sun)' : 'Đã Tắt';
+                clVal.className = perfSettings.clouds ? 'px-2 py-0.5 rounded-full bg-pink-100 text-pink-700 text-[10px]' : 'px-2 py-0.5 rounded-full bg-gray-100 text-gray-600 text-[10px]';
+            }
+            if (pVal) pVal.innerText = (perfSettings.particles && !isLowSpecMode) ? 'Đang Bật' : 'Đã Tắt';
+            if (cVal) cVal.innerText = perfSettings.creatures ? 'Đang Bật' : 'Đã Tắt';
+            if (fVal) fVal.innerText = `${perfSettings.fogFar}m (${perfSettings.fogFar <= 240 ? 'Nhẹ' : (perfSettings.fogFar >= 480 ? 'Xa tít' : (perfSettings.fogFar === 380 ? 'V5.3' : 'Vừa'))})`;
+            if (dVal) dVal.innerText = `${perfSettings.pixelRatioCap}x (${perfSettings.pixelRatioCap < 1 ? 'Siêu Nhẹ' : (perfSettings.pixelRatioCap >= 1.75 ? 'Ultra HD' : (perfSettings.pixelRatioCap === 1.25 ? 'V5.3' : 'Chuẩn'))})`;
+
+            [1, 2, 3, 4].forEach(lv => {
+                const btn = document.getElementById(`perf-level-${lv}`);
                 if (!btn) return;
-                const active = perfSettings.preset === p;
+                const active = (perfSettings.level === lv && perfSettings.preset !== 'custom');
                 btn.classList.toggle('ring-2', active);
-                btn.classList.toggle('ring-emerald-500', active);
+                btn.classList.toggle(lv === 4 ? 'ring-purple-500' : (lv === 3 ? 'ring-pink-500' : 'ring-emerald-500'), active);
             });
         }
 
@@ -6192,41 +6628,54 @@
             }
         }
 
-        function applyPerfPreset(preset) {
-            perfSettings.preset = preset;
-            if (preset === 'ultralight') {
-                isLowSpecMode = true;
-                perfSettings.particles = false;
-                perfSettings.creatures = false;
-                perfSettings.pixelRatioCap = 0.9;
-                perfSettings.fogFar = 220;
-                showRainbow = false;
-                clearActiveParticles();
-            } else if (preset === 'hd') {
-                isLowSpecMode = false;
-                perfSettings.particles = true;
-                perfSettings.creatures = true;
-                perfSettings.pixelRatioCap = 1.25;
-                perfSettings.fogFar = 360;
-                showRainbow = true;
-            } else {
-                isLowSpecMode = false;
-                perfSettings.particles = true;
-                perfSettings.creatures = true;
-                perfSettings.pixelRatioCap = 1.0;
-                perfSettings.fogFar = 290;
-                showRainbow = true;
-            }
+        function applyGraphicsLevel(level, silent = false) {
+            const lv = Math.max(1, Math.min(4, parseInt(level, 10) || 3));
+            const cfg = GRAPHICS_LEVELS[lv] || GRAPHICS_LEVELS[3];
+
+            perfSettings.level = lv;
+            perfSettings.preset = cfg.preset;
+            isLowSpecMode = (lv === 1);
+            perfSettings.particles = cfg.particles;
+            perfSettings.creatures = cfg.creatures;
+            perfSettings.pixelRatioCap = cfg.pixelRatioCap;
+            perfSettings.fogNear = cfg.fogNear;
+            perfSettings.fogFar = cfg.fogFar;
+            perfSettings.clouds = cfg.clouds;
+            perfSettings.waterShimmer = cfg.waterShimmer;
+            showRainbow = cfg.rainbow;
+
+            if (!cfg.particles) clearActiveParticles();
             if (rainbowGroup) rainbowGroup.visible = showRainbow;
-            if (scene.fog) scene.fog.far = perfSettings.fogFar;
+            if (skyAtmosphereGroup) skyAtmosphereGroup.visible = !!cfg.clouds;
+            if (hemiLight) hemiLight.intensity = (typeof curWeatherIdx !== 'undefined' && curWeatherIdx === 2) ? cfg.hemiInt * 0.35 : cfg.hemiInt;
+            if (THREE.ACESFilmicToneMapping !== undefined && THREE.NoToneMapping !== undefined) {
+                renderer.toneMapping = (lv === 4) ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
+                renderer.toneMappingExposure = cfg.toneExposure;
+            }
+            if (scene.fog) {
+                scene.fog.near = cfg.fogNear;
+                scene.fog.far = cfg.fogFar;
+            }
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
+
+            applyMaterialMode(cfg.materialMode);
+            applyShadowsSetting(cfg.shadows);
             updateLivingCreaturesVisibility();
             refreshPerfBreakdownUI();
-            showToast(
-                preset === 'ultralight' ? '🚀 Đã bật Chế Độ Siêu Nhẹ (60 FPS Cứng)!' :
-                (preset === 'hd' ? '✨ Đã bật Chế Độ Nét Cao (HD)!' : '⚖️ Đã bật Chế Độ Cân Bằng V5.4!'),
-                '📊', 2400
-            );
+
+            try { localStorage.setItem('kawaiicraft_graphics_level', String(lv)); } catch (e) {}
+
+            if (!silent) {
+                const emojis = { 1: '🚀', 2: '🍃', 3: '🌸', 4: '✨' };
+                showToast(`Đã chuyển đồ họa sang ${cfg.name}!`, emojis[lv] || '🎨', 2600);
+            }
+        }
+
+        function applyPerfPreset(preset) {
+            if (preset === 'ultralight' || preset === 'level1') applyGraphicsLevel(1);
+            else if (preset === 'balanced' || preset === 'level2') applyGraphicsLevel(2);
+            else if (preset === 'hd' || preset === 'level4') applyGraphicsLevel(4);
+            else applyGraphicsLevel(3);
         }
 
         function togglePerfOption(opt) {
@@ -6237,22 +6686,34 @@
             } else if (opt === 'creatures') {
                 perfSettings.creatures = !perfSettings.creatures;
                 updateLivingCreaturesVisibility();
+            } else if (opt === 'shadows') {
+                applyShadowsSetting(!perfSettings.shadows);
+                if (perfSettings.shadows && perfSettings.materialMode === 'lambert') applyMaterialMode('standard_ultra');
+            } else if (opt === 'clouds') {
+                perfSettings.clouds = !perfSettings.clouds;
+                if (skyAtmosphereGroup) skyAtmosphereGroup.visible = perfSettings.clouds;
             }
             perfSettings.preset = 'custom';
             refreshPerfBreakdownUI();
         }
 
         function cyclePerfFogFar() {
-            const steps = [210, 290, 360];
+            const steps = [215, 300, 380, 560];
+            const nearSteps = [85, 110, 130, 185];
             const idx = steps.indexOf(perfSettings.fogFar);
-            perfSettings.fogFar = steps[(idx + 1) % steps.length];
-            if (scene.fog) scene.fog.far = perfSettings.fogFar;
+            const nextIdx = (idx + 1) % steps.length;
+            perfSettings.fogFar = steps[nextIdx];
+            perfSettings.fogNear = nearSteps[nextIdx];
+            if (scene.fog) {
+                scene.fog.near = perfSettings.fogNear;
+                scene.fog.far = perfSettings.fogFar;
+            }
             perfSettings.preset = 'custom';
             refreshPerfBreakdownUI();
         }
 
         function cyclePerfPixelRatio() {
-            const steps = [0.85, 1.0, 1.25];
+            const steps = [0.9, 1.0, 1.25, 2.0];
             const idx = steps.indexOf(perfSettings.pixelRatioCap);
             perfSettings.pixelRatioCap = steps[(idx + 1) % steps.length];
             renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
@@ -9574,6 +10035,24 @@
                     updateLivingCreatures(now);
                 }
 
+                // Tier-4 Volumetric Clouds Drifting, Dynamic Sun Shadow Tracking & Water Shimmer
+                if (perfSettings.clouds && volumetricCloudsGroup) {
+                    const kids = volumetricCloudsGroup.children;
+                    for (let i = 0; i < kids.length; i++) {
+                        kids[i].position.x += (kids[i].userData.speed || 0.02) * dtScale;
+                        if (kids[i].position.x > 165) kids[i].position.x = -165;
+                    }
+                }
+                if (perfSettings.shadows && frameCount % 6 === 0) {
+                    updateDynamicSunShadowTarget();
+                }
+                if (perfSettings.waterShimmer && frameCount % 3 === 0) {
+                    const waterMats = blockMaterialsPBR[7];
+                    if (waterMats && waterMats[2]) {
+                        waterMats[2].opacity = 0.62 + Math.sin(now * 0.004) * 0.06;
+                    }
+                }
+
                 // Animate 6 Couple Minigames, Rides (Ferris Wheel, Swing) & HUD
                 updateMinigamesAndRides(now);
 
@@ -9624,6 +10103,13 @@
         setInterval(() => { saveWorldToCurrentSlot(true, false); }, 10000);
 
         window.onload = function () {
+            let savedGfx = 3;
+            try {
+                const rawLv = parseInt(localStorage.getItem('kawaiicraft_graphics_level') || '3', 10);
+                if (rawLv >= 1 && rawLv <= 4) savedGfx = rawLv;
+            } catch (e) {}
+            applyGraphicsLevel(savedGfx, true);
+
             setWeather(0);
             renderHotbar();
             loadWorldFromCurrentSlot();
