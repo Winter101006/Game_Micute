@@ -9,7 +9,7 @@
 
 ```text
 📁 D:/Duan/Game_micute/
-├── 📁 .git/                # Cơ sở dữ liệu lịch sử Git & kết nối GitHub (huan2022004/Game-cua-uyen)
+├── 📁 .git/                # Cơ sở dữ liệu lịch sử Git & kết nối GitHub (Winter101006/Game_Micute)
 ├── 📄 .gitignore           # Danh sách file rác hệ thống không đẩy lên GitHub (.DS_Store, Thumbs.db, *.log...)
 ├── 🎮 index.html           # [FILE CHÍNH ~9.250 DÒNG] Chứa toàn bộ Giao diện, Engine 3D Three.js, Âm thanh, 3 Map & Firebase Co-op
 ├── 📘 huong-dan.html       # [WEB HƯỚNG DẪN TƯƠNG TÁC] Trang web giải thích từng file, 12 phân hệ code & 7 công đoạn vận hành
