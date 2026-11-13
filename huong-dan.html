@@ -58,7 +58,7 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-lg md:text-xl font-extrabold text-pink-600">KawaiiCraft V5.3 — Web Tài Liệu Kỹ Thuật & Cấu Trúc Dự Án</h1>
+                        <h1 class="text-lg md:text-xl font-extrabold text-pink-600">KawaiiCraft V5.4 — Web Tài Liệu Kỹ Thuật & Cấu Trúc Dự Án</h1>
                         <span class="px-2.5 py-0.5 text-[11px] font-black rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">Bản Đầy Đủ Chi Tiết</span>
                     </div>
                     <p class="text-xs text-gray-500 font-semibold">Giải thích chi tiết từng thư mục, từng file, 12 phân hệ code, cơ sở dữ liệu Firebase và 7 công đoạn vận hành</p>
@@ -97,7 +97,7 @@
                         <span>💖 Dự Án Thế Giới 3D Co-op Dành Riêng Cho Anh Huân & Bé Uyên</span>
                     </div>
                     <h2 class="text-2xl md:text-3xl font-extrabold text-gray-800 leading-tight">
-                        Toàn Bộ Kiến Trúc <span class="text-pink-600">KawaiiCraft V5.3</span> Được Giải Thích Từ A Đến Z
+                        Toàn Bộ Kiến Trúc <span class="text-pink-600">KawaiiCraft V5.4</span> Được Giải Thích Từ A Đến Z
                     </h2>
                     <p class="text-sm text-gray-600 leading-relaxed">
                         Trang web này (`huong-dan.html`) được thiết kế như một cuốn <b>Sổ Tay Kỹ Sư & Bản Đồ Dữ Liệu Trực Quan</b>. Tại đây, bạn có thể tra cứu chính xác <b>từng thư mục, từng file trong ổ đĩa `D:/Duan/Game_micute/` dùng để làm gì</b>, cách <b>9.200+ dòng code trong `index.html`</b> phối hợp với <b>Firebase Realtime Database</b> để đồng bộ 2 người chơi mượt 60 FPS, và <b>7 công đoạn kỹ thuật</b> từ lúc mở trình duyệt cho đến khi đẩy code lên GitHub & Vercel.
@@ -936,13 +936,26 @@ this.masterFilter.frequency.setValueAtTime(950, this.ctx.currentTime);</code></p
     databaseURL: "https://kawaii-craft-c7663-default-rtdb.asia-southeast1.firebasedatabase.app"
 };</code></pre>
                 </div>
+
+                <!-- V5.4 Performance & Corner HUD Summary -->
+                <div class="guide-card glass-card rounded-3xl p-5 border-2 border-teal-300 bg-gradient-to-br from-teal-50/70 to-emerald-50/70 space-y-2 md:col-span-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
+                        <h3 class="font-extrabold text-sm text-teal-800">📊 5. Nâng Cấp Mới Nhất (V5.4): HUD Góc Gọn, Chống Lag/Khựng & Bảng Kiểm Soát Độ Nặng</h3>
+                        <span class="text-[11px] font-mono bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-lg font-bold">Mở ngay trong game: Nút "📊 Độ nặng"</span>
+                    </div>
+                    <ul class="text-xs text-gray-700 space-y-1 list-disc pl-4 leading-relaxed">
+                        <li><b>Thu gọn cụm thông báo vào góc trên trái:</b> Toàn bộ `#minigame-hud-banner`, `#battle-hp-hud`, `#toast` và bảng mời đổi map được thu nhỏ bề rộng (`~245px`) và gắn gọn ở góc trên bên trái (`top-[78px] left-2.5`), chừa 100% tầm nhìn chính giữa màn hình.</li>
+                        <li><b>Xóa độ trễ khi chọn Minigame & di chuyển:</b> Gỡ bỏ `backdrop-filter: blur` trên các modal & HUD, giảm tải render 3D còn 1/4 khi mở bảng, nâng cấp shader khối sang `MeshLambertMaterial`, bật Delta-Time + Particle Pool + chống GC khi chạy, và bỏ ghi `localStorage` thừa khi chưa sửa khối (`isWorldSaveDirty`).</li>
+                        <li><b>Bảng Bắt Bệnh Độ Nặng (`#perf-modal`):</b> Bấm nút `60 FPS 📊 Độ nặng` trên góc trên hoặc `⚙️ Thêm ▾ -> 📊 Độ Nặng / Mượt` để theo dõi trực tiếp % tải của 5 phân hệ (Địa hình Voxel, GPU/Fog, Sinh vật 3D, Hạt bay, HUD) và bật chế độ <b>🚀 Siêu Nhẹ / ⚖️ Cân Bằng / ✨ Nét Cao</b>.</li>
+                    </ul>
+                </div>
             </div>
         </section>
 
         <!-- FOOTER -->
         <footer class="glass-card rounded-3xl p-6 text-center space-y-3 border-2 border-pink-200">
             <div class="text-base font-extrabold text-pink-600">
-                💖 KawaiiCraft V5.3 — Thế Giới 3D & Công Viên Cặp Đôi Của Anh Huân & Bé Uyên 💖
+                💖 KawaiiCraft V5.4 — Thế Giới 3D & Công Viên Cặp Đôi Của Anh Huân & Bé Uyên 💖
             </div>
             <p class="text-xs text-gray-500 max-w-2xl mx-auto">
                 Tài liệu này (`huong-dan.html`) luôn đi kèm trực tiếp trong mã nguồn dự án `D:/Duan/Game_micute/`. Bạn có thể mở bất cứ lúc nào trên máy tính hoặc trên link web Vercel.

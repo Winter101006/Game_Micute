@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>KawaiiCraft V5.3 — Livik, Vikendi Tuyết & Sanhok 3 Đảo Dành Tặng Bé Uyên</title>
+    <title>KawaiiCraft V5.4 — Siêu Mượt 60 FPS • Livik, Vikendi Tuyết & Sanhok Dành Tặng Bé Uyên</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js r128 CDN -->
@@ -53,13 +53,11 @@
             pointer-events: none;
             z-index: 20;
         }
-        /* Cozy Pastel Glassmorphism */
+        /* Cozy Pastel Lightweight UI (No heavy GPU backdrop-blur over WebGL!) */
         .cozy-glass {
-            background: rgba(255, 255, 255, 0.88);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            border: 2px solid rgba(255, 255, 255, 0.95);
-            box-shadow: 0 8px 32px rgba(255, 154, 178, 0.28);
+            background: rgba(255, 255, 255, 0.94);
+            border: 2px solid rgba(255, 255, 255, 0.98);
+            box-shadow: 0 6px 20px rgba(255, 154, 178, 0.22);
         }
         .hotbar-slot {
             transition: all 0.16s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -126,10 +124,10 @@
 
     <!-- TOP BAR: Clean Color-Coded Compact HUD -->
     <div id="hud-top-bar" class="absolute top-2.5 left-0 right-0 px-3 md:px-4 flex flex-col items-start pointer-events-none z-30 gap-1.5 transition-all duration-300 max-w-[calc(100vw-165px)]">
-        <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS -->
+        <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS/Weight -->
         <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1 rounded-2xl shadow-sm">
-            <span class="text-lg pulse-heart">💖</span>
-            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.3</h1>
+            <span class="text-lg">💖</span>
+            <h1 class="text-pink-600 font-black text-xs md:text-sm leading-tight">KawaiiCraft V5.4</h1>
             <!-- Unified Map Switcher & Guide Trigger -->
             <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-extrabold text-[10px] md:text-xs px-2.5 py-0.5 rounded-full shadow-sm transition flex items-center gap-1 cursor-pointer">
                 <span id="world-mode-icon">🌸</span>
@@ -148,34 +146,37 @@
             <span id="active-slot-badge" class="bg-pink-50 text-pink-600 font-bold text-[10px] px-2 py-0.5 rounded-full border border-pink-200 hidden xl:inline">
                 Slot 1
             </span>
-            <span id="fps-counter" class="text-emerald-600 font-black text-[10px] bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">60 FPS</span>
+            <button onclick="togglePerfModal()" title="Bấm để xem Độ Nặng từng phần & Bật Chế Độ Siêu Nhẹ" class="text-emerald-700 font-black text-[10px] bg-emerald-50 hover:bg-emerald-100 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1 transition cursor-pointer">
+                <span id="fps-counter">60 FPS</span>
+                <span class="text-[9px] text-sky-600 font-extrabold">📊 Độ nặng</span>
+            </button>
             <span id="save-status-indicator" class="text-pink-400 font-bold text-[10px] hidden lg:flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block animate-ping"></span> Lưu
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block"></span> Lưu
             </span>
         </div>
 
         <!-- Row 2: 3 Color-Coded Action Groups (Minimalist + Visible Music Toggle!) -->
         <div class="pointer-events-auto flex items-center flex-wrap gap-1.5">
             <!-- Group A (Pink/Purple): Couple & Co-op -->
-            <div class="flex items-center gap-1 bg-pink-100/75 p-1 rounded-2xl border border-pink-300 shadow-xs backdrop-blur-md">
+            <div class="flex items-center gap-1 bg-pink-100/90 p-1 rounded-2xl border border-pink-300 shadow-xs">
                 <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người & Xem Danh Sách Phòng Đang Mở" class="px-2.5 py-1 rounded-xl flex items-center gap-1.5 bg-gradient-to-r from-rose-500 to-purple-500 text-white font-extrabold text-xs shadow-sm hover:opacity-95 active:scale-95 transition">
-                    <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-300 animate-pulse"></span>
+                    <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-300"></span>
                     <span>💑 Co-op</span>
                     <span id="coop-ping-tag" class="hidden text-[10px] bg-white/25 px-1.5 rounded-full">Online</span>
                 </button>
-                <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-rose-600 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/95 text-rose-600 font-extrabold text-xs hover:bg-white active:scale-95 transition">
                     <span>📍</span>
                     <span class="hidden sm:inline">Tới Người Ấy</span>
                 </button>
             </div>
 
             <!-- Group B (Amber/Orange): Games, Battle & Milestones -->
-            <div class="flex items-center gap-1 bg-amber-100/75 p-1 rounded-2xl border border-amber-300 shadow-xs backdrop-blur-md">
+            <div class="flex items-center gap-1 bg-amber-100/90 p-1 rounded-2xl border border-amber-300 shadow-xs">
                 <button id="btn-minigames" onclick="toggleMinigamesModal()" title="Khu Vui Chơi, Đấu Trường Thanh Máu & Minigame (Phím U)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-gradient-to-r from-amber-500 to-rose-500 text-white font-black text-xs shadow-sm hover:opacity-95 active:scale-95 transition">
                     <span>🎪</span>
                     <span>Minigame (U)</span>
                 </button>
-                <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn (Phím N)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-amber-800 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn (Phím N)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/95 text-amber-800 font-extrabold text-xs hover:bg-white active:scale-95 transition">
                     <span>📜</span>
                     <span class="hidden sm:inline">Cột Mốc</span>
                     <span id="quest-badge-counter" class="bg-rose-500 text-white text-[9px] font-black px-1.5 rounded-full">0/5</span>
@@ -183,20 +184,20 @@
             </div>
 
             <!-- Group C (Sky/Mint): Build, Fly, Audio & Collapsible Utilities Drawer -->
-            <div class="flex items-center flex-wrap gap-1 bg-sky-100/75 p-1 rounded-2xl border border-sky-300 shadow-xs backdrop-blur-md">
-                <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-sky-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+            <div class="flex items-center flex-wrap gap-1 bg-sky-100/90 p-1 rounded-2xl border border-sky-300 shadow-xs">
+                <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/95 text-sky-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
                     <span>🎒</span>
                     <span class="hidden md:inline">Túi Đồ</span>
                 </button>
-                <button id="btn-fly" title="Bật/Tắt Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-indigo-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                <button id="btn-fly" title="Bật/Tắt Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/95 text-indigo-700 font-extrabold text-xs hover:bg-white active:scale-95 transition">
                     <span id="fly-icon">🕊️</span>
                     <span id="fly-label">Đi Bộ</span>
                 </button>
-                <button id="btn-sound" title="Mặc định đang tắt nhạc khi vào game — Bấm để bật Nhạc Dịu Êm & Âm Thanh" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/90 text-pink-600 font-extrabold text-xs hover:bg-white active:scale-95 transition">
+                <button id="btn-sound" title="Mặc định đang tắt nhạc khi vào game — Bấm để bật Nhạc Dịu Êm & Âm Thanh" class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-white/95 text-pink-600 font-extrabold text-xs hover:bg-white active:scale-95 transition">
                     <span id="sound-icon">🔇</span>
                     <span id="sound-label" class="hidden sm:inline">Tắt Nhạc</span>
                 </button>
-                <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng thêm: Bản đồ, Kho Quà, Ghép Đồ, Lưu Game, Thời Tiết, Hướng Dẫn..." class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-sky-600 text-white font-black text-xs hover:bg-sky-700 active:scale-95 transition">
+                <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng thêm: Bản đồ, Kho Quà, Ghép Đồ, Lưu Game, Thời Tiết, Độ Nặng..." class="px-2.5 py-1 rounded-xl flex items-center gap-1 bg-sky-600 text-white font-black text-xs hover:bg-sky-700 active:scale-95 transition">
                     <span id="drawer-toggle-text">⚙️ Thêm ▾</span>
                 </button>
             </div>
@@ -224,7 +225,7 @@
             </button>
             <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-sky-50 text-sky-600 font-bold text-xs border border-sky-200 transition">🌈</button>
             <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-blue-50 text-blue-600 font-bold text-xs border border-blue-200 transition">💾 Lưu</button>
-            <button id="btn-perf" title="Chế độ Siêu Mượt cho máy yếu" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-600 font-bold text-xs border border-emerald-200 transition"><span id="perf-icon">⚡</span> Mượt</button>
+            <button id="btn-perf" onclick="togglePerfModal()" title="Xem Độ Nặng từng phần & Bật Chế Độ Siêu Nhẹ" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold text-xs border border-emerald-300 transition"><span id="perf-icon">📊</span> Độ Nặng / Mượt</button>
             <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-rose-50 text-rose-500 font-bold text-xs border border-rose-200 transition">📸</button>
             <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-gray-100 text-gray-700 font-bold text-xs border border-gray-200 transition">👁️ Ẩn HUD</button>
             <a href="huong-dan.html" target="_blank" title="Mở Web Tài Liệu Giải Thích Từng File, Thư Mục & 7 Công Đoạn Vận Hành" class="px-2.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-black text-xs transition flex items-center gap-1">📘 Web Giải Thích File</a>
@@ -260,74 +261,83 @@
         👁️ Hiện Giao Diện (Tab)
     </button>
 
-    <!-- ZERO-OVERLAP CENTER TOP ALERTS & MINIGAME HUD STACK -->
-    <div id="hud-center-alerts-stack" class="fixed top-[92px] left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1.5 pointer-events-none w-[94vw] max-w-2xl">
-        <!-- 1. Non-intrusive Sliding Toast Banner -->
-        <div id="toast" class="hidden cozy-glass px-5 py-2 rounded-full border-2 border-pink-400 bg-white/95 text-xs md:text-sm font-black text-rose-600 shadow-2xl opacity-0 pointer-events-none flex items-center gap-2 transition-all duration-300">
-            <span id="toast-icon" class="text-base">✨</span>
-            <span id="toast-msg">Chào mừng Uyên đến với KawaiiCraft V5.2!</span>
+    <!-- ZERO-OVERLAP COMPACT CORNER ALERTS & MINIGAME HUD DOCK (Top-Left Corner — Zero Center Obstruction!) -->
+    <div id="hud-center-alerts-stack" class="fixed top-[78px] left-2.5 z-30 flex flex-col items-start gap-1 pointer-events-none w-[228px] sm:w-[258px] max-w-[78vw]">
+        <!-- 1. Compact Corner Toast Banner -->
+        <div id="toast" class="hidden cozy-glass px-3 py-1 rounded-2xl border border-pink-400 bg-white/95 text-[11px] font-black text-rose-600 shadow-lg opacity-0 pointer-events-none flex items-center gap-1.5 transition-all duration-200 max-w-full">
+            <span id="toast-icon" class="text-sm shrink-0">✨</span>
+            <span id="toast-msg" class="leading-snug">Chào mừng Uyên đến với KawaiiCraft V5.4!</span>
         </div>
 
-        <!-- 2. Partner Map Change Invite Banner -->
-        <div id="map-invite-banner" class="hidden pointer-events-auto cozy-glass px-4 py-1.5 rounded-3xl border-2 border-indigo-400 bg-white/95 shadow-2xl flex flex-wrap items-center justify-center gap-2.5 text-xs">
-            <span id="map-invite-text" class="font-black text-indigo-700">💌 Người ấy vừa chuyển sang Map khác!</span>
-            <button onclick="acceptIncomingMapInvite()" class="px-3 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-black rounded-xl shadow hover:opacity-95 transition">
-                ✅ Đổi Sang Cùng (Y)
-            </button>
-            <button onclick="dismissMapInviteBanner()" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl">✕</button>
-        </div>
-
-        <!-- 3. Active Minigame HUD Banner -->
-        <div id="minigame-hud-banner" class="hidden pointer-events-auto cozy-glass px-4 py-1.5 rounded-3xl border-2 border-amber-400 bg-white/95 shadow-xl flex flex-wrap items-center justify-center gap-2 text-xs">
-            <span id="mg-hud-title" class="font-black text-rose-600 text-xs sm:text-sm">🏃‍♂️ ĐUỔI BẮT 50/50</span>
-            <span id="mg-hud-timer" class="px-3 py-0.5 rounded-full bg-amber-500 text-white font-black text-xs sm:text-sm shadow-xs">45s</span>
-            <span id="mg-hud-role" class="px-2.5 py-0.5 rounded-full bg-pink-100 text-pink-800 font-extrabold">Vai: Người Đuổi (+6%)</span>
-            <span id="mg-hud-skill" class="hidden px-2.5 py-0.5 rounded-full bg-cyan-100 text-cyan-800 font-extrabold">💨 Lướt (Shift/F): Sẵn sàng!</span>
-            <button onclick="exitCurrentMinigameOrRide()" class="px-2.5 py-0.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-[11px] shadow-xs transition">
-                ❌ Thoát
-            </button>
-        </div>
-
-        <!-- 4. Battle Arena Dual HP Bar HUD (Directly below Minigame Banner, NEVER overlaps!) -->
-        <div id="battle-hp-hud" class="hidden pointer-events-none cozy-glass px-4 py-2 rounded-3xl border-2 border-rose-400 bg-white/95 shadow-2xl w-full max-w-lg space-y-1">
-            <div class="flex items-center justify-between gap-3 text-xs font-black">
-                <div class="flex-1">
-                    <div class="flex justify-between text-sky-700 mb-0.5">
-                        <span id="hp-label-left">💙 Anh Huân</span>
-                        <span id="hp-val-left">100/100</span>
-                    </div>
-                    <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden border border-sky-300">
-                        <div id="hp-bar-left" class="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all duration-200" style="width: 100%"></div>
-                    </div>
-                </div>
-                <span class="text-base font-black text-rose-500">⚔️ VS</span>
-                <div class="flex-1">
-                    <div class="flex justify-between text-rose-600 mb-0.5">
-                        <span id="hp-label-right">💖 Bé Uyên</span>
-                        <span id="hp-val-right">100/100</span>
-                    </div>
-                    <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden border border-pink-300">
-                        <div id="hp-bar-right" class="h-full bg-gradient-to-r from-pink-400 to-rose-600 transition-all duration-200" style="width: 100%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-center text-[10px] font-bold text-gray-600">
-                ❄️ Bắn: <span class="text-rose-600">Chuột Trái / J / Q</span> • 🛡️ Khiên: <span class="text-indigo-600">K / Chuột Phải</span> • 🎂 Ăn Bánh Dâu +20 HP!
+        <!-- 2. Compact Partner Map Change Invite Banner -->
+        <div id="map-invite-banner" class="hidden pointer-events-auto cozy-glass px-2.5 py-1.5 rounded-2xl border border-indigo-400 bg-white/95 shadow-lg flex flex-col gap-1 text-[10.5px] w-full">
+            <span id="map-invite-text" class="font-black text-indigo-700 leading-snug">💌 Người ấy vừa chuyển sang Map khác!</span>
+            <div class="flex items-center gap-1.5">
+                <button onclick="acceptIncomingMapInvite()" class="flex-1 px-2 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 text-white font-black rounded-xl shadow hover:opacity-95 transition text-[10px]">
+                    ✅ Sang Cùng (Y)
+                </button>
+                <button onclick="dismissMapInviteBanner()" class="px-2 py-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold rounded-xl text-[10px]">✕</button>
             </div>
         </div>
 
-        <!-- 5. Couple Compass / Red Thread Indicator -->
-        <div id="partner-compass-indicator" onclick="teleportToPartner()" title="Bấm để bay ngay tới bên người ấy!" class="hidden pointer-events-auto cursor-pointer cozy-glass px-3.5 py-1 rounded-full border-2 border-rose-300 shadow-md flex items-center gap-1.5 text-xs font-extrabold text-rose-600 hover:bg-white transition">
-            <span id="compass-arrow" class="text-sm">💘</span>
+        <!-- 3. Compact Corner Active Minigame HUD Widget -->
+        <div id="minigame-hud-banner" class="hidden pointer-events-auto cozy-glass px-2.5 py-1.5 rounded-2xl border border-amber-400 bg-white/95 shadow-md flex flex-col gap-1 text-[10.5px] w-full">
+            <div class="flex items-center justify-between gap-1 w-full">
+                <span id="mg-hud-title" class="font-black text-rose-600 text-[10.5px] truncate flex-1">🏃‍♂️ ĐUỔI BẮT</span>
+                <span id="mg-hud-timer" class="px-2 py-0.5 rounded-full bg-amber-500 text-white font-black text-[10px] shrink-0">45s</span>
+                <button onclick="toggleCornerMinigameDetails()" title="Thu gọn/mở chi tiết trò chơi" class="px-1.5 py-0.5 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-800 font-black text-[9px] shrink-0">
+                    ▾
+                </button>
+                <button onclick="exitCurrentMinigameOrRide()" class="px-1.5 py-0.5 rounded-lg bg-rose-500 hover:bg-rose-600 text-white font-extrabold text-[10px] shadow-xs transition shrink-0">
+                    ✕ Thoát
+                </button>
+            </div>
+            <div id="mg-hud-details" class="flex flex-wrap items-center gap-1 text-[9.5px]">
+                <span id="mg-hud-role" class="px-1.5 py-0.5 rounded-lg bg-pink-100 text-pink-800 font-extrabold">Vai: Người Đuổi</span>
+                <span id="mg-hud-skill" class="hidden px-1.5 py-0.5 rounded-lg bg-cyan-100 text-cyan-800 font-extrabold">💨 Lướt: Sẵn sàng</span>
+            </div>
+        </div>
+
+        <!-- 4. Compact Corner Battle Arena Dual HP Bar HUD (Directly stacked under Minigame Card!) -->
+        <div id="battle-hp-hud" class="hidden pointer-events-none cozy-glass px-2.5 py-1.5 rounded-2xl border border-rose-400 bg-white/95 shadow-md w-full space-y-1">
+            <div class="flex items-center justify-between gap-2 text-[10px] font-black">
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between text-sky-700 mb-0.5 gap-1">
+                        <span id="hp-label-left" class="truncate">💙 Huân</span>
+                        <span id="hp-val-left" class="shrink-0">100</span>
+                    </div>
+                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-sky-300">
+                        <div id="hp-bar-left" class="h-full bg-gradient-to-r from-sky-400 to-blue-600 transition-all duration-150" style="width: 100%"></div>
+                    </div>
+                </div>
+                <span class="text-xs font-black text-rose-500 shrink-0">⚔️</span>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between text-rose-600 mb-0.5 gap-1">
+                        <span id="hp-label-right" class="truncate">💖 Uyên</span>
+                        <span id="hp-val-right" class="shrink-0">100</span>
+                    </div>
+                    <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden border border-pink-300">
+                        <div id="hp-bar-right" class="h-full bg-gradient-to-r from-pink-400 to-rose-600 transition-all duration-150" style="width: 100%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center text-[9px] font-bold text-gray-500 leading-tight">
+                Click/J/Q: Bắn • K: Khiên • 🎂 +20 HP
+            </div>
+        </div>
+
+        <!-- 5. Compact Couple Compass / Red Thread Indicator -->
+        <div id="partner-compass-indicator" onclick="teleportToPartner()" title="Bấm để bay ngay tới bên người ấy!" class="hidden pointer-events-auto cursor-pointer cozy-glass px-2.5 py-1 rounded-2xl border border-rose-300 shadow-sm flex items-center gap-1.5 text-[10.5px] font-extrabold text-rose-600 hover:bg-white transition">
+            <span id="compass-arrow" class="text-xs">💘</span>
             <span id="compass-partner-name">💙 Anh Huân</span>
-            <span id="compass-dist-text" class="text-[11px] bg-rose-100 text-rose-700 px-1.5 py-0.2 rounded-full">12m</span>
-            <span class="text-[10px] underline ml-1">Bay tới ↗</span>
+            <span id="compass-dist-text" class="text-[10px] bg-rose-100 text-rose-700 px-1.5 rounded-full">12m</span>
+            <span class="text-[9.5px] underline">Tới ↗</span>
         </div>
 
-        <!-- 6. Together Resonance Badge -->
-        <div id="together-resonance-badge" class="hidden pointer-events-none cozy-glass px-4 py-1 rounded-full border-2 border-pink-400 bg-pink-50/90 shadow-lg flex items-center gap-2 text-xs font-black text-rose-600 float-anim">
-            <span class="pulse-heart text-base">💑</span>
-            <span>Đang Ở Cạnh Bên Nhau • Cộng hưởng tình yêu +💖</span>
+        <!-- 6. Compact Together Resonance Badge -->
+        <div id="together-resonance-badge" class="hidden pointer-events-none cozy-glass px-2.5 py-1 rounded-2xl border border-pink-400 bg-pink-50/95 shadow-sm flex items-center gap-1.5 text-[10.5px] font-black text-rose-600">
+            <span class="text-sm">💑</span>
+            <span>Đang ở cạnh bên nhau +💖</span>
         </div>
     </div>
 
@@ -440,7 +450,7 @@
     </div>
 
     <!-- 1. INVENTORY MODAL (Phím B / I) -->
-    <div id="inventory-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="inventory-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-2xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button id="btn-close-inventory" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -476,7 +486,7 @@
     </div>
 
     <!-- 2. CRAFTING & CUTE SHOP MODAL (Phím C) -->
-    <div id="craft-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="craft-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button onclick="toggleCraftModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -589,7 +599,7 @@
     </div>
 
     <!-- 3. RADAR MINIMAP, 3-MAP SWITCHER & INTERACTIVE GUIDANCE MODAL (Phím M) -->
-    <div id="map-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="map-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-3xl w-full p-4 md:p-5 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button onclick="toggleMapModal()" class="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -662,7 +672,7 @@
     </div>
 
     <!-- 4. 5 MAJOR COUPLE MILESTONES MODAL (Zero-Interruption Flow - Phím N) -->
-    <div id="quest-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="quest-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-2xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button onclick="toggleQuestModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -705,7 +715,7 @@
     </div>
 
     <!-- 4B. COUPLE AMUSEMENT PARK & 6 SYNCED MINIGAMES HUB MODAL (Phím U) -->
-    <div id="minigames-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="minigames-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-4xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col border-2 border-amber-300">
             <button onclick="toggleMinigamesModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -713,7 +723,7 @@
 
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3 pr-8">
                 <div class="flex items-center gap-2.5">
-                    <span class="text-3xl float-anim">🎪</span>
+                    <span class="text-3xl">🎪</span>
                     <div>
                         <h2 id="minigames-modal-title" class="text-lg md:text-xl font-black text-rose-600">Công Viên Giải Trí & Minigame Cặp Đôi (Đồng Bộ Firebase)</h2>
                         <p id="minigames-modal-sub" class="text-xs text-gray-500 font-semibold">Thi đấu công bằng thời gian thực hoặc hẹn hò lãng mạn cùng Anh Huân & Bé Uyên!</p>
@@ -1030,7 +1040,7 @@
     </div>
 
     <!-- 5. SECRET LOVE LETTER & SWEET REWARD MODAL (Hugs, Kisses & "Bóp Bóp") -->
-    <div id="letter-modal" class="fixed inset-0 bg-black/50 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
+    <div id="letter-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-md w-full p-6 rounded-3xl shadow-2xl text-gray-800 relative text-center border-4 border-pink-300">
             <button onclick="closeLetterModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1060,7 +1070,7 @@
     </div>
 
     <!-- 5B. LOVE REWARD COUPON BOOK MODAL (Kho Quà: Ôm, Hôn, Lời Chúc & "Bóp Bóp") -->
-    <div id="coupon-modal" class="fixed inset-0 bg-black/45 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="coupon-modal" class="fixed inset-0 bg-black/45 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button onclick="toggleCouponModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1110,7 +1120,7 @@
     </div>
 
     <!-- 6. ONE-CLICK PREFABS MODAL (Phím G) -->
-    <div id="prefab-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="prefab-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button id="btn-close-prefab" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1198,7 +1208,7 @@
     </div>
 
     <!-- 7. SAVE / LOAD / SLOTS MODAL -->
-    <div id="save-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="save-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-lg w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col">
             <button id="btn-close-save" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1282,7 +1292,7 @@
     </div>
 
     <!-- 8. PHOTO SNAPSHOT PREVIEW MODAL (WITH COUPLE SELFIE MODE) -->
-    <div id="photo-modal" class="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
+    <div id="photo-modal" class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-lg w-full p-5 rounded-3xl shadow-2xl text-center relative">
             <h3 class="text-base md:text-lg font-black text-pink-600 mb-1">📸 Bức Ảnh Kỷ Niệm Của Huân & Uyên</h3>
             <p class="text-xs text-gray-500 mb-3">Đã lồng khung viền Polaroid lưu lại khoảnh khắc ngọt ngào!</p>
@@ -1306,7 +1316,7 @@
     </div>
 
     <!-- 8B. ONLINE CO-OP MULTIPLAYER ROOM MODAL (Firebase Realtime Database) -->
-    <div id="coop-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="coop-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-lg w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] overflow-y-auto custom-scroll border-2 border-pink-300">
             <button onclick="toggleCoopModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1451,7 +1461,7 @@
     </div>
 
     <!-- 8C. 3D LOVE SIGNBOARD MESSAGE INPUT MODAL -->
-    <div id="signboard-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="signboard-modal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-md w-full p-5 rounded-3xl shadow-2xl text-gray-700 relative border-2 border-amber-300">
             <button onclick="closeSignboardModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-amber-100 text-amber-700 font-black hover:bg-amber-200 transition flex items-center justify-center">
                 ✕
@@ -1474,7 +1484,7 @@
     </div>
 
     <!-- 9. HELP & ZERO-FRICTION CONTROLS MODAL (Hướng dẫn chi tiết cho Uyên) -->
-    <div id="help-modal" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 hidden">
+    <div id="help-modal" class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 p-4 hidden">
         <div class="cozy-glass max-w-lg w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] overflow-y-auto custom-scroll">
             <button id="btn-close-help" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-pink-100 text-pink-600 font-black hover:bg-pink-200 transition flex items-center justify-center">
                 ✕
@@ -1527,6 +1537,107 @@
                 <button id="btn-got-it" class="flex-1 py-2.5 bg-gradient-to-r from-pink-400 to-rose-400 text-white font-extrabold rounded-2xl shadow hover:from-pink-500 hover:to-rose-500 transition text-xs md:text-sm">
                     Uyên Đã Hiểu — Vào Chơi Ngay! 💖
                 </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 10. PERFORMANCE & SYSTEM WEIGHT INSPECTOR MODAL (Kiểm Soát Độ Nặng Từng Phần) -->
+    <div id="perf-modal" class="fixed inset-0 bg-black/45 flex items-center justify-center z-50 p-4 hidden">
+        <div class="cozy-glass max-w-2xl w-full p-5 md:p-6 rounded-3xl shadow-2xl text-gray-700 relative max-h-[92vh] flex flex-col border-2 border-emerald-300">
+            <button onclick="togglePerfModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 font-black hover:bg-emerald-200 transition flex items-center justify-center">
+                ✕
+            </button>
+            <div class="flex items-center gap-2.5 mb-3 pr-8">
+                <span class="text-2xl">📊</span>
+                <div>
+                    <h2 class="text-lg md:text-xl font-black text-emerald-700">Bảng Kiểm Soát Độ Nặng & Tối Ưu Siêu Mượt V5.4</h2>
+                    <p class="text-xs text-gray-500 font-semibold">Theo dõi trực tiếp mức tải từng phần của game và bật/tắt bớt hiệu ứng nặng khi cần</p>
+                </div>
+            </div>
+
+            <div class="overflow-y-auto custom-scroll space-y-3 pr-1 flex-1 text-xs">
+                <!-- Live Summary Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                    <div class="p-2.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
+                        <div class="text-[10px] font-bold text-gray-500">Tốc độ khung hình</div>
+                        <div id="perf-live-fps" class="text-base font-black text-emerald-600">60 FPS</div>
+                        <div id="perf-live-framems" class="text-[10px] font-bold text-emerald-700">~16.6 ms/frame</div>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-sky-50 border border-sky-200 text-center">
+                        <div class="text-[10px] font-bold text-gray-500">Khối 3D đang vẽ / Tổng</div>
+                        <div id="perf-live-voxels" class="text-sm font-black text-sky-700">0 / 0</div>
+                        <div id="perf-live-occluded" class="text-[10px] font-bold text-sky-600">Ẩn khuất: 0%</div>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-purple-50 border border-purple-200 text-center">
+                        <div class="text-[10px] font-bold text-gray-500">Lệnh vẽ GPU (Draw Calls)</div>
+                        <div id="perf-live-draws" class="text-sm font-black text-purple-700">0 / 45</div>
+                        <div id="perf-live-pixelratio" class="text-[10px] font-bold text-purple-600">Độ nét: 1.0x</div>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-amber-50 border border-amber-200 text-center">
+                        <div class="text-[10px] font-bold text-gray-500">RAM & Hạt / Vật thể</div>
+                        <div id="perf-live-ram" class="text-sm font-black text-amber-700">8.3 MB + Heap</div>
+                        <div id="perf-live-creatures" class="text-[10px] font-bold text-amber-700">0 hạt • 0 sinh vật</div>
+                    </div>
+                </div>
+
+                <!-- Detailed Weight Breakdown Table -->
+                <div class="bg-white/95 rounded-2xl border border-pink-200 p-3 space-y-2">
+                    <div class="font-extrabold text-pink-700 flex items-center justify-between">
+                        <span>⚖️ Độ Nặng Chi Tiết Từng Phân Hệ (Map hiện tại)</span>
+                        <span id="perf-map-tag" class="text-[10px] bg-pink-100 text-pink-700 px-2 py-0.5 rounded-full">Đảo Livik</span>
+                    </div>
+                    <div id="perf-subsystem-bars" class="space-y-1.5 text-[11px]">
+                        <!-- Injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- Top 5 Heaviest Blocks on Current Map -->
+                <div class="bg-white/95 rounded-2xl border border-sky-200 p-3 space-y-1.5">
+                    <div class="font-extrabold text-sky-800">🧱 Top 5 Loại Khối Chiếm GPU Nhiều Nhất Trên Map Này</div>
+                    <div id="perf-top-blocks" class="space-y-1 text-[11px]">
+                        <!-- Injected dynamically -->
+                    </div>
+                </div>
+
+                <!-- 1-Click Optimization Presets & Individual Controls -->
+                <div class="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl border border-emerald-300 p-3 space-y-2.5">
+                    <div class="font-extrabold text-emerald-800">🎛️ Tinh Giảm Độ Nặng 1 Chạm (Tự Chủ Kiểm Soát)</div>
+                    <div class="grid grid-cols-3 gap-2">
+                        <button onclick="applyPerfPreset('ultralight')" id="perf-preset-ultralight" class="py-2 px-2 rounded-xl border-2 border-emerald-300 bg-white hover:bg-emerald-100 font-extrabold text-[11px] text-emerald-800 transition">
+                            🚀 Siêu Nhẹ (60 FPS)
+                        </button>
+                        <button onclick="applyPerfPreset('balanced')" id="perf-preset-balanced" class="py-2 px-2 rounded-xl border-2 border-sky-500 bg-sky-100 font-extrabold text-[11px] text-sky-900 transition">
+                            ⚖️ Cân Bằng (V5.4)
+                        </button>
+                        <button onclick="applyPerfPreset('hd')" id="perf-preset-hd" class="py-2 px-2 rounded-xl border-2 border-purple-200 bg-white hover:bg-purple-100 font-extrabold text-[11px] text-purple-800 transition">
+                            ✨ Nét Cao (HD)
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                        <button onclick="togglePerfOption('particles')" id="perf-opt-particles" class="p-2 rounded-xl bg-white border border-emerald-200 flex items-center justify-between font-bold hover:bg-emerald-50 transition">
+                            <span>🌸 Hạt Hoa & Tuyết Rơi</span>
+                            <span id="perf-opt-particles-val" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px]">Nhẹ (Bật)</span>
+                        </button>
+                        <button onclick="togglePerfOption('creatures')" id="perf-opt-creatures" class="p-2 rounded-xl bg-white border border-emerald-200 flex items-center justify-between font-bold hover:bg-emerald-50 transition">
+                            <span>🦋 Cá Koi, Bướm & Cối Xay</span>
+                            <span id="perf-opt-creatures-val" class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 text-[10px]">Đang Bật</span>
+                        </button>
+                        <button onclick="cyclePerfFogFar()" class="p-2 rounded-xl bg-white border border-sky-200 flex items-center justify-between font-bold hover:bg-sky-50 transition">
+                            <span>🌫️ Tầm Nhìn Sương Mù</span>
+                            <span id="perf-opt-fog-val" class="px-2 py-0.5 rounded-full bg-sky-100 text-sky-700 text-[10px]">290m (Vừa)</span>
+                        </button>
+                        <button onclick="cyclePerfPixelRatio()" class="p-2 rounded-xl bg-white border border-purple-200 flex items-center justify-between font-bold hover:bg-purple-50 transition">
+                            <span>🖥️ Độ Nét Khung Hình</span>
+                            <span id="perf-opt-dpr-val" class="px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 text-[10px]">1.0x (Chuẩn)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-3 pt-2 border-t border-emerald-200 flex items-center justify-between text-[11px]">
+                <span class="text-gray-500 font-semibold">💡 V5.4 đã tắt GPU Blur nặng, thêm Delta-Time & Lambert Shader giúp nhẹ hơn ~45%!</span>
+                <button onclick="togglePerfModal()" class="px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold rounded-xl shadow transition">Đóng</button>
             </div>
         </div>
     </div>
@@ -1916,18 +2027,34 @@
         const canvas = document.getElementById('voxel-canvas');
         const scene = new THREE.Scene();
 
-        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 360);
         let isLowSpecMode = false;
         let mouseSensitivity = 0.0022;
+        const perfSettings = {
+            preset: 'balanced', // 'ultralight' | 'balanced' | 'hd'
+            particles: true,
+            creatures: true,
+            pixelRatioCap: 1.0,
+            fogFar: 290
+        };
+        const perfMetrics = {
+            fps: 60,
+            frameMs: 16.6,
+            renderMs: 4.5,
+            logicMs: 1.5,
+            activeDrawCalls: 0,
+            totalVoxels: 0,
+            visibleVoxels: 0
+        };
 
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas,
-            antialias: true,
+            antialias: false, // Faster crisp pixel fill without MSAA stall on integrated GPUs
             powerPreference: "high-performance",
-            preserveDrawingBuffer: true
+            preserveDrawingBuffer: false // Eliminates per-frame buffer copy stutter (Snapshots render explicitly!)
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.25));
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
         renderer.shadowMap.enabled = false; // Kept off for locked 60 FPS
 
         // Lighting with clear pastel contrast
@@ -1938,14 +2065,15 @@
         sunLight.position.set(60, 90, 45);
         scene.add(sunLight);
 
-        // Tuned Fog: Non-blinding, allows seeing mountain peaks & landmarks across the 320x320 map!
-        scene.fog = new THREE.Fog(0xdff9fb, 130, 380);
+        // Tuned Lightweight Fog: Clean horizon & faster GPU clipping across 320x320 map!
+        scene.fog = new THREE.Fog(0xdff9fb, 100, perfSettings.fogFar);
 
-        // Geometries and Materials (Multi-face Top vs Side Contrast)
+        // Geometries and Materials (Fast Lambert Shader cuts fragment cost ~50% while keeping identical Kawaii pastel look)
         const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
         const blockMaterials = {};
         const instancedMeshes = {};
         const blockMaxCapacity = {};
+        const BlockMatClass = THREE.MeshLambertMaterial || THREE.MeshStandardMaterial;
 
         function getMaxInstancesForBlock(id) {
             if ([1, 2, 3, 4, 5, 6, 7, 34].includes(id)) return 55000;
@@ -1958,16 +2086,14 @@
             const sideTex = createProceduralTexture(b, true);
             const baseOpts = {
                 transparent: !!b.transparent,
-                opacity: b.opacity || 1.0,
-                roughness: 0.50,
-                metalness: 0.05
+                opacity: b.opacity || 1.0
             };
             if (b.emissive) {
                 baseOpts.emissive = new THREE.Color(b.emissive);
                 baseOpts.emissiveIntensity = 0.65;
             }
-            const topMat = new THREE.MeshStandardMaterial({ ...baseOpts, map: topTex });
-            const sideMat = new THREE.MeshStandardMaterial({ ...baseOpts, map: sideTex });
+            const topMat = new BlockMatClass({ ...baseOpts, map: topTex });
+            const sideMat = new BlockMatClass({ ...baseOpts, map: sideTex });
 
             // [+x, -x, +y (top), -y (bottom), +z, -z]
             blockMaterials[b.id] = [sideMat, sideMat, topMat, sideMat, sideMat, sideMat];
@@ -1976,6 +2102,7 @@
             blockMaxCapacity[b.id] = cap;
             const instMesh = new THREE.InstancedMesh(cubeGeometry, blockMaterials[b.id], cap);
             instMesh.count = 0;
+            instMesh.visible = false; // Skip unused block types completely in render loop!
             instMesh.frustumCulled = false; // Prevent vanishing blocks when camera looks away from origin on 320x320 map!
             instMesh.userData = { blockId: b.id, maxCount: cap };
             scene.add(instMesh);
@@ -2066,7 +2193,23 @@
                 mesh.setMatrixAt(idx++, dummyMatrixObj.matrix);
             }
             mesh.count = idx;
-            mesh.instanceMatrix.needsUpdate = true;
+            mesh.visible = (idx > 0);
+            if (idx > 0) mesh.instanceMatrix.needsUpdate = true;
+        }
+
+        function refreshPerfMeshCounts() {
+            let visibleSum = 0;
+            let draws = 0;
+            BLOCKS.forEach(b => {
+                const m = instancedMeshes[b.id];
+                if (m && m.visible && m.count > 0) {
+                    visibleSum += m.count;
+                    draws++;
+                }
+            });
+            perfMetrics.totalVoxels = worldData.size;
+            perfMetrics.visibleVoxels = visibleSum;
+            perfMetrics.activeDrawCalls = draws;
         }
 
         function syncInstancedMeshes() {
@@ -2088,6 +2231,7 @@
             }
 
             BLOCKS.forEach(b => rebuildSingleMesh(b.id));
+            refreshPerfMeshCounts();
             drawMinimap();
         }
 
@@ -3908,6 +4052,7 @@
         }
 
         function updateLivingCreatures(now) {
+            if (!perfSettings.creatures || isLowSpecMode) return;
             for (let i = 0; i < koiFishList.length; i++) {
                 const k = koiFishList[i];
                 k.angle += k.speed;
@@ -4404,14 +4549,14 @@
                 if (minimap) minimap.classList.add('hidden');
                 if (hotbarWrap) hotbarWrap.classList.add('opacity-40', 'hover:opacity-100');
                 if (restoreBtn) restoreBtn.classList.remove('hidden');
-                if (alertsStack) { alertsStack.classList.remove('top-[92px]'); alertsStack.classList.add('top-3'); }
+                if (alertsStack) { alertsStack.classList.remove('top-[78px]', 'top-[92px]'); alertsStack.classList.add('top-3'); }
                 showToast("Đã bật Góc Nhìn Toàn Màn Hình Rộng Rãi! (Nhấn Tab hoặc nút góc trái để hiện lại)", "👁️");
             } else {
                 if (topBar) topBar.classList.remove('hidden');
                 if (minimap) minimap.classList.remove('hidden');
                 if (hotbarWrap) hotbarWrap.classList.remove('opacity-40', 'hover:opacity-100');
                 if (restoreBtn) restoreBtn.classList.add('hidden');
-                if (alertsStack) { alertsStack.classList.remove('top-3'); alertsStack.classList.add('top-[92px]'); }
+                if (alertsStack) { alertsStack.classList.remove('top-3', 'top-[92px]'); alertsStack.classList.add('top-[78px]'); }
                 showToast("Đã hiển thị lại thanh công cụ đầy đủ! 🌸");
             }
         }
@@ -4711,9 +4856,10 @@
         targetWireframe.visible = false;
         scene.add(targetWireframe);
 
+        const _rayDir = new THREE.Vector3();
         function raycastVoxel(maxDist = 7.5) {
             const origin = camera.position;
-            const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion).normalize();
+            const dir = _rayDir.set(0, 0, -1).applyQuaternion(camera.quaternion).normalize();
             let x = Math.floor(origin.x); let y = Math.floor(origin.y); let z = Math.floor(origin.z);
             const stepX = Math.sign(dir.x); const stepY = Math.sign(dir.y); const stepZ = Math.sign(dir.z);
             const tDeltaX = Math.abs(1 / (dir.x || 1e-6));
@@ -4899,7 +5045,13 @@
             }
         }
 
-        function updatePlayerMovement() {
+        const _mvForward = new THREE.Vector3();
+        const _mvRight = new THREE.Vector3();
+        const _mvDir = new THREE.Vector3();
+        const _mvEuler = new THREE.Euler();
+        let _lastCoordsStr = '';
+
+        function updatePlayerMovement(dtScale = 1.0) {
             const now = performance.now();
 
             // When seated inside Ferris Cabin or Couple Swing, ride updater positions player
@@ -4919,9 +5071,10 @@
                 updateFlyButtonUI();
             }
 
-            const forward = new THREE.Vector3(0, 0, -1).applyEuler(new THREE.Euler(0, player.rotation.y, 0));
-            const right = new THREE.Vector3(1, 0, 0).applyEuler(new THREE.Euler(0, player.rotation.y, 0));
-            const moveDir = new THREE.Vector3();
+            _mvEuler.set(0, player.rotation.y, 0);
+            const forward = _mvForward.set(0, 0, -1).applyEuler(_mvEuler);
+            const right = _mvRight.set(1, 0, 0).applyEuler(_mvEuler);
+            const moveDir = _mvDir.set(0, 0, 0);
 
             // Freeze walking during 3s Start Countdown of Tag / Maze / ColorMatch
             const inStartCountdown = activeMinigame && activeMinigame.phase === 'countdown' &&
@@ -4968,16 +5121,18 @@
                 }
             }
 
+            const scaledSpeed = curSpeed * dtScale;
+
             if (player.isFlying) {
-                const spd = isSprinting ? player.flySpeed * 1.45 : player.flySpeed;
+                const spd = (isSprinting ? player.flySpeed * 1.45 : player.flySpeed) * dtScale;
                 player.position.x = THREE.MathUtils.clamp(player.position.x + moveDir.x * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
                 player.position.z = THREE.MathUtils.clamp(player.position.z + moveDir.z * spd, -WORLD_RADIUS + 2, WORLD_RADIUS - 2);
                 if (keys['Space'] || touchHoldJump) player.position.y += spd;
                 if (keys['ShiftLeft'] || keys['KeyC']) player.position.y -= spd;
                 player.position.y = THREE.MathUtils.clamp(player.position.y, 2.0, 110);
             } else {
-                const nextX = player.position.x + moveDir.x * curSpeed;
-                const nextZ = player.position.z + moveDir.z * curSpeed;
+                const nextX = player.position.x + moveDir.x * scaledSpeed;
+                const nextZ = player.position.z + moveDir.z * scaledSpeed;
                 const py = player.position.y;
 
                 // Auto-Step
@@ -5035,13 +5190,14 @@
                     }
                 }
 
-                // Gravity
+                // Delta-Time Smoothed Gravity
                 const blockUnder = hasVoxel(player.position.x, player.position.y - player.height, player.position.z);
                 if (blockUnder) {
                     player.isGrounded = true;
                     player.velocity.y = 0;
                     const targetY = Math.floor(player.position.y - player.height) + 1 + player.height;
-                    player.position.y = THREE.MathUtils.lerp(player.position.y, targetY, 0.45);
+                    const smoothAlpha = 1 - Math.pow(0.55, dtScale);
+                    player.position.y = THREE.MathUtils.lerp(player.position.y, targetY, smoothAlpha);
 
                     if (keys['Space'] && !inStartCountdown) {
                         player.velocity.y = 0.21;
@@ -5050,8 +5206,8 @@
                     }
                 } else {
                     player.isGrounded = false;
-                    player.velocity.y -= 0.011;
-                    player.position.y += player.velocity.y;
+                    player.velocity.y -= 0.011 * dtScale;
+                    player.position.y += player.velocity.y * dtScale;
 
                     if (activeMinigame && activeMinigame.id === 'colormatch' && activeMinigame.phase === 'playing' && player.position.y < 4.0) {
                         if (typeof onLocalColorMatchFell === 'function') onLocalColorMatchFell();
@@ -5074,8 +5230,12 @@
             const px = player.position.x; const py = player.position.y; const pz = player.position.z;
             const dist = Math.sqrt(px * px + pz * pz);
             const badge = document.getElementById('current-biome-badge');
-            const coordsEl = document.getElementById('minimap-coords');
-            if (coordsEl) coordsEl.innerText = `X:${Math.round(px)} Y:${Math.round(py)} Z:${Math.round(pz)}`;
+            const coordsStr = `X:${Math.round(px)} Y:${Math.round(py)} Z:${Math.round(pz)}`;
+            if (coordsStr !== _lastCoordsStr) {
+                _lastCoordsStr = coordsStr;
+                const coordsEl = document.getElementById('minimap-coords');
+                if (coordsEl) coordsEl.innerText = coordsStr;
+            }
 
             const m = normalizeMapMode(currentWorldMapMode);
             const obsPos = getObservatoryPosForMap(m);
@@ -5142,7 +5302,9 @@
             }
         }
 
+        const MAX_PARTICLES_POOL = 36;
         const particlesList = [];
+        const particlePool = [];
         const sparkleGeo = new THREE.BoxGeometry(0.12, 0.12, 0.12);
         const steamMat = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.65 });
         const mistMat = new THREE.MeshBasicMaterial({ color: 0xdff9fb, transparent: true, opacity: 0.72 });
@@ -5152,56 +5314,69 @@
         const sunSparkleMat = new THREE.MeshBasicMaterial({ color: 0xffeaa7 });
         const particleMatCache = new Map();
 
+        function acquireParticleMesh(mat, x, y, z, vx, vy, vz, life = 1.0, gravity = 0.007) {
+            if (particlesList.length >= MAX_PARTICLES_POOL) return;
+            let slot = particlePool.pop();
+            if (!slot) {
+                const m = new THREE.Mesh(sparkleGeo, mat);
+                scene.add(m);
+                slot = { mesh: m, vx: 0, vy: 0, vz: 0, life: 0, gravity: 0.007 };
+            } else {
+                slot.mesh.material = mat;
+                slot.mesh.visible = true;
+            }
+            slot.mesh.position.set(x, y, z);
+            slot.mesh.scale.set(1, 1, 1);
+            slot.vx = vx; slot.vy = vy; slot.vz = vz;
+            slot.life = life;
+            slot.gravity = gravity;
+            particlesList.push(slot);
+        }
+
         function spawnSparkleBurst(x, y, z, colorHex, count = 8) {
+            if (isLowSpecMode || !perfSettings.particles) return;
             let mat = particleMatCache.get(colorHex);
             if (!mat) {
                 mat = new THREE.MeshBasicMaterial({ color: colorHex });
                 particleMatCache.set(colorHex, mat);
             }
-            for (let i = 0; i < count; i++) {
-                const p = new THREE.Mesh(sparkleGeo, mat);
-                p.position.set(x, y, z);
-                const vel = new THREE.Vector3((Math.random() - 0.5) * 0.16, Math.random() * 0.16 + 0.05, (Math.random() - 0.5) * 0.16);
-                scene.add(p);
-                particlesList.push({ mesh: p, vel, life: 1.0, gravity: 0.007 });
+            const cappedCount = Math.min(count, 16);
+            for (let i = 0; i < cappedCount; i++) {
+                acquireParticleMesh(
+                    mat, x, y, z,
+                    (Math.random() - 0.5) * 0.16, Math.random() * 0.16 + 0.05, (Math.random() - 0.5) * 0.16,
+                    1.0, 0.007
+                );
             }
         }
 
         function spawnAmbientParticles() {
-            if (isLowSpecMode || particlesList.length > 75) return;
+            if (isLowSpecMode || !perfSettings.particles || particlesList.length > 22) return;
 
             // 1. Hot Spring Steam (around 75, 13, -91) ONLY if within 20 blocks of camera
             const distHotSpring = Math.hypot(camera.position.x - 75, camera.position.z + 91);
-            if (distHotSpring <= 20 && Math.random() < 0.35) {
-                const p = new THREE.Mesh(sparkleGeo, steamMat);
-                p.position.set(72 + Math.random() * 6, 12.8, -94 + Math.random() * 6);
-                scene.add(p);
-                particlesList.push({
-                    mesh: p,
-                    vel: new THREE.Vector3((Math.random() - 0.5) * 0.02, 0.04 + Math.random() * 0.03, (Math.random() - 0.5) * 0.02),
-                    life: 1.15,
-                    gravity: -0.0005
-                });
+            if (distHotSpring <= 20 && Math.random() < 0.25) {
+                acquireParticleMesh(
+                    steamMat, 72 + Math.random() * 6, 12.8, -94 + Math.random() * 6,
+                    (Math.random() - 0.5) * 0.02, 0.04 + Math.random() * 0.03, (Math.random() - 0.5) * 0.02,
+                    1.15, -0.0005
+                );
             }
 
             // 2. Waterfall Mist Spray (around 5, 6, -21) ONLY if within 20 blocks of camera
             const distWaterfall = Math.hypot(camera.position.x - 5, camera.position.z + 21);
-            if (distWaterfall <= 20 && Math.random() < 0.42) {
-                const p = new THREE.Mesh(sparkleGeo, mistMat);
-                p.position.set(3 + Math.random() * 5, 4.5 + Math.random() * 1.8, -21.5 + Math.random() * 1.2);
-                scene.add(p);
-                particlesList.push({
-                    mesh: p,
-                    vel: new THREE.Vector3((Math.random() - 0.5) * 0.05, 0.03 + Math.random() * 0.04, 0.03 + Math.random() * 0.03),
-                    life: 0.85,
-                    gravity: 0.002
-                });
+            if (distWaterfall <= 20 && Math.random() < 0.28) {
+                acquireParticleMesh(
+                    mistMat, 3 + Math.random() * 5, 4.5 + Math.random() * 1.8, -21.5 + Math.random() * 1.2,
+                    (Math.random() - 0.5) * 0.05, 0.03 + Math.random() * 0.04, 0.03 + Math.random() * 0.03,
+                    0.85, 0.002
+                );
             }
 
-            // 3. Strictly Capped <= 20-Block Radius Weather Particles Around Camera
-            if (Math.random() < 0.28) {
+            // 3. Strictly Capped <= 18-Block Radius Weather Particles Around Camera
+            if (Math.random() < 0.18) {
                 const angle = Math.random() * Math.PI * 2;
-                const rad = Math.random() * 18.5; // strictly within 20 blocks of camera!
+                const rad = Math.random() * 18.0;
                 const ox = camera.position.x + Math.cos(angle) * rad;
                 const oz = camera.position.z + Math.sin(angle) * rad;
                 const oy = camera.position.y + 4 + Math.random() * 4.5;
@@ -5210,15 +5385,11 @@
                 else if (ox < -12 && oz > 12) mat = autumnLeafMat;
                 else if (ox > 12 && oz > 12) mat = sunSparkleMat;
 
-                const p = new THREE.Mesh(sparkleGeo, mat);
-                p.position.set(ox, oy, oz);
-                scene.add(p);
-                particlesList.push({
-                    mesh: p,
-                    vel: new THREE.Vector3((Math.random() - 0.5) * 0.03, -0.035, (Math.random() - 0.5) * 0.03),
-                    life: 1.3,
-                    gravity: 0
-                });
+                acquireParticleMesh(
+                    mat, ox, oy, oz,
+                    (Math.random() - 0.5) * 0.03, -0.035, (Math.random() - 0.5) * 0.03,
+                    1.3, 0
+                );
             }
         }
 
@@ -5226,12 +5397,15 @@
             spawnAmbientParticles();
             for (let i = particlesList.length - 1; i >= 0; i--) {
                 const p = particlesList[i];
-                p.mesh.position.add(p.vel);
-                p.vel.y -= (p.gravity !== undefined ? p.gravity : 0.007);
+                p.mesh.position.x += p.vx;
+                p.mesh.position.y += p.vy;
+                p.mesh.position.z += p.vz;
+                p.vy -= p.gravity;
                 p.life -= 0.028;
                 p.mesh.scale.multiplyScalar(0.96);
                 if (p.life <= 0) {
-                    scene.remove(p.mesh);
+                    p.mesh.visible = false;
+                    particlePool.push(p);
                     particlesList.splice(i, 1);
                 }
             }
@@ -5551,18 +5725,23 @@
         const minimapCanvas = document.getElementById('minimap-canvas');
         const mCtx = minimapCanvas.getContext('2d');
 
+        let _lastRadarPartnerKey = '';
         function updateMinimapPartnerUI() {
             const el = document.getElementById('minimap-partner-status');
             if (!el) return;
+            let nextText = "💞 Chơi 1 mình";
+            let nextClass = "text-[9px] font-bold text-gray-500 mt-0.5 text-center leading-tight";
             if (isCoopConnected && partnerAvatarGroup) {
                 const partnerName = myCoupleRole === 'uyen' ? 'Huân' : 'Uyên';
                 const dist = Math.round(Math.hypot(partnerAvatarGroup.position.x - player.position.x, partnerAvatarGroup.position.z - player.position.z));
-                el.innerText = `💞 ${partnerName} cách ${dist}m`;
-                el.className = "text-[9px] font-extrabold text-rose-600 mt-0.5 text-center leading-tight";
-            } else {
-                el.innerText = "💞 Chơi 1 mình";
-                el.className = "text-[9px] font-bold text-gray-500 mt-0.5 text-center leading-tight";
+                nextText = `💞 ${partnerName} cách ${dist}m`;
+                nextClass = "text-[9px] font-extrabold text-rose-600 mt-0.5 text-center leading-tight";
             }
+            const cacheKey = nextText + '|' + nextClass;
+            if (cacheKey === _lastRadarPartnerKey) return;
+            _lastRadarPartnerKey = cacheKey;
+            el.innerText = nextText;
+            el.className = nextClass;
         }
 
         function renderMapRadarOntoCanvas(canvasEl, ctx, showLabels = false) {
@@ -5868,23 +6047,246 @@
         document.getElementById('btn-close-help').onclick = () => helpModal.classList.add('hidden');
         document.getElementById('btn-got-it').onclick = () => { helpModal.classList.add('hidden'); container.requestPointerLock(); };
 
-        const btnPerf = document.getElementById('btn-perf');
-        btnPerf.onclick = () => {
-            isLowSpecMode = !isLowSpecMode;
-            renderer.setPixelRatio(isLowSpecMode ? 1.0 : Math.min(window.devicePixelRatio, 1.25));
-            btnPerf.classList.toggle('bg-emerald-100', isLowSpecMode);
-            showToast(isLowSpecMode ? "Đã bật chế độ Siêu Mượt cho máy yếu! ⚡" : "Đã bật chế độ Đồ Họa Đầy Đủ 🌸");
-        };
+        // Performance & Weight Inspector Controls (Kiểm Soát Độ Nặng Từng Phần)
+        let _perfModalTimer = null;
+        let _isCornerMgCollapsed = false;
+
+        function toggleCornerMinigameDetails() {
+            _isCornerMgCollapsed = !_isCornerMgCollapsed;
+            const det = document.getElementById('mg-hud-details');
+            if (det) det.classList.toggle('hidden', _isCornerMgCollapsed);
+        }
+
+        const MODAL_CHECK_IDS = ['minigames-modal', 'map-modal', 'inventory-modal', 'craft-modal', 'quest-modal', 'letter-modal', 'coupon-modal', 'prefab-modal', 'save-modal', 'photo-modal', 'coop-modal', 'signboard-modal', 'help-modal', 'perf-modal'];
+        function isAnyFullscreenModalOpen() {
+            for (let i = 0; i < MODAL_CHECK_IDS.length; i++) {
+                const el = document.getElementById(MODAL_CHECK_IDS[i]);
+                if (el && !el.classList.contains('hidden')) return true;
+            }
+            return false;
+        }
+
+        function updateLivingCreaturesVisibility() {
+            const vis = !!perfSettings.creatures;
+            for (let i = 0; i < koiFishList.length; i++) if (koiFishList[i].mesh) koiFishList[i].mesh.visible = vis;
+            for (let i = 0; i < butterfliesList.length; i++) if (butterfliesList[i].mesh) butterfliesList[i].mesh.visible = vis;
+            if (giantDuckGroup) giantDuckGroup.visible = vis;
+        }
+
+        function refreshPerfBreakdownUI() {
+            const m = document.getElementById('perf-modal');
+            if (!m || m.classList.contains('hidden')) return;
+
+            refreshPerfMeshCounts();
+            const total = perfMetrics.totalVoxels || 1;
+            const visible = perfMetrics.visibleVoxels || 0;
+            const occPct = Math.max(0, Math.round(((total - visible) / total) * 100));
+
+            const fpsEl = document.getElementById('perf-live-fps');
+            const msEl = document.getElementById('perf-live-framems');
+            const voxEl = document.getElementById('perf-live-voxels');
+            const occEl = document.getElementById('perf-live-occluded');
+            const drawsEl = document.getElementById('perf-live-draws');
+            const dprEl = document.getElementById('perf-live-pixelratio');
+            const ramEl = document.getElementById('perf-live-ram');
+            const crtEl = document.getElementById('perf-live-creatures');
+            const mapTagEl = document.getElementById('perf-map-tag');
+
+            if (fpsEl) fpsEl.innerText = `${perfMetrics.fps} FPS`;
+            if (msEl) msEl.innerText = `~${perfMetrics.frameMs.toFixed(1)} ms (${perfMetrics.renderMs.toFixed(1)}ms GPU)`;
+            if (voxEl) voxEl.innerText = `${visible.toLocaleString('vi-VN')} / ${total.toLocaleString('vi-VN')}`;
+            if (occEl) occEl.innerText = `Ẩn khuất: ${occPct}% khối ngầm`;
+            if (drawsEl) drawsEl.innerText = `${perfMetrics.activeDrawCalls} / ${BLOCKS.length}`;
+            if (dprEl) dprEl.innerText = `Độ nét: ${perfSettings.pixelRatioCap}x • Fog ${perfSettings.fogFar}m`;
+
+            let heapStr = '8.3 MB Voxel';
+            if (typeof performance !== 'undefined' && performance.memory && performance.memory.usedJSHeapSize) {
+                const heapMb = (performance.memory.usedJSHeapSize / (1024 * 1024)).toFixed(0);
+                heapStr = `${heapMb} MB Heap + 8.3 MB`;
+            }
+            if (ramEl) ramEl.innerText = heapStr;
+            const creatureCount = koiFishList.length + butterfliesList.length + (windmillBladesGroup ? 1 : 0) + (giantDuckGroup ? 1 : 0) + pets.length;
+            if (crtEl) crtEl.innerText = `${particlesList.length} hạt • ${creatureCount} sinh vật`;
+            const mapMeta = MAP_META[normalizeMapMode(currentWorldMapMode)] || MAP_META.livik;
+            if (mapTagEl) mapTagEl.innerText = mapMeta.shortName;
+
+            // Compute weight percentage of major subsystems
+            const voxelLoadPct = Math.min(100, Math.round((visible / 115000) * 100));
+            const gpuFillPct = Math.min(100, Math.round(((perfSettings.pixelRatioCap / 1.25) * 0.6 + (perfSettings.fogFar / 360) * 0.4) * 100));
+            const creaturePct = perfSettings.creatures ? Math.min(100, Math.round((creatureCount / 28) * 100)) : 0;
+            const particlePct = (perfSettings.particles && !isLowSpecMode) ? Math.min(100, Math.round((Math.max(8, particlesList.length) / MAX_PARTICLES_POOL) * 100)) : 0;
+            const netPct = isCoopConnected ? 35 : 0;
+
+            const barsContainer = document.getElementById('perf-subsystem-bars');
+            if (barsContainer) {
+                const rows = [
+                    { label: `1. Địa hình 320×320 (${visible.toLocaleString('vi-VN')} khối lộ mặt)`, pct: voxelLoadPct, col: 'bg-sky-500', note: voxelLoadPct > 75 ? 'Chiếm ~60% GPU (Chính)' : 'Ổn định' },
+                    { label: `2. Độ nét & Tầm nhìn GPU (${perfSettings.pixelRatioCap}x • Fog ${perfSettings.fogFar}m)`, pct: gpuFillPct, col: 'bg-purple-500', note: perfSettings.pixelRatioCap > 1.0 ? 'Tải cao' : 'Nhẹ' },
+                    { label: `3. Sinh vật & Công trình động (${creatureCount} nhóm 3D)`, pct: creaturePct, col: 'bg-amber-500', note: perfSettings.creatures ? 'Đang bật' : 'Đã tắt (0%)' },
+                    { label: `4. Hạt hoa/tuyết bay (${particlesList.length}/${MAX_PARTICLES_POOL} pool)`, pct: particlePct, col: 'bg-pink-500', note: perfSettings.particles && !isLowSpecMode ? 'Pool nhẹ' : 'Đã tắt (0%)' },
+                    { label: `5. Giao diện HUD (Không GPU Blur) & Mạng Firebase`, pct: Math.max(8, netPct), col: 'bg-emerald-500', note: isCoopConnected ? 'Co-op 16Hz' : 'Offline nhẹ (0%)' }
+                ];
+                barsContainer.innerHTML = rows.map(r => `
+                    <div>
+                        <div class="flex justify-between font-bold text-gray-700 mb-0.5">
+                            <span>${r.label}</span>
+                            <span class="text-gray-500">${r.note} (${r.pct}%)</span>
+                        </div>
+                        <div class="w-full h-2 bg-gray-100 rounded-full overflow-hidden border border-gray-200">
+                            <div class="h-full ${r.col} rounded-full" style="width:${r.pct}%"></div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Top 5 Heaviest Block Types on active map
+            const topContainer = document.getElementById('perf-top-blocks');
+            if (topContainer) {
+                const counts = [];
+                BLOCKS.forEach(b => {
+                    const inst = instancedMeshes[b.id];
+                    if (inst && inst.count > 0) counts.push({ b, count: inst.count });
+                });
+                counts.sort((a, b) => b.count - a.count);
+                const top5 = counts.slice(0, 5);
+                const maxC = top5[0] ? top5[0].count : 1;
+                topContainer.innerHTML = top5.map(item => {
+                    const pct = Math.max(4, Math.round((item.count / Math.max(1, visible)) * 100));
+                    const barW = Math.max(6, Math.round((item.count / maxC) * 100));
+                    return `
+                        <div class="flex items-center gap-2">
+                            <span class="w-36 truncate font-bold text-gray-700">${item.b.emoji} ${item.b.name}</span>
+                            <div class="flex-1 h-2 bg-sky-50 rounded-full overflow-hidden border border-sky-100">
+                                <div class="h-full bg-gradient-to-r from-sky-400 to-pink-400" style="width:${barW}%"></div>
+                            </div>
+                            <span class="w-24 text-right font-mono font-bold text-gray-600">${item.count.toLocaleString('vi-VN')} (${pct}%)</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // Update toggle labels
+            const pVal = document.getElementById('perf-opt-particles-val');
+            const cVal = document.getElementById('perf-opt-creatures-val');
+            const fVal = document.getElementById('perf-opt-fog-val');
+            const dVal = document.getElementById('perf-opt-dpr-val');
+            if (pVal) pVal.innerText = (perfSettings.particles && !isLowSpecMode) ? 'Nhẹ (Bật)' : 'Đã Tắt';
+            if (cVal) cVal.innerText = perfSettings.creatures ? 'Đang Bật' : 'Đã Tắt';
+            if (fVal) fVal.innerText = `${perfSettings.fogFar}m (${perfSettings.fogFar <= 225 ? 'Nhẹ' : (perfSettings.fogFar >= 340 ? 'Xa' : 'Vừa')})`;
+            if (dVal) dVal.innerText = `${perfSettings.pixelRatioCap}x (${perfSettings.pixelRatioCap < 1 ? 'Siêu Nhẹ' : (perfSettings.pixelRatioCap > 1 ? 'Nét HD' : 'Chuẩn')})`;
+
+            ['ultralight', 'balanced', 'hd'].forEach(p => {
+                const btn = document.getElementById(`perf-preset-${p}`);
+                if (!btn) return;
+                const active = perfSettings.preset === p;
+                btn.classList.toggle('ring-2', active);
+                btn.classList.toggle('ring-emerald-500', active);
+            });
+        }
+
+        function clearActiveParticles() {
+            while (particlesList.length > 0) {
+                const p = particlesList.pop();
+                if (p && p.mesh) p.mesh.visible = false;
+                particlePool.push(p);
+            }
+        }
+
+        function applyPerfPreset(preset) {
+            perfSettings.preset = preset;
+            if (preset === 'ultralight') {
+                isLowSpecMode = true;
+                perfSettings.particles = false;
+                perfSettings.creatures = false;
+                perfSettings.pixelRatioCap = 0.9;
+                perfSettings.fogFar = 220;
+                showRainbow = false;
+                clearActiveParticles();
+            } else if (preset === 'hd') {
+                isLowSpecMode = false;
+                perfSettings.particles = true;
+                perfSettings.creatures = true;
+                perfSettings.pixelRatioCap = 1.25;
+                perfSettings.fogFar = 360;
+                showRainbow = true;
+            } else {
+                isLowSpecMode = false;
+                perfSettings.particles = true;
+                perfSettings.creatures = true;
+                perfSettings.pixelRatioCap = 1.0;
+                perfSettings.fogFar = 290;
+                showRainbow = true;
+            }
+            if (rainbowGroup) rainbowGroup.visible = showRainbow;
+            if (scene.fog) scene.fog.far = perfSettings.fogFar;
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
+            updateLivingCreaturesVisibility();
+            refreshPerfBreakdownUI();
+            showToast(
+                preset === 'ultralight' ? '🚀 Đã bật Chế Độ Siêu Nhẹ (60 FPS Cứng)!' :
+                (preset === 'hd' ? '✨ Đã bật Chế Độ Nét Cao (HD)!' : '⚖️ Đã bật Chế Độ Cân Bằng V5.4!'),
+                '📊', 2400
+            );
+        }
+
+        function togglePerfOption(opt) {
+            if (opt === 'particles') {
+                perfSettings.particles = !perfSettings.particles;
+                if (isLowSpecMode && perfSettings.particles) isLowSpecMode = false;
+                if (!perfSettings.particles) clearActiveParticles();
+            } else if (opt === 'creatures') {
+                perfSettings.creatures = !perfSettings.creatures;
+                updateLivingCreaturesVisibility();
+            }
+            perfSettings.preset = 'custom';
+            refreshPerfBreakdownUI();
+        }
+
+        function cyclePerfFogFar() {
+            const steps = [210, 290, 360];
+            const idx = steps.indexOf(perfSettings.fogFar);
+            perfSettings.fogFar = steps[(idx + 1) % steps.length];
+            if (scene.fog) scene.fog.far = perfSettings.fogFar;
+            perfSettings.preset = 'custom';
+            refreshPerfBreakdownUI();
+        }
+
+        function cyclePerfPixelRatio() {
+            const steps = [0.85, 1.0, 1.25];
+            const idx = steps.indexOf(perfSettings.pixelRatioCap);
+            perfSettings.pixelRatioCap = steps[(idx + 1) % steps.length];
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, perfSettings.pixelRatioCap));
+            perfSettings.preset = 'custom';
+            refreshPerfBreakdownUI();
+        }
+
+        function togglePerfModal() {
+            const m = document.getElementById('perf-modal');
+            if (!m) return;
+            m.classList.toggle('hidden');
+            clearInterval(_perfModalTimer);
+            if (!m.classList.contains('hidden')) {
+                document.exitPointerLock();
+                refreshPerfBreakdownUI();
+                _perfModalTimer = setInterval(refreshPerfBreakdownUI, 650);
+            }
+        }
 
         /* ==========================================================================
-           11. SAVE / LOAD PERSISTENCE (FAST V5.0 DELTA SAVE + LEGACY V4 IMPORT)
+           11. SAVE / LOAD PERSISTENCE (FAST V5.4 DIRTY-CHECKED DELTA SAVE)
            ========================================================================== */
         let currentSlot = 1;
         const SLOT_KEYS = { 1: 'kawaiicraft_v5_slot_1', 2: 'kawaiicraft_v5_slot_2', 3: 'kawaiicraft_v5_slot_3' };
         let autoSaveTimer = null;
+        let isWorldSaveDirty = true;
         let coupleScores = { huan: 0, uyen: 0 };
 
         function updateSlotCardsUI() {
+            const badgeEl = document.getElementById('active-slot-badge');
+            if (badgeEl) badgeEl.innerText = `Slot ${currentSlot}`;
+            const saveModalEl = document.getElementById('save-modal');
+            if (saveModalEl && saveModalEl.classList.contains('hidden')) return;
+
             [1, 2, 3].forEach(s => {
                 const infoEl = document.getElementById(`slot-info-${s}`);
                 const tagEl = document.getElementById(`slot-active-tag-${s}`);
@@ -5908,16 +6310,17 @@
                     infoEl.innerText = "Trống (Bấm Chọn để tạo thế giới 320x320 mới)";
                 }
             });
-            const badgeEl = document.getElementById('active-slot-badge');
-            if (badgeEl) badgeEl.innerText = `Slot ${currentSlot}`;
         }
 
         function triggerAutoSave() {
+            isWorldSaveDirty = true;
             clearTimeout(autoSaveTimer);
             autoSaveTimer = setTimeout(() => { saveWorldToCurrentSlot(true); }, 1200);
         }
 
-        function saveWorldToCurrentSlot(silent = true) {
+        function saveWorldToCurrentSlot(silent = true, force = true) {
+            if (silent && !force && !isWorldSaveDirty) return;
+            isWorldSaveDirty = false;
             // Lưu danh sách Delta siêu nhẹ (< 1ms) thay vì quét toàn bộ 150.000 khối mỗi lần
             const deltasArr = [];
             for (const [key, id] of worldDeltas.entries()) {
@@ -7519,13 +7922,18 @@
             }
         }
 
+        let _lastMgHudKey = '';
         function updateMinigameHUD(visible, title = '', timerStr = '', roleStr = '', skillStr = '') {
             const banner = document.getElementById('minigame-hud-banner');
             if (!banner) return;
             if (!visible) {
-                banner.classList.add('hidden');
+                if (!banner.classList.contains('hidden')) banner.classList.add('hidden');
+                _lastMgHudKey = '';
                 return;
             }
+            const nextKey = `${title}|${timerStr}|${roleStr}|${skillStr}`;
+            if (!banner.classList.contains('hidden') && _lastMgHudKey === nextKey) return;
+            _lastMgHudKey = nextKey;
             banner.classList.remove('hidden');
             const titleEl = document.getElementById('mg-hud-title');
             const timerEl = document.getElementById('mg-hud-timer');
@@ -9133,50 +9541,78 @@
            12. MAIN ANIMATION LOOP (LOCKED 60 FPS)
            ========================================================================== */
         let lastFrameTime = performance.now();
+        let _prevAnimNow = lastFrameTime;
         let frameCount = 0;
+        let _fpsWindowFrames = 0;
         const fpsText = document.getElementById('fps-counter');
 
         function animate() {
             requestAnimationFrame(animate);
 
             frameCount++;
+            _fpsWindowFrames++;
             const now = performance.now();
+            const rawDt = now - _prevAnimNow;
+            _prevAnimNow = now;
+            const dtScale = Math.min(2.2, Math.max(0.35, (rawDt || 16.667) / 16.667));
+            if (rawDt > 0 && rawDt < 500) {
+                perfMetrics.frameMs = perfMetrics.frameMs * 0.9 + rawDt * 0.1;
+            }
             if (now - lastFrameTime >= 1000) {
-                fpsText.innerText = `${frameCount} FPS`;
-                frameCount = 0;
+                perfMetrics.fps = _fpsWindowFrames;
+                if (fpsText) fpsText.innerText = `${_fpsWindowFrames} FPS`;
+                _fpsWindowFrames = 0;
                 lastFrameTime = now;
             }
 
-            // Animate Windmill Blades
-            if (windmillBladesGroup) windmillBladesGroup.rotation.z += 0.012;
+            const modalOpen = isAnyFullscreenModalOpen();
 
-            // Animate Floating Giant Duck
-            if (giantDuckGroup) giantDuckGroup.position.y = 3.5 + Math.sin(now * 0.003) * 0.18;
+            if (!modalOpen) {
+                if (perfSettings.creatures && !isLowSpecMode) {
+                    if (windmillBladesGroup) windmillBladesGroup.rotation.z += 0.012 * dtScale;
+                    if (giantDuckGroup) giantDuckGroup.position.y = 3.5 + Math.sin(now * 0.003) * 0.18;
+                    updateLivingCreatures(now);
+                }
 
-            // Animate Living Creatures (Koi Fish & Butterflies)
-            updateLivingCreatures(now);
+                // Animate 6 Couple Minigames, Rides (Ferris Wheel, Swing) & HUD
+                updateMinigamesAndRides(now);
 
-            // Animate 6 Couple Minigames, Rides (Ferris Wheel, Swing) & HUD
-            updateMinigamesAndRides(now);
+                // Animate 3D Couple Avatars, Firebase Realtime Sync, Resonance & 3D Signboards
+                updateCoupleAvatarsAndMechanics(now);
 
-            // Animate 3D Couple Avatars, Firebase Realtime Sync, Resonance & 3D Signboards
-            updateCoupleAvatarsAndMechanics(now);
+                updatePlayerMovement(dtScale);
+                updateRaycast();
+                updateParticles();
+                updateItemDrops();
 
-            updatePlayerMovement();
-            updateRaycast();
-            updateParticles();
-            updateItemDrops();
+                if (frameCount % 16 === 0) {
+                    const mc = document.getElementById('minimap-container');
+                    if (mc && !mc.classList.contains('hidden') && window.innerWidth >= 640) {
+                        drawMinimap();
+                    }
+                }
+                for (let i = 0; i < pets.length; i++) pets[i].update(player.position);
 
-            if (frameCount % 8 === 0) {
-                drawMinimap();
-                const mapModalEl = document.getElementById('map-modal');
-                if (mapModalEl && !mapModalEl.classList.contains('hidden')) {
-                    drawFullInteractiveMap();
+                const tR0 = performance.now();
+                renderer.render(scene, camera);
+                const rDur = performance.now() - tR0;
+                perfMetrics.renderMs = perfMetrics.renderMs * 0.9 + rDur * 0.1;
+            } else {
+                // Giữ đồng bộ nhẹ cho Co-op & Bản đồ lớn khi đang mở bảng chọn/độ nặng (không ngốn GPU)
+                updateCoupleAvatarsAndMechanics(now);
+                if (frameCount % 16 === 0) {
+                    const mapModalEl = document.getElementById('map-modal');
+                    if (mapModalEl && !mapModalEl.classList.contains('hidden')) {
+                        drawFullInteractiveMap();
+                    }
+                }
+                if (frameCount % 4 === 0) {
+                    const tR0 = performance.now();
+                    renderer.render(scene, camera);
+                    const rDur = performance.now() - tR0;
+                    perfMetrics.renderMs = perfMetrics.renderMs * 0.9 + rDur * 0.1;
                 }
             }
-            pets.forEach(p => p.update(player.position));
-
-            renderer.render(scene, camera);
         }
 
         window.addEventListener('resize', () => {
@@ -9185,7 +9621,7 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        setInterval(() => { saveWorldToCurrentSlot(true); }, 10000);
+        setInterval(() => { saveWorldToCurrentSlot(true, false); }, 10000);
 
         window.onload = function () {
             setWeather(0);

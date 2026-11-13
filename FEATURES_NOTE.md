@@ -1,3 +1,24 @@
+# KawaiiCraft V5.4 — Tối Ưu Siêu Nhẹ 60 FPS, Bảng Độ Nặng & HUD Góc Gọn
+
+## 1. Dời Toàn Bộ Thanh Trạng Thái Vào Góc Trái Gọn Gàng (`#hud-center-alerts-stack`)
+- Chuyển cụm `#hud-center-alerts-stack` (`#minigame-hud-banner`, `#battle-hp-hud`, `#toast`, `#map-invite-banner`, `#partner-compass-indicator`, `#together-resonance-badge`) từ giữa màn hình sang **góc trên bên trái (`top-[78px] left-2.5 w-[228px] sm:w-[258px]`)**.
+- Bổ sung nút thu gọn/mở rộng (`▼ Thu gọn`) ngay trên banner minigame để người chơi có tầm nhìn rộng thoáng tối đa giữa màn hình.
+
+## 2. Tinh Giảm Độ Nặng & Triệt Tiêu Khựng Lag (Anti-Lag V5.4)
+- **Xóa sạch GPU `backdrop-filter: blur(...)`** khỏi `.cozy-glass`, thanh HUD trên và tất cả các bảng chọn (`#minigames-modal`, `#perf-modal`, v.v.) giúp mở bảng chọn trò chơi mượt tức thì.
+- **Tạm giảm tải 3D khi mở bảng (`isAnyFullscreenModalOpen()`):** Giới hạn render 3D phía sau xuống 1/4 tần suất và tạm dừng quét sinh vật/hạt/minimap để CPU/GPU dồn 100% cho giao diện chọn trò chơi.
+- **Chống khựng khi di chuyển (`Delta-Time` + `Zero-GC`):** Loại bỏ khởi tạo `THREE.Vector3`/`Euler` mới mỗi khung hình trong `raycastVoxel()` và `updatePlayerMovement(dtScale)`, bổ sung cache text chống ghi DOM trùng lặp (`_lastCoordsStr`, `_lastRadarPartnerKey`, `_lastMgHudKey`).
+- **Tái sử dụng hạt (`particlePool`) & Shader `MeshLambertMaterial`:** Thay `MeshStandardMaterial` PBR nặng bằng `MeshLambertMaterial` nhẹ (~2–3× nhanh hơn), giảm mặc định `antialias: false`, `pixelRatioCap: 1.0`, `fogFar: 290`, ẩn luôn mesh loại khối có `count === 0`.
+- **Chống khựng định kỳ mỗi 10 giây (`isWorldSaveDirty`):** Chỉ ghi `localStorage` khi có thay đổi (`force = false` cho Auto-Save nền) và không dựng lại HTML thẻ slot nếu `#save-modal` đang đóng.
+
+## 3. Bảng Soi Độ Nặng & Tinh Chỉnh Mượt Thời Gian Thực (`#perf-modal`)
+- Bấm thẳng vào nút **`60 FPS 📊 Độ nặng`** trên thanh góc trên hoặc vào **`⚙️ Thêm ▾ -> 📊 Độ Nặng / Mượt`** để xem:
+  - Điểm FPS / ms khung hình (`renderMs` GPU), số Voxel đang vẽ vs ẩn (`Surface Culling`), số Draw Calls, và tỷ lệ % độ nặng của 5 phân hệ (Địa hình Voxel, GPU Fill-Rate & Fog, Sinh vật & Công trình động, Hạt Particle Pool, HUD & Bản đồ con).
+  - Top 5 loại khối nặng nhất trên bản đồ hiện tại.
+  - 3 nút cấu hình nhanh **🚀 Siêu Nhẹ**, **⚖️ Cân Bằng**, **✨ Nét Cao** cùng 4 nút bật/tắt chi tiết từng phần.
+
+---
+
 # KawaiiCraft V5.3 — Nhật Ký Nâng Cấp Toàn Diện Dữ Liệu, Kiến Trúc & Web Hướng Dẫn (`huong-dan.html`)
 
 ## 1. Tạo Mới Web Tài Liệu Tương Tác Giải Thích Chi Tiết (`huong-dan.html`)
