@@ -2135,7 +2135,7 @@
                 level: 4, preset: 'level4', badge: 'M4 Cực Phẩm', name: 'Mức 4: Cực Phẩm HD+ (Bóng Đổ & Mây 3D)',
                 pixelRatioCap: 2.0, fogNear: 185, fogFar: 560, materialMode: 'standard_ultra',
                 shadows: true, clouds: true, particles: true, creatures: true, rainbow: true,
-                waterShimmer: true, hemiInt: 0.36, toneExposure: 1.08, maxAmbientParticles: 48
+                waterShimmer: true, hemiInt: 0.55, toneExposure: 1.0, maxAmbientParticles: 48
             }
         };
 
@@ -6272,9 +6272,9 @@
             scene.background = new THREE.Color(w.bg);
             scene.fog.color.setHex(w.fog);
             ambientLight.color.setHex(w.amb);
-            ambientLight.intensity = w.ambInt;
+            ambientLight.intensity = w.ambInt * (perfSettings.level === 4 ? 1.22 : 1);
             sunLight.color.setHex(w.sun);
-            sunLight.intensity = w.sunInt;
+            sunLight.intensity = w.sunInt * (perfSettings.level === 4 ? 1.12 : 1);
             if (typeof hemiLight !== 'undefined' && hemiLight) {
                 const lvCfg = (typeof GRAPHICS_LEVELS !== 'undefined' && GRAPHICS_LEVELS[perfSettings.level]) || { hemiInt: 0.15 };
                 const isNight = (curWeatherIdx === 2);
@@ -6649,7 +6649,7 @@
             if (skyAtmosphereGroup) skyAtmosphereGroup.visible = !!cfg.clouds;
             if (hemiLight) hemiLight.intensity = (typeof curWeatherIdx !== 'undefined' && curWeatherIdx === 2) ? cfg.hemiInt * 0.35 : cfg.hemiInt;
             if (THREE.ACESFilmicToneMapping !== undefined && THREE.NoToneMapping !== undefined) {
-                renderer.toneMapping = (lv === 4) ? THREE.ACESFilmicToneMapping : THREE.NoToneMapping;
+                renderer.toneMapping = THREE.NoToneMapping; // ACES làm màu đục/xám -> bỏ để giữ pastel tươi
                 renderer.toneMappingExposure = cfg.toneExposure;
             }
             if (scene.fog) {
@@ -6661,6 +6661,7 @@
             applyMaterialMode(cfg.materialMode);
             applyShadowsSetting(cfg.shadows);
             updateLivingCreaturesVisibility();
+            if (typeof setWeather === 'function' && typeof curWeatherIdx !== 'undefined') setWeather(curWeatherIdx, true);
             refreshPerfBreakdownUI();
 
             try { localStorage.setItem('kawaiicraft_graphics_level', String(lv)); } catch (e) {}
