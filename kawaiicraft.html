@@ -7,12 +7,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Quicksand:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      background-color: #faf7f2;
-      color: #292524;
+      background: linear-gradient(135deg, #fff5f8 0%, #f0f7ff 50%, #faf5ff 100%);
+      color: #1e293b;
     }
     .font-display {
       font-family: 'Quicksand', sans-serif;
@@ -21,20 +21,26 @@
       font-family: 'JetBrains Mono', monospace;
       font-variant-numeric: tabular-nums;
     }
+    .pastel-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1.5px solid rgba(244, 114, 182, 0.22);
+      box-shadow: 0 12px 32px -8px rgba(236, 72, 153, 0.1);
+      backdrop-filter: blur(12px);
+    }
   </style>
 </head>
 <body class="min-h-screen antialiased">
 
-  <!-- TOP HEADER (56px) -->
-  <header class="sticky top-0 z-30 h-14 border-b border-[#E7E0D6] bg-[#FAF7F2]/90 backdrop-blur-md">
-    <div class="mx-auto flex h-full max-w-6xl items-center justify-between px-4 sm:px-6">
+  <!-- TOP HEADER (60px) -->
+  <header class="sticky top-0 z-30 h-15 border-b border-pink-200/70 bg-white/85 backdrop-blur-md">
+    <div class="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
       <div class="flex items-center gap-3">
-        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E15B64] text-white font-display text-sm font-bold">
-          KC
+        <div class="flex h-9 w-9 items-center justify-center rounded-2xl bg-gradient-to-br from-pink-500 via-rose-500 to-purple-500 text-white font-display text-sm font-bold shadow-md shadow-pink-500/25">
+          🌸
         </div>
         <div class="flex items-center gap-2.5">
-          <span class="font-display text-base font-bold tracking-tight text-[#292524]">KawaiiCraft V5.5</span>
-          <span class="hidden sm:inline-block rounded-md border border-[#E7E0D6] bg-white px-2 py-0.5 font-mono text-[11px] text-[#78716C]">
+          <span class="font-display text-base font-extrabold bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent">KawaiiCraft V5.5</span>
+          <span class="hidden sm:inline-block rounded-full border border-pink-200 bg-pink-50/80 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-pink-600">
             Three.js WebGL · Firebase Co-op
           </span>
         </div>
@@ -43,15 +49,15 @@
       <div class="flex items-center gap-2">
         <a
           href="huong-dan.html"
-          class="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#E7E0D6] bg-white px-3 text-xs font-medium text-[#57534E] transition-colors hover:bg-[#F5F0E6] hover:text-[#292524]"
+          class="inline-flex h-9 items-center gap-1.5 rounded-xl border border-purple-200 bg-purple-50/80 px-3.5 text-xs font-bold text-purple-700 transition hover:bg-purple-100"
         >
-          <span>Tài liệu kiến trúc</span>
+          <span>📘 Tài liệu kiến trúc</span>
         </a>
         <a
           href="index.html"
-          class="inline-flex h-8 items-center gap-1.5 rounded-lg bg-[#292524] px-3.5 text-xs font-medium text-white transition-colors hover:bg-[#44403C]"
+          class="inline-flex h-9 items-center gap-1.5 rounded-xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 px-4 text-xs font-bold text-white shadow-md shadow-pink-500/20 transition hover:brightness-105"
         >
-          <span>Vào thế giới 3D</span>
+          <span>🎮 Vào thế giới 3D</span>
         </a>
       </div>
     </div>
@@ -64,25 +70,25 @@
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 items-stretch">
 
       <!-- LEFT (7 COLS): HERO + MAP SELECTOR + QUICK CO-OP CONFIG -->
-      <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-[#E7E0D6] bg-white p-6 sm:p-8 space-y-6">
+      <div class="lg:col-span-7 pastel-card flex flex-col justify-between rounded-3xl p-6 sm:p-8 space-y-6">
         <div>
-          <div class="inline-flex items-center gap-2 rounded-md border border-[#F2D6D8] bg-[#FDF2F3] px-2.5 py-1 text-xs font-medium text-[#C84B54]">
-            <span class="h-1.5 w-1.5 rounded-full bg-[#E15B64]"></span>
+          <div class="inline-flex items-center gap-2 rounded-full border border-pink-200 bg-gradient-to-r from-pink-50 to-purple-50 px-3 py-1 text-xs font-bold text-pink-600">
+            <span class="h-2 w-2 rounded-full bg-pink-500"></span>
             <span>Thế giới Voxel 3D đa địa hình dành cho 2 người chơi</span>
           </div>
 
-          <h1 class="mt-4 font-display text-2xl font-bold tracking-tight text-[#292524] sm:text-3xl">
-            Khám phá 3 vùng đất 320×320 khối và 11 trò chơi tương tác thời gian thực
+          <h1 class="mt-4 font-display text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            Khám phá <span class="bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent">3 vùng đất 320×320 khối</span> và 11 trò chơi tương tác thời gian thực
           </h1>
 
-          <p class="mt-2.5 text-sm leading-relaxed text-[#57534E]">
-            Được tối ưu hóa bằng Procedural Canvas Textures và thuật toán loại bỏ mặt khuất (Hidden-Face Culling), duy trì tốc độ khung hình 60 FPS ổn định ngay trên laptop văn phòng.
+          <p class="mt-2.5 text-sm leading-relaxed text-slate-600">
+            Được tối ưu hóa bằng Procedural Canvas Textures và thuật toán loại bỏ mặt khuất (Hidden-Face Culling), duy trì tốc độ khung hình 60 FPS mượt mà ngay trên laptop văn phòng.
           </p>
 
           <!-- Symmetrical 3-Map Selector Grid -->
           <div class="mt-6">
-            <div class="flex items-center justify-between text-xs text-[#78716C] mb-2.5">
-              <span class="font-medium text-[#292524]">Chọn bản đồ khởi hành</span>
+            <div class="flex items-center justify-between text-xs text-slate-500 mb-2.5">
+              <span class="font-bold text-pink-600">Chọn bản đồ khởi hành</span>
               <span class="font-mono">Kích thước mỗi bản đồ: 320 × 320</span>
             </div>
 
@@ -91,68 +97,68 @@
                 type="button"
                 onclick="selectLaunchMap('livik')"
                 id="map-card-livik"
-                class="flex flex-col justify-between rounded-xl border-2 border-[#E15B64] bg-[#FDF8F8] p-3.5 text-left transition-colors"
+                class="flex flex-col justify-between rounded-2xl border-2 border-pink-400 bg-gradient-to-br from-pink-50/90 to-rose-50/50 p-4 text-left shadow-sm transition"
               >
                 <div>
-                  <span class="font-mono text-[11px] text-[#E15B64] font-medium">Bản đồ 01</span>
-                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Đảo Livik 4 Mùa</div>
-                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Hồ Trái Tim, Đồi Anh Đào, Vòng Quay Mặt Trời</p>
+                  <span class="font-mono text-[11px] text-pink-600 font-bold">🌸 Bản đồ 01</span>
+                  <div class="mt-1 font-display text-sm font-extrabold text-slate-900">Đảo Livik 4 Mùa</div>
+                  <p class="mt-1 text-xs text-slate-600 leading-snug">Hồ Trái Tim, Đồi Anh Đào, Vòng Quay Mặt Trời</p>
                 </div>
-                <span class="mt-3 font-mono text-[11px] text-[#292524] font-medium">Đang chọn →</span>
+                <span class="mt-3 font-mono text-[11px] text-pink-600 font-bold">Đang chọn →</span>
               </button>
 
               <button
                 type="button"
                 onclick="selectLaunchMap('vikendi')"
                 id="map-card-vikendi"
-                class="flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]"
+                class="flex flex-col justify-between rounded-2xl border border-sky-200 bg-gradient-to-br from-sky-50/60 to-indigo-50/40 p-4 text-left transition hover:border-sky-300"
               >
                 <div>
-                  <span class="font-mono text-[11px] text-[#78716C]">Bản đồ 02</span>
-                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Lâu Đài Tuyết Vikendi</div>
-                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Cực quang đêm, Sân trượt băng, Lâu đài pha lê</p>
+                  <span class="font-mono text-[11px] text-sky-600 font-bold">❄️ Bản đồ 02</span>
+                  <div class="mt-1 font-display text-sm font-extrabold text-slate-900">Lâu Đài Tuyết Vikendi</div>
+                  <p class="mt-1 text-xs text-slate-600 leading-snug">Cực quang đêm, Sân trượt băng, Lâu đài pha lê</p>
                 </div>
-                <span class="mt-3 font-mono text-[11px] text-[#78716C]">Chọn bản đồ</span>
+                <span class="mt-3 font-mono text-[11px] text-slate-500">Chọn bản đồ</span>
               </button>
 
               <button
                 type="button"
                 onclick="selectLaunchMap('sanhok')"
                 id="map-card-sanhok"
-                class="flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]"
+                class="flex flex-col justify-between rounded-2xl border border-emerald-200 bg-gradient-to-br from-emerald-50/60 to-teal-50/40 p-4 text-left transition hover:border-emerald-300"
               >
                 <div>
-                  <span class="font-mono text-[11px] text-[#78716C]">Bản đồ 03</span>
-                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Rừng Nhiệt Đới Sanhok</div>
-                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Đền cổ, Thác nước đôi, Đom đóm rừng sâu</p>
+                  <span class="font-mono text-[11px] text-emerald-600 font-bold">🌿 Bản đồ 03</span>
+                  <div class="mt-1 font-display text-sm font-extrabold text-slate-900">Rừng Nhiệt Đới Sanhok</div>
+                  <p class="mt-1 text-xs text-slate-600 leading-snug">Đền cổ, Thác nước đôi, Đom đóm rừng sâu</p>
                 </div>
-                <span class="mt-3 font-mono text-[11px] text-[#78716C]">Chọn bản đồ</span>
+                <span class="mt-3 font-mono text-[11px] text-slate-500">Chọn bản đồ</span>
               </button>
             </div>
           </div>
         </div>
 
         <!-- Quick Co-op Session Pre-config & Primary CTA -->
-        <div class="border-t border-[#E7E0D6] pt-5 space-y-4">
+        <div class="border-t border-pink-100 pt-5 space-y-4">
           <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
-              <label class="block text-xs font-medium text-[#57534E] mb-1">Tên hiển thị trong thế giới</label>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Tên hiển thị trong thế giới</label>
               <input
                 id="player-name-input"
                 type="text"
                 value="Huân"
                 placeholder="Nhập tên của bạn..."
-                class="h-9 w-full rounded-lg border border-[#E7E0D6] bg-[#FAF7F2] px-3 text-xs font-medium text-[#292524] outline-none focus:border-[#E15B64]"
+                class="h-10 w-full rounded-xl border border-pink-200 bg-pink-50/40 px-3 text-xs font-semibold text-slate-800 outline-none focus:border-pink-400 focus:bg-white"
               />
             </div>
             <div>
-              <label class="block text-xs font-medium text-[#57534E] mb-1">Mã phòng Co-op (Firebase)</label>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Mã phòng Co-op (Firebase)</label>
               <input
                 id="room-code-input"
                 type="text"
                 value="HUAN-UYEN"
                 placeholder="VD: HUAN-UYEN"
-                class="h-9 w-full rounded-lg border border-[#E7E0D6] bg-[#FAF7F2] px-3 font-mono text-xs font-medium text-[#292524] outline-none focus:border-[#E15B64]"
+                class="h-10 w-full rounded-xl border border-purple-200 bg-purple-50/40 px-3 font-mono text-xs font-bold text-purple-800 outline-none focus:border-purple-400 focus:bg-white"
               />
             </div>
           </div>
@@ -161,17 +167,17 @@
             <button
               type="button"
               onclick="launchGameNow()"
-              class="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-[#E15B64] px-6 text-xs font-semibold text-white transition-colors hover:bg-[#C84B54]"
+              class="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 px-6 text-xs font-extrabold text-white shadow-lg shadow-pink-500/25 transition hover:brightness-105"
             >
-              <span>Khởi động KawaiiCraft 3D</span>
-              <span class="font-mono text-[11px] opacity-85">→</span>
+              <span>🌸 Khởi động KawaiiCraft 3D</span>
+              <span class="font-mono text-[11px]">→</span>
             </button>
 
             <a
               href="huong-dan.html"
-              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#E7E0D6] bg-[#FAF7F2] px-5 text-xs font-medium text-[#292524] transition-colors hover:bg-[#EFEAE1]"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-2xl border border-indigo-200 bg-indigo-50/80 px-5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100"
             >
-              <span>Sổ tay Kỹ thuật &amp; Cấu trúc File</span>
+              <span>📘 Sổ tay Kỹ thuật &amp; Cấu trúc File</span>
             </a>
           </div>
         </div>
@@ -181,59 +187,59 @@
       <div class="lg:col-span-5 flex flex-col justify-between gap-6">
 
         <!-- Keybindings Card -->
-        <div class="flex-1 rounded-2xl border border-[#E7E0D6] bg-white p-6">
-          <div class="flex items-center justify-between border-b border-[#E7E0D6] pb-3">
-            <h2 class="font-display text-sm font-bold text-[#292524]">Bảng phím tắt điều khiển</h2>
-            <span class="font-mono text-[11px] text-[#78716C]">Chuột + Bàn phím</span>
+        <div class="pastel-card flex-1 rounded-3xl p-6">
+          <div class="flex items-center justify-between border-b border-pink-100 pb-3">
+            <h2 class="font-display text-sm font-extrabold text-pink-600">Bảng phím tắt điều khiển</h2>
+            <span class="rounded-full bg-purple-50 px-2.5 py-0.5 font-mono text-[11px] font-semibold text-purple-600">Chuột + Bàn phím</span>
           </div>
 
-          <div class="mt-4 divide-y divide-[#F2ECE1] text-xs">
+          <div class="mt-4 divide-y divide-pink-100/70 text-xs">
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Di chuyển nhân vật</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">W A S D</kbd>
+              <span class="font-medium text-slate-600">Di chuyển nhân vật</span>
+              <kbd class="rounded-lg border border-pink-200 bg-pink-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-pink-700">W A S D</kbd>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Bật / tắt chế độ bay tự do</span>
+              <span class="font-medium text-slate-600">Bật / tắt chế độ bay tự do</span>
               <div class="flex items-center gap-1">
-                <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">F</kbd>
-                <span class="text-[#A8A29E]">hoặc</span>
-                <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">Space ×2</kbd>
+                <kbd class="rounded-lg border border-sky-200 bg-sky-50/80 px-2 py-0.5 font-mono text-[11px] font-bold text-sky-700">F</kbd>
+                <span class="text-slate-400">hoặc</span>
+                <kbd class="rounded-lg border border-sky-200 bg-sky-50/80 px-2 py-0.5 font-mono text-[11px] font-bold text-sky-700">Space ×2</kbd>
               </div>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Mở bản đồ 320×320 &amp; Đổi vùng đất</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">M</kbd>
+              <span class="font-medium text-slate-600">Mở bản đồ 320×320 &amp; Đổi vùng đất</span>
+              <kbd class="rounded-lg border border-purple-200 bg-purple-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-purple-700">M</kbd>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Khu vui chơi 11 Minigame cặp đôi</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">U</kbd>
+              <span class="font-medium text-slate-600">Khu vui chơi 11 Minigame cặp đôi</span>
+              <kbd class="rounded-lg border border-amber-200 bg-amber-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-amber-700">U</kbd>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Kho 36 khối xây dựng &amp; Nội thất</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">B</kbd>
+              <span class="font-medium text-slate-600">Kho 36 khối xây dựng &amp; Nội thất</span>
+              <kbd class="rounded-lg border border-emerald-200 bg-emerald-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-emerald-700">B</kbd>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Dịch chuyển tức thời tới người chơi cùng</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">G</kbd>
+              <span class="font-medium text-slate-600">Dịch chuyển tức thời tới người chơi cùng</span>
+              <kbd class="rounded-lg border border-rose-200 bg-rose-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-rose-700">G</kbd>
             </div>
             <div class="flex items-center justify-between py-2.5">
-              <span class="text-[#57534E]">Ẩn / hiện giao diện để chụp ảnh</span>
-              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">Tab</kbd>
+              <span class="font-medium text-slate-600">Ẩn / hiện giao diện để chụp ảnh</span>
+              <kbd class="rounded-lg border border-indigo-200 bg-indigo-50/80 px-2.5 py-0.5 font-mono text-[11px] font-bold text-indigo-700">Tab</kbd>
             </div>
           </div>
         </div>
 
         <!-- Symmetrical 2x2 Engine Spec Grid -->
-        <div class="grid grid-cols-2 gap-3">
-          <div class="rounded-xl border border-[#E7E0D6] bg-white p-4">
-            <div class="text-xs text-[#78716C]">Hiệu năng đồ họa</div>
-            <div class="mt-1 font-mono text-base font-semibold text-[#292524]">60 FPS · 4 mức</div>
-            <div class="mt-0.5 text-[11px] text-[#78716C]">InstancedMesh + Culling</div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="pastel-card rounded-2xl p-4">
+            <div class="text-xs font-semibold text-pink-600">Hiệu năng đồ họa</div>
+            <div class="mt-1 font-mono text-base font-extrabold text-slate-900">60 FPS · 4 mức</div>
+            <div class="mt-0.5 text-[11px] text-slate-500">InstancedMesh + Culling</div>
           </div>
-          <div class="rounded-xl border border-[#E7E0D6] bg-white p-4">
-            <div class="text-xs text-[#78716C]">Đồng bộ mạng</div>
-            <div class="mt-1 font-mono text-base font-semibold text-[#292524]">15Hz + Lerp</div>
-            <div class="mt-0.5 text-[11px] text-[#78716C]">Firebase Realtime DB</div>
+          <div class="pastel-card rounded-2xl p-4">
+            <div class="text-xs font-semibold text-purple-600">Đồng bộ mạng</div>
+            <div class="mt-1 font-mono text-base font-extrabold text-slate-900">15Hz + Lerp</div>
+            <div class="mt-0.5 text-[11px] text-slate-500">Firebase Realtime DB</div>
           </div>
         </div>
       </div>
@@ -246,16 +252,34 @@
 
     function selectLaunchMap(mapId) {
       selectedMap = mapId;
+      const styles = {
+        livik: {
+          active: 'flex flex-col justify-between rounded-2xl border-2 border-pink-400 bg-gradient-to-br from-pink-50/90 to-rose-50/50 p-4 text-left shadow-sm transition',
+          inactive: 'flex flex-col justify-between rounded-2xl border border-pink-200 bg-pink-50/30 p-4 text-left transition hover:border-pink-300',
+          color: 'text-pink-600'
+        },
+        vikendi: {
+          active: 'flex flex-col justify-between rounded-2xl border-2 border-sky-400 bg-gradient-to-br from-sky-50/90 to-indigo-50/50 p-4 text-left shadow-sm transition',
+          inactive: 'flex flex-col justify-between rounded-2xl border border-sky-200 bg-sky-50/30 p-4 text-left transition hover:border-sky-300',
+          color: 'text-sky-600'
+        },
+        sanhok: {
+          active: 'flex flex-col justify-between rounded-2xl border-2 border-emerald-400 bg-gradient-to-br from-emerald-50/90 to-teal-50/50 p-4 text-left shadow-sm transition',
+          inactive: 'flex flex-col justify-between rounded-2xl border border-emerald-200 bg-emerald-50/30 p-4 text-left transition hover:border-emerald-300',
+          color: 'text-emerald-600'
+        }
+      };
+
       ['livik', 'vikendi', 'sanhok'].forEach(id => {
         const el = document.getElementById('map-card-' + id);
         if (id === mapId) {
-          el.className = 'flex flex-col justify-between rounded-xl border-2 border-[#E15B64] bg-[#FDF8F8] p-3.5 text-left transition-colors';
+          el.className = styles[id].active;
           el.lastElementChild.textContent = 'Đang chọn →';
-          el.lastElementChild.className = 'mt-3 font-mono text-[11px] text-[#292524] font-medium';
+          el.lastElementChild.className = 'mt-3 font-mono text-[11px] font-bold ' + styles[id].color;
         } else {
-          el.className = 'flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]';
+          el.className = styles[id].inactive;
           el.lastElementChild.textContent = 'Chọn bản đồ';
-          el.lastElementChild.className = 'mt-3 font-mono text-[11px] text-[#78716C]';
+          el.lastElementChild.className = 'mt-3 font-mono text-[11px] text-slate-500';
         }
       });
     }

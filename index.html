@@ -53,19 +53,19 @@
             pointer-events: none;
             z-index: 20;
         }
-        /* Cozy Tactile Lightweight UI (Warm Cream & Charcoal — Zero GPU Blur Overhead) */
+        /* Cozy Pastel Lightweight UI (Silky Rose & Sky Glass — Zero GPU Blur Overhead) */
         .cozy-glass {
-            background: rgba(253, 250, 246, 0.95);
-            border: 1px solid rgba(226, 217, 205, 0.95);
-            box-shadow: 0 4px 14px rgba(41, 37, 36, 0.08);
+            background: rgba(255, 255, 255, 0.94);
+            border: 1.5px solid rgba(251, 207, 232, 0.9);
+            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.14);
         }
         .hotbar-slot {
-            transition: transform 0.14s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.14s cubic-bezier(0.22, 1, 0.36, 1);
+            transition: transform 0.16s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.16s cubic-bezier(0.22, 1, 0.36, 1);
         }
         .hotbar-slot.active {
-            transform: translateY(-6px);
-            border-color: #e15b64 !important;
-            box-shadow: 0 6px 16px rgba(225, 91, 100, 0.25);
+            transform: translateY(-7px) scale(1.08);
+            border-color: #ec4899 !important;
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.32);
             background: #ffffff;
         }
         .pulse-heart {
@@ -78,11 +78,11 @@
             width: 6px;
         }
         .custom-scroll::-webkit-scrollbar-track {
-            background: rgba(231, 224, 214, 0.4);
+            background: rgba(252, 231, 243, 0.5);
             border-radius: 8px;
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-            background: #c7bdb0;
+            background: #f472b6;
             border-radius: 8px;
         }
     </style>
@@ -96,129 +96,132 @@
         <!-- Center Crosshair -->
         <div class="crosshair flex items-center justify-center">
             <div class="w-6 h-6 flex items-center justify-center relative">
-                <span class="text-white/90 text-lg font-bold leading-none select-none drop-shadow">+</span>
+                <span class="text-rose-400 text-2xl font-bold opacity-85 leading-none select-none drop-shadow">♥</span>
             </div>
         </div>
 
         <!-- CLICK TO PLAY / LOCK MOUSE SPLASH BANNER -->
         <div id="click-to-play-overlay" class="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
-            <div class="cozy-glass px-7 py-6 rounded-2xl text-center max-w-md pointer-events-auto cursor-pointer border border-[#E7E0D6]">
-                <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-md bg-[#FDF2F3] border border-[#F2D6D8] text-[#C84B54] text-[11px] font-bold mb-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-[#E15B64]"></span>
-                    <span>KawaiiCraft V5.5 · 3D Co-op World</span>
+            <div class="cozy-glass px-7 py-6 rounded-3xl text-center max-w-md pointer-events-auto cursor-pointer border-2 border-pink-200 shadow-2xl">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-pink-50 to-purple-50 border border-pink-200 text-pink-600 text-xs font-extrabold mb-2">
+                    <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                    <span>KawaiiCraft V5.5 · Thế Giới 3D Của Huân &amp; Uyên</span>
                 </div>
-                <h3 class="text-base font-extrabold text-[#292524] mb-1">Quần Đảo 4 Mùa · Livik, Vikendi &amp; Sanhok</h3>
-                <p class="text-xs text-[#57534E] mb-4 font-semibold leading-relaxed">
-                    Nhấp chuột vào màn hình để khóa tâm ngắm 3D. Nhấn <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#D6CFC2] text-[10px]">M</kbd> mở bản đồ, <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#D6CFC2] text-[10px]">U</kbd> mở 11 trò chơi, <kbd class="px-1.5 py-0.5 rounded bg-white border border-[#D6CFC2] text-[10px]">F</kbd> để bay.
+                <h3 class="text-lg font-extrabold bg-gradient-to-r from-pink-600 via-rose-500 to-purple-600 bg-clip-text text-transparent mb-1.5">
+                    Quần Đảo 4 Mùa · Livik, Vikendi &amp; Sanhok
+                </h3>
+                <p class="text-xs text-slate-600 mb-4 font-semibold leading-relaxed">
+                    Nhấp chuột vào màn hình để xoay góc nhìn 3D. Nhấn <kbd class="px-1.5 py-0.5 rounded-md bg-pink-50 border border-pink-200 text-pink-700 text-[10px] font-bold">M</kbd> mở bản đồ, <kbd class="px-1.5 py-0.5 rounded-md bg-purple-50 border border-purple-200 text-purple-700 text-[10px] font-bold">U</kbd> chơi 11 minigame, <kbd class="px-1.5 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-700 text-[10px] font-bold">F</kbd> để bay.
                 </p>
-                <div class="px-5 py-2.5 bg-[#292524] hover:bg-[#44403C] text-white text-xs font-bold rounded-xl transition">
-                    Bắt đầu khám phá thế giới 3D →
+                <div class="px-5 py-2.5 bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white text-xs font-extrabold rounded-2xl shadow-md shadow-pink-500/25 transition">
+                    Bấm Vào Để Khám Phá Ngay →
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- TOP BAR: Symmetrical Compact HUD -->
+    <!-- TOP BAR: Symmetrical Pastel Aurora HUD (Zero Black Buttons!) -->
     <div id="hud-top-bar" class="absolute top-2.5 left-0 right-0 px-3 md:px-4 flex flex-col items-start pointer-events-none z-30 gap-1.5 transition-all duration-200 max-w-[calc(100vw-165px)]">
         <!-- Row 1: Brand, Unified Map Pill, Live Location, Scoreboard & FPS/Weight -->
-        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1.5 rounded-xl">
-            <span class="w-5 h-5 rounded-md bg-[#E15B64] text-white text-[10px] font-black flex items-center justify-center">KC</span>
-            <h1 class="text-[#292524] font-extrabold text-xs md:text-sm leading-tight">KawaiiCraft V5.5</h1>
+        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass px-3 py-1.5 rounded-2xl">
+            <span class="w-6 h-6 rounded-xl bg-gradient-to-br from-pink-500 to-purple-500 text-white text-[10px] font-black flex items-center justify-center shadow-xs">🌸</span>
+            <h1 class="bg-gradient-to-r from-pink-600 to-purple-600 bg-clip-text text-transparent font-extrabold text-xs md:text-sm leading-tight">KawaiiCraft V5.5</h1>
             <!-- Unified Map Switcher & Guide Trigger -->
-            <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-[#292524] hover:bg-[#44403C] text-white font-bold text-[11px] px-2.5 py-1 rounded-lg transition flex items-center gap-1 cursor-pointer">
+            <button id="btn-switch-world-mode" onclick="toggleMapModal()" title="Bấm để mở Bản Đồ Hướng Dẫn & Đổi giữa Livik / Vikendi Tuyết / Sanhok Rừng (Phím M)" class="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 hover:opacity-95 text-white font-bold text-[11px] px-3 py-1 rounded-xl shadow-xs transition flex items-center gap-1 cursor-pointer">
                 <span id="world-mode-icon">🌸</span>
                 <span id="world-mode-label">Map 1: Đảo Livik</span>
-                <span class="text-[9px] opacity-75">▾ Đổi Map</span>
+                <span class="text-[9px] opacity-85">▾ Đổi Map</span>
             </button>
-            <span id="current-biome-badge" class="bg-white text-[#57534E] font-bold text-[11px] px-2.5 py-1 rounded-lg border border-[#E7E0D6] hidden md:inline-flex items-center gap-1">
+            <span id="current-biome-badge" class="bg-pink-50 text-pink-700 font-bold text-[11px] px-2.5 py-1 rounded-xl border border-pink-200 hidden md:inline-flex items-center gap-1">
                 🌊 Hồ Trái Tim
             </span>
-            <span id="couple-score-pill" onclick="toggleMinigamesModal()" title="Bảng Tỉ Số Minigame Cặp Đôi (Bấm mở Khu Vui Chơi)" class="cursor-pointer bg-white text-[#292524] border border-[#E7E0D6] font-extrabold text-[11px] px-2.5 py-1 rounded-lg flex items-center gap-1 hover:bg-[#F5F0E6] transition">
+            <span id="couple-score-pill" onclick="toggleMinigamesModal()" title="Bảng Tỉ Số Minigame Cặp Đôi (Bấm mở Khu Vui Chơi)" class="cursor-pointer bg-gradient-to-r from-sky-500 to-indigo-500 text-white font-extrabold text-[11px] px-2.5 py-1 rounded-xl flex items-center gap-1 hover:opacity-95 transition shadow-2xs">
                 🏆 <span id="couple-score-text">Huân 0 - 0 Uyên</span>
             </span>
-            <span id="love-points-badge" class="bg-[#FDF2F3] text-[#C84B54] border border-[#F2D6D8] font-extrabold text-[11px] px-2 py-1 rounded-lg flex items-center gap-1">
+            <span id="love-points-badge" class="bg-rose-50 text-rose-600 border border-rose-200 font-extrabold text-[11px] px-2.5 py-1 rounded-xl flex items-center gap-1">
                 💖 <span id="love-points-text">120</span>
             </span>
-            <span id="active-slot-badge" class="bg-white text-[#78716C] font-bold text-[10px] px-2 py-1 rounded-lg border border-[#E7E0D6] hidden xl:inline">
+            <span id="active-slot-badge" class="bg-purple-50 text-purple-600 font-bold text-[10px] px-2 py-1 rounded-xl border border-purple-200 hidden xl:inline">
                 Slot 1
             </span>
-            <button onclick="togglePerfModal()" title="Bấm để chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="text-[#166534] font-bold text-[11px] bg-[#F0FDF4] hover:bg-[#DCFCE7] px-2.5 py-1 rounded-lg border border-[#BBF7D0] flex items-center gap-1 transition cursor-pointer">
+            <button onclick="togglePerfModal()" title="Bấm để chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="text-emerald-700 font-bold text-[11px] bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-xl border border-emerald-200 flex items-center gap-1 transition cursor-pointer">
                 <span id="fps-counter">60 FPS</span>
-                <span id="hud-gfx-badge" class="text-[9px] bg-white text-[#166534] px-1.5 py-0.2 rounded font-bold border border-[#BBF7D0]">M3</span>
+                <span id="hud-gfx-badge" class="text-[9px] bg-white text-emerald-700 px-1.5 py-0.2 rounded-md font-bold border border-emerald-200">M3</span>
                 <span class="text-[10px] hidden sm:inline">Đồ họa</span>
             </button>
-            <span id="save-status-indicator" class="text-[#78716C] font-bold text-[10px] hidden lg:flex items-center gap-1">
+            <span id="save-status-indicator" class="text-pink-500 font-bold text-[10px] hidden lg:flex items-center gap-1">
                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span> Đã lưu
             </span>
         </div>
 
-        <!-- Row 2: Symmetrical Uniform Control Bar (All buttons h-8, same radius) -->
-        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass p-1.5 rounded-xl">
-            <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người & Xem Danh Sách Phòng Đang Mở" class="h-7 px-2.5 rounded-lg flex items-center gap-1.5 bg-[#E15B64] hover:bg-[#C84B54] text-white font-bold text-xs transition">
+        <!-- Row 2: Symmetrical Uniform Pastel Control Bar -->
+        <div class="pointer-events-auto flex items-center flex-wrap gap-1.5 cozy-glass p-1.5 rounded-2xl">
+            <button id="btn-coop" onclick="toggleCoopModal()" title="Chơi Chung 2 Người & Xem Danh Sách Phòng Đang Mở" class="h-7 px-3 rounded-xl flex items-center gap-1.5 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-xs shadow-xs transition">
                 <span id="coop-btn-dot" class="w-2 h-2 rounded-full bg-amber-200"></span>
-                <span>Co-op 2 Người</span>
+                <span>💑 Co-op</span>
                 <span id="coop-ping-tag" class="hidden text-[10px] bg-white/25 px-1.5 rounded">Online</span>
             </button>
-            <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
+            <button id="btn-tp-partner" onclick="teleportToPartner()" title="Bay ngay tới vị trí của người yêu (Phím G)" class="h-7 px-2.5 rounded-xl flex items-center gap-1 bg-rose-50 border border-rose-200 text-rose-600 font-bold text-xs hover:bg-rose-100 transition">
                 <span>📍</span>
                 <span class="hidden sm:inline">Tới Người Ấy (G)</span>
             </button>
 
-            <span class="h-4 w-px bg-[#E7E0D6] mx-0.5"></span>
+            <span class="h-4 w-px bg-pink-200 mx-0.5"></span>
 
-            <button id="btn-minigames" onclick="toggleMinigamesModal()" title="Khu Vui Chơi, Đấu Trường Thanh Máu & Minigame (Phím U)" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-[#292524] hover:bg-[#44403C] text-white font-bold text-xs transition">
-                <span>Minigame (U)</span>
+            <button id="btn-minigames" onclick="toggleMinigamesModal()" title="Khu Vui Chơi, Đấu Trường Thanh Máu & Minigame (Phím U)" class="h-7 px-3 rounded-xl flex items-center gap-1 bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white font-bold text-xs shadow-xs transition">
+                <span>🎪 Minigame (U)</span>
             </button>
-            <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn (Phím N)" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
+            <button id="btn-quests" title="5 Cột Mốc Cặp Đôi Lớn (Phím N)" class="h-7 px-2.5 rounded-xl flex items-center gap-1 bg-purple-50 border border-purple-200 text-purple-700 font-bold text-xs hover:bg-purple-100 transition">
                 <span class="hidden sm:inline">Cột Mốc</span>
-                <span id="quest-badge-counter" class="bg-[#E15B64] text-white text-[9px] font-bold px-1.5 rounded">0/5</span>
+                <span id="quest-badge-counter" class="bg-pink-500 text-white text-[9px] font-bold px-1.5 rounded-full">0/5</span>
             </button>
 
-            <span class="h-4 w-px bg-[#E7E0D6] mx-0.5"></span>
+            <span class="h-4 w-px bg-pink-200 mx-0.5"></span>
 
-            <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
+            <button id="btn-inventory" title="Kho khối 36 loại (Phím B)" class="h-7 px-2.5 rounded-xl flex items-center gap-1 bg-sky-50 border border-sky-200 text-sky-700 font-bold text-xs hover:bg-sky-100 transition">
+                <span>🎒</span>
                 <span class="hidden md:inline">Túi Khối (B)</span>
             </button>
-            <button id="btn-fly" title="Bật/Tắt Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
+            <button id="btn-fly" title="Bật/Tắt Bay Tự Do (Phím F hoặc Nháy đúp Space)" class="h-7 px-2.5 rounded-xl flex items-center gap-1 bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-xs hover:bg-indigo-100 transition">
                 <span id="fly-icon">🕊️</span>
                 <span id="fly-label">Đi Bộ (F)</span>
             </button>
-            <button id="btn-sound" title="Bật/Tắt Nhạc Dịu Êm & Âm Thanh" class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
+            <button id="btn-sound" title="Bật/Tắt Nhạc Dịu Êm & Âm Thanh" class="h-7 px-2.5 rounded-xl flex items-center gap-1 bg-pink-50 border border-pink-200 text-pink-600 font-bold text-xs hover:bg-pink-100 transition">
                 <span id="sound-icon">🔇</span>
                 <span id="sound-label" class="hidden sm:inline">Tắt Nhạc</span>
             </button>
-            <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng thêm: Bản đồ, Kho Quà, Ghép Đồ, Lưu Game, Thời Tiết, Độ Nặng..." class="h-7 px-2.5 rounded-lg flex items-center gap-1 bg-white border border-[#E7E0D6] text-[#292524] font-bold text-xs hover:bg-[#F5F0E6] transition">
-                <span id="drawer-toggle-text">Công cụ ▾</span>
+            <button id="btn-toggle-drawer" onclick="toggleExtraToolsDrawer()" title="Mở rộng thêm: Bản đồ, Kho Quà, Ghép Đồ, Lưu Game, Thời Tiết, Độ Nặng..." class="h-7 px-3 rounded-xl flex items-center gap-1 bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-600 hover:to-indigo-600 text-white font-bold text-xs shadow-xs transition">
+                <span id="drawer-toggle-text">✨ Thêm ▾</span>
             </button>
         </div>
 
         <!-- Collapsible Compact Grid Drawer -->
-        <div id="extra-tools-drawer" class="hidden pointer-events-auto cozy-glass p-2 rounded-xl border border-[#E7E0D6] items-center flex-wrap gap-1.5 max-w-xl">
-            <button id="btn-map" title="Bản đồ Hướng Dẫn 320x320 & Đổi Map (Phím M)" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
-                <span>Bản Đồ (M)</span>
+        <div id="extra-tools-drawer" class="hidden pointer-events-auto cozy-glass p-2.5 rounded-2xl border border-pink-200 items-center flex-wrap gap-1.5 max-w-xl">
+            <button id="btn-map" title="Bản đồ Hướng Dẫn 320x320 & Đổi Map (Phím M)" class="px-2.5 py-1.5 rounded-xl bg-purple-50 border border-purple-200 hover:bg-purple-100 text-purple-700 font-bold text-xs flex items-center gap-1 transition">
+                🗺️ <span>Bản Đồ (M)</span>
             </button>
-            <button onclick="teleportToCloudObservatory()" title="Bay lên Đài Quan Sát Trên Mây ngắm toàn cảnh map hiện tại!" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
-                <span>Đài Quan Sát Mây</span>
+            <button onclick="teleportToCloudObservatory()" title="Bay lên Đài Quan Sát Trên Mây ngắm toàn cảnh map hiện tại!" class="px-2.5 py-1.5 rounded-xl bg-sky-50 border border-sky-200 hover:bg-sky-100 text-sky-700 font-bold text-xs flex items-center gap-1 transition">
+                ☁️ <span>Đài Quan Sát Mây</span>
             </button>
-            <button id="btn-coupons" onclick="toggleCouponModal()" title="Kho Thẻ Phần Thưởng Tình Yêu" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
-                <span>Kho Quà</span> <span id="coupon-badge-counter" class="bg-[#E15B64] text-white text-[9px] font-bold px-1.5 rounded">1</span>
+            <button id="btn-coupons" onclick="toggleCouponModal()" title="Kho Thẻ Phần Thưởng Tình Yêu" class="px-2.5 py-1.5 rounded-xl bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 font-bold text-xs flex items-center gap-1 transition">
+                🎟️ <span>Kho Quà</span> <span id="coupon-badge-counter" class="bg-pink-500 text-white text-[9px] font-bold px-1.5 rounded-full">1</span>
             </button>
-            <button id="btn-craft" title="Xưởng Ghép Đồ & Sáng Tạo (Phím C)" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
-                <span>Ghép Đồ (C)</span>
+            <button id="btn-craft" title="Xưởng Ghép Đồ & Sáng Tạo (Phím C)" class="px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 hover:bg-amber-100 text-amber-700 font-bold text-xs flex items-center gap-1 transition">
+                🛠️ <span>Ghép Đồ (C)</span>
             </button>
-            <button id="btn-prefab" title="Xây Nhà Mẫu 1 Chạm" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
-                <span>Mẫu Nhà</span>
+            <button id="btn-prefab" title="Xây Nhà Mẫu 1 Chạm" class="px-2.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 hover:bg-amber-100 text-amber-700 font-bold text-xs flex items-center gap-1 transition">
+                ✨ <span>Mẫu Nhà</span>
             </button>
-            <button id="btn-time" title="Đổi Thời tiết: Nắng Sớm / Hoàng Hôn / Đêm Sao" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs flex items-center gap-1 transition">
+            <button id="btn-time" title="Đổi Thời tiết: Nắng Sớm / Hoàng Hôn / Đêm Sao" class="px-2.5 py-1.5 rounded-xl bg-pink-50 border border-pink-200 hover:bg-pink-100 text-pink-700 font-bold text-xs flex items-center gap-1 transition">
                 <span id="time-icon">☀️</span> <span id="time-label">Nắng Sớm</span>
             </button>
-            <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs transition">Cầu Vồng</button>
-            <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs transition">Lưu Thế Giới</button>
-            <button id="btn-perf" onclick="togglePerfModal()" title="Chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs transition"><span id="perf-icon">🎨</span> Đồ Họa 4 Mức</button>
-            <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs transition">Chụp Ảnh</button>
-            <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-lg bg-white border border-[#E7E0D6] hover:bg-[#F5F0E6] text-[#292524] font-bold text-xs transition">Ẩn HUD (Tab)</button>
-            <a href="huong-dan.html" target="_blank" title="Mở Web Tài Liệu Kỹ Thuật" class="px-2.5 py-1.5 rounded-lg bg-[#292524] hover:bg-[#44403C] text-white font-bold text-xs transition flex items-center gap-1">Tài Liệu Kỹ Thuật</a>
-            <button id="btn-help" title="Hướng dẫn điều khiển" class="px-2.5 py-1.5 rounded-lg bg-[#E15B64] hover:bg-[#C84B54] text-white font-bold text-xs transition">Trợ Giúp</button>
+            <button id="btn-rainbow" title="Bật/Tắt Cầu Vồng Đôi" class="px-2.5 py-1.5 rounded-xl bg-sky-50 border border-sky-200 hover:bg-sky-100 text-sky-700 font-bold text-xs transition">🌈 Cầu Vồng</button>
+            <button id="btn-save-manager" title="Lưu trữ 3 Slot & Xuất file .kawaii" class="px-2.5 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 hover:bg-indigo-100 text-indigo-700 font-bold text-xs transition">💾 Lưu</button>
+            <button id="btn-perf" onclick="togglePerfModal()" title="Chọn 4 Mức Đồ Họa & Xem Độ Nặng từng phần" class="px-2.5 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 text-emerald-700 font-bold text-xs transition"><span id="perf-icon">🎨</span> Đồ Họa 4 Mức</button>
+            <button id="btn-photo" title="Chụp ảnh Polaroid kỷ niệm" class="px-2.5 py-1.5 rounded-xl bg-rose-50 border border-rose-200 hover:bg-rose-100 text-rose-600 font-bold text-xs transition">📸 Chụp Ảnh</button>
+            <button id="btn-clean-hud" onclick="toggleCleanHUDMode()" title="Thu gọn giao diện toàn màn hình (Phím Tab)" class="px-2.5 py-1.5 rounded-xl bg-slate-50 border border-slate-200 hover:bg-slate-100 text-slate-600 font-bold text-xs transition">👁️ Ẩn HUD</button>
+            <a href="huong-dan.html" target="_blank" title="Mở Web Tài Liệu Kỹ Thuật" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-95 text-white font-bold text-xs transition flex items-center gap-1">📘 Tài Liệu</a>
+            <button id="btn-help" title="Hướng dẫn điều khiển" class="px-2.5 py-1.5 rounded-xl bg-gradient-to-r from-pink-500 to-rose-500 hover:opacity-95 text-white font-bold text-xs transition">❓ Trợ Giúp</button>
         </div>
     </div>
 
