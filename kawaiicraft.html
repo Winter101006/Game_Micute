@@ -1,43 +1,275 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KawaiiCraft V5.3 — Cổng Khởi Động & Hướng Dẫn Dành Tặng Bé Uyên</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600;700;800&display=swap" rel="stylesheet">
-    <style>
-        * { font-family: 'Quicksand', sans-serif; }
-        body {
-            background: linear-gradient(135deg, #ffe4ec 0%, #e0f2fe 50%, #fae8ff 100%);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KawaiiCraft V5.5 · Trạm Khởi Động Thế Giới 3D Co-op</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Quicksand:wght@600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #faf7f2;
+      color: #292524;
+    }
+    .font-display {
+      font-family: 'Quicksand', sans-serif;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+      font-variant-numeric: tabular-nums;
+    }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
-    <div class="max-w-lg w-full bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-2xl border-2 border-pink-300 text-center space-y-5">
-        <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-br from-pink-500 to-rose-500 text-white flex items-center justify-center text-3xl shadow-lg">
-            🌸
-        </div>
-        <div class="space-y-1.5">
-            <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 font-extrabold text-xs">Phiên Bản KawaiiCraft V5.3</span>
-            <h1 class="text-2xl font-extrabold text-pink-600">Thế Giới 3D Của Anh Huân & Bé Uyên 💕</h1>
-            <p class="text-xs md:text-sm text-gray-600 font-semibold">
-                3 Bản Đồ `320×320` (Livik • Vikendi Tuyết • Sanhok Rừng) • 11 Minigame Đồng Bộ Firebase • Nhạc Hộp Nhạc Dịu Êm
-            </p>
-        </div>
+<body class="min-h-screen antialiased">
 
-        <div class="grid grid-cols-1 gap-3 pt-1">
-            <a href="index.html" class="w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold text-sm shadow-lg transition flex items-center justify-center gap-2">
-                <span>🎮</span> Vào Chơi Game Ngay (index.html)
-            </a>
-            <a href="huong-dan.html" class="w-full py-3 px-5 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-extrabold text-xs md:text-sm shadow-md transition flex items-center justify-center gap-2">
-                <span>📘</span> Mở Web Giải Thích Cấu Trúc File, Thư Mục & 7 Công Đoạn (huong-dan.html)
-            </a>
+  <!-- TOP HEADER (56px) -->
+  <header class="sticky top-0 z-30 h-14 border-b border-[#E7E0D6] bg-[#FAF7F2]/90 backdrop-blur-md">
+    <div class="mx-auto flex h-full max-w-6xl items-center justify-between px-4 sm:px-6">
+      <div class="flex items-center gap-3">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#E15B64] text-white font-display text-sm font-bold">
+          KC
         </div>
+        <div class="flex items-center gap-2.5">
+          <span class="font-display text-base font-bold tracking-tight text-[#292524]">KawaiiCraft V5.5</span>
+          <span class="hidden sm:inline-block rounded-md border border-[#E7E0D6] bg-white px-2 py-0.5 font-mono text-[11px] text-[#78716C]">
+            Three.js WebGL · Firebase Co-op
+          </span>
+        </div>
+      </div>
 
-        <div class="text-[11px] text-gray-500 pt-2 border-t border-pink-100">
-            Mẹo: Khi mở link chính của dự án, trình duyệt sẽ tự động vào thẳng `index.html`.
-        </div>
+      <div class="flex items-center gap-2">
+        <a
+          href="huong-dan.html"
+          class="inline-flex h-8 items-center gap-1.5 rounded-lg border border-[#E7E0D6] bg-white px-3 text-xs font-medium text-[#57534E] transition-colors hover:bg-[#F5F0E6] hover:text-[#292524]"
+        >
+          <span>Tài liệu kiến trúc</span>
+        </a>
+        <a
+          href="index.html"
+          class="inline-flex h-8 items-center gap-1.5 rounded-lg bg-[#292524] px-3.5 text-xs font-medium text-white transition-colors hover:bg-[#44403C]"
+        >
+          <span>Vào thế giới 3D</span>
+        </a>
+      </div>
     </div>
+  </header>
+
+  <!-- MAIN LAUNCHER WORKSPACE -->
+  <main class="mx-auto max-w-6xl px-4 py-8 sm:px-6 space-y-8">
+
+    <!-- Symmetrical 12-Column Split -->
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 items-stretch">
+
+      <!-- LEFT (7 COLS): HERO + MAP SELECTOR + QUICK CO-OP CONFIG -->
+      <div class="lg:col-span-7 flex flex-col justify-between rounded-2xl border border-[#E7E0D6] bg-white p-6 sm:p-8 space-y-6">
+        <div>
+          <div class="inline-flex items-center gap-2 rounded-md border border-[#F2D6D8] bg-[#FDF2F3] px-2.5 py-1 text-xs font-medium text-[#C84B54]">
+            <span class="h-1.5 w-1.5 rounded-full bg-[#E15B64]"></span>
+            <span>Thế giới Voxel 3D đa địa hình dành cho 2 người chơi</span>
+          </div>
+
+          <h1 class="mt-4 font-display text-2xl font-bold tracking-tight text-[#292524] sm:text-3xl">
+            Khám phá 3 vùng đất 320×320 khối và 11 trò chơi tương tác thời gian thực
+          </h1>
+
+          <p class="mt-2.5 text-sm leading-relaxed text-[#57534E]">
+            Được tối ưu hóa bằng Procedural Canvas Textures và thuật toán loại bỏ mặt khuất (Hidden-Face Culling), duy trì tốc độ khung hình 60 FPS ổn định ngay trên laptop văn phòng.
+          </p>
+
+          <!-- Symmetrical 3-Map Selector Grid -->
+          <div class="mt-6">
+            <div class="flex items-center justify-between text-xs text-[#78716C] mb-2.5">
+              <span class="font-medium text-[#292524]">Chọn bản đồ khởi hành</span>
+              <span class="font-mono">Kích thước mỗi bản đồ: 320 × 320</span>
+            </div>
+
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
+              <button
+                type="button"
+                onclick="selectLaunchMap('livik')"
+                id="map-card-livik"
+                class="flex flex-col justify-between rounded-xl border-2 border-[#E15B64] bg-[#FDF8F8] p-3.5 text-left transition-colors"
+              >
+                <div>
+                  <span class="font-mono text-[11px] text-[#E15B64] font-medium">Bản đồ 01</span>
+                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Đảo Livik 4 Mùa</div>
+                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Hồ Trái Tim, Đồi Anh Đào, Vòng Quay Mặt Trời</p>
+                </div>
+                <span class="mt-3 font-mono text-[11px] text-[#292524] font-medium">Đang chọn →</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="selectLaunchMap('vikendi')"
+                id="map-card-vikendi"
+                class="flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]"
+              >
+                <div>
+                  <span class="font-mono text-[11px] text-[#78716C]">Bản đồ 02</span>
+                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Lâu Đài Tuyết Vikendi</div>
+                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Cực quang đêm, Sân trượt băng, Lâu đài pha lê</p>
+                </div>
+                <span class="mt-3 font-mono text-[11px] text-[#78716C]">Chọn bản đồ</span>
+              </button>
+
+              <button
+                type="button"
+                onclick="selectLaunchMap('sanhok')"
+                id="map-card-sanhok"
+                class="flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]"
+              >
+                <div>
+                  <span class="font-mono text-[11px] text-[#78716C]">Bản đồ 03</span>
+                  <div class="mt-1 font-display text-sm font-bold text-[#292524]">Rừng Nhiệt Đới Sanhok</div>
+                  <p class="mt-1 text-xs text-[#78716C] leading-snug">Đền cổ, Thác nước đôi, Đom đóm rừng sâu</p>
+                </div>
+                <span class="mt-3 font-mono text-[11px] text-[#78716C]">Chọn bản đồ</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Co-op Session Pre-config & Primary CTA -->
+        <div class="border-t border-[#E7E0D6] pt-5 space-y-4">
+          <div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div>
+              <label class="block text-xs font-medium text-[#57534E] mb-1">Tên hiển thị trong thế giới</label>
+              <input
+                id="player-name-input"
+                type="text"
+                value="Huân"
+                placeholder="Nhập tên của bạn..."
+                class="h-9 w-full rounded-lg border border-[#E7E0D6] bg-[#FAF7F2] px-3 text-xs font-medium text-[#292524] outline-none focus:border-[#E15B64]"
+              />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-[#57534E] mb-1">Mã phòng Co-op (Firebase)</label>
+              <input
+                id="room-code-input"
+                type="text"
+                value="HUAN-UYEN"
+                placeholder="VD: HUAN-UYEN"
+                class="h-9 w-full rounded-lg border border-[#E7E0D6] bg-[#FAF7F2] px-3 font-mono text-xs font-medium text-[#292524] outline-none focus:border-[#E15B64]"
+              />
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onclick="launchGameNow()"
+              class="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-[#E15B64] px-6 text-xs font-semibold text-white transition-colors hover:bg-[#C84B54]"
+            >
+              <span>Khởi động KawaiiCraft 3D</span>
+              <span class="font-mono text-[11px] opacity-85">→</span>
+            </button>
+
+            <a
+              href="huong-dan.html"
+              class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-[#E7E0D6] bg-[#FAF7F2] px-5 text-xs font-medium text-[#292524] transition-colors hover:bg-[#EFEAE1]"
+            >
+              <span>Sổ tay Kỹ thuật &amp; Cấu trúc File</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT (5 COLS): SYMMETRICAL CONTROLS & ENGINE METRICS -->
+      <div class="lg:col-span-5 flex flex-col justify-between gap-6">
+
+        <!-- Keybindings Card -->
+        <div class="flex-1 rounded-2xl border border-[#E7E0D6] bg-white p-6">
+          <div class="flex items-center justify-between border-b border-[#E7E0D6] pb-3">
+            <h2 class="font-display text-sm font-bold text-[#292524]">Bảng phím tắt điều khiển</h2>
+            <span class="font-mono text-[11px] text-[#78716C]">Chuột + Bàn phím</span>
+          </div>
+
+          <div class="mt-4 divide-y divide-[#F2ECE1] text-xs">
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Di chuyển nhân vật</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">W A S D</kbd>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Bật / tắt chế độ bay tự do</span>
+              <div class="flex items-center gap-1">
+                <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">F</kbd>
+                <span class="text-[#A8A29E]">hoặc</span>
+                <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">Space ×2</kbd>
+              </div>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Mở bản đồ 320×320 &amp; Đổi vùng đất</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">M</kbd>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Khu vui chơi 11 Minigame cặp đôi</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">U</kbd>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Kho 36 khối xây dựng &amp; Nội thất</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">B</kbd>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Dịch chuyển tức thời tới người chơi cùng</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">G</kbd>
+            </div>
+            <div class="flex items-center justify-between py-2.5">
+              <span class="text-[#57534E]">Ẩn / hiện giao diện để chụp ảnh</span>
+              <kbd class="rounded border border-[#D6CFC2] bg-[#FAF7F2] px-2 py-0.5 font-mono text-[11px] text-[#292524]">Tab</kbd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Symmetrical 2x2 Engine Spec Grid -->
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-xl border border-[#E7E0D6] bg-white p-4">
+            <div class="text-xs text-[#78716C]">Hiệu năng đồ họa</div>
+            <div class="mt-1 font-mono text-base font-semibold text-[#292524]">60 FPS · 4 mức</div>
+            <div class="mt-0.5 text-[11px] text-[#78716C]">InstancedMesh + Culling</div>
+          </div>
+          <div class="rounded-xl border border-[#E7E0D6] bg-white p-4">
+            <div class="text-xs text-[#78716C]">Đồng bộ mạng</div>
+            <div class="mt-1 font-mono text-base font-semibold text-[#292524]">15Hz + Lerp</div>
+            <div class="mt-0.5 text-[11px] text-[#78716C]">Firebase Realtime DB</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let selectedMap = 'livik';
+
+    function selectLaunchMap(mapId) {
+      selectedMap = mapId;
+      ['livik', 'vikendi', 'sanhok'].forEach(id => {
+        const el = document.getElementById('map-card-' + id);
+        if (id === mapId) {
+          el.className = 'flex flex-col justify-between rounded-xl border-2 border-[#E15B64] bg-[#FDF8F8] p-3.5 text-left transition-colors';
+          el.lastElementChild.textContent = 'Đang chọn →';
+          el.lastElementChild.className = 'mt-3 font-mono text-[11px] text-[#292524] font-medium';
+        } else {
+          el.className = 'flex flex-col justify-between rounded-xl border border-[#E7E0D6] bg-[#FAF7F2]/60 p-3.5 text-left transition-colors hover:border-[#D6CFC2]';
+          el.lastElementChild.textContent = 'Chọn bản đồ';
+          el.lastElementChild.className = 'mt-3 font-mono text-[11px] text-[#78716C]';
+        }
+      });
+    }
+
+    function launchGameNow() {
+      const name = document.getElementById('player-name-input').value.trim();
+      const room = document.getElementById('room-code-input').value.trim().toUpperCase();
+      try {
+        if (name) localStorage.setItem('kawaii_coop_nickname', name);
+        if (room) localStorage.setItem('kawaii_coop_last_room', room);
+        localStorage.setItem('kawaii_launch_map_pref', selectedMap);
+      } catch (_) {}
+      window.location.href = `index.html?map=${encodeURIComponent(selectedMap)}&room=${encodeURIComponent(room)}`;
+    }
+  </script>
 </body>
 </html>

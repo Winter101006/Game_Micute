@@ -3,86 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KawaiiCraft V5.3 — Cẩm Nang Kiến Trúc, Cấu Trúc File & Giải Thích Các Công Đoạn</title>
+    <title>KawaiiCraft V5.5 · Tài Liệu Kiến Trúc Kỹ Thuật & Cấu Trúc Hệ Thống</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             scroll-behavior: smooth;
+        }
+        h1, h2, h3 {
+            font-family: 'Quicksand', 'Inter', sans-serif;
         }
         code, pre, .font-mono {
             font-family: 'JetBrains Mono', monospace;
+            font-variant-numeric: tabular-nums;
         }
         body {
-            background: linear-gradient(135deg, #fff5f8 0%, #f0f9ff 50%, #fdf4ff 100%);
-            color: #1f2937;
+            background-color: #faf7f2;
+            color: #292524;
         }
         .glass-card {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-            border: 2px solid rgba(244, 114, 182, 0.28);
-            box-shadow: 0 12px 32px -8px rgba(236, 72, 153, 0.12);
+            background: #ffffff;
+            border: 1px solid #e7e0d6 !important;
+            box-shadow: 0 1px 3px rgba(41, 37, 36, 0.04);
         }
         .step-badge {
-            background: linear-gradient(135deg, #ec4899, #f43f5e);
-            color: white;
+            background: #292524;
+            color: #ffffff;
         }
         .nav-pill.active {
-            background: linear-gradient(135deg, #ec4899, #8b5cf6);
-            color: white;
-            box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+            background: #292524;
+            color: #ffffff;
         }
         .custom-scroll::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
         .custom-scroll::-webkit-scrollbar-track {
-            background: #fce7f3;
-            border-radius: 999px;
+            background: transparent;
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-            background: #f472b6;
+            background: #d6cfc2;
             border-radius: 999px;
         }
     </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-20 antialiased">
 
     <!-- STICKY HEADER & NAVIGATION -->
-    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b-2 border-pink-200 shadow-sm">
+    <header class="sticky top-0 z-50 bg-[#FAF7F2]/95 backdrop-blur-md border-b border-[#E7E0D6]">
         <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center text-2xl shadow-md text-white">
-                    📘
+                <div class="w-9 h-9 rounded-lg bg-[#E15B64] flex items-center justify-center text-sm font-bold text-white font-mono">
+                    KC
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-lg md:text-xl font-extrabold text-pink-600">KawaiiCraft V5.4 — Web Tài Liệu Kỹ Thuật & Cấu Trúc Dự Án</h1>
-                        <span class="px-2.5 py-0.5 text-[11px] font-black rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">Bản Đầy Đủ Chi Tiết</span>
+                        <h1 class="text-base md:text-lg font-bold text-[#292524]">KawaiiCraft V5.5 · Tài Liệu Kiến Trúc & Cấu Trúc Dự Án</h1>
+                        <span class="px-2 py-0.5 text-[11px] font-mono font-medium rounded-md bg-white text-[#57534E] border border-[#E7E0D6]">Engineering Spec</span>
                     </div>
-                    <p class="text-xs text-gray-500 font-semibold">Giải thích chi tiết từng thư mục, từng file, 12 phân hệ code, cơ sở dữ liệu Firebase và 7 công đoạn vận hành</p>
+                    <p class="text-xs text-[#78716C]">Giải thích chi tiết từng file, 12 phân hệ mã nguồn, cơ sở dữ liệu Firebase và 7 công đoạn vận hành</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <a href="index.html" class="px-4 py-2 rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-extrabold text-xs md:text-sm shadow-md transition flex items-center gap-1.5">
-                    <span>🎮</span> Vào Chơi Game Ngay (index.html)
+                <a href="kawaiicraft.html" class="h-8 px-3 rounded-lg border border-[#E7E0D6] bg-white hover:bg-[#F5F0E6] text-[#292524] font-medium text-xs transition flex items-center">
+                    Trạm khởi động
                 </a>
-                <a href="https://github.com/Winter101006/Game_Micute" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-2xl bg-slate-800 hover:bg-slate-900 text-white font-bold text-xs md:text-sm shadow transition flex items-center gap-1.5">
-                    <span>🐙</span> GitHub Repo
+                <a href="index.html" class="h-8 px-3.5 rounded-lg bg-[#E15B64] hover:bg-[#C84B54] text-white font-medium text-xs transition flex items-center gap-1.5">
+                    <span>Vào thế giới 3D</span>
+                </a>
+                <a href="https://github.com/Winter101006/Game_Micute" target="_blank" rel="noopener" class="h-8 px-3 rounded-lg bg-[#292524] hover:bg-[#44403C] text-white font-medium text-xs transition flex items-center gap-1.5">
+                    <span>GitHub</span>
                 </a>
             </div>
         </div>
 
         <!-- SECTION TABS -->
-        <div class="max-w-7xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto custom-scroll text-xs font-extrabold">
-            <a href="#sec-overview" class="nav-pill active px-3.5 py-1.5 rounded-xl bg-pink-50 text-pink-700 hover:bg-pink-100 transition whitespace-nowrap">1. 🗂️ Cây Thư Mục & Ý Nghĩa Từng File</a>
-            <a href="#sec-storage" class="nav-pill px-3.5 py-1.5 rounded-xl bg-sky-50 text-sky-700 hover:bg-sky-100 transition whitespace-nowrap">2. ☁️ Cấu Trúc Dữ Liệu Firebase & LocalStorage</a>
-            <a href="#sec-modules" class="nav-pill px-3.5 py-1.5 rounded-xl bg-purple-50 text-purple-700 hover:bg-purple-100 transition whitespace-nowrap">3. 🧩 Giải Phẫu 12 Phân Hệ Trong index.html</a>
-            <a href="#sec-pipeline" class="nav-pill px-3.5 py-1.5 rounded-xl bg-amber-50 text-amber-800 hover:bg-amber-100 transition whitespace-nowrap">4. ⚙️ 7 Công Đoạn Vận Hành Chi Tiết</a>
-            <a href="#sec-maps-data" class="nav-pill px-3.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition whitespace-nowrap">5. 🗺️ Dữ Liệu 3 Bản Đồ, 11 Trò Chơi & 36 Khối</a>
-            <a href="#sec-customize" class="nav-pill px-3.5 py-1.5 rounded-xl bg-rose-50 text-rose-700 hover:bg-rose-100 transition whitespace-nowrap">6. 🛠️ Hướng Dẫn Tự Chỉnh Sửa & Nâng Cấp Code</a>
+        <div class="max-w-7xl mx-auto px-4 pb-2.5 flex items-center gap-1.5 overflow-x-auto custom-scroll text-xs font-medium">
+            <a href="#sec-overview" class="nav-pill active px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">01 · Cây thư mục & File</a>
+            <a href="#sec-storage" class="nav-pill px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">02 · Firebase & LocalStorage</a>
+            <a href="#sec-modules" class="nav-pill px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">03 · 12 Phân hệ Engine</a>
+            <a href="#sec-pipeline" class="nav-pill px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">04 · 7 Công đoạn vận hành</a>
+            <a href="#sec-maps-data" class="nav-pill px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">05 · 3 Bản đồ & 11 Trò chơi</a>
+            <a href="#sec-customize" class="nav-pill px-3 py-1.5 rounded-lg bg-white border border-[#E7E0D6] text-[#57534E] hover:text-[#292524] transition whitespace-nowrap">06 · Hướng dẫn tùy biến</a>
         </div>
     </header>
 
@@ -90,46 +94,51 @@
     <main class="max-w-7xl mx-auto px-4 pt-6 space-y-10">
 
         <!-- HERO SUMMARY BANNER -->
-        <section class="glass-card rounded-3xl p-6 md:p-8 border-2 border-pink-300 relative overflow-hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                <div class="lg:col-span-2 space-y-3">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-100 text-pink-700 text-xs font-extrabold">
-                        <span>💖 Dự Án Thế Giới 3D Co-op Dành Riêng Cho Anh Huân & Bé Uyên</span>
+        <section class="glass-card rounded-2xl p-6 md:p-8 relative overflow-hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+                <div class="lg:col-span-7 space-y-3">
+                    <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-[#FDF2F3] border border-[#F2D6D8] text-[#C84B54] text-xs font-medium">
+                        <span class="h-1.5 w-1.5 rounded-full bg-[#E15B64]"></span>
+                        <span>Tài liệu Kỹ thuật & Bản đồ Hệ thống 3D WebGL</span>
                     </div>
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-gray-800 leading-tight">
-                        Toàn Bộ Kiến Trúc <span class="text-pink-600">KawaiiCraft V5.4</span> Được Giải Thích Từ A Đến Z
+                    <h2 class="text-2xl md:text-3xl font-bold text-[#292524] leading-tight">
+                        Kiến trúc kỹ thuật KawaiiCraft V5.5 từ Engine 3D đến đồng bộ mạng thời gian thực
                     </h2>
-                    <p class="text-sm text-gray-600 leading-relaxed">
-                        Trang web này (`huong-dan.html`) được thiết kế như một cuốn <b>Sổ Tay Kỹ Sư & Bản Đồ Dữ Liệu Trực Quan</b>. Tại đây, bạn có thể tra cứu chính xác <b>từng thư mục, từng file trong ổ đĩa `D:/Duan/Game_micute/` dùng để làm gì</b>, cách <b>9.200+ dòng code trong `index.html`</b> phối hợp với <b>Firebase Realtime Database</b> để đồng bộ 2 người chơi mượt 60 FPS, và <b>7 công đoạn kỹ thuật</b> từ lúc mở trình duyệt cho đến khi đẩy code lên GitHub & Vercel.
+                    <p class="text-sm text-[#57534E] leading-relaxed">
+                        Tài liệu này mô tả chi tiết cấu trúc thư mục <code>D:/Duan/Game_micute/</code>, cách hơn 10.000 dòng mã trong <code>index.html</code> vận hành đồ họa Three.js r128 kết hợp Firebase Realtime Database để đồng bộ 2 người chơi ở tốc độ 60 FPS.
                     </p>
                     <!-- Quick Search Filter -->
                     <div class="pt-2 flex flex-col sm:flex-row gap-2">
                         <div class="relative flex-1">
-                            <input id="global-search" oninput="filterGuideCards(this.value)" type="text" placeholder="🔍 Tìm nhanh tên file, tên hàm, công đoạn (VD: vercel.json, Vikendi, Firebase, âm thanh, 100 HP)..." class="w-full px-4 py-2.5 rounded-2xl bg-white border-2 border-pink-300 text-xs md:text-sm font-bold text-gray-700 focus:outline-none focus:border-pink-500 shadow-inner">
+                            <input id="global-search" oninput="filterGuideCards(this.value)" type="text" placeholder="Tìm nhanh tên file, hàm, phân hệ (VD: vercel.json, Vikendi, Firebase, âm thanh)..." class="h-9 w-full px-3.5 rounded-lg bg-[#FAF7F2] border border-[#E7E0D6] text-xs text-[#292524] focus:outline-none focus:border-[#E15B64]">
                         </div>
-                        <button onclick="document.getElementById('global-search').value=''; filterGuideCards('');" class="px-4 py-2.5 rounded-2xl bg-pink-100 hover:bg-pink-200 text-pink-700 font-extrabold text-xs transition">
-                            Hiện Tất Cả
+                        <button onclick="document.getElementById('global-search').value=''; filterGuideCards('');" class="h-9 px-4 rounded-lg border border-[#E7E0D6] bg-white hover:bg-[#F5F0E6] text-[#292524] font-medium text-xs transition">
+                            Hiện tất cả
                         </button>
                     </div>
                 </div>
 
-                <!-- Key Metrics Grid -->
-                <div class="grid grid-cols-2 gap-3">
-                    <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-4 rounded-2xl border border-pink-200 text-center">
-                        <div class="text-2xl font-black text-pink-600">8 File & Folder</div>
-                        <div class="text-xs font-bold text-gray-600 mt-1">Cấu trúc gọn sạch, chuẩn Cloud Vercel</div>
+                <!-- Symmetrical 2x2 Key Metrics Grid -->
+                <div class="lg:col-span-5 grid grid-cols-2 gap-3">
+                    <div class="bg-[#FAF7F2] p-4 rounded-xl border border-[#E7E0D6] flex flex-col justify-between">
+                        <div class="text-xs text-[#78716C]">Cấu trúc lưu trữ</div>
+                        <div class="text-xl font-mono font-semibold text-[#292524] mt-1">Zero-Build</div>
+                        <div class="text-[11px] text-[#78716C] mt-1">Triển khai tĩnh trên Vercel</div>
                     </div>
-                    <div class="bg-gradient-to-br from-sky-50 to-indigo-100 p-4 rounded-2xl border border-sky-200 text-center">
-                        <div class="text-2xl font-black text-sky-600">3 Map × 320²</div>
-                        <div class="text-xs font-bold text-gray-600 mt-1">Livik • Vikendi Tuyết • Sanhok Rừng</div>
+                    <div class="bg-[#FAF7F2] p-4 rounded-xl border border-[#E7E0D6] flex flex-col justify-between">
+                        <div class="text-xs text-[#78716C]">Quy mô thế giới</div>
+                        <div class="text-xl font-mono font-semibold text-[#292524] mt-1">3 × 320²</div>
+                        <div class="text-[11px] text-[#78716C] mt-1">Livik · Vikendi · Sanhok</div>
                     </div>
-                    <div class="bg-gradient-to-br from-amber-50 to-orange-100 p-4 rounded-2xl border border-amber-200 text-center">
-                        <div class="text-2xl font-black text-amber-600">11 Trò Chơi</div>
-                        <div class="text-xs font-bold text-gray-600 mt-1">Đồng bộ thời gian thực qua Firebase</div>
+                    <div class="bg-[#FAF7F2] p-4 rounded-xl border border-[#E7E0D6] flex flex-col justify-between">
+                        <div class="text-xs text-[#78716C]">Trò chơi tương tác</div>
+                        <div class="text-xl font-mono font-semibold text-[#292524] mt-1">11 chế độ</div>
+                        <div class="text-[11px] text-[#78716C] mt-1">Đồng bộ Firebase 15Hz</div>
                     </div>
-                    <div class="bg-gradient-to-br from-emerald-50 to-teal-100 p-4 rounded-2xl border border-emerald-200 text-center">
-                        <div class="text-2xl font-black text-emerald-600">12 Phân Hệ</div>
-                        <div class="text-xs font-bold text-gray-600 mt-1">Đồ họa 3D, Vật lý, Âm thanh, Mạng</div>
+                    <div class="bg-[#FAF7F2] p-4 rounded-xl border border-[#E7E0D6] flex flex-col justify-between">
+                        <div class="text-xs text-[#78716C]">Kiến trúc mã nguồn</div>
+                        <div class="text-xl font-mono font-semibold text-[#292524] mt-1">12 phân hệ</div>
+                        <div class="text-[11px] text-[#78716C] mt-1">Đồ họa, Vật lý, Âm thanh, Mạng</div>
                     </div>
                 </div>
             </div>
