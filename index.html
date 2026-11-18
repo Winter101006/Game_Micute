@@ -392,12 +392,20 @@
         </div>
     </div>
 
-    <!-- BOTTOM HOTBAR: Ride Prompt + Selected Block Tag + 9 Hotbar Slots (Stacked Cleanly!) -->
+    <!-- BOTTOM HOTBAR: Color Match Bar + Nearby Game Shortcut Prompt + Selected Block Tag + 9 Hotbar Slots -->
     <div id="hud-bottom-bar" class="absolute bottom-2 left-0 right-0 flex flex-col items-center pointer-events-none z-20 px-2 gap-1 transition-opacity duration-300">
-        <!-- RIDE / INTERACTION PROXIMITY PROMPT -->
-        <div id="ride-action-prompt" class="hidden pointer-events-auto cursor-pointer cozy-glass px-4 py-1 rounded-full border-2 border-pink-400 bg-pink-50/95 shadow-lg flex items-center gap-2 text-xs font-black text-pink-700 animate-bounce" onclick="handleRideInteractKey()">
-            <span id="ride-prompt-icon">🎡</span>
-            <span id="ride-prompt-text">Bấm [E] để lên Cabin Vòng Quay Mặt Trời!</span>
+        <!-- COLOR MATCH SPOTLIGHT / PARKOUR CHECKPOINT HELPER -->
+        <div id="color-match-spotlight" class="hidden pointer-events-auto px-4 py-1.5 rounded-2xl border-2 border-white shadow-lg flex items-center gap-2 text-xs font-black text-white">
+            <span id="color-spot-emoji" class="text-base">🩷</span>
+            <span id="color-spot-text">ĐỨNG LÊN MÀU: HỒNG DÂU</span>
+            <span id="color-spot-timer" class="px-2 py-0.5 rounded-full bg-black/25 text-white font-black text-[11px]">5.0s</span>
+        </div>
+
+        <!-- NEARBY GAME / RIDE PROXIMITY SHORTCUT PROMPT -->
+        <div id="ride-action-prompt" class="hidden pointer-events-auto cursor-pointer cozy-glass px-3.5 py-1 rounded-full border-2 border-pink-400 bg-pink-50/95 shadow-lg flex items-center gap-2 text-xs font-black text-pink-700 hover:bg-white active:scale-95 transition" onclick="triggerNearbyGameShortcut()">
+            <span id="ride-prompt-icon" class="text-sm">🎡</span>
+            <span id="ride-prompt-key" class="px-1.5 py-0.5 rounded-md bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[10px] font-black shadow-xs">[R]</span>
+            <span id="ride-prompt-text">Bấm [E] hoặc [R] để lên Cabin Vòng Quay Mặt Trời!</span>
         </div>
 
         <!-- Selected Block Name Tag & Quick Cheatsheet Hint -->
@@ -406,7 +414,7 @@
                 🌸 Cỏ Xuân Hồng (Phím 1)
             </div>
             <div class="cozy-glass px-2.5 py-0.5 rounded-full text-[10px] font-bold text-gray-500 hidden lg:inline-block">
-                💡 Đặt/Lên Xe: <span class="text-pink-600">E</span> • Đập/Bắn: <span class="text-pink-600">Q</span> • Minigame: <span class="text-amber-600 font-black">U</span> • Chạy/Lướt: <span class="text-purple-600">Shift</span> • Bay: <span class="text-indigo-600">F</span> • Bản Đồ: <span class="text-sky-600">M</span>
+                💡 Đặt/Lên Xe: <span class="text-pink-600">E</span> • Chơi Khu Gần: <span class="text-rose-600 font-black">R</span> • Đập/Bắn: <span class="text-pink-600">Q</span> • Minigame: <span class="text-amber-600 font-black">U</span> • Chạy: <span class="text-purple-600">Shift</span> • Bay: <span class="text-indigo-600">F</span> • Map: <span class="text-sky-600">M</span>
             </div>
         </div>
 
@@ -759,7 +767,7 @@
                             <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-full text-emerald-600 border border-emerald-200">X:-59 Z:23</span>
                         </div>
                         <p class="text-[11px] text-gray-600 leading-relaxed mb-2">
-                            <b>Luật chơi:</b> Mê cung cây 44x44 tường cao không nhìn xuyên. Đua xuất phát cùng lúc, nhặt 3 <b>Bình Tăng Tốc</b> trong ngõ rẽ và chạm <b>Cúp Trái Tim Vàng</b> trước để thắng!
+                            <b>Bản Dễ Chơi:</b> Mê cung mở nhiều lối thông & có <b>Tia Sáng Vàng + La Bàn chỉ hướng</b> tới Cúp ở tâm! Tốc độ +18%, nhặt <b>Bình Tăng Tốc (+60%, 7s)</b> để về đích thật nhanh!
                         </p>
                     </div>
                     <div class="flex flex-col gap-1.5">
@@ -827,7 +835,7 @@
                             <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-full text-amber-700 border border-amber-200">X:0 Z:33</span>
                         </div>
                         <p class="text-[11px] text-gray-600 leading-relaxed mb-2">
-                            <b>Sinh tồn 6x6:</b> Hệ thống hô màu ngẫu nhiên mỗi 4 giây — có 3s chạy tới ô màu đúng trước khi các màu khác sụt xuống hồ nước! Ai trụ lâu hơn thắng!
+                            <b>Dễ Nhìn 4 Màu (5 Giây):</b> Chỉ dùng 4 màu tương phản rõ (🩷 Hồng, 💙 Xanh Lam, 💛 Vàng, 💚 Xanh Lá) kèm thanh báo màu to bên dưới — bạn có <b>5 giây</b> (+22% tốc độ) để đứng lên ô đúng!
                         </p>
                     </div>
                     <div class="flex flex-col gap-1.5">
@@ -848,7 +856,7 @@
                             <span class="text-[10px] font-bold bg-white px-2 py-0.5 rounded-full text-sky-700 border border-sky-200">X:-14 Z:-26</span>
                         </div>
                         <p class="text-[11px] text-gray-600 leading-relaxed mb-2">
-                            <b>Đua tốc độ:</b> Nhảy bậc Cầu Vồng qua 3 Checkpoint lên Đảo Mây (Y=28) không dùng Bay, hoặc thử <b>Máng Trượt Băng Tuyết (X:84 Z:-70)</b> lướt tốc độ 2.5x!
+                            <b>Dễ Nhảy & Lưu Checkpoint:</b> Mọi bậc đều rộng rãi nâng nhẹ 1 ô dễ nhảy. Nếu lỡ rớt xuống đất sau khi qua Checkpoint, bấm <b>[R]</b> để hồi ngay về Checkpoint gần nhất! (Máng Băng 2.5x tại X:84 Z:-70).
                         </p>
                     </div>
                     <div class="flex flex-col gap-1.5">
@@ -1514,7 +1522,7 @@
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
                     <span class="text-pink-700 font-bold">Phím tắt nhanh:</span>
-                    <span>Minigame: <b class="text-amber-600">U</b> • Map: <b class="text-purple-600">M</b> • Tới Người Yêu: <b class="text-rose-600">G</b> • Đồng ý Map: <b class="text-emerald-600">Y</b></span>
+                    <span>Chơi Game Gần / Hồi CP: <b class="text-rose-600">R</b> • Minigame: <b class="text-amber-600">U</b> • Map: <b class="text-purple-600">M</b> • Tới Người Yêu: <b class="text-rose-600">G</b> • Đồng ý Map: <b class="text-emerald-600">Y</b></span>
                 </div>
                 <div class="flex items-center justify-between bg-pink-50/80 p-2 rounded-xl">
                     <span class="text-pink-700 font-bold">Thả Tim / Múa / Selfie / Thu gọn HUD:</span>
@@ -3792,9 +3800,23 @@
                 stack.push([nc, nr]);
             }
 
-            // Carve Goal Plaza in Center (cells 6..7, 6..7 -> center around -58.5, 0.5)
-            for (let gx = 19; gx <= 23; gx++) {
-                for (let gz = 19; gz <= 23; gz++) {
+            // Braid Maze: Mở thông ~35% vách tường giữa các ô kề nhau để giảm ngõ cụt, dễ tìm đường hơn!
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < cols; c++) {
+                    if (c < cols - 1 && rand() < 0.35) {
+                        mazeGrid[r * 3 + 1][c * 3 + 3] = 0;
+                        mazeGrid[r * 3 + 2][c * 3 + 3] = 0;
+                    }
+                    if (r < rows - 1 && rand() < 0.35) {
+                        mazeGrid[r * 3 + 3][c * 3 + 1] = 0;
+                        mazeGrid[r * 3 + 3][c * 3 + 2] = 0;
+                    }
+                }
+            }
+
+            // Carve Wide Goal Plaza in Center (cells 6..7, 6..7 -> center around -58.5, 0.5)
+            for (let gx = 18; gx <= 24; gx++) {
+                for (let gz = 18; gz <= 24; gz++) {
                     mazeGrid[gz][gx] = 0;
                 }
             }
@@ -3803,20 +3825,20 @@
             mazeGrid[42][20] = 0;
             mazeGrid[42][21] = 0;
 
-            // Place Voxels
+            // Place Voxels (3-block tall hedges so still enclosed, with clean visual beacon above!)
             for (let gz = 0; gz < h; gz++) {
                 for (let gx = 0; gx < w; gx++) {
                     const wx = MAZE_ORIGIN.x + gx;
                     const wz = MAZE_ORIGIN.z + gz;
                     rawSetVoxel(wx, 4, wz, ((gx + gz) % 2 === 0) ? 6 : 5);
+                    rawDeleteVoxel(wx, 8, wz);
                     if (mazeGrid[gz][gx] === 1) {
-                        for (let y = 5; y <= 8; y++) {
-                            // Opaque Mint Green (1) & Pastel Pink Wood (14) so cannot see through or jump over!
-                            const matId = (y === 8 && (gx + gz) % 2 === 0) ? 14 : ((gx * 3 + gz) % 5 === 0 ? 14 : 1);
+                        for (let y = 5; y <= 7; y++) {
+                            const matId = (y === 7 && (gx + gz) % 2 === 0) ? 14 : ((gx * 3 + gz) % 5 === 0 ? 14 : 1);
                             rawSetVoxel(wx, y, wz, matId);
                         }
                     } else {
-                        for (let y = 5; y <= 8; y++) rawDeleteVoxel(wx, y, wz);
+                        for (let y = 5; y <= 7; y++) rawDeleteVoxel(wx, y, wz);
                     }
                 }
             }
@@ -3849,7 +3871,7 @@
                 }
             });
 
-            // Golden Heart Trophy in Maze Center
+            // Golden Heart Trophy + Sky Beacon Beam in Maze Center
             if (mazeTrophyMesh && mazeTrophyMesh.parent) mazeTrophyMesh.parent.remove(mazeTrophyMesh);
             if (amusementGroup) {
                 mazeTrophyMesh = new THREE.Mesh(
@@ -3858,7 +3880,14 @@
                 );
                 mazeTrophyMesh.position.set(MAZE_GOAL_POS.x, MAZE_GOAL_POS.y, MAZE_GOAL_POS.z);
                 amusementGroup.add(mazeTrophyMesh);
-                create3DParkSign(-58.5, 8.2, 21.5, "🌿 MÊ CUNG TÌNH YÊU", "Chạm Cúp Vàng giữa mê cung để thắng!", "#00b894");
+
+                if (typeof THREE.CylinderGeometry === 'function') {
+                    const beaconMat = new THREE.MeshBasicMaterial({ color: 0xffeaa7, transparent: true, opacity: 0.36 });
+                    const beaconMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.55, 22, 10), beaconMat);
+                    beaconMesh.position.set(MAZE_GOAL_POS.x, MAZE_GOAL_POS.y + 11, MAZE_GOAL_POS.z);
+                    amusementGroup.add(beaconMesh);
+                }
+                create3DParkSign(-58.5, 8.2, 21.5, "🌿 MÊ CUNG TÌNH YÊU", "Theo Tia Sáng Vàng & La Bàn chạm Cúp Tâm!", "#00b894");
             }
         }
 
@@ -4018,18 +4047,18 @@
         function buildColorMatchStage(seed) {
             currentColorBoardSeed = seed;
             const rand = mulberry32(seed);
-            // Color Match Blocks 40..45
-            const colorIds = [40, 41, 42, 43, 44, 45];
-            // Viewing Deck at North (-9..8, z: 20..22)
+            // 4 high-contrast matching colors (40 Pink, 41 Blue, 42 Yellow, 44 Green -> 9 tiles each!)
+            const colorIds = [40, 41, 42, 44];
+            // Viewing Deck at North (-10..9, z: 20..22)
             for (let x = -10; x <= 9; x++) {
                 for (let z = 20; z <= 22; z++) {
                     rawSetVoxel(x, 5, z, 15);
                     if (z === 20 && (x === -10 || x === 9)) rawSetVoxel(x, 6, z, 23);
                 }
             }
-            // Generate 6x6 Tiles (each 3x3 blocks -> x: -9..8, z: 24..41) guaranteeing every color appears 6 times!
+            // Generate 6x6 Tiles (each 3x3 blocks -> x: -9..8, z: 24..41) guaranteeing 9 tiles per color!
             const bag = [];
-            for (let r = 0; r < 6; r++) bag.push(...colorIds);
+            for (let r = 0; r < 9; r++) bag.push(...colorIds);
             for (let i = bag.length - 1; i > 0; i--) {
                 const j = Math.floor(rand() * (i + 1));
                 [bag[i], bag[j]] = [bag[j], bag[i]];
@@ -4048,23 +4077,26 @@
                     }
                 }
             }
-            create3DParkSign(0, 8.2, 22.5, "🎨 SÀN NHẢY SẮC MÀU 6x6", "Chạy tới đúng màu trong 3s để sinh tồn!", "#e17055");
+            create3DParkSign(0, 8.2, 22.5, "🎨 SÀN NHẢY SẮC MÀU 4 MÀU", "Có 5 giây chạy tới đúng màu! Bấm [R] chơi ngay!", "#e17055");
         }
 
         function buildRainbowParkourObby() {
             const rainbowColors = [17, 19, 33, 2, 18, 20];
-            // Ascending steps from (-14, 5, -26) up to Sky Island (0, 28, 0) (dy = +1 block per step, fair 2-block gap!)
+            // Smooth dy=+1 staircase steps from (-14, 5, -26) up to Sky Island (0, 28, 0) — easy & fun jumps!
             const steps = [
-                [-14, 5, -26], [-15, 6, -22], [-16, 7, -19], [-17, 8, -16], [-18, 10, -14], // CP 1 at Y=10
-                [-17, 11, -10], [-16, 12, -7], [-15, 13, -3], [-15, 14, 0], [-14, 16, 4],   // CP 2 at Y=16
-                [-12, 17, 7], [-10, 18, 10], [-8, 20, 12], [-6, 22, 12],                     // CP 3 at Y=22
-                [-3, 23, 13], [-1, 25, 13], [0, 27, 12]                                      // Connects directly to Sky Island Rainbow Bridge (z=11)!
+                [-14, 5, -26], [-15, 6, -23], [-16, 7, -20], [-17, 8, -18], [-18, 9, -16],
+                [-18, 10, -14], // idx 5 -> CP 1 at Y=10
+                [-17, 11, -11], [-16, 12, -8], [-16, 13, -5], [-15, 14, -2], [-15, 15, 1],
+                [-14, 16, 4],   // idx 11 -> CP 2 at Y=16
+                [-13, 17, 7], [-12, 18, 9], [-11, 19, 11], [-9, 20, 12], [-8, 21, 14],
+                [-6, 22, 12],   // idx 17 -> CP 3 at Y=22
+                [-4, 23, 13], [-2, 24, 14], [0, 25, 14], [2, 26, 12], [0, 27, 12]
             ];
 
             parkourCheckpointRings.length = 0;
             steps.forEach(([sx, sy, sz], i) => {
                 const cId = rainbowColors[i % rainbowColors.length];
-                const isCheckpoint = (i === 0 || i === 4 || i === 9 || i === 13);
+                const isCheckpoint = (i === 0 || i === 5 || i === 11 || i === 17);
                 const rad = isCheckpoint ? 1 : 0;
                 for (let dx = -rad; dx <= rad + (isCheckpoint ? 0 : 1); dx++) {
                     for (let dz = -rad; dz <= rad + (isCheckpoint ? 0 : 1); dz++) {
@@ -4090,25 +4122,25 @@
                 );
                 parkourFinishMesh.position.set(0.5, 30.8, 0.5);
                 amusementGroup.add(parkourFinishMesh);
-                create3DParkSign(-13.5, 8.0, -26.5, "🌈 PARKOUR CẦU VỒNG", "Leo 3 Checkpoint lên Đảo Mây (Y=28)!", "#6c5ce7");
+                create3DParkSign(-13.5, 8.0, -26.5, "🌈 PARKOUR CẦU VỒNG (DỄ NHẢY)", "Bấm [R] để bắt đầu • Rớt bấm [R] về Checkpoint!", "#6c5ce7");
             }
         }
 
         function buildSnowIceSlide() {
-            // Long Ice Slide descending from Snowy Peak (84, 17, -70) down to (50, 5, -28)
+            // Wide Ice Slide descending from Snowy Peak (84, 17, -70) down to (50, 5, -28)
             for (let t = 0; t <= 44; t++) {
                 const sx = Math.round(84 - t * 0.77);
                 const sz = Math.round(-70 + t * 0.95);
                 const sy = Math.max(5, Math.round(17 - t * 0.28));
-                for (let w = -1; w <= 1; w++) {
-                    rawSetVoxel(sx + w, sy, sz, 8); // Crystal Blue Ice!
+                for (let w = -2; w <= 2; w++) {
+                    rawSetVoxel(sx + w, sy, sz, 8); // Wide 5-block Crystal Blue Ice!
                     rawDeleteVoxel(sx + w, sy + 1, sz);
                     rawDeleteVoxel(sx + w, sy + 2, sz);
                 }
                 // Snow border bumpers so sliding stays on track!
-                rawSetVoxel(sx - 2, sy + 1, sz, 4);
-                rawSetVoxel(sx + 2, sy + 1, sz, 4);
-                if (t % 6 === 0) rawSetVoxel(sx + 2, sy + 2, sz, 23);
+                rawSetVoxel(sx - 3, sy + 1, sz, 4);
+                rawSetVoxel(sx + 3, sy + 1, sz, 4);
+                if (t % 6 === 0) rawSetVoxel(sx + 3, sy + 2, sz, 23);
             }
         }
 
@@ -5365,8 +5397,11 @@
                     curSpeed *= 2.2; // Runner Dash Skill burst (~4 blocks)
                 }
             }
-            if (activeMinigame && activeMinigame.id === 'maze' && now < mazeSpeedBoostUntil) {
-                curSpeed *= 1.55;
+            if (activeMinigame && activeMinigame.id === 'maze') {
+                curSpeed *= (now < mazeSpeedBoostUntil) ? 1.60 : 1.18;
+            }
+            if (activeMinigame && activeMinigame.id === 'colormatch') {
+                curSpeed *= 1.22; // Linh hoạt hơn trên Sàn Nhảy Sắc Màu
             }
             if (!player.isFlying && inWater) {
                 curSpeed *= 0.72; // Water swimming resistance
@@ -5508,7 +5543,7 @@
                         player.position.y = THREE.MathUtils.lerp(player.position.y, targetY, smoothAlpha);
 
                         if (keys['Space'] && !inStartCountdown && !collidesPlayerAABB(player.position.x, player.position.y + 0.2, player.position.z)) {
-                            player.velocity.y = 0.21;
+                            player.velocity.y = (activeMinigame && activeMinigame.id === 'parkour') ? 0.222 : 0.21;
                             player.isGrounded = false;
                             audio.playJumpSound();
                         }
@@ -5780,6 +5815,9 @@
                 if (typeof handleRideInteractKey === 'function' && handleRideInteractKey()) return;
                 triggerPlaceBlock();
                 return;
+            }
+            if (e.code === 'KeyR' && !e.repeat) {
+                if (typeof triggerNearbyGameShortcut === 'function' && triggerNearbyGameShortcut()) return;
             }
             if ((e.code === 'KeyQ' || e.code === 'KeyJ') && !e.repeat) {
                 if (activeMinigame && (activeMinigame.id === 'battle' || activeMinigame.id === 'vikendi_snowball') && activeMinigame.phase === 'playing' && typeof fireBattleProjectile === 'function') {
@@ -8249,14 +8287,14 @@
            11C. 6 SYNCED COUPLE MINIGAMES, SCOREBOARD & AMUSEMENT RIDES
            ========================================================================== */
         const COLOR_MATCH_META = {
-            40: { name: "HỒNG DÂU", emoji: "🍓", hex: "#ff85a2" },
-            41: { name: "CAM ĐẢO", emoji: "🍊", hex: "#ff9f43" },
-            42: { name: "VÀNG CHANH", emoji: "🍋", hex: "#feca57" },
-            43: { name: "XANH BẠC HÀ", emoji: "🍏", hex: "#55efc4" },
-            44: { name: "XANH NGỌC", emoji: "🫐", hex: "#48dbfb" },
-            45: { name: "TÍM KHOAI MÔN", emoji: "🍇", hex: "#a29bfe" }
+            40: { name: "HỒNG DÂU", emoji: "🩷", hex: "#ff4d6d" },
+            41: { name: "XANH LAM", emoji: "💙", hex: "#2e86de" },
+            42: { name: "VÀNG RỰC", emoji: "💛", hex: "#e1a300" },
+            43: { name: "TÍM MỘNG MƠ", emoji: "💜", hex: "#8c7ae6" },
+            44: { name: "XANH LÁ", emoji: "💚", hex: "#00b894" },
+            45: { name: "CAM TƯƠI", emoji: "🧡", hex: "#e17055" }
         };
-        const COLOR_MATCH_IDS = [40, 41, 42, 43, 44, 45];
+        const COLOR_MATCH_IDS = [40, 41, 42, 44];
 
         let lastTagChaserRole = 'huan'; // Alternates each round -> Round 1: uyen chases, Round 2: huan chases
         let lastSyncedMatchKey = '';
@@ -8376,11 +8414,36 @@
         }
 
         let _lastMgHudKey = '';
+        let _lastSpotlightKey = '';
+        function setSpotlightHelper(visible, bgHex = '#ff4d6d', emoji = '🩷', text = '', timerStr = '', clickHandler = null) {
+            const box = document.getElementById('color-match-spotlight');
+            if (!box) return;
+            if (!visible) {
+                if (!box.classList.contains('hidden')) box.classList.add('hidden');
+                box.onclick = null;
+                _lastSpotlightKey = '';
+                return;
+            }
+            const nextKey = `${bgHex}|${emoji}|${text}|${timerStr}`;
+            if (!box.classList.contains('hidden') && _lastSpotlightKey === nextKey) return;
+            _lastSpotlightKey = nextKey;
+            box.classList.remove('hidden');
+            box.style.backgroundColor = bgHex;
+            box.onclick = clickHandler;
+            const emEl = document.getElementById('color-spot-emoji');
+            const txEl = document.getElementById('color-spot-text');
+            const tmEl = document.getElementById('color-spot-timer');
+            if (emEl) emEl.innerText = emoji;
+            if (txEl) txEl.innerText = text;
+            if (tmEl) tmEl.innerText = timerStr;
+        }
+
         function updateMinigameHUD(visible, title = '', timerStr = '', roleStr = '', skillStr = '') {
             const banner = document.getElementById('minigame-hud-banner');
             if (!banner) return;
             if (!visible) {
                 if (!banner.classList.contains('hidden')) banner.classList.add('hidden');
+                setSpotlightHelper(false);
                 _lastMgHudKey = '';
                 return;
             }
@@ -8678,6 +8741,95 @@
             updateMinigameHUD(true, "🎠 XÍCH ĐU ĐÔI ANH ĐÀO", "Đung Đưa", myCoupleRole === 'huan' ? "💙 Ghế Trái (Huân)" : "💖 Ghế Phải (Uyên)", "Bấm [E] hoặc [Space] để xuống");
         }
 
+        function getNearbyGameZone() {
+            const m = normalizeMapMode(currentWorldMapMode);
+            const px = player.position.x, py = player.position.y, pz = player.position.z;
+
+            if (m === 'livik') {
+                const distFerris = Math.hypot(px - FERRIS_CENTER.x, pz - FERRIS_CENTER.z);
+                if (distFerris <= 11.5 && py <= 15) {
+                    return { id: 'ferris', icon: '🎡', keyLabel: 'E / R', text: 'Vòng Quay Mặt Trời — Bấm [E] hoặc [R] để Lên Cabin!', run: () => boardFerrisWheel() };
+                }
+                const distSwing = Math.hypot(px - SWING_ANCHOR.x, pz - SWING_ANCHOR.z);
+                if (distSwing <= 8.0 && py <= 13) {
+                    return { id: 'swing', icon: '🎠', keyLabel: 'E / R', text: 'Xích Đu Đôi Anh Đào — Bấm [E] hoặc [R] để Ngồi Chơi!', run: () => boardCoupleSwing() };
+                }
+                const distTag = Math.hypot(px - 60, pz - 0);
+                if (distTag <= 20.0 && py <= 14) {
+                    return { id: 'tag', icon: '🏃‍♂️', keyLabel: 'R', text: 'Đấu Trường Đuổi Bắt 50/50 — Bấm [R] để Chơi Ngay!', run: () => startTagMinigame() };
+                }
+                const distMaze = Math.hypot(px - (-59), pz - 23);
+                if (distMaze <= 14.0 && py <= 12) {
+                    return { id: 'maze', icon: '🌿', keyLabel: 'R', text: 'Cổng Mê Cung Tình Yêu — Bấm [R] để Bắt Đầu Đua!', run: () => startMazeMinigame() };
+                }
+                const distColor = Math.hypot(px - 0, pz - 30);
+                if (distColor <= 16.5 && py <= 13) {
+                    return { id: 'colormatch', icon: '🎨', keyLabel: 'R', text: 'Sàn Nhảy Sắc Màu 4 Màu — Bấm [R] để Chơi Ngay!', run: () => startColorMatchMinigame() };
+                }
+                const distParkour = Math.hypot(px - (-14), pz - (-26));
+                if (distParkour <= 10.5 && py <= 12) {
+                    return { id: 'parkour', icon: '🌈', keyLabel: 'R', text: 'Parkour Cầu Vồng — Bấm [R] để Bắt Đầu Đua!', run: () => startParkourMinigame() };
+                }
+                const distBattle = Math.hypot(px - BATTLE_ARENA_CENTER.x, pz - BATTLE_ARENA_CENTER.z);
+                if (distBattle <= 17.5 && py <= 14) {
+                    return { id: 'battle', icon: '⚔️', keyLabel: 'R', text: 'Đấu Trường Thanh Máu 100 HP — Bấm [R] để Vào Trận!', run: () => startBattleHPMinigame() };
+                }
+                const distSlide = Math.hypot(px - 84, pz - (-70));
+                if (distSlide <= 11.0 && py <= 26) {
+                    return { id: 'iceslide', icon: '🛷', keyLabel: 'R', text: 'Máng Trượt Băng Tuyết — Bấm [R] đặt chân lên đầu máng lướt 2.5x!', run: () => { player.isFlying = false; updateFlyButtonUI(); player.position.set(84, 19.6, -70); player.rotation.set(-0.1, 0.68, 0); showToast("🛷 Đã vào đầu Máng Trượt Băng! Giữ W để lướt siêu tốc 2.5x!", "❄️", 2400); } };
+                }
+            } else if (m === 'vikendi') {
+                const distSnow = Math.hypot(px, pz);
+                if (distSnow <= 22.0 && py <= 14) {
+                    return { id: 'vikendi_snowball', icon: '⛄', keyLabel: 'R', text: 'Quảng Trường Ném Tuyết — Bấm [R] để Chơi Ngay (30s)!', run: () => startVikendiSnowballGame() };
+                }
+                const distSled = Math.hypot(px - VIKENDI_SLED_START.x, pz - VIKENDI_SLED_START.z);
+                if (distSled <= 14.0) {
+                    return { id: 'vikendi_sled', icon: '🛷', keyLabel: 'R', text: 'Đỉnh Dốc Trượt Băng — Bấm [R] để Đua Xuống Dốc Ngay!', run: () => startVikendiSledGame() };
+                }
+            } else if (m === 'sanhok') {
+                const distBridge = Math.hypot(px - SANHOK_RACE_START.x, pz - SANHOK_RACE_START.z);
+                if (distBridge <= 16.0) {
+                    return { id: 'sanhok_bridge', icon: '🌉', keyLabel: 'R', text: 'Bến Xuất Phát Cầu Treo — Bấm [R] để Đua 3 Đảo Ngay!', run: () => startSanhokBridgeRace() };
+                }
+                const distFruit = Math.hypot(px, pz);
+                if (distFruit <= 24.0 && py <= 14) {
+                    return { id: 'sanhok_fruit', icon: '🥭', keyLabel: 'R', text: 'Chợ Trái Vàng Sanhok — Bấm [R] để Nhặt Trái Đua (30s)!', run: () => startSanhokFruitGame() };
+                }
+            }
+            return null;
+        }
+
+        function returnToParkourCheckpoint() {
+            if (!activeMinigame || activeMinigame.id !== 'parkour') return false;
+            const cpIdx = Math.max(0, Math.min(3, parkourCheckpointIdx || 0));
+            const pt = PARKOUR_CHECKPOINTS[cpIdx];
+            if (!pt) return false;
+            player.isFlying = false;
+            updateFlyButtonUI();
+            player.velocity.set(0, 0, 0);
+            player.position.set(pt.x + 0.5, pt.y + 1 + player.height, pt.z + 0.5);
+            audio.playCollectPop();
+            spawnSparkleBurst(pt.x + 0.5, pt.y + 1.5, pt.z + 0.5, "#feca57", 14);
+            showToast(`↩️ Đã quay lại ${pt.label}! Tiếp tục nhảy lên nào 🌈`, "🏁", 1800);
+            return true;
+        }
+
+        function triggerNearbyGameShortcut() {
+            if (currentSeatedRide) {
+                exitCurrentMinigameOrRide();
+                return true;
+            }
+            if (activeMinigame && activeMinigame.id === 'parkour') {
+                return returnToParkourCheckpoint();
+            }
+            if (activeMinigame) return false;
+            const zone = getNearbyGameZone();
+            if (!zone) return false;
+            if (typeof zone.run === 'function') zone.run();
+            return true;
+        }
+
         function handleRideInteractKey() {
             if (currentSeatedRide) {
                 exitCurrentMinigameOrRide();
@@ -8685,12 +8837,12 @@
             }
             if (normalizeMapMode(currentWorldMapMode) !== 'livik') return false;
             const distFerris = Math.hypot(player.position.x - FERRIS_CENTER.x, player.position.z - FERRIS_CENTER.z);
-            if (distFerris <= 10.5 && player.position.y <= 15) {
+            if (distFerris <= 11.5 && player.position.y <= 15) {
                 boardFerrisWheel();
                 return true;
             }
             const distSwing = Math.hypot(player.position.x - SWING_ANCHOR.x, player.position.z - SWING_ANCHOR.z);
-            if (distSwing <= 6.8 && player.position.y <= 12) {
+            if (distSwing <= 8.0 && player.position.y <= 13) {
                 boardCoupleSwing();
                 return true;
             }
@@ -8755,7 +8907,7 @@
             const mm = document.getElementById('minigames-modal');
             if (mm) mm.classList.add('hidden');
             audio.playGiftChime();
-            showToast("🎨 SÀN NHẢY SẮC MÀU BẮT ĐẦU! Nghe hiệu lệnh màu & chạy thật nhanh trong 3 giây!", "🌈", 3000);
+            showToast("🎨 SÀN NHẢY SẮC MÀU (4 MÀU DỄ NHÌN)! Có 5 giây (+22% tốc độ) chạy lên ô đúng màu!", "🌈", 3200);
         }
 
         function startColorMatchMinigame() {
@@ -8785,7 +8937,14 @@
 
             if (!isCoopConnected) {
                 const survived = Math.max(0, activeMinigame.round);
-                showToast(`💦 Rơi xuống hồ rồi! Bạn trụ được ${survived} lượt Sàn Nhảy Sắc Màu!`, "🎨", 3200);
+                if (survived >= 4) {
+                    lovePoints += 15;
+                    updateLovePointsUI();
+                    checkQuestProgress('minigame_tag', 1);
+                    showToast(`🏆 Giỏi quá! Trụ được ${survived} lượt Sàn Nhảy Sắc Màu (+15 💖)!`, "🎉", 3400);
+                } else {
+                    showToast(`💦 Rơi xuống hồ rồi! Bạn trụ được ${survived} lượt (trụ 4 lượt trở lên để nhận thưởng 💖 nhé)!`, "🎨", 3200);
+                }
                 finishColorMatchRound(null);
                 return;
             }
@@ -9622,26 +9781,29 @@
                 }
             }
 
-            // 5. Floating Proximity Prompt ("Bấm [E] để lên Vòng Quay / Xích Đu" — ONLY on Livik!)
+            // 5. Floating Proximity Shortcut Prompt across ALL 3 Maps (Shows [R] / [E] near any game zone!)
             const promptEl = document.getElementById('ride-action-prompt');
-            if (promptEl && !currentSeatedRide && !activeMinigame && normalizeMapMode(currentWorldMapMode) === 'livik') {
-                const distFerris = Math.hypot(player.position.x - FERRIS_CENTER.x, player.position.z - FERRIS_CENTER.z);
-                const distSwing = Math.hypot(player.position.x - SWING_ANCHOR.x, player.position.z - SWING_ANCHOR.z);
+            if (promptEl && !currentSeatedRide && !activeMinigame) {
+                const nearZone = getNearbyGameZone();
                 const iconEl = document.getElementById('ride-prompt-icon');
+                const keyEl = document.getElementById('ride-prompt-key');
                 const txtEl = document.getElementById('ride-prompt-text');
-                if (distFerris <= 8.5 && player.position.y <= 14) {
-                    promptEl.classList.remove('hidden');
-                    if (iconEl) iconEl.innerText = "🎡";
-                    if (txtEl) txtEl.innerText = "Bấm [E] để lên Cabin Vòng Quay Mặt Trời!";
-                } else if (distSwing <= 6.8 && player.position.y <= 12) {
-                    promptEl.classList.remove('hidden');
-                    if (iconEl) iconEl.innerText = "🎠";
-                    if (txtEl) txtEl.innerText = "Bấm [E] để ngồi Xích Đu Đôi Anh Đào!";
-                } else {
+                if (nearZone) {
+                    const nextKey = `${nearZone.id}|${nearZone.keyLabel}|${nearZone.text}`;
+                    if (promptEl.classList.contains('hidden') || promptEl.dataset.zoneKey !== nextKey) {
+                        promptEl.dataset.zoneKey = nextKey;
+                        promptEl.classList.remove('hidden');
+                        if (iconEl) iconEl.innerText = nearZone.icon;
+                        if (keyEl) keyEl.innerText = `[${nearZone.keyLabel}]`;
+                        if (txtEl) txtEl.innerText = nearZone.text;
+                    }
+                } else if (!promptEl.classList.contains('hidden')) {
                     promptEl.classList.add('hidden');
+                    promptEl.dataset.zoneKey = '';
                 }
-            } else if (promptEl) {
+            } else if (promptEl && !promptEl.classList.contains('hidden')) {
                 promptEl.classList.add('hidden');
+                promptEl.dataset.zoneKey = '';
             }
 
             // 6. Active Minigame Ticks
@@ -9707,81 +9869,104 @@
 
                 if (activeMinigame.phase === 'playing') {
                     const raceSec = ((now - (activeMinigame.raceStartedAt || now)) / 1000).toFixed(1);
-                    const boostRemain = now < mazeSpeedBoostUntil ? `⚡ Tăng tốc: ${Math.ceil((mazeSpeedBoostUntil - now) / 1000)}s` : "🔍 Tìm Bình Tăng Tốc";
-                    updateMinigameHUD(true, "🌿 MÊ CUNG TÌNH YÊU", `${raceSec}s`, "🏆 Chạm Cúp ở Tâm", boostRemain);
+                    const gdx = MAZE_GOAL_POS.x - player.position.x;
+                    const gdz = MAZE_GOAL_POS.z - player.position.z;
+                    const gDist = Math.hypot(gdx, gdz);
+                    const yaw = player.rotation.y;
+                    const fx = -Math.sin(yaw), fz = -Math.cos(yaw);
+                    const rx = Math.cos(yaw), rz = -Math.sin(yaw);
+                    const dotF = gDist > 0.01 ? (gdx * fx + gdz * fz) / gDist : 1;
+                    const dotR = gDist > 0.01 ? (gdx * rx + gdz * rz) / gDist : 0;
+                    let dirArrow = '⬆️ Thẳng';
+                    if (dotF < -0.55) dirArrow = '⬇️ Quay lại';
+                    else if (dotF >= 0.72) dirArrow = '⬆️ Thẳng';
+                    else if (dotF >= 0) dirArrow = dotR > 0 ? '↗️ Chếch Phải' : '↖️ Chếch Trái';
+                    else dirArrow = dotR > 0 ? '➡️ Rẽ Phải' : '⬅️ Rẽ Trái';
 
-                    // Pickup 3 Speed Boost Gems
+                    const boostRemain = now < mazeSpeedBoostUntil ? `⚡ Tăng tốc: ${Math.ceil((mazeSpeedBoostUntil - now) / 1000)}s` : "✨ Nhìn Tia Sáng Vàng";
+                    updateMinigameHUD(true, "🌿 MÊ CUNG TÌNH YÊU", `${raceSec}s`, `🧭 Cúp: ${Math.round(gDist)}m (${dirArrow})`, boostRemain);
+
+                    // Pickup 3 Speed Boost Gems (wider radius & longer 7s burst!)
                     for (let i = 0; i < MAZE_BOOST_SPOTS.length; i++) {
                         const spot = MAZE_BOOST_SPOTS[i];
                         const bm = mazeBoostMeshes[i];
                         if (bm && bm.visible && now - (spot.pickedAt || 0) > 12000) {
                             const d = Math.hypot(player.position.x - spot.x, player.position.z - spot.z);
-                            if (d < 1.65 && Math.abs(player.position.y - spot.y) < 3.0) {
+                            if (d < 2.3 && Math.abs(player.position.y - spot.y) < 3.2) {
                                 spot.pickedAt = now;
                                 bm.visible = false;
-                                mazeSpeedBoostUntil = now + 5000;
+                                mazeSpeedBoostUntil = now + 7000;
                                 audio.playCollectPop();
                                 spawnSparkleBurst(spot.x, spot.y, spot.z, "#00cec9", 18);
-                                showToast("⚡ Nhặt Bình Tăng Tốc Mê Cung! Chạy +55% trong 5 giây!", "💎", 2200);
+                                showToast("⚡ Nhặt Bình Tăng Tốc Mê Cung! Chạy +60% trong 7 giây!", "💎", 2200);
                             }
                         }
                     }
 
                     // Check Golden Heart Trophy Goal!
-                    const goalDist = Math.hypot(player.position.x - MAZE_GOAL_POS.x, player.position.z - MAZE_GOAL_POS.z);
-                    if (goalDist < 2.2 && Math.abs(player.position.y - MAZE_GOAL_POS.y) < 3.2) {
+                    if (gDist < 3.0 && Math.abs(player.position.y - MAZE_GOAL_POS.y) < 3.4) {
                         finishMazeRound(myCoupleRole);
                         return;
                     }
                 }
             } else if (activeMinigame.id === 'colormatch' && activeMinigame.phase === 'playing') {
-                const cycleMs = 5000; // 3s announce & run + 2s drop hole!
+                const cycleMs = 7000; // 5s run to color + 2s drop hole!
                 const elapsedMs = now - activeMinigame.startedAt;
                 const round = Math.floor(elapsedMs / cycleMs);
                 const phaseMs = elapsedMs % cycleMs;
                 const targetId = getColorTargetForRound(activeMinigame.boardSeed, round);
-                const cMeta = COLOR_MATCH_META[targetId] || { name: "HỒNG DÂU", emoji: "🍓" };
+                const cMeta = COLOR_MATCH_META[targetId] || { name: "HỒNG DÂU", emoji: "🩷", hex: "#ff4d6d" };
                 activeMinigame.round = round;
 
                 if (round !== colorMatchAnnouncedRound) {
                     colorMatchAnnouncedRound = round;
                     if (round > 0) restoreColorMatchBoard(activeMinigame.boardSeed);
                     audio.playCollectPop();
-                    showToast(`${cMeta.emoji} LƯỢT ${round + 1}: CHẠY TỚI MÀU ${cMeta.name} (3 giây)!`, cMeta.emoji, 2600);
+                    showToast(`${cMeta.emoji} LƯỢT ${round + 1}: ĐỨNG LÊN MÀU ${cMeta.name} (5 giây)!`, cMeta.emoji, 2400);
                 }
 
-                if (phaseMs < 3000) {
-                    const secLeft = ((3000 - phaseMs) / 1000).toFixed(1);
-                    updateMinigameHUD(true, `🎨 LƯỢT ${round + 1}`, `${secLeft}s`, `${cMeta.emoji} ĐỨNG LÊN: ${cMeta.name}`, "🏃 Nhanh chân lên!");
+                if (phaseMs < 5000) {
+                    const secLeft = ((5000 - phaseMs) / 1000).toFixed(1);
+                    updateMinigameHUD(true, `🎨 LƯỢT ${round + 1}`, `${secLeft}s`, `${cMeta.emoji} MÀU: ${cMeta.name}`, "🏃 Thoải mái 5 giây!");
+                    setSpotlightHelper(true, cMeta.hex, cMeta.emoji, `CHẠY LÊN Ô MÀU: ${cMeta.name}`, `${secLeft}s`);
                 } else {
                     if (colorMatchDroppedRound !== round) {
                         colorMatchDroppedRound = round;
                         dropNonMatchingColorTiles(targetId);
                         audio.playBreakSound();
                     }
-                    const dropLeft = ((5000 - phaseMs) / 1000).toFixed(1);
-                    updateMinigameHUD(true, `💥 SÀN RỤNG!`, `${dropLeft}s`, `✅ AN TOÀN: ${cMeta.emoji} ${cMeta.name}`, "💦 Coi chừng rơi xuống hồ!");
+                    const dropLeft = ((7000 - phaseMs) / 1000).toFixed(1);
+                    updateMinigameHUD(true, `💥 SÀN RỤNG!`, `${dropLeft}s`, `✅ AN TOÀN: ${cMeta.emoji} ${cMeta.name}`, "Giữ nguyên vị trí!");
+                    setSpotlightHelper(true, cMeta.hex, '✅', `SÀN ĐANG RỤNG — ĐỨNG YÊN TRÊN ${cMeta.name}!`, `${dropLeft}s`);
                 }
             } else if (activeMinigame.id === 'parkour' && activeMinigame.phase === 'playing') {
                 const elapsed = ((now - parkourStartTime) / 1000).toFixed(1);
-                updateMinigameHUD(true, "🌈 PARKOUR CẦU VỒNG", `${elapsed}s`, `🚩 Checkpoint: ${parkourCheckpointIdx}/3`, "🎯 Đích: Đảo Mây (Y=28)");
+                const parkourHint = parkourCheckpointIdx >= 1 ? "Rớt bấm [R] về CP!" : "Nhảy bậc Cầu Vồng!";
+                updateMinigameHUD(true, "🌈 PARKOUR CẦU VỒNG", `${elapsed}s`, `🚩 Checkpoint: ${parkourCheckpointIdx}/3`, parkourHint);
 
                 for (let cp = 1; cp <= 3; cp++) {
                     if (parkourCheckpointIdx < cp) {
                         const pt = PARKOUR_CHECKPOINTS[cp];
                         const distCp = Math.hypot(player.position.x - pt.x, player.position.z - pt.z);
-                        if (distCp < 2.3 && Math.abs(player.position.y - (pt.y + player.height)) < 2.8) {
+                        if (distCp < 2.7 && Math.abs(player.position.y - (pt.y + player.height)) < 3.0) {
                             parkourCheckpointIdx = cp;
                             audio.playCollectPop();
                             spawnSparkleBurst(pt.x, pt.y + 1, pt.z, "#feca57", 18);
-                            showToast(`🚩 Đã chạm ${pt.label} (${cp}/3)! Cố lên sắp tới Đảo Mây rồi!`, "✨", 2200);
+                            showToast(`🚩 Đã lưu ${pt.label} (${cp}/3)! Nếu lỡ té bấm [R] để quay lại ngay!`, "✨", 2600);
                         }
                     }
                 }
 
+                // Helpful instant [R] checkpoint return banner if player falls low after reaching CP1+
+                if (parkourCheckpointIdx >= 1 && player.position.y < 8.5) {
+                    setSpotlightHelper(true, '#7c3aed', '↩️', `Lỡ rớt rồi! Bấm [R] hoặc chạm vào đây về lại Checkpoint ${parkourCheckpointIdx}`, 'Phím R', () => returnToParkourCheckpoint());
+                } else {
+                    setSpotlightHelper(false);
+                }
+
                 const fin = PARKOUR_CHECKPOINTS[4];
                 const distFin = Math.hypot(player.position.x - fin.x, player.position.z - fin.z);
-                if (distFin < 2.8 && Math.abs(player.position.y - fin.y) < 4.0) {
+                if (distFin < 3.5 && Math.abs(player.position.y - fin.y) < 4.2) {
                     finishParkourRound(myCoupleRole, elapsed);
                     return;
                 }

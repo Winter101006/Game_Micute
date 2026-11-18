@@ -1,3 +1,14 @@
+# KawaiiCraft V5.5 — Giảm Độ Khó Minigame (2, 5, 6), Phím Tắt `[R]` Tới Gần Khu Game & Đồ Họa 4 Mức
+
+## 0. Nâng Cấp Trải Nghiệm Minigame & Phím Tắt Nhanh Gần Khu Vực
+- **Hiện phím tắt tự động khi lại gần mọi khu trò chơi (`#ride-action-prompt` + phím `[R]`):** Đến gần bất kỳ khu game nào trên cả 3 map (Đuổi bắt, Mê cung, Vòng quay, Xích đu, Sàn nhảy sắc màu, Parkour, Trượt băng, Đấu trường 100 HP, Ném tuyết, Đua dốc băng, Nhặt trái vàng, Đua cầu treo) sẽ tự hiện thanh nhắc kèm nút **`[R]`** (hoặc **`[E / R]`** ở Vòng quay & Xích đu) để bấm chơi luôn tức thì.
+- **Giảm độ khó & dễ thao tác cho Game 2, 5, 6:**
+  - **Game 2 (🌿 Mê Cung Tình Yêu):** Đục thêm ~35% lối thông vòng giảm ngõ cụt, dựng **Tia Sáng Vàng** vươn lên trời tại Cúp tâm mê cung, thêm la bàn chỉ hướng (`⬆️/↖️/↗️/⬅️/➡️/⬇️`) + khoảng cách tới Cúp trên HUD, tăng tốc +18% (nhặt Bình Tăng Tốc +60% kéo dài 7s), nới rộng bán kính ăn Bình & Cúp.
+  - **Game 5 (🎨 Sàn Nhảy Sắc Màu):** Sửa dứt điểm lỗi lệch tên màu so với màu khối trong `COLOR_MATCH_META`, rút gọn xuống 4 màu tương phản rõ (`Hồng Dâu`, `Xanh Lam`, `Vàng Rực`, `Xanh Lá`), tăng thời gian chạy mỗi lượt từ `3s` lên **`5s`**, tăng tốc độ di chuyển `+22%`, và thêm dải báo màu cỡ lớn (`#color-match-spotlight`) ngay phía dưới.
+  - **Game 6 (🌈 Parkour Cầu Vồng & Máng Băng):** Chỉnh lại toàn bộ bậc cầu vồng chỉ nâng `+1` block mỗi bước để nhảy êm không hụt, nới rộng bán kính chạm Checkpoint, hỗ trợ bấm **`[R]`** để quay lại tức thì Checkpoint vừa qua nếu lỡ rớt xuống đất, và mở rộng máng trượt băng lên 5 khối.
+
+---
+
 # KawaiiCraft V5.5 — Đồ Họa 4 Mức Tăng Dần (Mức 3 = V5.3, Mức 4 = Cực Phẩm), Texture 64×64 Nét Căng & Va Chạm AABB Chuẩn
 
 ## 1. Sửa Triệt Để Lỗi Đi Xuyên Khối (`collidesPlayerAABB` & Sub-Stepping)
